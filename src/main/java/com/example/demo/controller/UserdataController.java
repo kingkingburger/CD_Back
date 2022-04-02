@@ -14,7 +14,7 @@ import java.util.List;
 
 @CrossOrigin(origins="*")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/apitest")
 @RequiredArgsConstructor
 public class UserdataController {
 
@@ -29,6 +29,7 @@ public class UserdataController {
     public List<UserDataResponseDto> findAll(){
         return userService.findAll();
     }
+
 
 
 }

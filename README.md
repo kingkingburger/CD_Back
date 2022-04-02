@@ -47,11 +47,15 @@ spring.jpa.properties.hibernate.format_sql=true
 spring.jpa.properties.hibernate.use_sql_comments=true
 ```
 
+#### 설정1
+
 spring.datasource.hikari.jdbc-url=jdbc:mysql://localhost:3306/
 
 **userdata(내 테이블 이름이 userdata 이다, 본인 db의 테이블 이름을 적어줘야함**?serverTimezone=Asia/Seoul&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
 
 
+
+#### 설정2
 
 **spring.datasource.hikari.username=develop**
 **spring.datasource.hikari.password=1234**
