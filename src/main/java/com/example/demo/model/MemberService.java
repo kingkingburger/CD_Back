@@ -40,4 +40,10 @@ public class MemberService {
         return list.stream().map(MemberResponseDto::new).collect(Collectors.toList());
     }
 
+    public MemberResponseDto findBy(final MemberRequestDto params){
+        MemberResponseDto entity = memberRepository.findByEmailAndPasswd(params.getEmail(), params.getPasswd());
+        memberRepository.
+        return entity;
+    }
+
 }

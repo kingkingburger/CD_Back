@@ -16,12 +16,14 @@ public class MemberResponseDto {
 
     private Long userid; // PK
     private String email;
+    private String name;
     private String passwd;
-    private LocalDateTime join_date ;
+    private LocalDateTime join_date;
 
     public MemberResponseDto(Member_table member_table) {
         this.userid = member_table.getUserid();
         this.email = member_table.getEmail();
+        this.name = member_table.getName();
         this.passwd = member_table.getPasswd();
         this.join_date = member_table.getJoin_date();
 

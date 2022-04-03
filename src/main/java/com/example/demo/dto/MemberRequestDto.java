@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class MemberRequestDto {
 
-    private String email; //작성자
-    private String passwd; //카테고리
+    private String email;
+    private String passwd;
 
 
     public Member_table toEntity() {

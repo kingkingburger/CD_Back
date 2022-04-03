@@ -10,6 +10,7 @@ import com.example.demo.model.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -32,8 +33,14 @@ public class MemberController {
 
 
     @PostMapping("/save")
-    public Long save(@RequestBody final MemberRequestDto params) {
-        return memberService.save(params);
+    public void save(@RequestBody final MemberRequestDto params) {
+        memberService.save(params);
+    }
+
+    @PostMapping("/login")
+    public MemberResponseDto login(@RequestBody final MemberRequestDto params) {
+        MemberResponseDto entity = memberService.findBy(params);
+        return entity;
     }
 
 }

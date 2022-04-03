@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import com.example.demo.dto.MemberRequestDto;
+import com.example.demo.dto.MemberResponseDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +10,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 class UsersdataTest {
 
     @Autowired
     UserdataRepository userdataRepository;
+
+    @Autowired
+    MemberRepository memberRepository;
 
     @Test
     void save(){
@@ -46,5 +50,12 @@ class UsersdataTest {
         Usersdata entity = userdataRepository.findById((long) 3).get();
 
         userdataRepository.delete(entity);
+    }
+
+    @Test
+    void findbyId(){
+        MemberResponseDto entity = memberRepository.findByEmailAndPasswd("dnjsalsgh123@gmail.com", "1234");
+        System.out.println("entity = " + entity);
+        System.out.println(entity.getEmail() + entity.getName());
     }
 }
