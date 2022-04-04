@@ -18,6 +18,7 @@ public class MemberResponseDto {
     private String email;
     private String name;
     private String passwd;
+    private String phone;
     private LocalDateTime join_date;
 
     public MemberResponseDto(Member_table member_table) {
@@ -25,6 +26,7 @@ public class MemberResponseDto {
         this.email = member_table.getEmail();
         this.name = member_table.getName();
         this.passwd = member_table.getPasswd();
+        this.phone = member_table.getPhone();
         this.join_date = member_table.getJoin_date();
 
     }

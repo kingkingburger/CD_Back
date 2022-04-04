@@ -13,12 +13,15 @@ public class MemberRequestDto {
 
     private String email;
     private String passwd;
-
+    private String name;
+    private String phone;
 
     public Member_table toEntity() {
         return Member_table.builder()
                 .email(email)
                 .passwd(passwd)
+                .name(name)
+                .phone(phone)
                 .build();
     }
 }

@@ -42,7 +42,6 @@ public class MemberService {
 
     public MemberResponseDto findBy(final MemberRequestDto params){
         MemberResponseDto entity = memberRepository.findByEmailAndPasswd(params.getEmail(), params.getPasswd());
-        memberRepository.
         return entity;
     }
 
