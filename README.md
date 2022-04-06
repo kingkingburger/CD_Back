@@ -70,3 +70,13 @@ https://sundries-in-myidea.tistory.com/91
 
 
 
+| **속성명**     | **Key**     | **null** **유무** | **Date type(size)** | **설명**   |
+| -------------- | ----------- | ----------------- | ------------------- | ---------- |
+| memberid       | primary key | not null          | int                 | 회원id     |
+| memberLoginid  |             | not null          | varchar(20)         | 로그인id   |
+| memberName     |             | not null          | varchar(20)         | 회원이름   |
+| memberPassword |             | not null          | varchar(20)         | 비밀번호   |
+| memberRank     |             | not null          | int                 | 회원등급   |
+| memberPerchase |             | not null          | int                 | 누적구매수 |
+| memberPhone    |             | not null          | string              | 핸드폰번호 |
+| createdDate    |             | not null          | timestamp           | 생성일자   |
