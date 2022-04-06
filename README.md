@@ -61,3 +61,12 @@ spring.datasource.hikari.jdbc-url=jdbc:mysql://localhost:3306/
 **spring.datasource.hikari.password=1234**
 
 이 부분에 자기 db이름과 password를 넣으면 연결
+
+
+
+#### JPA로 쿼리쓰는법
+
+https://sundries-in-myidea.tistory.com/91
+
+
+

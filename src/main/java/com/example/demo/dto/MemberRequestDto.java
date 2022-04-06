@@ -7,21 +7,23 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class MemberRequestDto {
 
-    private String email;
-    private String passwd;
-    private String name;
-    private String phone;
+    private String memberLoginid;
+    private String memberName;
+    private String memberPassword;
+    private String memberPhone;
 
     public Member_table toEntity() {
         return Member_table.builder()
-                .email(email)
-                .passwd(passwd)
-                .name(name)
-                .phone(phone)
+                .memberLoginid(memberLoginid)
+                .memberPassword(memberPassword)
+                .memberName(memberName)
+                .memberPhone(memberPhone)
                 .build();
     }
 }

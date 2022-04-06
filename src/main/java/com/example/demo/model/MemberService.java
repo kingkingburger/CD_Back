@@ -29,19 +29,19 @@ public class MemberService {
     @Transactional
     public Long save(final MemberRequestDto params){
         Member_table entity = memberRepository.save(params.toEntity());
-        return entity.getUserid();
+        return entity.getMemberid();
     }
 
     //게시글 리스트 조회
     public List<MemberResponseDto> findAll(){
-        Sort sort = Sort.by(Sort.Direction.DESC , "userid");
+        Sort sort = Sort.by(Sort.Direction.DESC , "memberid");
         List<Member_table> list = memberRepository.findAll(sort);
 
         return list.stream().map(MemberResponseDto::new).collect(Collectors.toList());
     }
 
     public MemberResponseDto findBy(final MemberRequestDto params){
-        MemberResponseDto entity = memberRepository.findByEmailAndPasswd(params.getEmail(), params.getPasswd());
+        MemberResponseDto entity = memberRepository.findByEmailAndPasswd(params.getMemberLoginid(), params.getMemberPassword());
         return entity;
     }
 

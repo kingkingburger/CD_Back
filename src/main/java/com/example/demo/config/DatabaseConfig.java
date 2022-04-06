@@ -22,6 +22,7 @@ public class DatabaseConfig {
 
     @Bean
     public DataSource dataSource(){
+        System.out.println("DataSource connection" + dataSource().toString());
         return new HikariDataSource(hikariConfig());
     }
 }
