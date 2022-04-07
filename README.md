@@ -2,21 +2,19 @@
 
 #### 테이블 생성
 
+22/04/07(최신)
+
 ```sql
-create table usersdata(
-	id bigint not null auto_increment comment 'PK',
-    created_date datetime not null comment '생성일',
-    modified_date datetime comment '수정일',
-    category varchar(100) not null comment '카테고리',
-    username varchar(20) not null comment '작성자',
-    price int not null comment '경매가격',
-    immediatelyprice int not null comment '즉시구매가',
-    title varchar(100) not null comment '제목',
-    location varchar(100) not null comment '위치',
-    imgsrc varchar(100) not null comment '이미지경로',
-    usersdata enum('Y','N') not null comment '삭제 여부',
-    primary key (id)
-) comment '유저정보';
+create table member(
+    memberId int not null auto_increment comment 'PK',
+    memberLoginId varchar(20) not null comment '로그인id',
+    memberName varchar(20) not null comment '회원이름',
+    memberPassword varchar(20) not null comment '비밀번호',
+    memberRank int default 1 not null comment '회원등급',
+    numberPerchase int default 0 not null comment '누적구매수',
+    createdDate timeStamp not null comment '생성일자',
+    primary key(memberId)
+);
 ```
 
 
