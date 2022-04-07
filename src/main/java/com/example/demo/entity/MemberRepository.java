@@ -10,4 +10,5 @@ public interface MemberRepository extends JpaRepository<Member_table, Long>{
 
     MemberResponseDto findByEmailAndPasswd(final String email, final String passwd);
 
+//    MemberResponseDto Logincheck();
 }

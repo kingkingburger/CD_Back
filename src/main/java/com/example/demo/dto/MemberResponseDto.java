@@ -13,22 +13,24 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class MemberResponseDto {
 
-
-    private Long userid; // PK
-    private String email;
-    private String name;
-    private String passwd;
-    private String phone;
+    private Long memberid; // PK
+    private String memberLoginid;
+    private String memberName;
+    private String memberPassword;
+    private int memberRank;
+    private int memberPerchase;
+    private String memberPhone;
     private LocalDateTime join_date;
 
     public MemberResponseDto(Member_table member_table) {
-        this.userid = member_table.getUserid();
-        this.email = member_table.getEmail();
-        this.name = member_table.getName();
-        this.passwd = member_table.getPasswd();
-        this.phone = member_table.getPhone();
+        this.memberid = member_table.getMemberid();
+        this.memberLoginid = member_table.getMemberLoginid();
+        this.memberName = member_table.getMemberName();
+        this.memberPassword = member_table.getMemberPassword();
+        this.memberRank = member_table.getMemberRank();
+        this.memberPerchase = member_table.getMemberPerchase();
+        this.memberPhone = member_table.getMemberPhone();
         this.join_date = member_table.getJoin_date();
-
     }
 
 }

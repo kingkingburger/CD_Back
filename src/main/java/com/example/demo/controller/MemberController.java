@@ -43,4 +43,10 @@ public class MemberController {
         return entity;
     }
 
+//    @PostMapping("/logincheck")
+//    public MemberResponseDto logincheck(@RequestBody final MemberRequestDto params) {
+//        MemberResponseDto entity = memberService.Logincheck(params);
+//        return entity;
+//    }
+
 }

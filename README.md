@@ -59,3 +59,22 @@ spring.datasource.hikari.jdbc-url=jdbc:mysql://localhost:3306/
 **spring.datasource.hikari.password=1234**
 
 이 부분에 자기 db이름과 password를 넣으면 연결
+
+
+
+#### JPA로 쿼리쓰는법
+
+https://sundries-in-myidea.tistory.com/91
+
+
+
+| **속성명**     | **Key**     | **null** **유무** | **Date type(size)** | **설명**   |
+| -------------- | ----------- | ----------------- | ------------------- | ---------- |
+| memberid       | primary key | not null          | int                 | 회원id     |
+| memberLoginid  |             | not null          | varchar(20)         | 로그인id   |
+| memberName     |             | not null          | varchar(20)         | 회원이름   |
+| memberPassword |             | not null          | varchar(20)         | 비밀번호   |
+| memberRank     |             | not null          | int                 | 회원등급   |
+| memberPerchase |             | not null          | int                 | 누적구매수 |
+| memberPhone    |             | not null          | string              | 핸드폰번호 |
+| createdDate    |             | not null          | timestamp           | 생성일자   |
