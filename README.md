@@ -5,17 +5,24 @@
 22/04/07(최신)
 
 ```sql
-create table member(
-    memberId int not null auto_increment comment 'PK',
-    memberLoginId varchar(20) not null comment '로그인id',
-    memberName varchar(20) not null comment '회원이름',
-    memberPassword varchar(20) not null comment '비밀번호',
-    memberRank int default 1 not null comment '회원등급',
-    numberPerchase int default 0 not null comment '누적구매수',
-    createdDate timeStamp not null comment '생성일자',
+create table member_table(
+    memberid int not null auto_increment comment 'PK',
+    member_loginid varchar(20) not null comment '로그인id',
+    member_name varchar(20) not null comment '회원이름',
+    member_password varchar(20) not null comment '비밀번호',
+    member_phone varchar(20) not null comment '전화번호',
+    member_rank int default 1 not null comment '회원등급',
+    member_perchase int default 0 not null comment '누적구매수',
+    created_date timeStamp not null comment '생성일자',
     primary key(memberId)
 );
 ```
+
+jpa에서 쿼리를 짤 때 첫 번째 만나는 대문자는 앞에 _ 붙히고 소문자로 바꾼다.
+
+ex) entity가 MemberLoginid 라면 쿼리를 날릴 때 member_loginid로 바꿔서 날린다. 그러니 db컬럼의 이름을 바꿔줘야 한다.
+
+출처: https://programmerah.com/how-to-fix-sql-error-1054-sqlstate-42s22-unknown-column-markcardex0_-art_service_time-in-field-list-3667/
 
 
 

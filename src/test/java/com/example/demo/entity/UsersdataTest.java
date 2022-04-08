@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
@@ -22,19 +23,15 @@ class UsersdataTest {
     @Test
     void save(){
         //1. 파라미터 생성
-        Usersdata params = Usersdata.builder()
-                .category("전자제품")
-                .username("구구")
-                .price(600000)
-                .immediatelyprice(800000)
-                .title("갤럭시 s8")
-                .location("경기도 수원시")
-                .imgsrc("/userimg2.png")
-                .deleteYn('N')
+        Member_table params = Member_table.builder()
+                .memberLoginid("won")
+                .memberPassword("1234")
+                .memberName("minho")
+                .memberPhone("01035862056")
                 .build();
 
         //2. 저장
-        userdataRepository.save(params);
+        memberRepository.save(params);
     }
 
     @Test
@@ -51,11 +48,16 @@ class UsersdataTest {
 
         userdataRepository.delete(entity);
     }
-
     @Test
-    void findbyId(){
-        MemberResponseDto entity = memberRepository.findByEmailAndPasswd("dnjsalsgh123@gmail.com", "1234");
-        System.out.println("entity = " + entity);
-        System.out.println(entity.getEmail() + entity.getName());
+    void find(){
+        Optional<MemberResponseDto> loginid = memberRepository.findByMemberLoginid("2");
+        if(loginid.isPresent()){
+            System.out.println("loginid = " + loginid.get());
+        }
+        else{
+            System.out.println("null");
+        }
     }
+
+
 }

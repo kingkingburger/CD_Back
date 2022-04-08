@@ -28,6 +28,7 @@ public class MemberService {
 
     @Transactional
     public Long save(final MemberRequestDto params){
+        System.out.println(params.toString());
         Member_table entity = memberRepository.save(params.toEntity());
         return entity.getMemberid();
     }
@@ -40,9 +41,9 @@ public class MemberService {
         return list.stream().map(MemberResponseDto::new).collect(Collectors.toList());
     }
 
-    public MemberResponseDto findBy(final MemberRequestDto params){
-        MemberResponseDto entity = memberRepository.findByEmailAndPasswd(params.getMemberLoginid(), params.getMemberPassword());
-        return entity;
-    }
+//    public MemberResponseDto findBy(final MemberRequestDto params){
+//        MemberResponseDto entity = memberRepository.findByEmailAndPasswd(params.getMemberLoginid(), params.getMemberPassword());
+//        return entity;
+//    }
 
 }

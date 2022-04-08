@@ -17,10 +17,10 @@ public class MemberResponseDto {
     private String memberLoginid;
     private String memberName;
     private String memberPassword;
+    private String memberPhone;
     private int memberRank;
     private int memberPerchase;
-    private String memberPhone;
-    private LocalDateTime join_date;
+    private LocalDateTime createdDate ;
 
     public MemberResponseDto(Member_table member_table) {
         this.memberid = member_table.getMemberid();
@@ -30,7 +30,7 @@ public class MemberResponseDto {
         this.memberRank = member_table.getMemberRank();
         this.memberPerchase = member_table.getMemberPerchase();
         this.memberPhone = member_table.getMemberPhone();
-        this.join_date = member_table.getJoin_date();
+        this.createdDate = member_table.getCreatedDate();
     }
 
 }

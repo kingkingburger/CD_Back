@@ -26,4 +26,14 @@ public class MemberRequestDto {
                 .memberPhone(memberPhone)
                 .build();
     }
+
+    @Override
+    public String toString() {
+        return "MemberRequestDto{" +
+                "memberLoginid='" + memberLoginid + '\'' +
+                ", memberName='" + memberName + '\'' +
+                ", memberPassword='" + memberPassword + '\'' +
+                ", memberPhone='" + memberPhone + '\'' +
+                '}';
+    }
 }

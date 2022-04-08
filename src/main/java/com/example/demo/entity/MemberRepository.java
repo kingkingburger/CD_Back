@@ -4,11 +4,10 @@ import com.example.demo.dto.MemberRequestDto;
 import com.example.demo.dto.MemberResponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member_table, Long>{
 
-    MemberResponseDto findByEmailAndPasswd(final String email, final String passwd);
+    Optional<MemberResponseDto> findByMemberLoginid(String memberLoginid);
 
-//    MemberResponseDto Logincheck();
 }

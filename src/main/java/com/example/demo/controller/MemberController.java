@@ -8,8 +8,12 @@ import com.example.demo.exception.ErrorCode;
 import com.example.demo.model.MemberService;
 import com.example.demo.model.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.Binding;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
@@ -32,16 +36,21 @@ public class MemberController {
     }
 
 
-    @PostMapping("/save")
-    public void save(@RequestBody final MemberRequestDto params) {
-        memberService.save(params);
+    @PostMapping("/add")
+    public String save(@RequestBody MemberRequestDto member, BindingResult bindingResult)  {
+        System.out.println(member.toString());
+        if(bindingResult.hasErrors()){
+            return "/SignUp";
+        }
+        memberService.save(member);
+        return "/";
     }
 
-    @PostMapping("/login")
-    public MemberResponseDto login(@RequestBody final MemberRequestDto params) {
-        MemberResponseDto entity = memberService.findBy(params);
-        return entity;
-    }
+//    @PostMapping("/login")
+//    public MemberResponseDto login(@RequestBody final MemberRequestDto params) {
+////        MemberResponseDto entity = memberService.findBy(params);
+////        return entity;
+//    }
 
 //    @PostMapping("/logincheck")
 //    public MemberResponseDto logincheck(@RequestBody final MemberRequestDto params) {

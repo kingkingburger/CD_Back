@@ -16,13 +16,13 @@ public class DatabaseConfig {
 
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource.hikari")
-    public HikariConfig hikariConfig(){
+    public HikariConfig hikariConfig() {
         return new HikariConfig();
     }
 
     @Bean
-    public DataSource dataSource(){
-        System.out.println("DataSource connection" + dataSource().toString());
+    public DataSource dataSource() {
         return new HikariDataSource(hikariConfig());
     }
+
 }

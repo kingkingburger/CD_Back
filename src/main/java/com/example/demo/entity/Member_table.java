@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
 @Getter
@@ -20,12 +21,14 @@ public class Member_table {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberid; // PK
     private String memberLoginid;
+    @NotEmpty
     private String memberName;
+    @NotEmpty
     private String memberPassword;
+    private String memberPhone;
     private int memberRank;
     private int memberPerchase;
-    private String memberPhone;
-    private LocalDateTime join_date = LocalDateTime.now() ;
+    private LocalDateTime createdDate = LocalDateTime.now() ;
 
 
     //빌더 패턴을 이용하면 어떤 멤버에 어떤 값을 세팅하는지 직관적으로 확인이 가능합니다.
