@@ -3,31 +3,51 @@ package com.example.demo.controller;
 import com.example.demo.dto.MemberRequestDto;
 import com.example.demo.dto.MemberResponseDto;
 import com.example.demo.model.LoginService;
+import com.example.demo.session.SessionManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @RestController
 @Slf4j
-@RequestMapping("/api")
 @RequiredArgsConstructor
 public class LoginController {
 
     private final LoginService loginService;
+    private final SessionManager sessionManager;
 
-    @GetMapping("/login")
-    public String loginForm(@RequestBody MemberRequestDto memberRequestDto) {
-        return "/login";
+
+    @PostMapping("/add")
+    public Object save(@Valid @RequestBody MemberRequestDto memberRequestDto, BindingResult bindingResult, HttpServletResponse response)  {
+        System.out.println(memberRequestDto.toString());
+        if(bindingResult.hasErrors()){
+            return bindingResult.getGlobalErrors();
+        }
+        //입력된 id 중복 체크
+        loginService.checkvaild(memberRequestDto);
+
+        //저장
+        loginService.save(memberRequestDto);
+
+        //방금 만든 회원 정보로 로그인
+        MemberResponseDto member = loginService.login(memberRequestDto.getMemberLoginid(), memberRequestDto.getMemberPassword());
+
+
+        //세션 관리자를 통해 세션을 생성하고, 회원 데이터를 보관
+        sessionManager.createdSession(member, response);
+
+        return member;
     }
 
-
     @PostMapping("/login")
-    public Object login(@Valid @RequestBody MemberRequestDto memberRequestDto, BindingResult bindingResult) {
+    public Object login(@Valid @RequestBody MemberRequestDto memberRequestDto, BindingResult bindingResult, HttpServletResponse response) {
         if (bindingResult.hasErrors()) { //에러가 있다면
             return "에러발생";
         }
@@ -42,8 +62,22 @@ public class LoginController {
             return bindingResult.getGlobalErrors();
         }
 
-        //로그인 성공 처리
-        return "/";
+
+        //세션 관리자를 통해 세션을 생성하고, 회원 데이터를 보관
+        sessionManager.createdSession(member, response);
+
+        return member;
+    }
+
+    @PostMapping("/logout")
+    public void logout(HttpServletRequest request){
+        sessionManager.expire(request);
+    }
+
+    private void expireCookie(HttpServletResponse response ,String cookieName) {
+        Cookie cookie = new Cookie(cookieName, null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
     }
 }
 

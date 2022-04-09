@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
@@ -20,6 +17,8 @@ public class Member_table {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberid; // PK
+    @NotEmpty
+    @Column(unique = true )
     private String memberLoginid;
     @NotEmpty
     private String memberName;

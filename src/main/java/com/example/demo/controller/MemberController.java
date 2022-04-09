@@ -17,9 +17,8 @@ import java.io.IOException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @RestController
-@RequestMapping("/api")
 @RequiredArgsConstructor
 public class MemberController {
 
@@ -34,28 +33,4 @@ public class MemberController {
     public List<MemberResponseDto> findAll() {
         return memberService.findAll();
     }
-
-
-    @PostMapping("/add")
-    public String save(@RequestBody MemberRequestDto member, BindingResult bindingResult)  {
-        System.out.println(member.toString());
-        if(bindingResult.hasErrors()){
-            return "/SignUp";
-        }
-        memberService.save(member);
-        return "/";
-    }
-
-//    @PostMapping("/login")
-//    public MemberResponseDto login(@RequestBody final MemberRequestDto params) {
-////        MemberResponseDto entity = memberService.findBy(params);
-////        return entity;
-//    }
-
-//    @PostMapping("/logincheck")
-//    public MemberResponseDto logincheck(@RequestBody final MemberRequestDto params) {
-//        MemberResponseDto entity = memberService.Logincheck(params);
-//        return entity;
-//    }
-
 }
