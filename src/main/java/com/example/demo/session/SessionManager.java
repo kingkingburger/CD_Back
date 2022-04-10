@@ -43,7 +43,6 @@ public class SessionManager {
         Cookie sessionCookie = findCookie(request, SESSION_COOKIE_NAME);
         if(sessionCookie == null){
             System.out.println("getSession에서 세션을 못가져옴");
-
             return new IllegalStateException("getSession에서 세션을 못가져옴");
         }
         return sessionStore.get(sessionCookie.getValue());

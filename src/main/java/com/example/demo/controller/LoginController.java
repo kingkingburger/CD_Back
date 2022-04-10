@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.SessionConst;
 import com.example.demo.dto.MemberRequestDto;
 import com.example.demo.dto.MemberResponseDto;
 import com.example.demo.model.LoginService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
@@ -47,7 +49,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public Object login(@Valid @RequestBody MemberRequestDto memberRequestDto, BindingResult bindingResult, HttpServletResponse response) {
+    public Object login(@Valid @RequestBody MemberRequestDto memberRequestDto, BindingResult bindingResult, HttpServletRequest request) {
         if (bindingResult.hasErrors()) { //에러가 있다면
             return "에러발생";
         }
@@ -57,21 +59,30 @@ public class LoginController {
 
         if (member == null) { //id, password둘다 안오면
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다");
-            System.out.println(bindingResult.getGlobalErrors());
-
             return bindingResult.getGlobalErrors();
         }
 
-
         //세션 관리자를 통해 세션을 생성하고, 회원 데이터를 보관
-        sessionManager.createdSession(member, response);
+        //sessionManager.createdSession(member, response);
+
+        //로그인 성공 처리
+        //세션이 있있으면 있는 세션 반환, 없으면 신규 세션을 생성
+        HttpSession session = request.getSession();
+        //세션에 로그인 회원 정보를 보관
+        session.setAttribute(SessionConst.LOGIN_MEBMER, member);
+        System.out.println("session = " + session.getId());
+
 
         return member;
     }
 
     @PostMapping("/logout")
     public void logout(HttpServletRequest request){
-        sessionManager.expire(request);
+//        sessionManager.expire(request);
+        HttpSession session = request.getSession(false);
+        if(session != null){
+            session.invalidate();
+        }
     }
 
     private void expireCookie(HttpServletResponse response ,String cookieName) {
