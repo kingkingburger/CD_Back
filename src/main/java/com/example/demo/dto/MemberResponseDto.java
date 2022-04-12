@@ -33,4 +33,17 @@ public class MemberResponseDto {
         this.createdDate = member_table.getCreatedDate();
     }
 
+    @Override
+    public String toString() {
+        return "MemberResponseDto{" +
+                "memberid=" + memberid +
+                ", memberLoginid='" + memberLoginid + '\'' +
+                ", memberName='" + memberName + '\'' +
+                ", memberPassword='" + memberPassword + '\'' +
+                ", memberPhone='" + memberPhone + '\'' +
+                ", memberRank=" + memberRank +
+                ", memberPerchase=" + memberPerchase +
+                ", createdDate=" + createdDate +
+                '}';
+    }
 }

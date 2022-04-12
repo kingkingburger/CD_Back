@@ -69,7 +69,7 @@ public class LoginController {
         //세션이 있있으면 있는 세션 반환, 없으면 신규 세션을 생성
         HttpSession session = request.getSession();
         //세션에 로그인 회원 정보를 보관
-        session.setAttribute(SessionConst.LOGIN_MEBMER, member);
+        session.setAttribute("JSESSIONID", member);
         System.out.println("session = " + session.getId());
 
 
