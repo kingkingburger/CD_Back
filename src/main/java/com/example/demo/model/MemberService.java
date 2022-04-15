@@ -2,23 +2,19 @@ package com.example.demo.model;
 
 import com.example.demo.dto.MemberRequestDto;
 import com.example.demo.dto.MemberResponseDto;
-import com.example.demo.dto.UserDataRequestDto;
-import com.example.demo.dto.UserDataResponseDto;
 import com.example.demo.entity.MemberRepository;
 import com.example.demo.entity.Member_table;
-import com.example.demo.entity.UserdataRepository;
-import com.example.demo.entity.Usersdata;
-import com.example.demo.exception.CustomException;
-import com.example.demo.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -27,10 +23,25 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public Long save(final MemberRequestDto params){
-        System.out.println(params.toString());
-        Member_table entity = memberRepository.save(params.toEntity());
-        return entity.getMemberid();
+    public boolean save(final MemberRequestDto params){
+        //들어온 id
+        String input_loginid = params.getMemberLoginid();
+
+        //만약 DB에 입력값이 없다면
+        Optional<MemberResponseDto> checked_duplication = memberRepository.findByMemberLoginid(input_loginid);
+
+        log.info("checked_duplication = {}", checked_duplication);
+        if(checked_duplication.isEmpty()){
+            memberRepository.save(params.toEntity());
+            return true;
+        }else{ //DB에 등록이 되었다면 에러를 던저줘야 함
+            return false;
+        }
+
+
+
+//        Member_table entity = memberRepository.save(params.toEntity());
+
     }
 
     //게시글 리스트 조회
@@ -41,9 +52,5 @@ public class MemberService {
         return list.stream().map(MemberResponseDto::new).collect(Collectors.toList());
     }
 
-//    public MemberResponseDto findBy(final MemberRequestDto params){
-//        MemberResponseDto entity = memberRepository.findByEmailAndPasswd(params.getMemberLoginid(), params.getMemberPassword());
-//        return entity;
-//    }
 
 }

@@ -1,40 +1,51 @@
 package com.example.demo.controller;
 
 import com.example.demo.SessionConst;
+import com.example.demo.dto.MemberRequestDto;
 import com.example.demo.dto.MemberResponseDto;
 import com.example.demo.entity.MemberRepository;
 import com.example.demo.model.LoginService;
+import com.example.demo.model.MemberService;
 import com.example.demo.session.SessionManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+//@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @Slf4j
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class HomeController {
 
     private final MemberRepository memberRepository;
+    private final MemberService memberService;
     private final LoginService loginService;
     private final SessionManager sessionManager;
 
-    //클라이언트 고유 id 값으로 로그인
-    @GetMapping("/check")
-    public Object homeLogin(
-            @SessionAttribute(name = "JSESSIONID", required = false) Object loginMember) {
+    @GetMapping("/")
+    public String homeLogin(@SessionAttribute(name = SessionConst.LOGIN_MEBMER, required = false) MemberRequestDto loginMember, Model model, @ModelAttribute("member") MemberRequestDto member) {
 
-
-        if(loginMember == null){
-            System.out.println("세션값이 null");
-            return "세션값이 null";
+        //세션에 회원 데이터가 없으면
+        if (loginMember == null) {
+            return "index";
         }
 
-        //로그인 성공
-        return loginMember;
+        //세션이 유지되면 로그인으로 이동
+        model.addAttribute("member", loginMember);
+        return "index";
     }
 
+
+
+//    @GetMapping("/home")
+//    public String home(Model model){
+//        return "home";
+//    }
 }

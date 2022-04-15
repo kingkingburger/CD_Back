@@ -1,9 +1,6 @@
 package com.example.demo.entity;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -12,6 +9,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
 @Entity
+@Data
 public class Member_table {
 
     @Id

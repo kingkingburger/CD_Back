@@ -1,36 +1,42 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.MemberRequestDto;
-import com.example.demo.dto.MemberResponseDto;
-import com.example.demo.dto.UserDataResponseDto;
-import com.example.demo.exception.CustomException;
-import com.example.demo.exception.ErrorCode;
 import com.example.demo.model.MemberService;
-import com.example.demo.model.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.naming.Binding;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.List;
+import javax.validation.Valid;
 
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
-@RestController
+@Slf4j
+@Controller
 @RequiredArgsConstructor
 public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping("/test")
-    public String test() {
-        throw new CustomException(ErrorCode.POSTS_NOT_FOUND);
+
+    @GetMapping("/sign")
+    public String addFrom(@ModelAttribute("member") MemberRequestDto member) {
+        return "sign";
     }
 
-    @GetMapping("/b")
-    public List<MemberResponseDto> findAll() {
-        return memberService.findAll();
+    @PostMapping("/sign")
+    public String save(@Valid @ModelAttribute("member") MemberRequestDto member, BindingResult bindingResult){
+
+        if(bindingResult.hasErrors()){
+            bindingResult.reject("아이디가 중복되었습니다.");
+            return "sign";
+        }
+
+        if(memberService.save(member)){
+            return "redirect:/";
+        } else{
+            bindingResult.reject("addFail","아이디가 중복되었습니다.");
+            return "sign";
+        }
     }
+
 }

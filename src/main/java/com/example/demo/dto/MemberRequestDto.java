@@ -2,20 +2,23 @@ package com.example.demo.dto;
 
 
 import com.example.demo.entity.Member_table;
-import com.example.demo.entity.Usersdata;
-import lombok.AccessLevel;
+import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import javax.validation.constraints.NotEmpty;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@Data
+//@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class MemberRequestDto {
 
+    @NotEmpty
     private String memberLoginid;
+    @NotEmpty
     private String memberName;
+    @NotEmpty
     private String memberPassword;
+    @NotEmpty
     private String memberPhone;
 
     public Member_table toEntity() {

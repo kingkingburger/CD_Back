@@ -10,6 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -22,24 +25,29 @@ public class LoginService {
      */
     public MemberResponseDto login(String loginId, String passwd) {
         return memberRepository.findByMemberLoginid(loginId) //회원이 있는지 없는지 확인
-                .filter(m -> m.getMemberPassword().equals(passwd)).stream().findFirst().orElse(null);
+                .filter(m->m.getMemberPassword().equals(passwd))
+                .orElse(null);
     }
 
-    //
     @Transactional
     public MemberResponseDto findById(final Long id) {
         Member_table entity = memberRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
         return new MemberResponseDto(entity);
     }
-
-    @Transactional
-    public Long save(final MemberRequestDto params) {
-        System.out.println(params.toString());
-
-        return memberRepository.save(params.toEntity()).getMemberid();
-
+    
+    //유저 loginid로 유저를 찾아줌
+    public Optional<MemberResponseDto> findByLoginId(String loginId) {
+        return findAll().stream()
+                .filter(m -> m.getMemberLoginid().equals(loginId)).findFirst();
     }
 
+
+    //테이블에서 전체 유저를 찾아주는 서비스
+    public List<MemberResponseDto> findAll(){
+        MemberResponseDto userlist = (MemberResponseDto) memberRepository.findAll();
+        return (List<MemberResponseDto>) userlist;
+    }
+    
     //중복된 id 체크
     @Transactional
     public void checkvaild(final MemberRequestDto params) {

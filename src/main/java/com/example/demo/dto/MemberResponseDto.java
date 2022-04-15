@@ -1,7 +1,6 @@
 package com.example.demo.dto;
 
 import com.example.demo.entity.Member_table;
-import com.example.demo.entity.Usersdata;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
