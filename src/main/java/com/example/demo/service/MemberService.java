@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.service;
 
 import com.example.demo.dto.MemberRequestDto;
 import com.example.demo.dto.MemberResponseDto;
@@ -37,10 +37,6 @@ public class MemberService {
         }else{ //DB에 등록이 되었다면 에러를 던저줘야 함
             return false;
         }
-
-
-
-//        Member_table entity = memberRepository.save(params.toEntity());
 
     }
 

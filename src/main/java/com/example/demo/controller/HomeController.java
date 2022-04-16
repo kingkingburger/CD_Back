@@ -2,21 +2,15 @@ package com.example.demo.controller;
 
 import com.example.demo.SessionConst;
 import com.example.demo.dto.MemberRequestDto;
-import com.example.demo.dto.MemberResponseDto;
 import com.example.demo.entity.MemberRepository;
-import com.example.demo.model.LoginService;
-import com.example.demo.model.MemberService;
+import com.example.demo.service.LoginService;
+import com.example.demo.service.MemberService;
 import com.example.demo.session.SessionManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 //@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @Slf4j
@@ -42,6 +36,11 @@ public class HomeController {
         return "index";
     }
 
+    @GetMapping("/home")
+    public String home(@SessionAttribute(name = SessionConst.LOGIN_MEBMER, required = false) MemberRequestDto loginMember, Model model, @ModelAttribute("member") MemberRequestDto member) {
+
+        return "home-electronics-store";
+    }
 
 
 //    @GetMapping("/home")

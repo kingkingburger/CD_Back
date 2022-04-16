@@ -3,8 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.SessionConst;
 import com.example.demo.dto.MemberRequestDto;
 import com.example.demo.dto.MemberResponseDto;
-import com.example.demo.model.LoginService;
-import com.example.demo.session.SessionManager;
+import com.example.demo.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -34,15 +33,16 @@ public class LoginController {
     public String login(@Valid @ModelAttribute("loginForm") MemberRequestDto form, BindingResult bindingResult,
                         @RequestParam(defaultValue = "/") String redirectURL,
                         HttpServletRequest request) {
-
+        log.info("form = {}" , form);
         if (bindingResult.hasErrors()) {
+            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
             return "login";
         }
 
         MemberResponseDto loginMember = loginService.login(form.getMemberLoginid(), form.getMemberPassword());
 
         if (loginMember == null) {
-            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
+            bindingResult.reject("loginFail", "아이디 또는 비밀번호를 입력하세요");
             return "login";
         }
 
@@ -51,7 +51,7 @@ public class LoginController {
         HttpSession session = request.getSession();
         //세션에 로그인 회원 정보 보관
         session.setAttribute(SessionConst.LOGIN_MEBMER, loginMember);
-
+        log.info("redirectUrl = {}", redirectURL);
         return "redirect:" + redirectURL;
     }
 

@@ -14,11 +14,11 @@ public class MemberRequestDto {
 
     @NotEmpty
     private String memberLoginid;
-    @NotEmpty
+
     private String memberName;
     @NotEmpty
     private String memberPassword;
-    @NotEmpty
+
     private String memberPhone;
 
     public Member_table toEntity() {
