@@ -41,6 +41,8 @@ public class LoginController {
 
         MemberResponseDto loginMember = loginService.login(form.getMemberLoginid(), form.getMemberPassword());
 
+
+        log.info("loginMember = {}", loginMember);
         if (loginMember == null) {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호를 입력하세요");
             return "login";
@@ -51,7 +53,10 @@ public class LoginController {
         HttpSession session = request.getSession();
         //세션에 로그인 회원 정보 보관
         session.setAttribute(SessionConst.LOGIN_MEBMER, loginMember);
+
+        log.info("get session ={} ", session.getAttribute(SessionConst.LOGIN_MEBMER));
         log.info("redirectUrl = {}", redirectURL);
+
         return "redirect:" + redirectURL;
     }
 
