@@ -42,6 +42,12 @@ public class HomeController {
         return "home-electronics-store";
     }
 
+    @GetMapping("/layoutFile")
+    public String layout() {
+
+        return "layoutFile";
+    }
+
 
 //    @GetMapping("/home")
 //    public String home(Model model){
