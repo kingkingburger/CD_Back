@@ -15,15 +15,17 @@ public class Member_table {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberid; // PK
-    @NotEmpty
-    @Column(unique = true )
+
     private String memberLoginid;
-    @NotEmpty
+
     private String memberName;
-    @NotEmpty
+
     private String memberPassword;
+
     private String memberPhone;
+
     private int memberRank;
+
     private int memberPerchase;
     private LocalDateTime createdDate = LocalDateTime.now() ;
 

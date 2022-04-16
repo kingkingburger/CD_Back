@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.SessionConst;
 import com.example.demo.dto.MemberRequestDto;
+import com.example.demo.dto.MemberResponseDto;
 import com.example.demo.entity.MemberRepository;
 import com.example.demo.service.LoginService;
 import com.example.demo.service.MemberService;
@@ -24,10 +25,11 @@ public class HomeController {
     private final SessionManager sessionManager;
 
     @GetMapping("/")
-    public String homeLogin(@SessionAttribute(name = SessionConst.LOGIN_MEBMER, required = false) MemberRequestDto loginMember, Model model, @ModelAttribute("member") MemberRequestDto member) {
+    public String homeLogin(@SessionAttribute(name = SessionConst.LOGIN_MEBMER, required = false) MemberResponseDto loginMember, Model model, @ModelAttribute("member") MemberRequestDto member) {
 
         //세션에 회원 데이터가 없으면
         if (loginMember == null) {
+            log.info("세션에 회원 없음");
             return "index";
         }
 

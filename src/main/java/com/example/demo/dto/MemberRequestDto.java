@@ -12,14 +12,12 @@ import javax.validation.constraints.NotEmpty;
 //@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class MemberRequestDto {
 
-    @NotEmpty
+
     private String memberLoginid;
-
     private String memberName;
-    @NotEmpty
     private String memberPassword;
-
     private String memberPhone;
+
 
     public Member_table toEntity() {
         return Member_table.builder()
@@ -29,6 +27,7 @@ public class MemberRequestDto {
                 .memberPhone(memberPhone)
                 .build();
     }
+
 
     @Override
     public String toString() {

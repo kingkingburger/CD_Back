@@ -40,13 +40,13 @@ public class MemberService {
 
     }
 
-    //게시글 리스트 조회
-    public List<MemberResponseDto> findAll(){
-        Sort sort = Sort.by(Sort.Direction.DESC , "memberid");
-        List<Member_table> list = memberRepository.findAll(sort);
-
-        return list.stream().map(MemberResponseDto::new).collect(Collectors.toList());
-    }
+//    //게시글 리스트 조회
+//    public List<MemberResponseDto> findAll(){
+//        Sort sort = Sort.by(Sort.Direction.DESC , "memberid");
+//        List<Member_table> list = memberRepository.findAll(sort);
+//
+//        return list.stream().map(MemberResponseDto::new).collect(Collectors.toList());
+//    }
 
 
 }

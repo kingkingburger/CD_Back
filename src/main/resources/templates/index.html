@@ -293,14 +293,19 @@
                             <span class="navbar-tool-tooltip">Wishlist</span>
                             <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-heart"></i></div>
                         </a>
-                        <!-- 로그인 버튼 #signin-modal-->
-                        <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" th:onclick="|location.href='@{/login}'|" data-bs-toggle="modal">
-                            <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
 
-                            <div class="navbar-tool-text ms-n3" >
+                        <!-- 로그인 버튼 #signin-modal-->
+                        <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" th:object="${member}"
+                           th:onclick="|location.href='@{/login}'|" data-bs-toggle="modal">
+                            <div class="navbar-tool-icon-box">
+                                <i class="navbar-tool-icon ci-user"></i>
+                            </div>
+
+                            <div class="navbar-tool-text ms-n3" th:text="*{memberName}">
                                 계정
                             </div>
                         </a>
+
                         <div class="navbar-tool dropdown ms-3"><a
                                 class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="shop-cart.html">
                             <span class="navbar-tool-label">4</span><i class="navbar-tool-icon ci-cart"></i></a><a
