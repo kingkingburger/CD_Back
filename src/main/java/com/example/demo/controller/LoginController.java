@@ -61,12 +61,12 @@ public class LoginController {
     }
 
     @PostMapping("/logout")
-    public void logout(HttpServletRequest request){
-//        sessionManager.expire(request);
+    public String logoutV3(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
-        if(session != null){
+        if (session != null) {
             session.invalidate();
         }
+        return "redirect:/";
     }
 
     private void expireCookie(HttpServletResponse response ,String cookieName) {
