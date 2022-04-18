@@ -1,6 +1,6 @@
 ## Mysql 버전 8
 
-#### 테이블 생성
+#### 테이블 생성 - Member
 
 22/04/07(최신)
 
@@ -23,6 +23,34 @@ jpa에서 쿼리를 짤 때 첫 번째 만나는 대문자는 앞에 _ 붙히고
 ex) entity가 MemberLoginid 라면 쿼리를 날릴 때 member_loginid로 바꿔서 날린다. 그러니 db컬럼의 이름을 바꿔줘야 한다.
 
 출처: https://programmerah.com/how-to-fix-sql-error-1054-sqlstate-42s22-unknown-column-markcardex0_-art_service_time-in-field-list-3667/
+
+
+
+#### 테이블 생성 - Product
+
+```sql
+create table product(
+    productid int not null auto_increment comment 'PK',
+    memberid int not null comment '회원id',
+    product_name varchar(50) not null comment '물품 이름', 
+    auction_price int default 0 comment '경매가격',
+    product_price int not null comment '즉시거래가격',
+    image_namesrc varchar(100) comment '이미지',
+    product_explanation varchar(1000) default '설명이 없습니다.' comment '물품상세설명',
+    product_category varchar(20) not null comment '물품카테고리',
+    created_date timeStamp not null comment'생성일자',
+    primary key(productid),
+    foreign key(memberid) references member_table (memberid) on update cascade on delete cascade
+);
+```
+
+foreign key로 memberid를 받습니다. on update, on delete 를 cascade로 설정해놔서 member_table에 있는 member가 수정, 삭제되면 자동으로 product 테이블도 수정이 됩니다.
+
+**jpa에서 객체다루는 법**
+https://junghwanta.tistory.com/5
+https://cjw-awdsd.tistory.com/47
+
+
 
 
 
