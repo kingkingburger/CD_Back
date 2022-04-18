@@ -54,13 +54,24 @@
                         <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-heart"></i></div>
                     </a>
                     <!-- 로그인 버튼 #signin-modal-->
-                    <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" th:onclick="|location.href='@{/login}'|" data-bs-toggle="modal">
+                    <form class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2"
+                          th:if="${session.loginMember != null }" th:action="@{/logout}" method="post"
+                          data-bs-toggle="modal">
+
+                        <button class="navbar-tool-text ms-n3 bg-transparent border-0"  type="submit">
+                            로그아웃
+                        </button>
+                    </form>
+
+                    <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2"
+                       th:if="${session.loginMember == null }" th:onclick="|location.href='@{/login}'|"
+                       data-bs-toggle="modal">
                         <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
 
-                        <div class="navbar-tool-text ms-n3" >
-                            계정
-                        </div>
+                        <div class="navbar-tool-text ms-n3" th:text="로그인"></div>
                     </a>
+
+
                     <div class="navbar-tool dropdown ms-3"><a
                             class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="shop-cart.html">
                         <span class="navbar-tool-label">4</span><i class="navbar-tool-icon ci-cart"></i></a><a
