@@ -8,9 +8,11 @@ import java.time.LocalDateTime;
 
 
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
+@ToString(exclude = "member_table")
 @Entity
 @Data
 @Table(name="Product")
+
 public class Product {
 
     @Id
@@ -28,7 +30,7 @@ public class Product {
     private LocalDateTime createdDate = LocalDateTime.now() ; //생성일자
 
     @ManyToOne
-    @JoinColumn(name="memberid") //Product 테이블에 있는 것을 매핑
+    @JoinColumn(name="memberid", nullable=false) //Product 테이블에 있는 것을 매핑 , nullable을 false로 해서 내부 join으로 변경
     private Member_table member_table;
 
     //빌더 패턴을 이용하면 어떤 멤버에 어떤 값을 세팅하는지 직관적으로 확인이 가능합니다.
@@ -42,4 +44,6 @@ public class Product {
         this.productExplanation = productExplanation;
         this.productCategory = productCategory;
     }
+
+
 }

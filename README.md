@@ -44,10 +44,14 @@ create table product(
 );
 ```
 
-foreign key로 memberid를 받습니다. on update, on delete 를 cascade로 설정해놔서 member_table에 있는 member가 수정, 삭제되면 자동으로 product 테이블도 수정이 됩니다.
+foreign key로 memberid를 받습니다. 
+
+on update, on delete 를 cascade로 설정해놔서 member_table에 있는 member가 수정, 삭제되면 자동으로 product 테이블도 수정이 됩니다.
 
 **jpa에서 객체다루는 법**
+
 https://junghwanta.tistory.com/5
+
 https://cjw-awdsd.tistory.com/47
 
 

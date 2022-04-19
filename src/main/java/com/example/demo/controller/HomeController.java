@@ -3,7 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.SessionConst;
 import com.example.demo.dto.MemberRequestDto;
 import com.example.demo.dto.MemberResponseDto;
-import com.example.demo.entity.MemberRepository;
+import com.example.demo.repository.MemberRepository;
 import com.example.demo.service.LoginService;
 import com.example.demo.service.MemberService;
 import com.example.demo.session.SessionManager;

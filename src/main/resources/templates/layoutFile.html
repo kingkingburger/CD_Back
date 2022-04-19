@@ -53,11 +53,12 @@
                         <span class="navbar-tool-tooltip">Wishlist</span>
                         <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-heart"></i></div>
                     </a>
+
                     <!-- 로그인 버튼 #signin-modal-->
                     <form class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2"
                           th:if="${session.loginMember != null }" th:action="@{/logout}" method="post"
                           data-bs-toggle="modal">
-
+                        <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
                         <button class="navbar-tool-text ms-n3 bg-transparent border-0"  type="submit">
                             로그아웃
                         </button>
@@ -178,8 +179,11 @@
         </div>
     </div>
 </header>
-<div th:replace="${content}"> <p>레이아웃 컨텐츠</p>
+
+<div th:replace="${content}">
+    <p>레이아웃 컨텐츠</p>
 </div>
+
 <footer class="footer bg-dark pt-5">
     <div class="container">
 

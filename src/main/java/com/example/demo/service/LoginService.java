@@ -2,7 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.MemberRequestDto;
 import com.example.demo.dto.MemberResponseDto;
-import com.example.demo.entity.MemberRepository;
+import com.example.demo.repository.MemberRepository;
 import com.example.demo.entity.Member_table;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;

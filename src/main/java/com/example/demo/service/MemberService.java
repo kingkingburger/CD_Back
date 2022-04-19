@@ -2,17 +2,13 @@ package com.example.demo.service;
 
 import com.example.demo.dto.MemberRequestDto;
 import com.example.demo.dto.MemberResponseDto;
-import com.example.demo.entity.MemberRepository;
-import com.example.demo.entity.Member_table;
+import com.example.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -39,14 +35,6 @@ public class MemberService {
         }
 
     }
-
-//    //게시글 리스트 조회
-//    public List<MemberResponseDto> findAll(){
-//        Sort sort = Sort.by(Sort.Direction.DESC , "memberid");
-//        List<Member_table> list = memberRepository.findAll(sort);
-//
-//        return list.stream().map(MemberResponseDto::new).collect(Collectors.toList());
-//    }
 
 
 }

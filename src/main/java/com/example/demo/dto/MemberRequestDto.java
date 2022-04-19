@@ -9,7 +9,6 @@ import javax.validation.constraints.NotEmpty;
 
 @Getter
 @Data
-//@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class MemberRequestDto {
 
 

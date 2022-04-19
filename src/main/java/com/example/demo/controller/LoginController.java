@@ -30,7 +30,8 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@Valid @ModelAttribute("loginForm") MemberRequestDto form, BindingResult bindingResult,
+    public String login(@Valid @ModelAttribute("loginForm") MemberRequestDto form,
+                        BindingResult bindingResult,
                         @RequestParam(defaultValue = "/") String redirectURL,
                         HttpServletRequest request) {
         log.info("form = {}" , form);
