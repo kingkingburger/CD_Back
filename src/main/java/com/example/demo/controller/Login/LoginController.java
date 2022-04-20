@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.controller.Login;
 
 import com.example.demo.SessionConst;
 import com.example.demo.dto.MemberRequestDto;

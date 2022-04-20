@@ -172,7 +172,10 @@
                            th:onclick="|location.href='@{/}'|">
                             Shop
                         </a>
-
+                        <a class="nav-link dropdown-toggle" type="button"
+                           th:onclick="|location.href='@{/addProduct}'|">
+                            Selling
+                        </a>
                     </ul>
                 </div>
             </div>
@@ -183,6 +186,7 @@
 <div th:replace="${content}">
     <p>레이아웃 컨텐츠</p>
 </div>
+
 
 <footer class="footer bg-dark pt-5">
     <div class="container">

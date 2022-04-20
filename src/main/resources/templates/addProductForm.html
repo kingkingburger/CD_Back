@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layoutFile :: layout(~{::body})}">
+<head>
+    <meta charset="utf-8">
+    <title>Silk load</title>
+    <!-- SEO Meta Tags-->
+    <meta name="description" content="Cartzilla - Bootstrap E-commerce Template">
+    <meta name="keywords"
+          content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap, html5, css3, js, gallery, slider, touch, creative, clean">
+    <meta name="author" content="Createx Studio">
+    <!-- Viewport-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon and Touch Icons-->
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="mask-icon" color="#fe6a6a" href="safari-pinned-tab.svg">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Vendor Styles including: Font Icons, Plugins, etc.-->
+    <link rel="stylesheet" media="screen" href="vendor/simplebar/dist/simplebar.min.css"/>
+    <link rel="stylesheet" media="screen" href="vendor/tiny-slider/dist/tiny-slider.css"/>
+    <link rel="stylesheet" media="screen" href="vendor/drift-zoom/dist/drift-basic.min.css"/>
+    <link rel="stylesheet" media="screen" href="vendor/lightgallery.js/dist/css/lightgallery.min.css"/>
+    <!-- Main Theme Styles + Bootstrap-->
+    <link rel="stylesheet" media="screen" href="css/theme.min.css">
+</head>
+
+<!-- Body-->
+<body class="handheld-toolbar-enabled">
+<!-- Page Title-->
+<div class="page-title-overlap bg-dark pt-4">
+    <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+        <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
+                    <li class="breadcrumb-item"><a class="text-nowrap" href="index.html"><i class="ci-home"></i>Home</a>
+                    </li>
+                    <li class="breadcrumb-item text-nowrap"><a href="#">Shop</a>
+                    </li>
+                    <li class="breadcrumb-item text-nowrap active" aria-current="page">addProduct</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
+            <!--왼쪽 위 제목-->
+            <h1 class="h3 text-light mb-0">판매하기</h1>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <!-- Gallery + details-->
+    <div class="bg-light shadow-lg rounded-3 px-4 py-3 mb-5">
+        <div class="px-lg-3">
+
+                <!-- Product details 상세정보-->
+
+                    <div class="product-details mx-auto pb-3">
+                        <form class="needs-validation" action=""  method="post"  autocomplete="off" novalidate>
+
+                            <div class="input-group mb-3 my-2 ">
+                                <div class="m-3">제목 </div>
+                                <input class="form-control rounded-start" id="product_name" type="text" placeholder="상품 제목을 입력하세요" required>
+                            </div>
+
+                            <div class="input-group mb-3 my-2">
+                                <div class="m-3">가격 </div>
+                                <input class="form-control rounded-start" id="auction_price"  type="text" placeholder="경매 시작가 입력하세요" required>
+                                <div class="m-2">원 </div>
+                            </div>
+
+                            <div class="input-group mb-3 my-2">
+                                <div class="m-3">가격 </div>
+                                <input class="form-control rounded-start" id="product_price"  type="text" placeholder="즉시 구매가 입력하세요" required>
+                                <div class="m-2">원 </div>
+                            </div>
+
+                            <div class="input-group mb-3 my-2">
+                                <div class="m-3">이미지 </div>
+                                <input class="form-control rounded-start" id="image_namesrc"  type="text" placeholder="이미지를 업로드 하세요" required>
+                            </div>
+
+                            <div class="mb-3 my-2">
+                                <div class="m-3">설명</div>
+                                <textarea rows="6" class="form-control rounded-start"></textarea>
+                            </div>
+
+
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between align-items-center pb-1">
+                                    <label class="form-label" for="product-size">카테고리</label>
+                                </div>
+                                <select class="form-select" required id="product-size">
+                                    <option value="기타">기타</option>
+                                    <option value="의류신발가방">의류/신발/가방</option>
+                                    <option value="시계쥬얼리악세서리">시계/쥬얼리/악세서리</option>
+                                    <option value="디지털가전">디지털/가전</option>
+                                    <option value="스포츠/레저">스포츠/레저</option>
+                                    <option value="차량/오토바이">차량/오토바이</option>
+                                    <option value="음반/악기">음반/악기</option>
+                                    <option value="도서/티켓/문구">도서/티켓/문구</option>
+                                    <option value="뷰티/미용">뷰티/미용</option>
+                                    <option value="가구/인테리어">가구/인테리어</option>
+                                    <option value="생활/가공식품">생활/가공식품</option>
+                                    <option value="유아동/출산">유아동/출산</option>
+                                    <option value="유아동/출산">유아동/출산</option>
+                                    <option value="동물">동물</option>
+                                </select>
+                            </div>
+
+                            <hr class="mt-4">
+
+                            <div class="text-end pt-4">
+                                <button class="btn btn-primary btn-shadow d-block w-100" type="submit">
+                                    <i class="ci-cart fs-lg me-2"></i>
+                                    등록하기
+                                </button>
+                            </div>
+                        </form>
+
+
+
+                        <!-- Product panels-->
+                        <div class="accordion mb-4" id="productPanels">
+                            <div class="accordion-item">
+                                <h3 class="accordion-header"><a class="accordion-button" href="#productInfo"
+                                                                role="button" data-bs-toggle="collapse"
+                                                                aria-expanded="true" aria-controls="productInfo"><i
+                                        class="ci-announcement text-muted fs-lg align-middle mt-n1 me-2"></i>Product
+                                    info</a></h3>
+                                <div class="accordion-collapse collapse show" id="productInfo"
+                                     data-bs-parent="#productPanels">
+                                    <div class="accordion-body">
+                                        <h6 class="fs-sm mb-2">Composition</h6>
+                                        <ul class="fs-sm ps-4">
+                                            <li>Elastic rib: Cotton 95%, Elastane 5%</li>
+                                            <li>Lining: Cotton 100%</li>
+                                            <li>Cotton 80%, Polyester 20%</li>
+                                        </ul>
+                                        <h6 class="fs-sm mb-2">Art. No.</h6>
+                                        <ul class="fs-sm ps-4 mb-0">
+                                            <li>183260098</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h3 class="accordion-header"><a class="accordion-button collapsed"
+                                                                href="#shippingOptions" role="button"
+                                                                data-bs-toggle="collapse" aria-expanded="true"
+                                                                aria-controls="shippingOptions"><i
+                                        class="ci-delivery text-muted lead align-middle mt-n1 me-2"></i>Shipping options</a>
+                                </h3>
+                                <div class="accordion-collapse collapse" id="shippingOptions"
+                                     data-bs-parent="#productPanels">
+                                    <div class="accordion-body fs-sm">
+                                        <div class="d-flex justify-content-between border-bottom pb-2">
+                                            <div>
+                                                <div class="fw-semibold text-dark">Courier</div>
+                                                <div class="fs-sm text-muted">2 - 4 days</div>
+                                            </div>
+                                            <div>$26.50</div>
+                                        </div>
+                                        <div class="d-flex justify-content-between border-bottom py-2">
+                                            <div>
+                                                <div class="fw-semibold text-dark">Local shipping</div>
+                                                <div class="fs-sm text-muted">up to one week</div>
+                                            </div>
+                                            <div>$10.00</div>
+                                        </div>
+                                        <div class="d-flex justify-content-between border-bottom py-2">
+                                            <div>
+                                                <div class="fw-semibold text-dark">Flat rate</div>
+                                                <div class="fs-sm text-muted">5 - 7 days</div>
+                                            </div>
+                                            <div>$33.85</div>
+                                        </div>
+                                        <div class="d-flex justify-content-between border-bottom py-2">
+                                            <div>
+                                                <div class="fw-semibold text-dark">UPS ground shipping</div>
+                                                <div class="fs-sm text-muted">4 - 6 days</div>
+                                            </div>
+                                            <div>$18.00</div>
+                                        </div>
+                                        <div class="d-flex justify-content-between pt-2">
+                                            <div>
+                                                <div class="fw-semibold text-dark">Local pickup from store</div>
+                                                <div class="fs-sm text-muted">&mdash;</div>
+                                            </div>
+                                            <div>$0.00</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h3 class="accordion-header"><a class="accordion-button collapsed" href="#localStore"
+                                                                role="button" data-bs-toggle="collapse"
+                                                                aria-expanded="true" aria-controls="localStore"><i
+                                        class="ci-location text-muted fs-lg align-middle mt-n1 me-2"></i>Find in local
+                                    store</a></h3>
+                                <div class="accordion-collapse collapse" id="localStore"
+                                     data-bs-parent="#productPanels">
+                                    <div class="accordion-body">
+                                        <select class="form-select">
+                                            <option value>Select your country</option>
+                                            <option value="Argentina">Argentina</option>
+                                            <option value="Belgium">Belgium</option>
+                                            <option value="France">France</option>
+                                            <option value="Germany">Germany</option>
+                                            <option value="Spain">Spain</option>
+                                            <option value="UK">United Kingdom</option>
+                                            <option value="USA">USA</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+        </div>
+    </div>
+</div>
+
+
+</main>
+
+<!-- Toolbar for handheld devices (Default)-->
+<div class="handheld-toolbar">
+    <div class="d-table table-layout-fixed w-100"><a class="d-table-cell handheld-toolbar-item"
+                                                     href="account-wishlist.html"><span class="handheld-toolbar-icon"><i
+            class="ci-heart"></i></span><span class="handheld-toolbar-label">Wishlist</span></a><a
+            class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" data-bs-toggle="collapse"
+            data-bs-target="#navbarCollapse" onclick="window.scrollTo(0, 0)"><span class="handheld-toolbar-icon"><i
+            class="ci-menu"></i></span><span class="handheld-toolbar-label">Menu</span></a><a
+            class="d-table-cell handheld-toolbar-item" href="shop-cart.html"><span class="handheld-toolbar-icon"><i
+            class="ci-cart"></i><span class="badge bg-primary rounded-pill ms-1">4</span></span><span
+            class="handheld-toolbar-label">$265.00</span></a></div>
+</div>
+<!-- Back To Top Button--><a class="btn-scroll-top" href="#top" data-scroll><span
+        class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up"> </i></a>
+<!-- Vendor scrits: js libraries and plugins-->
+<script src="vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="vendor/simplebar/dist/simplebar.min.js"></script>
+<script src="vendor/tiny-slider/dist/min/tiny-slider.js"></script>
+<script src="vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+<script src="vendor/drift-zoom/dist/Drift.min.js"></script>
+<script src="vendor/lightgallery.js/dist/js/lightgallery.min.js"></script>
+<script src="vendor/lg-video.js/dist/lg-video.min.js"></script>
+<!-- Main theme script-->
+<script src="js/theme.min.js"></script>
+</body>
+
+</html>

@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.controller.Member;
 
 import com.example.demo.dto.MemberRequestDto;
 import com.example.demo.service.MemberService;

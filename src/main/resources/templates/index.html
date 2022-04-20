@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{layoutFile :: layout(~{::section})}">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layoutFile :: layout(~{::body})}">
 <!-- Body-->
 <body class="handheld-toolbar-enabled">
-<section>
     <!-- Page Title-->
     <div class="page-title-overlap bg-dark pt-4">
         <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
@@ -1247,8 +1248,11 @@
             class="ci-cart"></i><span class="badge bg-primary rounded-pill ms-1">4</span></span><span
             class="handheld-toolbar-label">$265.00</span></a></div>
 </div>
-<!-- Back To Top Button--><a class="btn-scroll-top" href="#top" data-scroll><span
-        class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up"> </i></a>
-</section>
+<!-- Back To Top Button-->
+    <a class="btn-scroll-top" href="#top" data-scroll>
+        <span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span>
+        <i class="btn-scroll-top-icon ci-arrow-up"> </i>
+    </a>
+
 </body>
 </html>
