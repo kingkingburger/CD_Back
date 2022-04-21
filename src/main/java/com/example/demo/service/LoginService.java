@@ -23,7 +23,7 @@ public class LoginService {
     /**
      * @return null 로그인 실패
      */
-    public MemberResponseDto login(String loginId, String passwd) {
+    public Member_table login(String loginId, String passwd) {
         return memberRepository.findByMemberLoginid(loginId) //회원이 있는지 없는지 확인
                 .filter(m->m.getMemberPassword().equals(passwd))
                 .orElse(null);

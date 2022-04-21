@@ -59,33 +59,51 @@
                 <!-- Product details 상세정보-->
 
                     <div class="product-details mx-auto pb-3">
-                        <form class="needs-validation" action=""  method="post"  autocomplete="off" novalidate>
+                        <form class="needs-validation" action="" th:action="@{/addProduct}" th:object="${product}" method="post"  autocomplete="off" novalidate>
+
+                            <div th:if="${#fields.hasGlobalErrors()}">
+                                <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
+                            </div>
 
                             <div class="input-group mb-3 my-2 ">
                                 <div class="m-3">제목 </div>
-                                <input class="form-control rounded-start" id="product_name" type="text" placeholder="상품 제목을 입력하세요" required>
+                                <input class="form-control rounded-start" id="product_name"
+                                       th:errorclass="field-error"
+                                       th:field="*{productName}" type="text" placeholder="상품 제목을 입력하세요" required>
                             </div>
 
                             <div class="input-group mb-3 my-2">
                                 <div class="m-3">가격 </div>
-                                <input class="form-control rounded-start" id="auction_price"  type="text" placeholder="경매 시작가 입력하세요" required>
+                                <input class="form-control rounded-start" id="auction_price"
+                                       th:errorclass="field-error"
+                                       th:field="*{auctionPrice}"
+                                       type="text" placeholder="경매 시작가 입력하세요" >
                                 <div class="m-2">원 </div>
                             </div>
 
                             <div class="input-group mb-3 my-2">
                                 <div class="m-3">가격 </div>
-                                <input class="form-control rounded-start" id="product_price"  type="text" placeholder="즉시 구매가 입력하세요" required>
+                                <input class="form-control rounded-start" id="product_price"
+                                       th:errorclass="field-error"
+                                       th:field="*{productPrice}"
+                                       type="text" placeholder="즉시 구매가 입력하세요" required>
                                 <div class="m-2">원 </div>
                             </div>
 
                             <div class="input-group mb-3 my-2">
                                 <div class="m-3">이미지 </div>
-                                <input class="form-control rounded-start" id="image_namesrc"  type="text" placeholder="이미지를 업로드 하세요" required>
+                                <input class="form-control rounded-start" id="image_namesrc"
+                                       th:errorclass="field-error"
+                                       th:field="*{imageNamesrc}"
+                                       type="text" placeholder="이미지를 업로드 하세요" >
                             </div>
 
                             <div class="mb-3 my-2">
                                 <div class="m-3">설명</div>
-                                <textarea rows="6" class="form-control rounded-start"></textarea>
+                                <textarea rows="6"
+                                          th:errorclass="field-error"
+                                          th:field="*{productExplanation}"
+                                          class="form-control rounded-start"></textarea>
                             </div>
 
 
@@ -93,7 +111,10 @@
                                 <div class="d-flex justify-content-between align-items-center pb-1">
                                     <label class="form-label" for="product-size">카테고리</label>
                                 </div>
-                                <select class="form-select" required id="product-size">
+                                <select class="form-select"
+                                        th:errorclass="field-error"
+                                        th:field="*{productCategory}"
+                                        required id="product-size">
                                     <option value="기타">기타</option>
                                     <option value="의류신발가방">의류/신발/가방</option>
                                     <option value="시계쥬얼리악세서리">시계/쥬얼리/악세서리</option>
@@ -105,7 +126,6 @@
                                     <option value="뷰티/미용">뷰티/미용</option>
                                     <option value="가구/인테리어">가구/인테리어</option>
                                     <option value="생활/가공식품">생활/가공식품</option>
-                                    <option value="유아동/출산">유아동/출산</option>
                                     <option value="유아동/출산">유아동/출산</option>
                                     <option value="동물">동물</option>
                                 </select>

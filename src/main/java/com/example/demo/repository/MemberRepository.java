@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface MemberRepository extends JpaRepository<Member_table, Long>{
 
 
-    Optional<MemberResponseDto> findByMemberLoginid(String memberLoginid);
+    Optional<Member_table> findByMemberLoginid(String memberLoginid);
 
     boolean existsByMemberLoginid(String Loginid);
 

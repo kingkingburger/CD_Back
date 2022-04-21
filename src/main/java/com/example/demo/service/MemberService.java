@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.MemberRequestDto;
 import com.example.demo.dto.MemberResponseDto;
+import com.example.demo.entity.Member_table;
 import com.example.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,9 +25,10 @@ public class MemberService {
         String input_loginid = params.getMemberLoginid();
 
         //만약 DB에 입력값이 없다면
-        Optional<MemberResponseDto> checked_duplication = memberRepository.findByMemberLoginid(input_loginid);
+        Optional<Member_table> checked_duplication = memberRepository.findByMemberLoginid(input_loginid);
 
         log.info("checked_duplication = {}", checked_duplication);
+
         if(checked_duplication.isEmpty()){
             memberRepository.save(params.toEntity());
             return true;

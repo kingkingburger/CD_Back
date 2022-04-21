@@ -3,6 +3,7 @@ package com.example.demo.controller.Login;
 import com.example.demo.SessionConst;
 import com.example.demo.dto.MemberRequestDto;
 import com.example.demo.dto.MemberResponseDto;
+import com.example.demo.entity.Member_table;
 import com.example.demo.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +41,7 @@ public class LoginController {
             return "login";
         }
 
-        MemberResponseDto loginMember = loginService.login(form.getMemberLoginid(), form.getMemberPassword());
+        Member_table loginMember = loginService.login(form.getMemberLoginid(), form.getMemberPassword());
 
 
         log.info("loginMember = {}", loginMember);
