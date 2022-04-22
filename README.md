@@ -1,6 +1,8 @@
 ## Mysql 버전 8
 
-#### 테이블 생성 - Member
+
+
+## 테이블 생성 - Member
 
 22/04/07(최신)
 
@@ -26,7 +28,9 @@ ex) entity가 MemberLoginid 라면 쿼리를 날릴 때 member_loginid로 바꿔
 
 
 
-#### 테이블 생성 - Product (22/04/22)
+
+
+## 테이블 생성 - Product (22/04/22)
 
 ```sql
 create table product(
@@ -49,15 +53,11 @@ foreign key로 memberid, categoryid를 받습니다.
 
 on update, on delete 를 cascade로 설정해놔서 member_table에 있는 member가 수정, 삭제되면 자동으로 product 테이블도 수정이 됩니다.
 
-**jpa에서 객체다루는 법**
-
-https://junghwanta.tistory.com/5
-
-https://cjw-awdsd.tistory.com/47
 
 
 
-#### 테이블 생성 - category
+
+## 테이블 생성 - category
 
 ```sql
 create table category(
@@ -69,6 +69,8 @@ create table category(
 ```
 
 product 테이블의 category들을 저장합니다. 
+
+
 
 
 
@@ -98,6 +100,8 @@ spring.jpa.properties.hibernate.format_sql=true
 spring.jpa.properties.hibernate.use_sql_comments=true
 ```
 
+
+
 #### 설정1
 
 spring.datasource.hikari.jdbc-url=jdbc:mysql://localhost:3306/
@@ -120,3 +124,9 @@ spring.datasource.hikari.jdbc-url=jdbc:mysql://localhost:3306/
 https://sundries-in-myidea.tistory.com/91
 
 
+
+#### **jpa에서 객체다루는 법**
+
+https://junghwanta.tistory.com/5
+
+https://cjw-awdsd.tistory.com/47
