@@ -26,25 +26,26 @@ ex) entity가 MemberLoginid 라면 쿼리를 날릴 때 member_loginid로 바꿔
 
 
 
-#### 테이블 생성 - Product
+#### 테이블 생성 - Product (22/04/22)
 
 ```sql
 create table product(
     productid int not null auto_increment comment 'PK',
     memberid int not null comment '회원id',
+    categoryid int not null comment '카테고리',
     product_name varchar(50) not null comment '물품 이름', 
     auction_price int default 0 comment '경매가격',
     product_price int not null comment '즉시거래가격',
     image_namesrc varchar(100) comment '이미지',
     product_explanation varchar(1000) default '설명이 없습니다.' comment '물품상세설명',
-    product_category varchar(20) not null comment '물품카테고리',
     created_date timeStamp not null comment'생성일자',
     primary key(productid),
-    foreign key(memberid) references member_table (memberid) on update cascade on delete cascade
+    foreign key(memberid) references member_table (memberid) on update cascade on delete cascade,
+    foreign key(categoryid) references category (categoryid) on update cascade on delete cascade
 );
 ```
 
-foreign key로 memberid를 받습니다. 
+foreign key로 memberid, categoryid를 받습니다. 
 
 on update, on delete 를 cascade로 설정해놔서 member_table에 있는 member가 수정, 삭제되면 자동으로 product 테이블도 수정이 됩니다.
 
@@ -55,6 +56,19 @@ https://junghwanta.tistory.com/5
 https://cjw-awdsd.tistory.com/47
 
 
+
+#### 테이블 생성 - category
+
+```sql
+create table category(
+    categoryid int not null auto_increment comment 'Pk',
+    `first`  varchar(30) not null comment '1차 카테고리',
+    `second` varchar(30) not null comment '2차 카테고리',
+    primary key(categoryid)
+);
+```
+
+product 테이블의 category들을 저장합니다. 
 
 
 
@@ -106,14 +120,3 @@ spring.datasource.hikari.jdbc-url=jdbc:mysql://localhost:3306/
 https://sundries-in-myidea.tistory.com/91
 
 
-
-| **속성명**     | **Key**     | **null** **유무** | **Date type(size)** | **설명**   |
-| -------------- | ----------- | ----------------- | ------------------- | ---------- |
-| memberid       | primary key | not null          | int                 | 회원id     |
-| memberLoginid  |             | not null          | varchar(20)         | 로그인id   |
-| memberName     |             | not null          | varchar(20)         | 회원이름   |
-| memberPassword |             | not null          | varchar(20)         | 비밀번호   |
-| memberRank     |             | not null          | int                 | 회원등급   |
-| memberPerchase |             | not null          | int                 | 누적구매수 |
-| memberPhone    |             | not null          | string              | 핸드폰번호 |
-| createdDate    |             | not null          | timestamp           | 생성일자   |
