@@ -6,7 +6,6 @@ import com.example.demo.dto.MemberResponseDto;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.service.LoginService;
 import com.example.demo.service.MemberService;
-import com.example.demo.session.SessionManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -22,7 +21,6 @@ public class HomeController {
     private final MemberRepository memberRepository;
     private final MemberService memberService;
     private final LoginService loginService;
-    private final SessionManager sessionManager;
 
     @GetMapping("/")
     public String homeLogin(@SessionAttribute(name = SessionConst.LOGIN_MEBMER, required = false) MemberResponseDto loginMember, Model model, @ModelAttribute("member") MemberRequestDto member) {

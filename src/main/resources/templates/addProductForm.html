@@ -59,7 +59,7 @@
                 <!-- Product details 상세정보-->
 
                     <div class="product-details mx-auto pb-3">
-                        <form class="needs-validation" action="" th:action="@{/addProduct}" th:object="${product}" method="post"  autocomplete="off" novalidate>
+                        <form class="needs-validation" action="" th:action="@{/addProduct}" th:object="${productdata}" method="post"  autocomplete="off" novalidate>
 
                             <div th:if="${#fields.hasGlobalErrors()}">
                                 <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
