@@ -72,6 +72,19 @@ product 테이블의 category들을 저장합니다.
 
 
 
+#### 테이블 생성 - category
+
+```sql
+create table category(
+categoryid int not null auto_increment comment 'Pk',
+`first`  varchar(30) not null comment '1차 카테고리',
+`second` varchar(30) not null comment '2차 카테고리',
+primary key(categoryid)
+);
+```
+
+
+
 
 
 ## spring - db 설정

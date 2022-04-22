@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import lombok.*;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -8,11 +9,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
+
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
 @ToString(exclude = "ProductList")
 @Entity
 @Data
+@Component
 public class Member_table {
 
     @Id
