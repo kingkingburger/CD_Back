@@ -1,8 +1,8 @@
 package com.example.demo.controller.Home;
 
 import com.example.demo.SessionConst;
-import com.example.demo.dto.MemberRequestDto;
-import com.example.demo.dto.MemberResponseDto;
+import com.example.demo.dto.MemberFormDto;
+import com.example.demo.entity.Member;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.service.LoginService;
 import com.example.demo.service.MemberService;
@@ -18,12 +18,10 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class HomeController {
 
-    private final MemberRepository memberRepository;
-    private final MemberService memberService;
-    private final LoginService loginService;
-
     @GetMapping("/")
-    public String homeLogin(@SessionAttribute(name = SessionConst.LOGIN_MEBMER, required = false) MemberResponseDto loginMember, Model model, @ModelAttribute("member") MemberRequestDto member) {
+    public String homeLogin(@SessionAttribute(name = SessionConst.LOGIN_MEBMER, required = false) Member loginMember,
+                            Model model,
+                            @ModelAttribute("member") MemberFormDto member) {
 
         //세션에 회원 데이터가 없으면
         if (loginMember == null) {
@@ -37,20 +35,12 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public String home(@SessionAttribute(name = SessionConst.LOGIN_MEBMER, required = false) MemberRequestDto loginMember, Model model, @ModelAttribute("member") MemberRequestDto member) {
+    public String home(@SessionAttribute(name = SessionConst.LOGIN_MEBMER, required = false) Member loginMember,
+                       Model model,
+                       @ModelAttribute("member") MemberFormDto member) {
 
         return "home-electronics-store";
     }
 
-    @GetMapping("/layoutFile")
-    public String layout() {
 
-        return "layoutFile";
-    }
-
-
-//    @GetMapping("/home")
-//    public String home(Model model){
-//        return "home";
-//    }
 }

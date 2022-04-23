@@ -1,14 +1,10 @@
 package com.example.demo.session;
 
-import com.example.demo.entity.Member_table;
+import com.example.demo.entity.Member;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
-
-import javax.servlet.http.HttpServletResponse;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class SessionManagerTest {
 
@@ -18,7 +14,7 @@ class SessionManagerTest {
 
         MockHttpServletResponse response = new MockHttpServletResponse();
         //세션 생성
-        Member_table params = Member_table.builder()
+        Member params = Member.builder()
                 .memberLoginid("won")
                 .memberPassword("1234")
                 .memberName("minho")

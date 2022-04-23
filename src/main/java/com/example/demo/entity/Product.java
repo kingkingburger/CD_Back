@@ -33,7 +33,7 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name="memberid", nullable=false) //Product 테이블에 있는 것을 매핑 , nullable을 false로 해서 내부 join으로 변경
-    private Member_table member_table;
+    private Member member_table;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "categoryid", nullable = false)

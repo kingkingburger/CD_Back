@@ -1,8 +1,8 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.MemberResponseDto;
+import com.example.demo.dto.MemberFormDto;
 import com.example.demo.repository.MemberRepository;
-import com.example.demo.entity.Member_table;
+import com.example.demo.entity.Member;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,14 +18,14 @@ class MemberServiceTest {
 
     @Test
     void findbyLoginid(){
-        Optional<MemberResponseDto> byMemberLoginid = memberRepository.findByMemberLoginid("1234");
-        System.out.println("byMemberLoginid = " + byMemberLoginid);
+//        Optional<MemberFormDto> byMemberLoginid = memberRepository.findByLoginId("1234");
+//        System.out.println("byMemberLoginid = " + byMemberLoginid);
     }
 
     @Test
     void findAll() {
 
-        List<Member_table> all = memberRepository.findAll();
+        List<Member> all = memberRepository.findAll();
         System.out.println("all = " + all);
         //조회
     }

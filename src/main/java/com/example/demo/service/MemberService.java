@@ -1,14 +1,14 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.MemberRequestDto;
-import com.example.demo.dto.MemberResponseDto;
-import com.example.demo.entity.Member_table;
+import com.example.demo.dto.MemberFormDto;
+import com.example.demo.entity.Member;
 import com.example.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Slf4j
@@ -20,21 +20,15 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public boolean save(final MemberRequestDto params){
-        //들어온 id
-        String input_loginid = params.getMemberLoginid();
+    public void save(final MemberFormDto form){
 
-        //만약 DB에 입력값이 없다면
-        Optional<Member_table> checked_duplication = memberRepository.findByMemberLoginid(input_loginid);
+        Member member = Member.builder()
+                .loginId(form.getLoginId())
+                .name(form.getName())
+                .password((form.getPassword()))
+                .build();
 
-        log.info("checked_duplication = {}", checked_duplication);
-
-        if(checked_duplication.isEmpty()){
-            memberRepository.save(params.toEntity());
-            return true;
-        }else{ //DB에 등록이 되었다면 에러를 던저줘야 함
-            return false;
-        }
+        memberRepository.save(member);
 
     }
 

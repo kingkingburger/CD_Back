@@ -1,6 +1,8 @@
 package com.example.demo.controller.Member;
 
-import com.example.demo.dto.MemberRequestDto;
+import com.example.demo.dto.MemberFormDto;
+import com.example.demo.entity.Member;
+import com.example.demo.repository.MemberRepository;
 import com.example.demo.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,34 +11,37 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 
 @Slf4j
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/members")
 public class MemberController {
 
     private final MemberService memberService;
 
+    @GetMapping("/add")
+    public String addForm(@ModelAttribute("memberFormDto") MemberFormDto form) {
 
-    @GetMapping("/sign")
-    public String addFrom(@ModelAttribute("member") MemberRequestDto member) {
-        return "sign";
+        return "addMemberForm";
+
     }
 
-    @PostMapping("/sign")
-    public String save(@Valid @ModelAttribute("member") MemberRequestDto member, BindingResult bindingResult){
+    @PostMapping("/add")
+    public String save(@Valid @ModelAttribute MemberFormDto form,
+                       BindingResult bindingResult
+    ) {
 
-        if(bindingResult.hasErrors()){
-            bindingResult.reject("아이디가 중복되었습니다.");
-            return "sign";
+        log.info("memberForm: {}", form);
+
+        if(bindingResult.hasErrors()) {
+            return "addMemberForm";
         }
 
-        if(memberService.save(member)){
-            return "redirect:/";
-        } else{
-            bindingResult.reject("addFail","아이디가 중복되었습니다.");
-            return "sign";
-        }
+        memberService.save(form);
+
+        return "redirect:/";
     }
 
 }

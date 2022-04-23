@@ -246,19 +246,19 @@
                 <hr>
                 <h3 class="fs-base pt-4 pb-2">안녕하세요</h3>
 
-                <form class="needs-validation" action="" th:action="@{/login}" th:object="${loginForm}" method="post"  autocomplete="off" novalidate>
+                <form class="needs-validation" action="" th:action="@{/login}" th:object="${loginFormDto}" method="post"  autocomplete="off" novalidate>
 
                   <div th:if="${#fields.hasGlobalErrors()}">
                     <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
                   </div>
 
                   <div class="input-group mb-3"><i class="ci-mail position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
-                    <input class="form-control rounded-start" id="memberLoginid" th:errorclass="field-error" th:field="*{memberLoginid}" type="text" placeholder="Id을 입력하세요" required>
+                    <input class="form-control rounded-start" id="memberLoginid" th:errorclass="field-error" th:field="*{loginId}" type="text" placeholder="Id을 입력하세요" required>
                   </div>
 
                   <div class="input-group mb-3"><i class="ci-locked position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
                     <div class="password-toggle w-100">
-                      <input class="form-control" type="password" id="spassword" th:field="*{memberPassword}" placeholder="비밀번호" required>
+                      <input class="form-control" type="password" id="spassword" th:field="*{password}" placeholder="비밀번호" required>
                       <label class="password-toggle-btn" aria-label="Show/hide password">
                         <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
                       </label>
@@ -266,7 +266,7 @@
                   </div>
 
                   <hr class="mt-4">
-                  <h3 class="fs-base pt-4 pb-2"><a th:href="@{/sign}">회원가입</a></h3>
+                  <h3 class="fs-base pt-4 pb-2"><a th:href="@{/members/add}">회원가입</a></h3>
 
                   <div class="text-end pt-4">
                     <button class="btn btn-primary" type="submit"><i class="ci-sign-in me-2 ms-n21"></i>Login In</button>
