@@ -28,8 +28,6 @@ ex) entity가 MemberLoginid 라면 쿼리를 날릴 때 member_loginid로 바꿔
 
 
 
-
-
 ## 테이블 생성 - Product (22/04/22)
 
 ```sql
@@ -72,63 +70,19 @@ product 테이블의 category들을 저장합니다.
 
 
 
-#### 테이블 생성 - category
+## 폴더구조
 
-```sql
-create table category(
-categoryid int not null auto_increment comment 'Pk',
-`first`  varchar(30) not null comment '1차 카테고리',
-`second` varchar(30) not null comment '2차 카테고리',
-primary key(categoryid)
-);
-```
-
-
-
+| 위치                                  | 설명                                 |
+| ------------------------------------- | ------------------------------------ |
+| src/main/com/example/demo/controller  | 컨트롤러 처리하는 곳                 |
+| src/main/com/example/demo/config      | WebConfig, Interceptor 페이지를 관리 |
+| src/main/com/example/demo/dto         | 데이터 오브젝트로 받는 곳            |
+| src/main/com/example/demo/entity      | mysql table이 있는 곳                |
+| src/main/com/example/demo/interceptor | interceptor 상새 설정                |
+| src/main/com/example/demo/repository  | JPA문 쓰는 곳                        |
+| src/main/com/example/demo/service     | DB에서 넘어온 데이터를 가공하는 곳   |
 
 
-## spring - db 설정
-
-resources 파일 -> application.properties 설정
-
-```
-# 데이터 소스 (Data Source)
-spring.datasource.hikari.driver-class-name=com.mysql.cj.jdbc.Driver
-spring.datasource.hikari.jdbc-url=jdbc:mysql://localhost:3306/userdata?serverTimezone=Asia/Seoul&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
-spring.datasource.hikari.username=develop
-spring.datasource.hikari.password=1234
-
-# Resource and Thymeleaf Refresh
-spring.devtools.livereload.enabled=true
-spring.thymeleaf.cache=false
-
-# JPA Properties
-spring.jpa.database=mysql
-spring.jpa.database-platform=org.hibernate.dialect.MySQL5InnoDBDialect
-spring.jpa.generate-ddl=false
-spring.jpa.hibernate.ddl-auto=none
-spring.jpa.open-in-view=false
-spring.jpa.show-sql=true
-spring.jpa.properties.hibernate.format_sql=true
-spring.jpa.properties.hibernate.use_sql_comments=true
-```
-
-
-
-#### 설정1
-
-spring.datasource.hikari.jdbc-url=jdbc:mysql://localhost:3306/
-
-**userdata(내 테이블 이름이 userdata 이다, 본인 db의 테이블 이름을 적어줘야함**?serverTimezone=Asia/Seoul&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
-
-
-
-#### 설정2
-
-**spring.datasource.hikari.username=develop**
-**spring.datasource.hikari.password=1234**
-
-이 부분에 자기 db이름과 password를 넣으면 연결
 
 
 
