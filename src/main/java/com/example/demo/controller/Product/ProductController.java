@@ -5,7 +5,7 @@ import com.example.demo.SessionConst;
 import com.example.demo.entity.Category;
 import com.example.demo.entity.Member;
 import com.example.demo.entity.Product;
-import com.example.demo.entity.ProductData;
+import com.example.demo.dto.ProductDto;
 import com.example.demo.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,12 +30,12 @@ public class ProductController {
     private final Category category;//category 테이블 가져오기
 
     @GetMapping("/addProduct")
-    public String addProduct(@ModelAttribute("productdata")ProductData productdata){
+    public String addProduct(@ModelAttribute("productdata") ProductDto productdata){
         return "addProductForm";
     }
 
     @PostMapping("/addProduct")
-    public String saveProduct(@ModelAttribute("productdata") ProductData productdata,
+    public String saveProduct(@ModelAttribute("productdata") ProductDto productdata,
                                 HttpServletRequest request,
                                 BindingResult bindingResult){
 
@@ -49,13 +49,13 @@ public class ProductController {
 
         product.setMember_table(loginmember); // memberid를 넣는곳
 
-        String productCategory = productdata.getProductCategory(); // html에서 넘어온 카테고리
+        String productdataCategory = productdata.getCategory();// html에서 넘어온 카테고리
+        String[] split = productdataCategory.split(","); //view에서 ,을 기준으로 카테고리가 넘어온다.
 
-        category.setFirst(productCategory);                        // 1차 카테고리
-        category.setSecond(productCategory);                       // 2차 카테고리
+        category.setFirst(split[1]);                        // 1차 카테고리
+        category.setSecond(split[0]);                       // 2차 카테고리
         
-        
-        product.setCategory(category);                             // productdata로 넘어온것을 product table에 넣어주기
+        product.setCategory(this.category);                             // productdata로 넘어온것을 product table에 넣어주기
 
         product.setProductName(productdata.getProductName());
         product.setAuctionPrice(productdata.getAuctionPrice());
@@ -63,15 +63,15 @@ public class ProductController {
         product.setImageNamesrc(productdata.getImageNamesrc());
         product.setProductExplanation(productdata.getProductExplanation());
 
-        category.setProductList(Collections.singletonList(product));
+        this.category.setProductList(Collections.singletonList(product));
 
         log.info("product : {}", product);
 
         productRepository.save(product);
 
         product.setProductid(null);   // jpa에서 save는 @id 값이 null일 때 Entity를 new라고 판단한다.
-        category.setCategoryid(null); // 만약 new라고 판단되지 않으면 update문으로 실행된다.
-        log.info("data fram = {}", category);
+        this.category.setCategoryid(null); // 만약 new라고 판단되지 않으면 update문으로 실행된다.
+
         return "redirect:/";
     }
 
