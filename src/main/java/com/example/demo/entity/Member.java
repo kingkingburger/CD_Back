@@ -38,7 +38,7 @@ public class Member {
 
     private Integer numberPurchase;
 
-    private LocalDate createDate;
+    private LocalDate createDate = LocalDate.now();
 
 
 }
