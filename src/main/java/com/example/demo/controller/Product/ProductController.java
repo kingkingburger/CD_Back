@@ -10,6 +10,7 @@ import com.example.demo.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -36,9 +37,11 @@ public class ProductController {
     }
 
     @PostMapping("/addProduct")
+
     public String saveProduct(@ModelAttribute("productData") ProductFormDto productData,
                                 HttpServletRequest request,
                                 BindingResult bindingResult){
+
 
         if(bindingResult.hasGlobalErrors()){
             bindingResult.reject("producterr","물품을 입력하세요");
@@ -48,7 +51,9 @@ public class ProductController {
         HttpSession session = request.getSession();
         Members loginMember = (Members) session.getAttribute(SessionConst.LOGIN_MEBMER);
 
+
         productService.save(productData ,loginMember);
+
 
         return "redirect:/";
     }
