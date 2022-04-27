@@ -12,32 +12,39 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@Table
-@Component
+@Builder
+@AllArgsConstructor
 //@ToString(exclude = "category")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long productid; // PK
+    @Column(name = "PRODUCT_ID")
+    private Long id; // PK
 
-    private String productName; //물품이름
+    private String name; //물품이름
 
     private Long auctionPrice; //경매가격
-    private Long productPrice; //즉시거래가격
+    private Long instantPrice; //즉시거래가격
 
-    private String imageNamesrc; //이미지
-    private String productExplanation; //물품상세설명
+    private String imageNameSrc; //이미지
+    private String Explanation; //물품상세설명
 
     private LocalDateTime createdDate = LocalDateTime.now() ; //생성일자
 
     @ManyToOne
-    @JoinColumn(name="memberid", nullable=false) //Product 테이블에 있는 것을 매핑 , nullable을 false로 해서 내부 join으로 변경
-    private Member member_table;
+    @JoinColumn(name="MEMBER_ID", nullable=false) //Product 테이블에 있는 것을 매핑 , nullable을 false로 해서 내부 join으로 변경
+    private Members members;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "categoryid", nullable = false)
+    @JoinColumn(name = "CATEGORY_ID", nullable = false)
     private Category category;
+
+    //양방향 연관관계 객체간에 관계 유지, toString 무한 호출 조심
+   public void changeCategory(Category category ) {
+        this.category = category;
+        category.getProductList().add(this);
+    }
 
 
 }

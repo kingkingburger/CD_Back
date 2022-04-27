@@ -2,8 +2,7 @@ package com.example.demo.controller.Login;
 
 import com.example.demo.SessionConst;
 import com.example.demo.dto.LoginFormDto;
-import com.example.demo.dto.MemberFormDto;
-import com.example.demo.entity.Member;
+import com.example.demo.entity.Members;
 import com.example.demo.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +36,7 @@ public class LoginController {
         if( bindingResult.hasErrors()) {
             return  "login";
         }
-        Member loginMember = loginService.login(loginFormDto.getLoginId(), loginFormDto.getPassword());
+        Members loginMember = loginService.login(loginFormDto.getLoginId(), loginFormDto.getPassword());
 
         if( loginMember == null ) {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");

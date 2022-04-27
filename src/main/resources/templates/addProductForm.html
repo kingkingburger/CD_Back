@@ -2,32 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       th:replace="~{layoutFile :: layout(~{::body})}">
-<head>
-    <meta charset="utf-8">
-    <title>Silk load</title>
-    <!-- SEO Meta Tags-->
-    <meta name="description" content="Cartzilla - Bootstrap E-commerce Template">
-    <meta name="keywords"
-          content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap, html5, css3, js, gallery, slider, touch, creative, clean">
-    <meta name="author" content="Createx Studio">
-    <!-- Viewport-->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Favicon and Touch Icons-->
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="mask-icon" color="#fe6a6a" href="safari-pinned-tab.svg">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="theme-color" content="#ffffff">
-    <!-- Vendor Styles including: Font Icons, Plugins, etc.-->
-    <link rel="stylesheet" media="screen" href="vendor/simplebar/dist/simplebar.min.css"/>
-    <link rel="stylesheet" media="screen" href="vendor/tiny-slider/dist/tiny-slider.css"/>
-    <link rel="stylesheet" media="screen" href="vendor/drift-zoom/dist/drift-basic.min.css"/>
-    <link rel="stylesheet" media="screen" href="vendor/lightgallery.js/dist/css/lightgallery.min.css"/>
-    <!-- Main Theme Styles + Bootstrap-->
-    <link rel="stylesheet" media="screen" href="css/theme.min.css">
-</head>
+
 
 <!-- Body-->
 <body class="handheld-toolbar-enabled">
@@ -59,7 +34,7 @@
             <!-- Product details 상세정보-->
 
             <div class="product-details mx-auto pb-3">
-                <form class="needs-validation" action="" th:action="@{/addProduct}" th:object="${productdata}"
+                <form class="needs-validation" action="" th:action="@{/addProduct}" th:object="${productData}"
                       method="post" autocomplete="off" novalidate>
 
                     <div th:if="${#fields.hasGlobalErrors()}">
@@ -70,7 +45,7 @@
                         <div class="m-3">제목</div>
                         <input class="form-control rounded-start" id="product_name"
                                th:errorclass="field-error"
-                               th:field="*{productName}" type="text" placeholder="상품 제목을 입력하세요" required>
+                               th:field="*{name}" type="text" placeholder="상품 제목을 입력하세요" required>
                     </div>
 
                     <div class="input-group mb-3 my-2">
@@ -86,7 +61,7 @@
                         <div class="m-3">가격</div>
                         <input class="form-control rounded-start" id="product_price"
                                th:errorclass="field-error"
-                               th:field="*{productPrice}"
+                               th:field="*{instancePrice}"
                                type="text" placeholder="즉시 구매가 입력하세요" required>
                         <div class="m-2">원</div>
                     </div>
@@ -95,7 +70,7 @@
                         <div class="m-3">이미지</div>
                         <input class="form-control rounded-start" id="image_namesrc"
                                th:errorclass="field-error"
-                               th:field="*{imageNamesrc}"
+                               th:field="*{imageNameSrc}"
                                type="text" placeholder="이미지를 업로드 하세요">
                     </div>
 
@@ -103,7 +78,7 @@
                         <div class="m-3">설명</div>
                         <textarea rows="6"
                                   th:errorclass="field-error"
-                                  th:field="*{productExplanation}"
+                                  th:field="*{explanation}"
                                   class="form-control rounded-start"></textarea>
                     </div>
 
@@ -135,7 +110,6 @@
                                                 <option class="mt-2" value="치마,여성의류">치마</option>
                                                 <option class="mt-2" value="원피스,여성의류">원피스</option>
                                                 <option class="mt-2" value="가디건,여성의류">가디건</option>
-                                                <input type="hidden" th:name="category" th:value="여성의류" value="여성의류"/>
                                             </select>
                                         </ul>
                                     </li>
@@ -622,16 +596,7 @@
 
 <!-- Back To Top Button--><a class="btn-scroll-top" href="#top" data-scroll><span
         class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up"> </i></a>
-<!-- Vendor scrits: js libraries and plugins-->
-<script src="vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="vendor/simplebar/dist/simplebar.min.js"></script>
-<script src="vendor/tiny-slider/dist/min/tiny-slider.js"></script>
-<script src="vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
-<script src="vendor/drift-zoom/dist/Drift.min.js"></script>
-<script src="vendor/lightgallery.js/dist/js/lightgallery.min.js"></script>
-<script src="vendor/lg-video.js/dist/lg-video.min.js"></script>
-<!-- Main theme script-->
-<script src="js/theme.min.js"></script>
+
 </body>
 
 </html>
