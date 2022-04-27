@@ -10,6 +10,7 @@ import com.example.demo.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -36,8 +37,8 @@ public class ProductController {
 
     @PostMapping("/addProduct")
     public String saveProduct(@ModelAttribute("productdata") ProductDto productdata,
-                                HttpServletRequest request,
-                                BindingResult bindingResult){
+                              HttpServletRequest request,
+                              BindingResult bindingResult, Model model){
 
         if(bindingResult.hasGlobalErrors()){
             bindingResult.reject("producterr","물품을 입력하세요");
@@ -48,8 +49,10 @@ public class ProductController {
         Member loginmember = (Member) session.getAttribute(SessionConst.LOGIN_MEBMER);
 
         product.setMember_table(loginmember); // memberid를 넣는곳
+        model.addAttribute("category","1");
 
         String productdataCategory = productdata.getCategory();// html에서 넘어온 카테고리
+        log.info("productdataCategory : {}", productdataCategory);
         String[] split = productdataCategory.split(","); //view에서 ,을 기준으로 카테고리가 넘어온다.
 
         category.setFirst(split[1]);                        // 1차 카테고리
@@ -70,7 +73,7 @@ public class ProductController {
         productRepository.save(product);
 
         product.setProductid(null);   // jpa에서 save는 @id 값이 null일 때 Entity를 new라고 판단한다.
-        this.category.setCategoryid(null); // 만약 new라고 판단되지 않으면 update문으로 실행된다.
+        category.setCategoryid(null); // 만약 new라고 판단되지 않으면 update문으로 실행된다.
 
         return "redirect:/";
     }
