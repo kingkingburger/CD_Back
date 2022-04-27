@@ -1,14 +1,9 @@
 package com.example.demo.entity;
 
 import lombok.*;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Entity
@@ -18,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Member {
+public class Members {
 
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +33,8 @@ public class Member {
 
     private Integer numberPurchase;
 
-    private LocalDate createDate;
+    private LocalDate createDate = LocalDate.now();
+
 
 
 }

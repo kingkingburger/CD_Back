@@ -1,14 +1,12 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.MemberFormDto;
 import com.example.demo.repository.MemberRepository;
-import com.example.demo.entity.Member;
+import com.example.demo.entity.Members;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
-import java.util.Optional;
 
 @SpringBootTest
 class MemberServiceTest {
@@ -25,7 +23,7 @@ class MemberServiceTest {
     @Test
     void findAll() {
 
-        List<Member> all = memberRepository.findAll();
+        List<Members> all = memberRepository.findAll();
         System.out.println("all = " + all);
         //조회
     }

@@ -1,8 +1,6 @@
 package com.example.demo.controller.Member;
 
 import com.example.demo.dto.MemberFormDto;
-import com.example.demo.entity.Member;
-import com.example.demo.repository.MemberRepository;
 import com.example.demo.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +9,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
 
 @Slf4j
 @Controller

@@ -35,7 +35,7 @@
             <!-- Product details 상세정보-->
 
             <div class="product-details mx-auto pb-3">
-                <form class="needs-validation" action="" th:action="@{/addProduct}" th:object="${productdata}"
+                <form class="needs-validation" action="" th:action="@{/addProduct}" th:object="${productData}"
                       method="post" autocomplete="off" novalidate>
 
                     <div th:if="${#fields.hasGlobalErrors()}">
@@ -46,7 +46,7 @@
                         <div class="m-3">제목</div>
                         <input class="form-control rounded-start" id="product_name"
                                th:errorclass="field-error"
-                               th:field="*{productName}" type="text" placeholder="상품 제목을 입력하세요" required>
+                               th:field="*{name}" type="text" placeholder="상품 제목을 입력하세요" required>
                     </div>
 
                     <div class="input-group mb-3 my-2">
@@ -62,7 +62,7 @@
                         <div class="m-3">가격</div>
                         <input class="form-control rounded-start" id="product_price"
                                th:errorclass="field-error"
-                               th:field="*{productPrice}"
+                               th:field="*{instancePrice}"
                                type="text" placeholder="즉시 구매가 입력하세요" required>
                         <div class="m-2">원</div>
                     </div>
@@ -71,7 +71,7 @@
                         <div class="m-3">이미지</div>
                         <input class="form-control rounded-start" id="image_namesrc"
                                th:errorclass="field-error"
-                               th:field="*{imageNamesrc}"
+                               th:field="*{imageNameSrc}"
                                type="text" placeholder="이미지를 업로드 하세요">
                     </div>
 
@@ -79,7 +79,7 @@
                         <div class="m-3">설명</div>
                         <textarea rows="6"
                                   th:errorclass="field-error"
-                                  th:field="*{productExplanation}"
+                                  th:field="*{explanation}"
                                   class="form-control rounded-start"></textarea>
                     </div>
 
@@ -88,32 +88,34 @@
                         <div class="navbar navbar-expand-lg navbar-light navbar-stuck-menu mt-n2 pt-0 pb-2">
                             <div class="collapse navbar-collapse" id="navbarCollapse">
                                 <!-- Primary menu-->
-                                <li class="dropdown" style="list-style:none;">여성의류
 
-                                    <ul class="dropdown-menu">
+                                    <li class="dropdown" style="list-style:none;">여성의류
 
-                                        <select class="form-select dropdown col"
+                                        <ul class="dropdown-menu">
 
-                                                size="20"
-                                                onchange="handleOnChange(this)"
-                                        >
-                                            <option class="mt-2" value="패딩점퍼,여성의류">패딩/점퍼</option>
-                                            <option class="mt-2" value="맨투맨,여성의류">맨투맨</option>
-                                            <option class="mt-2" value="코드,여성의류">코드</option>
-                                            <option class="mt-2" value="후드티/후드집업,여성의류">후드티/후드집업</option>
-                                            <option class="mt-2" value="티셔츠,여성의류">티셔츠</option>
-                                            <option class="mt-2" value="셔츠,여성의류">셔츠</option>
-                                            <option class="mt-2" value="바지,여성의류">바지</option>
-                                            <option class="mt-2" value="반바지,여성의류">반바지</option>
-                                            <option class="mt-2" value="정장,여성의류">정장</option>
-                                            <option class="mt-2" value="트레이닝,여성의류">트레이닝</option>
-                                            <option class="mt-2" value="언더웨어홈웨어,여성의류">언더웨어/홈웨어</option>
-                                            <option class="mt-2" value="치마,여성의류">치마</option>
-                                            <option class="mt-2" value="원피스,여성의류">원피스</option>
-                                            <option class="mt-2" value="가디건,여성의류">가디건</option>
-                                        </select>
-                                    </ul>
-                                </li>
+                                            <select class="form-select dropdown col"
+                                                    th:errorclass="field-error"
+                                                    th:field="*{category}"
+                                                    size="20"
+                                            >
+                                                <option class="mt-2" value="패딩점퍼,여성의류">패딩/점퍼</option>
+                                                <option class="mt-2" value="맨투맨,여성의류">맨투맨</option>
+                                                <option class="mt-2" value="코드,여성의류">코드</option>
+                                                <option class="mt-2" value="후드티/후드집업,여성의류">후드티/후드집업</option>
+                                                <option class="mt-2" value="티셔츠,여성의류">티셔츠</option>
+                                                <option class="mt-2" value="셔츠,여성의류">셔츠</option>
+                                                <option class="mt-2" value="바지,여성의류">바지</option>
+                                                <option class="mt-2" value="반바지,여성의류">반바지</option>
+                                                <option class="mt-2" value="정장,여성의류">정장</option>
+                                                <option class="mt-2" value="트레이닝,여성의류">트레이닝</option>
+                                                <option class="mt-2" value="언더웨어홈웨어,여성의류">언더웨어/홈웨어</option>
+                                                <option class="mt-2" value="치마,여성의류">치마</option>
+                                                <option class="mt-2" value="원피스,여성의류">원피스</option>
+                                                <option class="mt-2" value="가디건,여성의류">가디건</option>
+                                            </select>
+                                        </ul>
+                                    </li>
+
 
                                 <li class="dropdown" style="list-style:none;">남성의류
 
@@ -593,8 +595,11 @@
         document.getElementById('result_comment').innerText = "선택된것 = " + value;
         document.getElementById('result').value = value;
 
-    }
-</script>
+
+<!-- Back To Top Button--><a class="btn-scroll-top" href="#top" data-scroll><span
+        class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up"> </i></a>
+
+
 </body>
 
 </html>
