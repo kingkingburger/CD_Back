@@ -10,7 +10,6 @@ import java.util.List;
 
 @Data
 @Entity
-@Component
 @ToString(exclude = "ProductList")
 @AllArgsConstructor
 @NoArgsConstructor

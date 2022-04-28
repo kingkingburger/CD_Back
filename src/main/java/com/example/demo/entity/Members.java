@@ -12,9 +12,7 @@ import java.time.LocalDate;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Members {
-
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MEMBER_ID")
@@ -35,6 +33,14 @@ public class Members {
 
     private LocalDate createDate = LocalDate.now();
 
-
-
+    @Builder
+    public Members(Long id, String loginId, String name, String password, Integer ranks, Integer numberPurchase) {
+        this.id = id;
+        this.loginId = loginId;
+        this.name = name;
+        this.password = password;
+        this.ranks = ranks;
+        this.numberPurchase = numberPurchase;
+        this.createDate = LocalDate.now();
+    }
 }
