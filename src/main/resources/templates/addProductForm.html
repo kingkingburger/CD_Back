@@ -2,35 +2,10 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       th:replace="~{layoutFile :: layout(~{::body})}">
-<head>
-    <meta charset="utf-8">
-    <title>Silk load</title>
-    <!-- SEO Meta Tags-->
-    <meta name="description" content="Cartzilla - Bootstrap E-commerce Template">
-    <meta name="keywords"
-          content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap, html5, css3, js, gallery, slider, touch, creative, clean">
-    <meta name="author" content="Createx Studio">
-    <!-- Viewport-->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Favicon and Touch Icons-->
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="mask-icon" color="#fe6a6a" href="safari-pinned-tab.svg">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="theme-color" content="#ffffff">
-    <!-- Vendor Styles including: Font Icons, Plugins, etc.-->
-    <link rel="stylesheet" media="screen" href="vendor/simplebar/dist/simplebar.min.css"/>
-    <link rel="stylesheet" media="screen" href="vendor/tiny-slider/dist/tiny-slider.css"/>
-    <link rel="stylesheet" media="screen" href="vendor/drift-zoom/dist/drift-basic.min.css"/>
-    <link rel="stylesheet" media="screen" href="vendor/lightgallery.js/dist/css/lightgallery.min.css"/>
-    <!-- Main Theme Styles + Bootstrap-->
-    <link rel="stylesheet" media="screen" href="css/theme.min.css">
-</head>
 
 <!-- Body-->
 <body class="handheld-toolbar-enabled">
+
 <!-- Page Title-->
 <div class="page-title-overlap bg-dark pt-4">
     <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
@@ -51,6 +26,7 @@
         </div>
     </div>
 </div>
+
 <div class="container">
     <!-- Gallery + details-->
     <div class="bg-light shadow-lg rounded-3 px-4 py-3 mb-5">
@@ -59,7 +35,7 @@
             <!-- Product details 상세정보-->
 
             <div class="product-details mx-auto pb-3">
-                <form class="needs-validation" action="" th:action="@{/addProduct}" th:object="${productdata}"
+                <form class="needs-validation" action="" th:action="@{/addProduct}" th:object="${productData}"
                       method="post" autocomplete="off" novalidate>
 
                     <div th:if="${#fields.hasGlobalErrors()}">
@@ -70,7 +46,7 @@
                         <div class="m-3">제목</div>
                         <input class="form-control rounded-start" id="product_name"
                                th:errorclass="field-error"
-                               th:field="*{productName}" type="text" placeholder="상품 제목을 입력하세요" required>
+                               th:field="*{name}" type="text" placeholder="상품 제목을 입력하세요" required>
                     </div>
 
                     <div class="input-group mb-3 my-2">
@@ -86,7 +62,7 @@
                         <div class="m-3">가격</div>
                         <input class="form-control rounded-start" id="product_price"
                                th:errorclass="field-error"
-                               th:field="*{productPrice}"
+                               th:field="*{instancePrice}"
                                type="text" placeholder="즉시 구매가 입력하세요" required>
                         <div class="m-2">원</div>
                     </div>
@@ -95,7 +71,7 @@
                         <div class="m-3">이미지</div>
                         <input class="form-control rounded-start" id="image_namesrc"
                                th:errorclass="field-error"
-                               th:field="*{imageNamesrc}"
+                               th:field="*{imageNameSrc}"
                                type="text" placeholder="이미지를 업로드 하세요">
                     </div>
 
@@ -103,7 +79,7 @@
                         <div class="m-3">설명</div>
                         <textarea rows="6"
                                   th:errorclass="field-error"
-                                  th:field="*{productExplanation}"
+                                  th:field="*{explanation}"
                                   class="form-control rounded-start"></textarea>
                     </div>
 
@@ -112,6 +88,7 @@
                         <div class="navbar navbar-expand-lg navbar-light navbar-stuck-menu mt-n2 pt-0 pb-2">
                             <div class="collapse navbar-collapse" id="navbarCollapse">
                                 <!-- Primary menu-->
+
                                     <li class="dropdown" style="list-style:none;">여성의류
 
                                         <ul class="dropdown-menu">
@@ -135,23 +112,23 @@
                                                 <option class="mt-2" value="치마,여성의류">치마</option>
                                                 <option class="mt-2" value="원피스,여성의류">원피스</option>
                                                 <option class="mt-2" value="가디건,여성의류">가디건</option>
-                                                <input type="hidden" th:name="category" th:value="여성의류" value="여성의류"/>
                                             </select>
                                         </ul>
                                     </li>
+
 
                                 <li class="dropdown" style="list-style:none;">남성의류
 
                                     <ul class="dropdown-menu">
 
                                         <select class="form-select col"
-                                                th:errorclass="field-error"
-                                                th:field="*{category}"
+
                                                 size="20"
+                                                onchange="handleOnChange(this)"
                                         >
                                             <option class="mt-2" value="패딩점퍼,남성의류">패딩/점퍼</option>
                                             <option class="mt-2" value="코드,남성의류">코드</option>
-                                            <option class="mt-2" value="맨투맨",남성의류>맨투맨</option>
+                                            <option class="mt-2" value="맨투맨" ,남성의류>맨투맨</option>
                                             <option class="mt-2" value="후드티후드집업,남성의류">후드티/후드집업</option>
                                             <option class="mt-2" value="티셔츠,남성의류">티셔츠</option>
                                             <option class="mt-2" value="셔츠,남성의류">셔츠</option>
@@ -169,9 +146,9 @@
                                 <li class="dropdown" style="list-style:none;">신발
                                     <ul class="dropdown-menu">
                                         <select class="form-select col"
-                                                th:errorclass="field-error"
-                                                th:field="*{category}"
+
                                                 size="10"
+                                                onchange="handleOnChange(this)"
                                         >
                                             <option class="mt-2" value="스니커즈,신발">스니커즈</option>
                                             <option class="mt-2" value="남성화,신발">남성화</option>
@@ -184,9 +161,9 @@
                                 <li class="dropdown" style="list-style:none;">가방
                                     <ul class="dropdown-menu">
                                         <select class="form-select col"
-                                                th:errorclass="field-error"
-                                                th:field="*{category}"
+
                                                 size="10"
+                                                onchange="handleOnChange(this)"
                                         >
                                             <option class="mt-2" value="여성가방,가방">여성가방</option>
                                             <option class="mt-2" value="남성가방,가방">남성가방</option>
@@ -199,9 +176,9 @@
                                 <li class="dropdown" style="list-style:none;">시계/쥬얼리
                                     <ul class="dropdown-menu">
                                         <select class="form-select col"
-                                                th:errorclass="field-error"
-                                                th:field="*{category}"
+
                                                 size="10"
+                                                onchange="handleOnChange(this)"
                                         >
                                             <option class="mt-2" value="시계,시계쥬얼리">시계</option>
                                             <option class="mt-2" value="쥬얼리,시계쥬얼리">쥬얼리</option>
@@ -213,9 +190,9 @@
                                 <li class="dropdown" style="list-style:none;">패션 악세서리
                                     <ul class="dropdown-menu">
                                         <select class="form-select col"
-                                                th:errorclass="field-error"
-                                                th:field="*{category}"
+
                                                 size="10"
+                                                onchange="handleOnChange(this)"
                                         >
                                             <option class="mt-2" value="지갑,악세서리">지갑</option>
                                             <option class="mt-2" value="벨트,악세서리">벨트</option>
@@ -234,9 +211,9 @@
                                 <li class="dropdown" style="list-style:none;">디지털/가전
                                     <ul class="dropdown-menu">
                                         <select class="form-select col"
-                                                th:errorclass="field-error"
-                                                th:field="*{category}"
+
                                                 size="10"
+                                                onchange="handleOnChange(this)"
                                         >
                                             <option class="mt-2" value="모바일,디지털">모바일</option>
                                             <option class="mt-2" value="가전제품,디지털">가전제품</option>
@@ -253,9 +230,9 @@
                                 <li class="dropdown" style="list-style:none;">스포츠/레저
                                     <ul class="dropdown-menu">
                                         <select class="form-select col"
-                                                th:errorclass="field-error"
-                                                th:field="*{category}"
+
                                                 size="10"
+                                                onchange="handleOnChange(this)"
                                         >
                                             <option class="mt-2" value="골프,스포츠">골프</option>
                                             <option class="mt-2" value="캠핑,스포츠">캠핑</option>
@@ -281,9 +258,9 @@
 
                                     <ul class="dropdown-menu">
                                         <select class="form-select col"
-                                                th:errorclass="field-error"
-                                                th:field="*{category}"
+
                                                 size="10"
+                                                onchange="handleOnChange(this)"
                                         >
                                             <option class="mt-2" value="국산차,차량">국산차</option>
                                             <option class="mt-2" value="수입차,차량">수입차</option>
@@ -298,9 +275,9 @@
 
                                     <ul class="dropdown-menu">
                                         <select class="form-select col"
-                                                th:errorclass="field-error"
-                                                th:field="*{category}"
+
                                                 size="10"
+                                                onchange="handleOnChange(this)"
                                         >
                                             <option class="mt-2" value="보이그룹,굿즈">보이그룹
                                             </option>
@@ -317,9 +294,9 @@
 
                                     <ul class="dropdown-menu">
                                         <select class="form-select col"
-                                                th:errorclass="field-error"
-                                                th:field="*{category}"
+
                                                 size="10"
+                                                onchange="handleOnChange(this)"
                                         >
                                             <option class="mt-2" value="희귀수집품,예술">희귀/수집품
                                             </option>
@@ -336,9 +313,9 @@
 
                                     <ul class="dropdown-menu">
                                         <select class="form-select col"
-                                                th:errorclass="field-error"
-                                                th:field="*{category}"
+
                                                 size="10"
+                                                onchange="handleOnChange(this)"
                                         >
                                             <option class="mt-2" value="CDDVDLP,악기">CD/DVD/LP
                                             </option>
@@ -353,9 +330,9 @@
 
                                     <ul class="dropdown-menu">
                                         <select class="form-select col"
-                                                th:errorclass="field-error"
-                                                th:field="*{category}"
+
                                                 size="10"
+                                                onchange="handleOnChange(this)"
                                         >
                                             <option class="mt-2" value="도서,도서">도서
                                             </option>
@@ -376,9 +353,9 @@
 
                                     <ul class="dropdown-menu">
                                         <select class="form-select col"
-                                                th:errorclass="field-error"
-                                                th:field="*{category}"
+
                                                 size="10"
+                                                onchange="handleOnChange(this)"
                                         >
                                             <option class="mt-2" value="스킨케어,뷰티">스킨케어
                                             </option>
@@ -407,9 +384,9 @@
 
                                     <ul class="dropdown-menu">
                                         <select class="form-select col"
-                                                th:errorclass="field-error"
-                                                th:field="*{category}"
+
                                                 size="10"
+                                                onchange="handleOnChange(this)"
                                         >
                                             <option class="mt-2" value="인테리어,가구">인테리어
                                             </option>
@@ -424,9 +401,9 @@
 
                                     <ul class="dropdown-menu">
                                         <select class="form-select col"
-                                                th:errorclass="field-error"
-                                                th:field="*{category}"
+
                                                 size="10"
+                                                onchange="handleOnChange(this)"
                                         >
                                             <option class="mt-2" value="주방용품,생활">주방용품
                                             </option>
@@ -445,9 +422,9 @@
 
                                     <ul class="dropdown-menu">
                                         <select class="form-select col"
-                                                th:errorclass="field-error"
-                                                th:field="*{category}"
+
                                                 size="10"
+                                                onchange="handleOnChange(this)"
                                         >
                                             <option class="mt-2" value="베이비의류,아동">베이비의류
                                             </option>
@@ -467,12 +444,10 @@
 
 
                                 <li class="dropdown" style="list-style:none;">동물
-
                                     <ul class="dropdown-menu">
                                         <select class="form-select col"
-                                                th:errorclass="field-error"
-                                                th:field="*{category}"
                                                 size="10"
+                                                onchange="handleOnChange(this)"
                                         >
                                             <option class="mt-2" value="강아지,동물">강아지
                                             </option>
@@ -486,6 +461,7 @@
                                     </ul>
                                 </li>
 
+
                             </div>
                         </div>
                     </div>
@@ -493,6 +469,11 @@
 
 
                     <hr class="mt-4">
+
+                    <div id="result_comment"  >
+                        선택된것 =
+                    </div>
+                    <input type="hidden" id="result" th:field="*{category}"/>
 
                     <div class="text-end pt-4">
                         <button class="btn btn-primary btn-shadow d-block w-100" type="submit">
@@ -579,24 +560,11 @@
                     <div class="accordion-item">
                         <h3 class="accordion-header"><a class="accordion-button collapsed" href="#localStore"
                                                         role="button" data-bs-toggle="collapse"
-                                                        aria-expanded="true" aria-controls="localStore"><i
-                                class="ci-location text-muted fs-lg align-middle mt-n1 me-2"></i>Find in local
-                            store</a></h3>
-                        <!--                                <div class="accordion-collapse collapse" id="localStore"-->
-                        <!--                                     data-bs-parent="#productPanels">-->
-                        <!--                                    <div class="accordion-body">-->
-                        <!--                                        <select class="form-select">-->
-                        <!--                                            <option value>Select your country</option>-->
-                        <!--                                            <option value="Argentina">Argentina</option>-->
-                        <!--                                            <option value="Belgium">Belgium</option>-->
-                        <!--                                            <option value="France">France</option>-->
-                        <!--                                            <option value="Germany">Germany</option>-->
-                        <!--                                            <option value="Spain">Spain</option>-->
-                        <!--                                            <option value="UK">United Kingdom</option>-->
-                        <!--                                            <option value="USA">USA</option>-->
-                        <!--                                        </select>-->
-                        <!--                                    </div>-->
-                        <!--                                </div>-->
+                                                        aria-expanded="true" aria-controls="localStore">
+                            <i class="ci-location text-muted fs-lg align-middle mt-n1 me-2"></i>
+                            Find in local store</a>
+                        </h3>
+
                     </div>
                 </div>
             </div>
@@ -619,19 +587,19 @@
             class="handheld-toolbar-label">$265.00</span></a></div>
 </div>
 
+<script th:inline="javascript">
+    function handleOnChange(e) {
+        // 선택된 데이터 가져오기
+        const value = e.value;
+
+        document.getElementById('result_comment').innerText = "선택된것 = " + value;
+        document.getElementById('result').value = value;
+
 
 <!-- Back To Top Button--><a class="btn-scroll-top" href="#top" data-scroll><span
         class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up"> </i></a>
-<!-- Vendor scrits: js libraries and plugins-->
-<script src="vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="vendor/simplebar/dist/simplebar.min.js"></script>
-<script src="vendor/tiny-slider/dist/min/tiny-slider.js"></script>
-<script src="vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
-<script src="vendor/drift-zoom/dist/Drift.min.js"></script>
-<script src="vendor/lightgallery.js/dist/js/lightgallery.min.js"></script>
-<script src="vendor/lg-video.js/dist/lg-video.min.js"></script>
-<!-- Main theme script-->
-<script src="js/theme.min.js"></script>
+
+
 </body>
 
 </html>

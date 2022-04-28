@@ -2,10 +2,7 @@ package com.example.demo.controller.Home;
 
 import com.example.demo.SessionConst;
 import com.example.demo.dto.MemberFormDto;
-import com.example.demo.entity.Member;
-import com.example.demo.repository.MemberRepository;
-import com.example.demo.service.LoginService;
-import com.example.demo.service.MemberService;
+import com.example.demo.entity.Members;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -19,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class HomeController {
 
     @GetMapping("/")
-    public String homeLogin(@SessionAttribute(name = SessionConst.LOGIN_MEBMER, required = false) Member loginMember,
+    public String homeLogin(@SessionAttribute(name = SessionConst.LOGIN_MEBMER, required = false) Members loginMember,
                             Model model,
                             @ModelAttribute("member") MemberFormDto member) {
 
@@ -35,7 +32,7 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public String home(@SessionAttribute(name = SessionConst.LOGIN_MEBMER, required = false) Member loginMember,
+    public String home(@SessionAttribute(name = SessionConst.LOGIN_MEBMER, required = false) Members loginMember,
                        Model model,
                        @ModelAttribute("member") MemberFormDto member) {
 

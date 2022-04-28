@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.repository.MemberRepository;
-import com.example.demo.entity.Member;
+import com.example.demo.entity.Members;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +14,12 @@ public class LoginService {
 
     private final MemberRepository memberRepository;
 
-    public Member login(String loginId, String password) {
+    public Members login(String loginId, String password) {
 
-        Optional<Member> optionalMember = memberRepository.findByLoginId(loginId);
+        Optional<Members> optionalMember = memberRepository.findByLoginId(loginId);
 
         if (optionalMember.isPresent()) {
-            Member member = optionalMember.get();
+            Members member = optionalMember.get();
             return member.getPassword().equals(password) ? member : null;
         }
         return null;
