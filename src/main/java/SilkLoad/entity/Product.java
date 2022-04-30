@@ -5,13 +5,14 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
 
 @Entity
 @Data
-@Builder
 @AllArgsConstructor
 //@ToString(exclude = "category")
 public class Product {
@@ -26,8 +27,7 @@ public class Product {
     private Long auctionPrice; //경매가격
     private Long instantPrice; //즉시거래가격
 
-    private String imageNameSrc; //이미지
-    private String Explanation; //물품상세설명
+    private String explanation; //물품상세설명
 
     private LocalDateTime createdDate = LocalDateTime.now() ; //생성일자
 
@@ -39,11 +39,40 @@ public class Product {
     @JoinColumn(name = "CATEGORY_ID", nullable = false)
     private Category category;
 
+
+    @OneToMany(mappedBy = "product", fetch=FetchType.EAGER)
+    private List<ProductImage> productImagesList = new ArrayList<ProductImage>();
+
+    /**
+     *
+     * @param productImage 양방향 연관관계
+     */
+    public void addProductImg( ProductImage productImage ) {
+        productImage.setProduct(this);
+        productImagesList.add(productImage);
+    }
+
     //양방향 연관관계 객체간에 관계 유지, toString 무한 호출 조심
+
     public void changeCategory(Category category ) {
         this.category = category;
         category.getProductList().add(this);
     }
+
+    @Builder
+    public Product(Long id, String name, Long auctionPrice, Long instantPrice, String explanation, LocalDateTime createdDate, Members members, Category category) {
+        this.id = id;
+        this.name = name;
+        this.auctionPrice = auctionPrice;
+        this.instantPrice = instantPrice;
+        this.explanation = explanation;
+        this.createdDate = createdDate;
+        this.members = members;
+        this.category = category;
+        this.productImagesList = new ArrayList<>();
+    }
+
+
 
 
 }

@@ -1,8 +1,11 @@
 package SilkLoad.controller.Home;
 
+
 import SilkLoad.SessionConst;
 import SilkLoad.dto.MemberFormDto;
 import SilkLoad.entity.Members;
+import SilkLoad.entity.ProductImage;
+import SilkLoad.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -11,14 +14,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
-//@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+import java.util.List;
+
 @Slf4j
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
 
+    private final ProductService productService;
+
     @GetMapping("/")
-    public String homeLogin(@SessionAttribute(name = SessionConst.LOGIN_MEBMER, required = false) Members loginMember,
+    public String homeLogin(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Members loginMember,
                             Model model,
                             @ModelAttribute("member") MemberFormDto member) {
 
@@ -33,13 +39,20 @@ public class HomeController {
         return "index";
     }
 
+    /**
+     *
+     * @param model productImage를 담기위한 매개변수
+     * @return
+     */
     @GetMapping("/home")
-    public String home(@SessionAttribute(name = SessionConst.LOGIN_MEBMER, required = false) Members loginMember,
-                       Model model,
-                       @ModelAttribute("member") MemberFormDto member) {
+    public String home(Model model) {
+
+        List<ProductImage> allProductImage = productService.findAllProductImage();
+        model.addAttribute("allProductImage", allProductImage);
 
         return "home-electronics-store";
     }
+
 
 
 }
