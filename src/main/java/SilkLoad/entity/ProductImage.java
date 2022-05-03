@@ -4,12 +4,14 @@ package SilkLoad.entity;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity
 @Data
 @NoArgsConstructor
+@ToString(exclude = "product")
 public class ProductImage {
 
     @Id
@@ -21,14 +23,8 @@ public class ProductImage {
     @JoinColumn(name="PRODUCT_ID", nullable=false)
     private Product product;
 
-    /**
-     * 회원이 올린 파일 이름
-     */
-    private String uploadFileName;
-    /**
-     * 실제 저장 될 파일 이름
-     */
-    private String storeFileName;
+    private String uploadFileName;  //회원이 올린 파일 이름
+    private String storeFileName;   //실제 저장 될 파일 이름
 
     @Builder
     public ProductImage(String uploadFileName, String storeFileName) {
@@ -37,11 +33,12 @@ public class ProductImage {
     }
 
     /**
-     * @param product, 양방향 연관관계 객체
+     * ProductImg <=> Product 양방향 연관관계 객체
+     * @param param_product
      */
-    public void changeProduct(Product product ) {
-        this.product = product;
-        product.getProductImagesList().add(this);
+    public void changeProduct(Product param_product) {
+        this.product = param_product;
+        param_product.getProductImagesList().add(this);
     }
 
 }
