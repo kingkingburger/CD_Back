@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@NoArgsConstructor(access= AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 
 @Entity
 @Data
@@ -26,17 +26,17 @@ public class Product {
     private Long auctionPrice; //경매가격
     private Long instantPrice; //즉시거래가격
     private String explanation; //물품상세설명
-    private LocalDateTime createdDate = LocalDateTime.now() ; //생성일자
+    private LocalDateTime createdDate = LocalDateTime.now(); //생성일자
 
     @ManyToOne
-    @JoinColumn(name="MEMBER_ID", nullable=false) //Product 테이블에 있는 것을 매핑 , nullable을 false로 해서 내부 join으로 변경
+    @JoinColumn(name = "MEMBER_ID", nullable = false) //Product 테이블에 있는 것을 매핑 , nullable을 false로 해서 내부 join으로 변경
     private Members members;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "CATEGORY_ID", nullable = false)
     private Category category;
 
-    @OneToMany(mappedBy = "product", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private List<ProductImage> productImagesList = new ArrayList<ProductImage>();
 
     /**
@@ -44,7 +44,7 @@ public class Product {
      * @param category
      */
     //양방향 연관관계 객체간에 관계 유지, toString 무한 호출 조심
-    public void changeCategory(Category category ) {
+    public void changeCategory(Category category) {
         this.category = category;
         category.getProductList().add(this);
     }

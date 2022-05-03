@@ -20,7 +20,7 @@ public class ProductImage {
     private Long id; // PK
 
     @ManyToOne
-    @JoinColumn(name="PRODUCT_ID", nullable=false)
+    @JoinColumn(name = "PRODUCT_ID", nullable = false)
     private Product product;
 
     private String uploadFileName;  //회원이 올린 파일 이름

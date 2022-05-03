@@ -14,7 +14,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Members {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MEMBER_ID")
     private Long id;
 
