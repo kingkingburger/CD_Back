@@ -1,7 +1,8 @@
-package com.example.demo.service;
+package SilkLoad.example.service;
 
-import com.example.demo.repository.MemberRepository;
-import com.example.demo.entity.Members;
+
+import SilkLoad.entity.Members;
+import SilkLoad.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,6 +1,7 @@
 package SilkLoad.repository;
 
 import SilkLoad.entity.Members;
+import lombok.Data;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,9 +55,16 @@ public class ProductService {
 
         //카테고리 등록
         product.changeCategory( category );
+        List<ProductImage> productImages = filesImgSave(productFormDto.getImageFileList());
 
         //product 저장
         productRepository.save(product);
+
+        productImages.forEach( productImage -> {
+            productImage.changeProduct(product);
+            productImageRepository.save(productImage);
+        });
+
 
     }
 
