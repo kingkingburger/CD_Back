@@ -23,7 +23,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ProductService {
+public class ProductService extends Product {
 
     /**
      * 물품 이미지가 저장될 절대 경로, application properties 참조
@@ -39,7 +39,7 @@ public class ProductService {
     private final ProductImageRepository productImageRepository;
 
 
-    public void save(ProductFormDto productFormDto, Members loginMember) throws IOException{
+    public void save(ProductFormDto productFormDto, Members loginMember) throws IOException {
 
 
         String categoryName = productFormDto.getCategory();
@@ -57,20 +57,20 @@ public class ProductService {
 
 
         //카테고리 등록
-        product.changeCategory( category );
+        product.changeCategory(category);
 
         //product 저장
         productRepository.save(product);
 
         //이미지등록
         List<ProductImage> productImages = filesImgSave(productFormDto.getImageFileList());
-        productImages.forEach( productImage -> {
+        productImages.forEach(productImage -> {
             productImage.changeProduct(product);
             productImageRepository.save(productImage);
         });
     }
 
-    private Category categoryClassification(String categoryName ) {
+    private Category categoryClassification(String categoryName) {
 
         String[] splitCategory = categoryName.split(",");
         Category category = Category.builder()
@@ -109,6 +109,7 @@ public class ProductService {
 
     /**
      * 이미지 저장 메소드
+     *
      * @param multipartFile
      * @return
      * @throws IOException
@@ -125,7 +126,7 @@ public class ProductService {
         //디렉터리에 파일 저장하는 메소드
         multipartFile.transferTo(new File(getFullPath(storeFileName)));
 
-        return  ProductImage.builder()
+        return ProductImage.builder()
                 .uploadFileName(originalImgName)
                 .storeFileName(storeFileName)
                 .build();
@@ -161,19 +162,26 @@ public class ProductService {
 
     /**
      * id로 Product(물품) 찾기
+     *
      * @param id
      * @return id로 1개의 물품만 반환
      */
-    public Product findById_Product(long id){
+    public Product findById_Product(long id) {
         Product product = productRepository.findById(id).get();
         return product;
     }
+
 
     /**
      * db에 있는 product 테이블에 있는 모든것
      * @return List형태로 반환
      */
-    public List<Product> findAllProduct(){
+    public List<Product> findAllProduct() {
+        List<Product> allProduct = productRepository.findAll();
+        return allProduct;
+    }
+
+    public List<Product> findAllimg() {
         List<Product> allProduct = productRepository.findAll();
         return allProduct;
     }

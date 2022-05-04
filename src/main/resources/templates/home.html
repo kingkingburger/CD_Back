@@ -5,7 +5,6 @@
 <!-- Body-->
 <body class="handheld-toolbar-enabled">
 
-
 <main class="page-wrapper">
 
     <!-- Products grid (Trending produts)-->
@@ -27,14 +26,14 @@
             <div class="col-lg-3 col-md-4 col-sm-6 px-2 mb-4" th:each="product : ${Product}" >
                 <div class="card product-card">
 
-                    <a class="card-img-top d-block overflow-hidden" href="shop-single-v2.html">
+                    <a class="card-img-top d-block overflow-hidden" th:href="@{/Product(id=${product.getId()})}">
 <!--                        <img alt="Product"  th:src="|/images/${imageFile.getStoreFileName()}|"/>-->
                         <img alt="Product" th:src="|/images/${product.getProductImagesList().get(0).getStoreFileName()}|"/>
                     </a>
                     <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#" th:text="${product.getCategory().getSecond()}">카테고리</a>
 
                         <h3 class="product-title fs-sm" >
-                            <a href="shop-single-v2.html" th:text="${product.getName()}">물품제목</a>
+                            <a th:href="@{/Product(id=${product.getId()})}" th:text="${product.getName()}">물품제목</a>
                         </h3>
                         <div class="d-flex ">
                             <div class="product-price"><span class="text-accent" th:text="${product.getInstantPrice()}+원"></span></div>

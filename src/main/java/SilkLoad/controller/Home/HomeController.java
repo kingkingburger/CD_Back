@@ -2,10 +2,12 @@ package SilkLoad.controller.Home;
 
 
 import SilkLoad.SessionConst;
+import SilkLoad.dto.LoginFormDto;
 import SilkLoad.dto.MemberFormDto;
 import SilkLoad.entity.Members;
 import SilkLoad.entity.Product;
 import SilkLoad.entity.ProductImage;
+import SilkLoad.service.MemberService;
 import SilkLoad.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,10 +50,9 @@ public class HomeController {
     @GetMapping("/home")
     public String home(Model model) {
         List<Product> allProduct = productService.findAllProduct();
-        model.addAttribute("Product",allProduct);
+        model.addAttribute("Product", allProduct);
         return "home";
     }
-
 
 
 }

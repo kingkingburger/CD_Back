@@ -1,5 +1,6 @@
 package SilkLoad.service;
 
+import SilkLoad.controller.Member.MemberController;
 import SilkLoad.dto.MemberFormDto;
 import SilkLoad.entity.Members;
 import SilkLoad.repository.MemberRepository;
@@ -10,12 +11,12 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class MemberService {
+public class MemberService extends MemberFormDto {
 
     //final 붙여야지 생성자 만들어줌
     private final MemberRepository memberRepository;
 
-    public void save(MemberFormDto form){
+    public void save(MemberFormDto form) {
 
         Members member = Members.builder()
                 .loginId(form.getLoginId())
