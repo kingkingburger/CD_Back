@@ -32,10 +32,12 @@ public class ProductService {
     private String imgFileDir;
 
     private final ProductRepository productRepository;
+
     /**
      * imageRepository.... 서비스를 따로 분리해야 하나 생각 중
      */
     private final ProductImageRepository productImageRepository;
+
 
     public void save(ProductFormDto productFormDto, Members loginMember) throws IOException{
 
@@ -53,13 +55,16 @@ public class ProductService {
                 .members(loginMember)
                 .build();
 
+
         //카테고리 등록
         product.changeCategory( category );
-        List<ProductImage> productImages = filesImgSave(productFormDto.getImageFileList());
 
         //product 저장
         productRepository.save(product);
 
+
+        //이미지등록
+        List<ProductImage> productImages = filesImgSave(productFormDto.getImageFileList());
         productImages.forEach( productImage -> {
             productImage.changeProduct(product);
             productImageRepository.save(productImage);
@@ -80,13 +85,13 @@ public class ProductService {
     }
 
     /**
-     *
      * @param filename 서버에 저장된 파일 명
      * @return 저장된 파일의 경로 명 + 파일 명
      */
     public String getFullPath(String filename) {
         return imgFileDir + filename;
     }
+
 
     /**
      * @param imgFileList
@@ -102,10 +107,11 @@ public class ProductService {
             }
         }
         return storeFileResult;
-
     }
 
+
     /**
+     * 이미지 저장 메소드
      * @param multipartFile
      * @return
      * @throws IOException
@@ -114,12 +120,11 @@ public class ProductService {
 
         if (multipartFile.isEmpty()) {
             return null;
-
         }
 
         String originalImgName = multipartFile.getOriginalFilename();
         String storeFileName = createSaveImgName(originalImgName);
-
+        System.out.println("storeFileName = " + getFullPath(storeFileName));
         //디렉터리에 파일 저장하는 메소드
         multipartFile.transferTo(new File(getFullPath(storeFileName)));
 
@@ -130,7 +135,6 @@ public class ProductService {
     }
 
     /**
-     *
      * @param originalImgName uuid를 통해 랜덤한 파일 이름 만들기, 파일 이름 겹치는 것 방지
      * @return uuid 파일 명 + 확장자 명
      */
@@ -141,9 +145,8 @@ public class ProductService {
     }
 
     /**
-     *
      * @param originalFilename 원래 파일 명
-     * @return 원래 파일의 확장자 이름
+     * @return 원래 파일의 확장자 이름(img, png..)
      */
     private String extractExt(String originalFilename) {
         int pos = originalFilename.lastIndexOf(".");
@@ -155,10 +158,27 @@ public class ProductService {
      * product_image db로 부터 모든 파일 추출
      */
     public List<ProductImage> findAllProductImage() {
-
         return productImageRepository.findAll();
-
     }
 
+
+    /**
+     * id로 Product(물품) 찾기
+     * @param id
+     * @return id로 1개의 물품만 반환
+     */
+    public Product findById_Product(long id){
+        Product product = productRepository.findById(id).get();
+        return product;
+    }
+
+    /**
+     * db에 있는 product 테이블에 있는 모든것
+     * @return List형태로 반환
+     */
+    public List<Product> findAllProduct(){
+        List<Product> allProduct = productRepository.findAll();
+        return allProduct;
+    }
 
 }

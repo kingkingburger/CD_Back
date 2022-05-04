@@ -7,7 +7,6 @@ import SilkLoad.service.ProductService;
 import SilkLoad.entity.Members;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Controller;
@@ -17,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
@@ -32,6 +30,7 @@ public class ProductController {
     public String addProduct(@ModelAttribute("productData") ProductFormDto productData){
         return "addProductForm";
     }
+
 
     @PostMapping("/addProduct")
     public String saveProduct(@ModelAttribute("productData") ProductFormDto productData,
@@ -55,7 +54,6 @@ public class ProductController {
     }
 
     /**
-     *
      * @param filename 실제 파일명
      * @return 파일 시스템에서 찾은 파일 반환
      * @throws MalformedURLException

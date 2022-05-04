@@ -14,7 +14,7 @@ import java.util.List;
 @Entity
 @Data
 @AllArgsConstructor
-//@ToString(exclude = "category")
+@ToString(exclude = "category")
 public class Product {
 
     @Id
@@ -23,12 +23,9 @@ public class Product {
     private Long id; // PK
 
     private String name; //물품이름
-
     private Long auctionPrice; //경매가격
     private Long instantPrice; //즉시거래가격
-
     private String explanation; //물품상세설명
-
     private LocalDateTime createdDate = LocalDateTime.now() ; //생성일자
 
     @ManyToOne
@@ -39,21 +36,14 @@ public class Product {
     @JoinColumn(name = "CATEGORY_ID", nullable = false)
     private Category category;
 
-
     @OneToMany(mappedBy = "product", fetch=FetchType.EAGER)
     private List<ProductImage> productImagesList = new ArrayList<ProductImage>();
 
     /**
-     *
-     * @param productImage 양방향 연관관계
+     * Product <=> Category 양방향 연관관계
+     * @param category
      */
-    public void addProductImg( ProductImage productImage ) {
-        productImage.setProduct(this);
-        productImagesList.add(productImage);
-    }
-
     //양방향 연관관계 객체간에 관계 유지, toString 무한 호출 조심
-
     public void changeCategory(Category category ) {
         this.category = category;
         category.getProductList().add(this);
@@ -71,8 +61,5 @@ public class Product {
         this.category = category;
         this.productImagesList = new ArrayList<>();
     }
-
-
-
 
 }

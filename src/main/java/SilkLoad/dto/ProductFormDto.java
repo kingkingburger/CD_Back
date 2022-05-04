@@ -17,7 +17,7 @@ public class ProductFormDto {
     private Long Id; // PK
     @NotBlank
     private String name; //물품이름
-    @NotBlank
+//    @NotBlank
     private Long auctionPrice; //경매가격
     @NotBlank
     private Long instancePrice; //즉시거래가격
