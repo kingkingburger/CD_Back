@@ -324,7 +324,8 @@
               <div class="col-lg-7 pe-lg-0 pt-lg-4">
                 <div class="product-gallery">
                   <div class="product-gallery-preview order-sm-2">
-                    <div class="product-gallery-preview-item active" id="first"><img class="image-zoom" src="img/shop/single/gallery/01.jpg" data-zoom="img/shop/single/gallery/01.jpg" alt="Product image">
+                    <div class="product-gallery-preview-item active" id="first">
+                      <img class="image-zoom" th:src="|/images/${product.getProductImagesList().get(0).getStoreFileName()}|" data-zoom="img/shop/single/gallery/01.jpg" alt="Product image">
                       <div class="image-zoom-pane"></div>
                     </div>
                     <div class="product-gallery-preview-item" id="second"><img class="image-zoom" src="img/shop/single/gallery/02.jpg" data-zoom="img/shop/single/gallery/02.jpg" alt="Product image">
@@ -337,8 +338,16 @@
                       <div class="image-zoom-pane"></div>
                     </div>
                   </div>
-                  <div class="product-gallery-thumblist order-sm-1"><a class="product-gallery-thumblist-item active" href="#first"><img src="img/shop/single/gallery/th01.jpg" alt="Product thumb"></a><a class="product-gallery-thumblist-item" href="#second"><img src="img/shop/single/gallery/th02.jpg" alt="Product thumb"></a><a class="product-gallery-thumblist-item" href="#third"><img src="img/shop/single/gallery/th03.jpg" alt="Product thumb"></a><a class="product-gallery-thumblist-item" href="#fourth"><img src="img/shop/single/gallery/th04.jpg" alt="Product thumb"></a><a class="product-gallery-thumblist-item video-item" href="https://www.youtube.com/watch?v=1vrXpMLLK14">
-                      <div class="product-gallery-thumblist-item-text"><i class="ci-video"></i>Video</div></a></div>
+                  <div class="product-gallery-thumblist order-sm-1">
+                    <a class="product-gallery-thumblist-item active" href="#first">
+                      <img th:src="|/images/${product.getProductImagesList().get(0).getStoreFileName()}|" alt="Product thumb"></a>
+                    <a class="product-gallery-thumblist-item" href="#second">
+                      <img src="img/shop/single/gallery/th02.jpg" alt="Product thumb"></a>
+                    <a class="product-gallery-thumblist-item" href="#third">
+                      <img src="img/shop/single/gallery/th03.jpg" alt="Product thumb"></a>
+                    <a class="product-gallery-thumblist-item" href="#fourth">
+                      <img src="img/shop/single/gallery/th04.jpg" alt="Product thumb"></a>
+                  </div>
                 </div>
               </div>
               <!-- Product details-->
@@ -357,8 +366,8 @@
 
                   <div class="fs-sm mb-4">
                       <span class="text-heading fw-medium me-1">카테고리:</span>
-                      <span class="text-muted" id="colorOption" th:utext="${pro.getCategory().getSecond()}"></span>
-                      <span class="text-muted" id="colorOption" th:text="${pro.getCategory().getFirst()}"></span>
+                      <span class="text-muted" id="colorOption1" th:utext="${pro.getCategory().getSecond()}"></span>
+                      <span class="text-muted" id="colorOption2" th:text="${pro.getCategory().getFirst()}"></span>
                   </div>
 
                   <div class="position-relative me-n4 mb-3">
@@ -395,48 +404,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="accordion-item">
-                      <h3 class="accordion-header"><a class="accordion-button collapsed" href="#shippingOptions" role="button" data-bs-toggle="collapse" aria-expanded="true" aria-controls="shippingOptions"><i class="ci-delivery text-muted lead align-middle mt-n1 me-2"></i>Shipping options</a></h3>
-                      <div class="accordion-collapse collapse" id="shippingOptions" data-bs-parent="#productPanels">
-                        <div class="accordion-body fs-sm">
-                          <div class="d-flex justify-content-between border-bottom pb-2">
-                            <div>
-                              <div class="fw-semibold text-dark">Courier</div>
-                              <div class="fs-sm text-muted">2 - 4 days</div>
-                            </div>
-                            <div>$26.50</div>
-                          </div>
-                          <div class="d-flex justify-content-between border-bottom py-2">
-                            <div>
-                              <div class="fw-semibold text-dark">Local shipping</div>
-                              <div class="fs-sm text-muted">up to one week</div>
-                            </div>
-                            <div>$10.00</div>
-                          </div>
-                          <div class="d-flex justify-content-between border-bottom py-2">
-                            <div>
-                              <div class="fw-semibold text-dark">Flat rate</div>
-                              <div class="fs-sm text-muted">5 - 7 days</div>
-                            </div>
-                            <div>$33.85</div>
-                          </div>
-                          <div class="d-flex justify-content-between border-bottom py-2">
-                            <div>
-                              <div class="fw-semibold text-dark">UPS ground shipping</div>
-                              <div class="fs-sm text-muted">4 - 6 days</div>
-                            </div>
-                            <div>$18.00</div>
-                          </div>
-                          <div class="d-flex justify-content-between pt-2">
-                            <div>
-                              <div class="fw-semibold text-dark">Local pickup from store</div>
-                              <div class="fs-sm text-muted">&mdash;</div>
-                            </div>
-                            <div>$0.00</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+
 
                   </div>
                   <!-- Sharing-->
@@ -448,82 +416,45 @@
         </div>
 
       <!-- Product carousel (Style with)-->
-      <div class="container pt-5">
+      <div class="container pt-5" >
         <h2 class="h3 text-center pb-4">Style with</h2>
-        <div class="tns-carousel tns-controls-static tns-controls-outside">
+        <div class="tns-carousel tns-controls-static tns-controls-outside" >
           <div class="tns-carousel-inner" data-carousel-options="{&quot;items&quot;: 2, &quot;controls&quot;: true, &quot;nav&quot;: false, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;500&quot;:{&quot;items&quot;:2, &quot;gutter&quot;: 18},&quot;768&quot;:{&quot;items&quot;:3, &quot;gutter&quot;: 20}, &quot;1100&quot;:{&quot;items&quot;:4, &quot;gutter&quot;: 30}}}">
             <!-- Product-->
-            <div>
+            <div th:each="all_product : ${allproduct}">
               <div class="card product-card card-static">
-                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/14.jpg" alt="Product"></a>
-                <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">Men’s Jeans</a>
-                  <h3 class="product-title fs-sm"><a href="#">Slim Taper Fit Jeans</a></h3>
+                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist">
+                  <i class="ci-heart"></i>
+                </button>
+                <a class="card-img-top d-block overflow-hidden" href="#">
+                  <img th:src="|/images/${all_product.getProductImagesList().get(0).getStoreFileName()}|" alt="Product">
+                </a>
+                <div class="card-body py-2">
+                  <a class="product-meta d-block fs-xs pb-1" href="#" th:text="${all_product.getCategory().getSecond()}">카테고리</a>
+                  <h3 class="product-title fs-sm">
+                    <a th:href="@{/Product(id=${product.getId()})}" th:text="${all_product.getName()}">물품제목</a>
+                  </h3>
                   <div class="d-flex justify-content-between">
-                    <div class="product-price"><span class="text-accent">$58.<small>99</small></span></div>
-                    <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
+                    <div class="product-price">
+                      <span class="text-accent" th:text="${all_product.getInstantPrice()}+원">
+                        <small></small>
+                      </span>
+                    </div>
+                    <div class="star-rating">
+                      <i class="star-rating-icon ci-star-filled active">
+
+                      </i>
+                      <i class="star-rating-icon ci-star-filled active"></i>
+                      <i class="star-rating-icon ci-star-filled active"></i>
+                      <i class="star-rating-icon ci-star-filled active"></i>
+                      <i class="star-rating-icon ci-star"></i>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <!-- Product-->
-            <div>
-              <div class="card product-card card-static"><span class="badge bg-danger badge-shadow">Sale</span>
-                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/17.jpg" alt="Product"></a>
-                <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">Men’s T-shirts</a>
-                  <h3 class="product-title fs-sm"><a href="#">Cotton T-shirt Regular Fit</a></h3>
-                  <div class="d-flex justify-content-between">
-                    <div class="product-price"><span class="text-accent">$9.<small>50</small></span>
-                      <del class="fs-sm text-muted">$11.<small>50</small></del>
-                    </div>
-                    <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i><i class="star-rating-icon ci-star"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Product-->
-            <div>
-              <div class="card product-card card-static">
-                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/18.jpg" alt="Product"></a>
-                <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">Men’s Shoes</a>
-                  <h3 class="product-title fs-sm"><a href="#">Men’s Leather Keds</a></h3>
-                  <div class="d-flex justify-content-between">
-                    <div class="product-price text-accent">$64.<small>99</small></div>
-                    <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Product-->
-            <div>
-              <div class="card product-card card-static">
-                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/19.jpg" alt="Product"></a>
-                <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">Men’s T-shirts</a>
-                  <h3 class="product-title fs-sm"><a href="#">3 Color Collection of T-shirts</a></h3>
-                  <div class="d-flex justify-content-between">
-                    <div class="product-price text-accent">$27.<small>99</small></div>
-                    <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Product-->
-            <div>
-              <div class="card product-card card-static">
-                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/13.jpg" alt="Product"></a>
-                <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">Men’s T-shirts</a>
-                  <h3 class="product-title fs-sm"><a href="#">Cotton Polo Regular Fit</a></h3>
-                  <div class="d-flex justify-content-between">
-                    <div class="product-price text-accent">$13.<small>50</small></div>
-                    <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i><i class="star-rating-icon ci-star"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+
+
           </div>
         </div>
       </div>
