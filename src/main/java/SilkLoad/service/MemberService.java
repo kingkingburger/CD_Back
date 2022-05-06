@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class MemberService extends MemberFormDto {
+public class MemberService  {
 
     //final 붙여야지 생성자 만들어줌
     private final MemberRepository memberRepository;

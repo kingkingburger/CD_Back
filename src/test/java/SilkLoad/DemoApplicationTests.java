@@ -1,4 +1,4 @@
-package test;
+package SilkLoad;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,6 +8,9 @@ class DemoApplicationTests {
 
 	@Test
 	void contextLoads() {
+
+
+		System.out.println(Integer.parseInt("01"));
 	}
 
 }

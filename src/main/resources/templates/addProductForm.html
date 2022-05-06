@@ -36,17 +36,17 @@
 
             <div class="product-details mx-auto pb-3">
                 <form class="needs-validation" action="" th:action="@{/addProduct}" th:object="${productData}"
-                      method="post" enctype="multipart/form-data" autocomplete="off" novalidate>
+                      method="post" enctype="multipart/form-data" >
 
-                    <div th:if="${#fields.hasGlobalErrors()}">
-                        <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
-                    </div>
+<!--                    <div th:if="${#fields.hasGlobalErrors()}">-->
+<!--                        <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>-->
+<!--                    </div>-->
 
                     <div class="input-group mb-3 my-2 ">
                         <div class="m-3">상품 명</div>
                         <input class="form-control rounded-start" id="product_name"
                                th:errorclass="field-error"
-                               th:field="*{name}" type="text" placeholder="상품 제목을 입력하세요" required>
+                               th:field="*{name}" type="text" placeholder="상품 제목을 입력하세요" >
                     </div>
 
                     <div class="input-group mb-3 my-2">
@@ -66,6 +66,33 @@
                                type="text" placeholder="즉시 구매가 입력하세요" required>
                         <div class="m-2">원</div>
                     </div>
+
+                    <div class="input-group mb-3 my-2">
+                        <div class="m-3">마감날짜</div>
+                        <input class="form-control rounded-start" id="product_Date"
+                               th:errorclass="field-error"
+                               th:field="*{deadLineDate}"
+                               type="text" placeholder="입력 형식: 00-05-05" required>
+
+
+                    </div>
+                    <div class="text-danger" th:errors="*{deadLineDate}">
+                        날짜 오류
+                    </div>
+
+
+                    <div class="input-group mb-3 my-2">
+                        <div class="m-3">마감시간</div>
+                        <input class="form-control rounded-start" id="product_Time"
+                               th:errorclass="field-error"
+                               th:field="*{deadLineTime}"
+                               type="text" placeholder="입력 형식: 00:00" required>
+
+                    </div>
+                    <div class="text-danger" th:errors="*{deadLineTime}">
+                        시간 오류
+                    </div>
+
 
                     <div class="input-group mb-3 my-2">
                         <div class="m-3">상품 이미지</div>

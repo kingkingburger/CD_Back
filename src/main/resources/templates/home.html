@@ -38,6 +38,8 @@
                         <div class="d-flex ">
                             <div class="product-price"><span class="text-accent" th:text="${product.getInstantPrice()}+원"></span></div>
                             <div class="product-price"><span class="text-accent" th:if="${product.getAuctionPrice() != null}" th:text="경매가+${product.getAuctionPrice()}"></span></div>
+                            <div class="product-price"><span class="clock" ></span></div>
+
                         </div>
                     </div>
                     <div class="card-body card-body-hidden">
@@ -290,6 +292,31 @@
 </div>
 <!-- Back To Top Button--><a class="btn-scroll-top" href="#top" data-scroll><span
         class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up"> </i></a>
+<script th:inline="javascript">
 
+    var time = 600;
+    var min = "";
+    var sec = "";
+
+    var x = setInterval( () => {
+
+        min = parseInt(time/60);
+        sec = time%60;
+
+        document.querySelector(".clock").innerHTML = min + "분" + sec + "초";
+        time--;
+
+        if (time < 0) {
+            clearInterval(x);
+            document.querySelector(".clock").innerHTML = "시간초과";
+        }
+//product-price"><span class="clock"
+
+
+    }, 1000 )
+
+
+
+</script>
 </body>
 </html>

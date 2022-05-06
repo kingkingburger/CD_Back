@@ -13,6 +13,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,20 +37,30 @@ public class ProductController {
 
 
     @PostMapping("/addProduct")
-    public String saveProduct(@ModelAttribute("productData") ProductFormDto productData,
-                              HttpServletRequest request,
-                              BindingResult bindingResult) throws IOException {
+    public String saveProduct(@Validated @ModelAttribute("productData") ProductFormDto productData,
+                              BindingResult bindingResult,
+                              HttpServletRequest request
+                              ) throws IOException {
 
+        if ( bindingResult.hasErrors() ) {
 
-        if (bindingResult.hasGlobalErrors()) {
-            bindingResult.reject("productErr", "물품을 입력하세요");
+            if ( productData.getDeadLineDate().length() != 8 ) {
+                bindingResult.rejectValue("deadLineDate", "range", null);
+            }
+
+            if ( productData.getDeadLineTime().length() != 5 ) {
+                bindingResult.rejectValue("deadLineTime","range", null );
+            }
+
             return "addProductForm";
+
         }
 
-        HttpSession session = request.getSession();
-        Members loginMember = (Members) session.getAttribute(SessionConst.LOGIN_MEMBER);
-
-        productService.save(productData, loginMember);
+//
+//        HttpSession session = request.getSession();
+//        Members loginMember = (Members) session.getAttribute(SessionConst.LOGIN_MEMBER);
+//
+//        productService.save(productData, loginMember);
 
         return "redirect:/";
     }

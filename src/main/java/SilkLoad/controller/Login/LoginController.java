@@ -42,8 +42,10 @@ public class LoginController {
         Members loginMember = loginService.login(loginFormDto.getLoginId(), loginFormDto.getPassword());
 
         if (loginMember == null) {
+
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
             return "login";
+
         }
 
         HttpSession session = request.getSession();

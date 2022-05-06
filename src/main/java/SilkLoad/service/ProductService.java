@@ -23,7 +23,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ProductService extends Product {
+public class ProductService  {
 
     /**
      * 물품 이미지가 저장될 절대 경로, application properties 참조
@@ -62,12 +62,15 @@ public class ProductService extends Product {
         //product 저장
         productRepository.save(product);
 
+
         //이미지등록
         List<ProductImage> productImages = filesImgSave(productFormDto.getImageFileList());
         productImages.forEach(productImage -> {
             productImage.changeProduct(product);
             productImageRepository.save(productImage);
         });
+
+
     }
 
     private Category categoryClassification(String categoryName) {
