@@ -31,9 +31,13 @@ public class HomeController {
                             Model model,
                             @ModelAttribute("member") MemberFormDto member) {
 
+        //세션에 데이터가 없어도 model을 넣어준다.
+        List<Product> allProduct = productService.findAllProduct();
+        model.addAttribute("allproduct", allProduct);
+
         //세션에 회원 데이터가 없으면
         if (loginMember == null) {
-            log.info("세션에 회원 없음");
+
             return "index";
         }
 
@@ -46,11 +50,10 @@ public class HomeController {
      * @param model product들을 담기위한 매개변수
      * @return model List형태로 view에 반환
      */
-
     @GetMapping("/home")
     public String home(Model model) {
         List<Product> allProduct = productService.findAllProduct();
-        model.addAttribute("Product", allProduct);
+        model.addAttribute("allproduct", allProduct);
         return "home";
     }
 
