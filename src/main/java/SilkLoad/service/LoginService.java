@@ -1,5 +1,6 @@
 package SilkLoad.service;
 
+import SilkLoad.dto.LoginFormDto;
 import SilkLoad.entity.Members;
 import SilkLoad.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +11,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class LoginService {
+public class LoginService  {
 
     private final MemberRepository memberRepository;
 

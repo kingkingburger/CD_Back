@@ -22,7 +22,7 @@ public class Category {
     private String first;
     private String second;
 
-    @OneToMany(mappedBy = "category", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
     private List<Product> productList = new ArrayList<Product>();
 
     @Builder
@@ -31,9 +31,7 @@ public class Category {
         this.first = first;
         this.second = second;
         this.productList = new ArrayList<Product>();
-
     }
-
 
 
 }

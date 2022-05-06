@@ -33,7 +33,7 @@ public class MemberController {
                        BindingResult bindingResult
     ) {
 
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return "addMemberForm";
         }
 

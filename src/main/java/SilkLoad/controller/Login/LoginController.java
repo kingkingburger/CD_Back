@@ -36,14 +36,16 @@ public class LoginController {
                         HttpServletRequest request) {
         log.info("loginFormDto : {}", loginFormDto);
 
-        if( bindingResult.hasErrors()) {
-            return  "login";
+        if (bindingResult.hasErrors()) {
+            return "login";
         }
         Members loginMember = loginService.login(loginFormDto.getLoginId(), loginFormDto.getPassword());
 
-        if( loginMember == null ) {
+        if (loginMember == null) {
+
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
             return "login";
+
         }
 
         HttpSession session = request.getSession();
@@ -65,4 +67,3 @@ public class LoginController {
     }
 
 }
-
