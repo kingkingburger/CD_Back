@@ -77,6 +77,7 @@ public class ProductController {
         List<Product> allProduct = productService.findAllProduct();
         Product byId_product = productService.findById_Product(id);
         model.addAttribute("product", byId_product);
+        model.addAttribute("allproduct",allProduct);
         return "DetailProduct";
     }
 
