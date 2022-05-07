@@ -2,10 +2,7 @@ package SilkLoad.service;
 
 
 import SilkLoad.dto.ProductFormDto;
-import SilkLoad.entity.Category;
-import SilkLoad.entity.Members;
-import SilkLoad.entity.Product;
-import SilkLoad.entity.ProductImage;
+import SilkLoad.entity.*;
 import SilkLoad.repository.ProductImageRepository;
 import SilkLoad.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -39,8 +36,8 @@ public class ProductService  {
     private final ProductImageRepository productImageRepository;
 
 
-    public void save(ProductFormDto productFormDto, Members loginMember) throws IOException {
 
+    public void save(ProductFormDto productFormDto, Members loginMember) throws IOException {
 
         String categoryName = productFormDto.getCategory();
 
@@ -52,9 +49,9 @@ public class ProductService  {
                 .auctionPrice(productFormDto.getAuctionPrice())
                 .explanation(productFormDto.getExplanation())
                 .createdDate(productFormDto.getCreatedDate())
+                .productState(productState.sale)
                 .members(loginMember)
                 .build();
-
 
         //카테고리 등록
         product.changeCategory(category);
