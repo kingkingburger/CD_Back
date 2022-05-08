@@ -56,11 +56,11 @@ public class ProductController {
 
         }
 
-//
-//        HttpSession session = request.getSession();
-//        Members loginMember = (Members) session.getAttribute(SessionConst.LOGIN_MEMBER);
-//
-//        productService.save(productData, loginMember);
+
+        HttpSession session = request.getSession();
+        Members loginMember = (Members) session.getAttribute(SessionConst.LOGIN_MEMBER);
+
+        productService.save(productData, loginMember);
 
         return "redirect:/";
     }
@@ -74,10 +74,8 @@ public class ProductController {
     @GetMapping("/Product")
     public String addProduct(@RequestParam Long id,
                              Model model) {
-        List<Product> allProduct = productService.findAllProduct();
         Product byId_product = productService.findById_Product(id);
         model.addAttribute("product", byId_product);
-        model.addAttribute("allproduct",allProduct);
         return "DetailProduct";
     }
 
