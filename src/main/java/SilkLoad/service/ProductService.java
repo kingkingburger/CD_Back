@@ -207,6 +207,9 @@ public class ProductService  {
         return productSaleDtoList;
     }
 
+    /**
+     * 매개변수 product를 통해 ProductSaleDto를 생성
+     */
     public ProductSaleDto getProductSaleDto(Product product) {
         ProductSaleDto productSaleDto = ProductSaleDto.builder().id(product.getId())
                 .name(product.getName())
@@ -222,6 +225,14 @@ public class ProductService  {
         return productSaleDto;
     }
 
+    /**
+     *
+     * @param createdProduct
+     * @param productTime
+     * productTime의 상태가 무엇인지 확인하여 등록 날짜를 통한 마감 시간을 구하는 메소드
+     * localDateTime 형식이 아닌 String 형식의 날짜와 시간을 리턴
+     * @return
+     */
     private String productDeadLine(LocalDateTime createdProduct, ProductTime productTime) {
 
         if (productTime == ProductTime.ONE_DAY  ) {
