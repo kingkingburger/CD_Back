@@ -18,7 +18,6 @@ class productTimeTest {
         Assertions.assertThat(x).isEqualTo(ProductTime.ONE_DAY);
         System.out.println(x.getDescription());
 
-
     }
 
     @Test

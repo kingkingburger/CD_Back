@@ -41,15 +41,14 @@ public class ProductService  {
     private final ProductImageRepository productImageRepository;
 
 
-    public void save(ProductFormDto productFormDto, Members loginMember) throws IOException {
 
+    public void save(ProductFormDto productFormDto, Members loginMember) throws IOException {
 
         String categoryName = productFormDto.getCategory();
 
         Category category = categoryClassification(categoryName);
 
         Product product = getProduct(productFormDto, loginMember);
-
         //카테고리 등록
         product.changeCategory(category);
 

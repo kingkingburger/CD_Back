@@ -33,9 +33,13 @@ public class HomeController {
                             Model model,
                             @ModelAttribute("member") MemberFormDto member) {
 
+        //세션에 데이터가 없어도 model을 넣어준다.
+        List<ProductSaleDto> allProduct = productService.findAllProduct();
+        model.addAttribute("allproduct", allProduct);
+
         //세션에 회원 데이터가 없으면
         if (loginMember == null) {
-            log.info("세션에 회원 없음");
+
             return "index";
         }
 
@@ -52,8 +56,10 @@ public class HomeController {
      */
     @GetMapping("/home")
     public String home(Model model) {
+
         List<ProductSaleDto> allProduct = productService.findAllProduct();
         model.addAttribute("Products", allProduct );
+
         return "home";
     }
 

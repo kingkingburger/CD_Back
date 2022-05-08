@@ -28,4 +28,6 @@ class MemberServiceTest {
         System.out.println("all = " + all);
         //조회
     }
+
+
 }

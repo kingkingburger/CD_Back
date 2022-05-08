@@ -57,7 +57,17 @@ public class Product {
     }
 
     @Builder
-    public Product(Long id, String name, Long auctionPrice, Long instantPrice, String explanation, LocalDateTime createdDate, Members members, Category category, ProductTime productTime, ProductType productType) {
+
+    public Product(Long id,
+                   String name,
+                   Long auctionPrice,
+                   Long instantPrice,
+                   String explanation,
+                   LocalDateTime createdDate,
+                   Members members,
+                   Category category,
+                   ProductTime productTime,
+                   ProductType productType) {
 
         this.id = id;
         this.name = name;
@@ -65,11 +75,12 @@ public class Product {
         this.instantPrice = instantPrice;
         this.explanation = explanation;
         this.createdDate = createdDate;
+        this.productType = productType;
         this.members = members;
         this.category = category;
-        this.productType = productType;
         this.productTime = productTime;
         this.productImagesList = new ArrayList<>();
+
 
     }
 

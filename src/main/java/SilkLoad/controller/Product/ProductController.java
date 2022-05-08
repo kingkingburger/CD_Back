@@ -83,6 +83,7 @@ public class ProductController {
         model.addAttribute("product", productSaleDto);
         model.addAttribute("allProduct",allProduct);
 
+
         return "DetailProduct";
     }
 

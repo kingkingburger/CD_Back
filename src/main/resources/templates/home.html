@@ -23,12 +23,14 @@
         <div class="row pt-2 mx-n2" >
 
             <!-- Product 모든 등록된 물품 이미지를 가지고 오는 부분-->
+
             <div class="col-lg-3 col-md-4 col-sm-6 px-2 mb-4" th:each="product : ${Products}" >
+
                 <div class="card product-card">
 
                     <a class="card-img-top d-block overflow-hidden" th:href="@{/Product(id=${product.getId()})}">
 <!--                        <img alt="Product"  th:src="|/images/${imageFile.getStoreFileName()}|"/>-->
-                        <img alt="Product" th:src="|/images/${product.getProductImagesList().get(0).getStoreFileName()}|"/>
+                        <img alt="Product"  th:src="|/images/${product.getProductImagesList().get(0).getStoreFileName()}|"/>
                     </a>
                     <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#" th:text="${product.getCategory().getSecond()}">카테고리</a>
 

@@ -306,12 +306,12 @@
                 <li class="breadcrumb-item"><a class="text-nowrap" href="index.html"><i class="ci-home"></i>Home</a></li>
                 <li class="breadcrumb-item text-nowrap"><a href="#">Shop</a>
                 </li>
-                <li class="breadcrumb-item text-nowrap active" aria-current="page">Product Page v.1</li>
+                <li class="breadcrumb-item text-nowrap active" aria-current="page" th:text="${product.name}"></li>
               </ol>
             </nav>
           </div>
-          <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
-            <h1 class="h3 text-light mb-0">Sports Hooded Sweatshirt</h1>
+          <div class="order-lg-1 pe-lg-4 text-center text-lg-start" >
+            <h1 class="h3 text-light mb-0" th:text="${product.name}" >제품메인제목</h1>
           </div>
         </div>
       </div>
@@ -360,7 +360,7 @@
                   </div>
 
                     <!--가격-->
-                  <div class="mb-3"><span class="h3 fw-normal text-accent me-1" th:text="${product.getInstantPrice()}"><small>원</small></span>
+                  <div class="mb-3"><span class="h3 fw-normal text-accent me-1" th:text="${product.instantPrice}"><small>원</small></span>
                     <del class="text-muted fs-lg me-3">원</del><span class="badge bg-danger badge-shadow align-middle mt-n2">Sale</span>
                   </div>
 
@@ -439,11 +439,11 @@
                 <div class="card-body py-2">
                   <a class="product-meta d-block fs-xs pb-1" href="#" th:text="${all_product.getCategory().getSecond()}">카테고리</a>
                   <h3 class="product-title fs-sm">
-                    <a th:href="@{/Product(id=${product.getId()})}" th:text="${all_product.getName()}">물품제목</a>
+                    <a th:href="@{/Product(id=${product.getId()})}" th:text="${all_product.name}">물품제목</a>
                   </h3>
                   <div class="d-flex justify-content-between">
                     <div class="product-price">
-                      <span class="text-accent" th:text="${all_product.getInstantPrice()}+원">
+                      <span class="text-accent" th:text="${all_product.instantPrice}+원">
                         <small></small>
                       </span>
                     </div>
