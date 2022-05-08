@@ -319,7 +319,7 @@
         <!-- Gallery + details-->
         <div class="bg-light shadow-lg rounded-3 px-4 py-3 mb-5">
           <div class="px-lg-3">
-            <div class="row" th:each="pro : ${product}">
+            <div class="row">
               <!-- Product gallery-->
               <div class="col-lg-7 pe-lg-0 pt-lg-4">
                 <div class="product-gallery">
@@ -360,14 +360,14 @@
                   </div>
 
                     <!--가격-->
-                  <div class="mb-3"><span class="h3 fw-normal text-accent me-1" th:text="${pro.getInstantPrice()}"><small>원</small></span>
+                  <div class="mb-3"><span class="h3 fw-normal text-accent me-1" th:text="${product.getInstantPrice()}"><small>원</small></span>
                     <del class="text-muted fs-lg me-3">원</del><span class="badge bg-danger badge-shadow align-middle mt-n2">Sale</span>
                   </div>
 
                   <div class="fs-sm mb-4">
                       <span class="text-heading fw-medium me-1">카테고리:</span>
-                      <span class="text-muted" id="colorOption1" th:utext="${pro.getCategory().getSecond()}"></span>
-                      <span class="text-muted" id="colorOption2" th:text="${pro.getCategory().getFirst()}"></span>
+                      <span class="text-muted" id="colorOption1" th:utext="${product.getCategory().getSecond()}"></span>
+                      <span class="text-muted" id="colorOption2" th:text="${product.getCategory().getFirst()}"></span>
                   </div>
 
                   <div class="position-relative me-n4 mb-3">
@@ -395,8 +395,15 @@
 
                           <h6 class="fs-sm mb-2">상세 설명</h6>
                           <ul class="fs-sm ps-4">
-                            <li th:text="${pro.getExplanation()}"></li>
+                            <li th:text="${ product.explanation }"></li>
                           </ul>
+
+                          <h6 class="fs-sm mb-2">마감시간</h6>
+                          <ul class="fs-sm ps-4">
+                            <li th:id="*{ product.productTime}" ></li>
+                          </ul>
+
+
                           <h6 class="fs-sm mb-2">Art. No.</h6>
                           <ul class="fs-sm ps-4 mb-0">
                             <li>183260098</li>
@@ -421,7 +428,7 @@
         <div class="tns-carousel tns-controls-static tns-controls-outside" >
           <div class="tns-carousel-inner" data-carousel-options="{&quot;items&quot;: 2, &quot;controls&quot;: true, &quot;nav&quot;: false, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;500&quot;:{&quot;items&quot;:2, &quot;gutter&quot;: 18},&quot;768&quot;:{&quot;items&quot;:3, &quot;gutter&quot;: 20}, &quot;1100&quot;:{&quot;items&quot;:4, &quot;gutter&quot;: 30}}}">
             <!-- Product-->
-            <div th:each="all_product : ${allproduct}">
+            <div th:each="all_product : ${allProduct}">
               <div class="card product-card card-static">
                 <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist">
                   <i class="ci-heart"></i>
@@ -538,5 +545,47 @@
        </div>
       </div>
     </main>
+    <script th:inline="javascript">
+
+      const timeType = [[${product.productTime}]];
+      const deadLineString = [[${product.deadLine}]]
+      const now = new Date();
+      const deadLine = new Date( Number(deadLineString.slice(0,4)),
+              Number(deadLineString.slice(5,7))-1,
+              Number(deadLineString.slice(8,10)),
+              Number(deadLineString.slice(11,13)),
+              Number(deadLineString.slice(14,16)),
+              Number(deadLineString.slice(17,19)),
+                );
+      const remainingTime = deadLine.getTime() - now.getTime();
+      if (remainingTime > 0) {
+
+
+        let totalSec = parseInt(remainingTime / 1000);
+
+        let hour = parseInt(totalSec / 3600);
+        let min = parseInt((totalSec - hour * 60 * 60) / 60);
+        let sec = totalSec % 60;
+        $("#" + timeType).text(hour + "시 " + min + "분 " + sec + "초");
+
+        let timer = setInterval(() => {
+
+          hour = parseInt(totalSec / 3600);
+          min = parseInt((totalSec - hour * 60 * 60) / 60);
+          sec = totalSec % 60;
+
+          $("#" + timeType).text(hour + "시 " + min + "분 " + sec + "초");
+
+          totalSec--;
+
+          if (totalSec < 0) {
+            clearInterval(timer);
+          }
+
+        }, 1000);
+      } else {
+        $("#" + timeType).text("마감");
+      }
+    </script>
   </body>
 </html>

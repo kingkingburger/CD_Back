@@ -1,6 +1,6 @@
 package SilkLoad.entity;
 
-public enum productState {
+public enum ProductType {
 
     sale, soldOut, timeOut
 

@@ -50,7 +50,17 @@
                     </div>
 
                     <div class="input-group mb-3 my-2">
-                        <div class="m-3">가격</div>
+                        <div class="m-3 me-5">경매 시간</div>
+
+                        <div th:each="type : ${productTimes}" class="form-check p-3">
+                            <input type="radio" class="form-check-input" name="optRadio" value="something" th:field="*{productTime}" th:value="${type.name()}" >
+                            <label class="form-check-label" th:for="${#ids.prev('productTime')}"  th:text="${type.description}">24시간</label>
+
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3 my-2">
+                        <div class="m-3">경매 시작가</div>
                         <input class="form-control rounded-start" id="auction_price"
                                th:errorclass="field-error"
                                th:field="*{auctionPrice}"
@@ -59,39 +69,15 @@
                     </div>
 
                     <div class="input-group mb-3 my-2">
-                        <div class="m-3">가격</div>
+                        <div class="m-3">즉시 구매가</div>
                         <input class="form-control rounded-start" id="product_price"
                                th:errorclass="field-error"
                                th:field="*{instancePrice}"
-                               type="text" placeholder="즉시 구매가 입력하세요" required>
+                               type="text" placeholder="즉시 구매가를 입력하세요" required>
                         <div class="m-2">원</div>
                     </div>
 
-                    <div class="input-group mb-3 my-2">
-                        <div class="m-3">마감날짜</div>
-                        <input class="form-control rounded-start" id="product_Date"
-                               th:errorclass="field-error"
-                               th:field="*{deadLineDate}"
-                               type="text" placeholder="입력 형식: 00-05-05" required>
 
-
-                    </div>
-                    <div class="text-danger" th:errors="*{deadLineDate}">
-                        날짜 오류
-                    </div>
-
-
-                    <div class="input-group mb-3 my-2">
-                        <div class="m-3">마감시간</div>
-                        <input class="form-control rounded-start" id="product_Time"
-                               th:errorclass="field-error"
-                               th:field="*{deadLineTime}"
-                               type="text" placeholder="입력 형식: 00:00" required>
-
-                    </div>
-                    <div class="text-danger" th:errors="*{deadLineTime}">
-                        시간 오류
-                    </div>
 
 
                     <div class="input-group mb-3 my-2">
@@ -573,11 +559,9 @@
                             <i class="ci-location text-muted fs-lg align-middle mt-n1 me-2"></i>
                             Find in local store</a>
                         </h3>
-
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
@@ -597,15 +581,41 @@
 </div>
 
 
-
 <script th:inline="javascript">
+
     function handleOnChange(e) {
+
         // 선택된 데이터 가져오기
         const value = e.value;
-
         document.getElementById('result_comment').innerText = "선택된것 = " + value;
         document.getElementById('result').value = value;
+
     }
+
+    $(document).ready(() => {
+
+        $("#productTime1").attr("checked", true);
+        $("#productTime1").click(function(event) {
+            //readOnly remove
+            $("#auction_price").removeAttr("readonly").attr("placeholder","경매 시작가를 입력하세요.");
+        });
+
+        $("#productTime2").click(function(event) {
+            //readOnly remove
+            $("#auction_price").removeAttr("readonly").attr("placeholder","경매 시작가를 입력하세요.");
+
+        });
+
+
+        $("#productTime3").click(function(event) {
+            //readOnly set
+            $("#auction_price").val("")
+                .attr("readonly",true)
+                .attr("placeholder","비경매는 입력하지 않습니다.");
+        });
+
+    });
+
 </script>
 <!-- Back To Top Button-->
 <a class="btn-scroll-top" href="#top" data-scroll>

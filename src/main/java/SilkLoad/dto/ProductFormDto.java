@@ -1,7 +1,11 @@
 package SilkLoad.dto;
 
 
+import SilkLoad.entity.ProductTime;
+import SilkLoad.entity.ProductType;
+import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
@@ -11,10 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-
+@ToString
 public class ProductFormDto {
 
-    private Long Id; // PK
     @NotBlank
     private String name; //물품이름
 
@@ -26,9 +29,9 @@ public class ProductFormDto {
     private List<MultipartFile> imageFileList = new ArrayList<MultipartFile>(); //이미지
     private String Explanation; //물품상세설명
     private LocalDateTime createdDate = LocalDateTime.now(); //생성일자
-    @NotBlank
-    private String deadLineDate;
-    @NotBlank
-    private String deadLineTime;
+
+    @NotNull
+    private ProductTime productTime;
+
 
 }
