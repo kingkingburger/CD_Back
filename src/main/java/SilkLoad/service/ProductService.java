@@ -2,6 +2,7 @@ package SilkLoad.service;
 
 
 import SilkLoad.dto.ProductFormDto;
+import SilkLoad.dto.ProductSaleDto;
 import SilkLoad.entity.*;
 import SilkLoad.repository.ProductImageRepository;
 import SilkLoad.repository.ProductRepository;
@@ -11,8 +12,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -43,16 +48,7 @@ public class ProductService  {
 
         Category category = categoryClassification(categoryName);
 
-        Product product = Product.builder()
-                .name(productFormDto.getName())
-                .instantPrice(productFormDto.getInstancePrice())
-                .auctionPrice(productFormDto.getAuctionPrice())
-                .explanation(productFormDto.getExplanation())
-                .createdDate(productFormDto.getCreatedDate())
-                .productState(productState.sale)
-                .members(loginMember)
-                .build();
-
+        Product product = getProduct(productFormDto, loginMember);
         //카테고리 등록
         product.changeCategory(category);
 
@@ -68,6 +64,20 @@ public class ProductService  {
         });
 
 
+    }
+
+    private Product getProduct(ProductFormDto productFormDto, Members loginMember) {
+        Product product = Product.builder()
+                .name(productFormDto.getName())
+                .instantPrice(productFormDto.getInstancePrice())
+                .auctionPrice(productFormDto.getAuctionPrice())
+                .explanation(productFormDto.getExplanation())
+                .createdDate(productFormDto.getCreatedDate())
+                .productTime( productFormDto.getProductTime())
+                .productType(ProductType.sale)
+                .members(loginMember)
+                .build();
+        return product;
     }
 
     private Category categoryClassification(String categoryName) {
@@ -176,10 +186,72 @@ public class ProductService  {
      * db에 있는 product 테이블에 있는 모든것
      * @return List형태로 반환
      */
-    public List<Product> findAllProduct() {
+    public List<ProductSaleDto> findAllProduct() {
         List<Product> allProduct = productRepository.findAll();
-        return allProduct;
+
+        return productToProductSaleDto(allProduct);
     }
+
+    public List<ProductSaleDto> productToProductSaleDto(List<Product> allProduct) {
+
+        List<ProductSaleDto> productSaleDtoList = new ArrayList<>();
+
+
+        allProduct.forEach( product -> {
+
+            ProductSaleDto productSaleDto = getProductSaleDto(product);
+
+            productSaleDtoList.add(productSaleDto);
+
+        } );
+        return productSaleDtoList;
+    }
+
+    /**
+     * 매개변수 product를 통해 ProductSaleDto를 생성
+     */
+    public ProductSaleDto getProductSaleDto(Product product) {
+        ProductSaleDto productSaleDto = ProductSaleDto.builder().id(product.getId())
+                .name(product.getName())
+                .auctionPrice(product.getAuctionPrice())
+                .instantPrice(product.getInstantPrice())
+                .explanation(product.getExplanation())
+                .productType(product.getProductType())
+                .category(product.getCategory())
+                .deadLine(productDeadLine( product.getCreatedDate(), product.getProductTime() ))
+                .productTime(product.getProductTime())
+                .productImagesList(product.getProductImagesList())
+                .build();
+        return productSaleDto;
+    }
+
+    /**
+     *
+     * @param createdProduct
+     * @param productTime
+     * productTime의 상태가 무엇인지 확인하여 등록 날짜를 통한 마감 시간을 구하는 메소드
+     * localDateTime 형식이 아닌 String 형식의 날짜와 시간을 리턴
+     * @return
+     */
+    private String productDeadLine(LocalDateTime createdProduct, ProductTime productTime) {
+
+        if (productTime == ProductTime.ONE_DAY  ) {
+            createdProduct = createdProduct.plusDays(1);
+        }
+        else if (productTime == ProductTime.TWO_DAY) {
+            createdProduct = createdProduct.plusDays(2);
+
+        }
+        String parsedLocalDateTimeNow = "";
+        if (createdProduct != null) {
+            parsedLocalDateTimeNow = createdProduct.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        }
+
+        return parsedLocalDateTimeNow;
+
+
+    }
+
 
     public List<Product> findAllimg() {
         List<Product> allProduct = productRepository.findAll();

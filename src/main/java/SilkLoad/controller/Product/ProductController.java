@@ -3,7 +3,9 @@ package SilkLoad.controller.Product;
 
 import SilkLoad.SessionConst;
 import SilkLoad.dto.ProductFormDto;
+import SilkLoad.dto.ProductSaleDto;
 import SilkLoad.entity.Product;
+import SilkLoad.entity.ProductTime;
 import SilkLoad.service.ProductService;
 import SilkLoad.entity.Members;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
@@ -30,32 +33,28 @@ public class ProductController {
 
     private final ProductService productService;
 
+    @ModelAttribute("productTimes")
+    public ProductTime[] productType() {
+        return ProductTime.values();
+    }
+
     @GetMapping("/addProduct")
     public String addProduct(@ModelAttribute("productData") ProductFormDto productData) {
         return "addProductForm";
     }
 
-
     @PostMapping("/addProduct")
-    public String saveProduct(@Validated @ModelAttribute("productData") ProductFormDto productData,
+    public String saveProduct(@Valid @ModelAttribute("productData") ProductFormDto productData,
                               BindingResult bindingResult,
                               HttpServletRequest request
+
                               ) throws IOException {
 
+        log.info("productData={}", productData.toString());
+
         if ( bindingResult.hasErrors() ) {
-
-            if ( productData.getDeadLineDate().length() != 8 ) {
-                bindingResult.rejectValue("deadLineDate", "range", null);
-            }
-
-            if ( productData.getDeadLineTime().length() != 5 ) {
-                bindingResult.rejectValue("deadLineTime","range", null );
-            }
-
             return "addProductForm";
-
         }
-
 
         HttpSession session = request.getSession();
         Members loginMember = (Members) session.getAttribute(SessionConst.LOGIN_MEMBER);
@@ -64,6 +63,8 @@ public class ProductController {
 
         return "redirect:/";
     }
+
+
 
     /**
      * product의 상세 페이지
@@ -74,8 +75,15 @@ public class ProductController {
     @GetMapping("/Product")
     public String addProduct(@RequestParam Long id,
                              Model model) {
+
+        List<ProductSaleDto> allProduct = productService.findAllProduct();
         Product byId_product = productService.findById_Product(id);
-        model.addAttribute("product", byId_product);
+        ProductSaleDto productSaleDto = productService.getProductSaleDto(byId_product);
+
+        model.addAttribute("product", productSaleDto);
+        model.addAttribute("allProduct",allProduct);
+
+
         return "DetailProduct";
     }
 

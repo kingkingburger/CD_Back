@@ -1,6 +1,8 @@
 package SilkLoad.example.service;
 
+import SilkLoad.dto.ProductSaleDto;
 import SilkLoad.entity.Product;
+import SilkLoad.entity.ProductType;
 import SilkLoad.entity.productState;
 import SilkLoad.service.ProductService;
 import org.junit.jupiter.api.Test;
@@ -26,7 +28,7 @@ public class ProductServiceTest {
                 .auctionPrice((long)20000)
                 .explanation("productState가 재대로 들어가는지")
                 .createdDate(LocalDateTime.now())
-                .productState(productState.sale)
+                .productType(ProductType.sale)
                 .build();
 
         System.out.println("product = " + product);
@@ -34,10 +36,10 @@ public class ProductServiceTest {
 
     @Test
     void 물품_가져오기_테스트(){
-        List<Product> allProduct = productService.findAllProduct();
+        List<ProductSaleDto> allProduct = productService.findAllProduct();
         Product byId_product = productService.findById_Product((long) 5);
 //        System.out.println("byId_product = " + byId_product);
-        for (Product product : allProduct) {
+        for (ProductSaleDto product : allProduct) {
             System.out.println("product = " + product.getProductImagesList().get(0).getStoreFileName());
         }
     }

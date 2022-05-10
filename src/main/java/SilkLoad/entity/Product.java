@@ -26,11 +26,12 @@ public class Product {
     private Long auctionPrice; //경매가격
     private Long instantPrice; //즉시거래가격
     private String explanation; //물품상세설명
-    private LocalDateTime deadLine;
 
     @Enumerated(EnumType.STRING)
-    private productState productState;
+    private ProductType productType;
 
+    @Enumerated(EnumType.STRING)
+    private ProductTime productTime;
 
     private LocalDateTime createdDate = LocalDateTime.now(); //생성일자
 
@@ -56,27 +57,31 @@ public class Product {
     }
 
     @Builder
+
     public Product(Long id,
                    String name,
                    Long auctionPrice,
                    Long instantPrice,
                    String explanation,
                    LocalDateTime createdDate,
-                   LocalDateTime deadLine,
-                   productState productState,
                    Members members,
-                   Category category) {
+                   Category category,
+                   ProductTime productTime,
+                   ProductType productType) {
+
         this.id = id;
         this.name = name;
         this.auctionPrice = auctionPrice;
         this.instantPrice = instantPrice;
         this.explanation = explanation;
-        this.deadLine = deadLine;
         this.createdDate = createdDate;
-        this.productState = productState;
+        this.productType = productType;
         this.members = members;
         this.category = category;
+        this.productTime = productTime;
         this.productImagesList = new ArrayList<>();
+
+
     }
 
 }
