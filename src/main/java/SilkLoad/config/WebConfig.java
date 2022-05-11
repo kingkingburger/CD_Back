@@ -17,7 +17,8 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new ErrorPageCheckInterceptor())
                 .order(0)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/", "/members/add", "/login", "/logout","/home","/addProduct","/Product",
+                .excludePathPatterns("/", "/members/add", "/login", "/logout","/home","/addProduct","/Product", "/Cart","/MyPage",
+                        "/account-wishlist","/account-orders",
                         "/images/**","/css/**", "/*.ico", "/error","/vendor/**", "/img/**","/js/**","/fonts/**" );
 
         //로그인 인증

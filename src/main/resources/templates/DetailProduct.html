@@ -324,16 +324,11 @@
               <div class="col-lg-7 pe-lg-0 pt-lg-4">
                 <div class="product-gallery">
                   <div class="product-gallery-preview order-sm-2">
+
                     <div class="product-gallery-preview-item active" id="first">
-                      <img class="image-zoom" th:src="|/images/${product.getProductImagesList().get(0).getStoreFileName()}|" data-zoom="img/shop/single/gallery/01.jpg" alt="Product image">
-                      <div class="image-zoom-pane"></div>
+                      <img th:src="|/images/${product.getProductImagesList().get(0).getStoreFileName()}|" alt="Product image">
                     </div>
-                    <div class="product-gallery-preview-item" id="second"><img class="image-zoom" src="img/shop/single/gallery/02.jpg" data-zoom="img/shop/single/gallery/02.jpg" alt="Product image">
-                      <div class="image-zoom-pane"></div>
-                    </div>
-                    <div class="product-gallery-preview-item" id="third"><img class="image-zoom" src="img/shop/single/gallery/03.jpg" data-zoom="img/shop/single/gallery/03.jpg" alt="Product image">
-                      <div class="image-zoom-pane"></div>
-                    </div>
+
                     <div class="product-gallery-preview-item" id="fourth"><img class="image-zoom" src="img/shop/single/gallery/04.jpg" data-zoom="img/shop/single/gallery/04.jpg" alt="Product image">
                       <div class="image-zoom-pane"></div>
                     </div>
@@ -341,10 +336,6 @@
                   <div class="product-gallery-thumblist order-sm-1">
                     <a class="product-gallery-thumblist-item active" href="#first">
                       <img th:src="|/images/${product.getProductImagesList().get(0).getStoreFileName()}|" alt="Product thumb"></a>
-                    <a class="product-gallery-thumblist-item" href="#second">
-                      <img src="img/shop/single/gallery/th02.jpg" alt="Product thumb"></a>
-                    <a class="product-gallery-thumblist-item" href="#third">
-                      <img src="img/shop/single/gallery/th03.jpg" alt="Product thumb"></a>
                     <a class="product-gallery-thumblist-item" href="#fourth">
                       <img src="img/shop/single/gallery/th04.jpg" alt="Product thumb"></a>
                   </div>
@@ -354,8 +345,14 @@
               <div class="col-lg-5 pt-4 pt-lg-0">
                 <div class="product-details ms-auto pb-3">
                   <div class="d-flex justify-content-between align-items-center mb-2"><a href="#reviews" data-scroll>
-                      <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
-                      </div><span class="d-inline-block fs-sm text-body align-middle mt-1 ms-1">74 Reviews</span></a>
+                      <div class="star-rating">
+                        <i class="star-rating-icon ci-star-filled active"></i>
+                        <i class="star-rating-icon ci-star-filled active"></i>
+                        <i class="star-rating-icon ci-star-filled active"></i>
+                        <i class="star-rating-icon ci-star-filled active"></i>
+                        <i class="star-rating-icon ci-star"></i>
+                      </div>
+                    <span class="d-inline-block fs-sm text-body align-middle mt-1 ms-1"></span></a>
                     <button class="btn-wishlist me-0 me-lg-n3" type="button" data-bs-toggle="tooltip" title="Add to wishlist"><i class="ci-heart"></i></button>
                   </div>
 
@@ -370,33 +367,21 @@
                       <span class="text-muted" id="colorOption2" th:text="${product.getCategory().getFirst()}"></span>
                   </div>
 
-                  <div class="position-relative me-n4 mb-3">
-                    <div class="form-check form-option form-check-inline mb-2">
-                      <input class="form-check-input" type="radio" name="color" id="color1" data-bs-label="colorOption" value="Red/Dark blue/White" checked>
-                      <label class="form-option-label rounded-circle" for="color1"><span class="form-option-color rounded-circle" style="background-image: url(img/shop/single/color-opt-1.png)"></span></label>
-                    </div>
-                    <div class="form-check form-option form-check-inline mb-2">
-                      <input class="form-check-input" type="radio" name="color" id="color2" data-bs-label="colorOption" value="Beige/White/Dark grey">
-                      <label class="form-option-label rounded-circle" for="color2"><span class="form-option-color rounded-circle" style="background-image: url(img/shop/single/color-opt-2.png)"></span></label>
-                    </div>
-                    <div class="form-check form-option form-check-inline mb-2">
-                      <input class="form-check-input" type="radio" name="color" id="color3" data-bs-label="colorOption" value="Dark grey/White/Orange">
-                      <label class="form-option-label rounded-circle" for="color3"><span class="form-option-color rounded-circle" style="background-image: url(img/shop/single/color-opt-3.png)"></span></label>
-                    </div>
-                    <div class="product-badge product-available mt-n1"><i class="ci-security-check"></i>Product available</div>
-                  </div>
 
                   <!-- Product panels-->
                   <div class="accordion mb-4" id="productPanels">
                     <div class="accordion-item">
-                      <h3 class="accordion-header"><a class="accordion-button" href="#productInfo" role="button" data-bs-toggle="collapse" aria-expanded="true" aria-controls="productInfo"><i class="ci-announcement text-muted fs-lg align-middle mt-n1 me-2"></i>Product info</a></h3>
+                      <h3 class="accordion-header"><a class="accordion-button" href="#productInfo" role="button" data-bs-toggle="collapse" aria-expanded="true" aria-controls="productInfo">
+                        <i class="ci-announcement text-muted fs-lg align-middle mt-n1 me-2"></i>Product info</a>
+                      </h3>
                       <div class="accordion-collapse collapse show" id="productInfo" data-bs-parent="#productPanels">
                         <div class="accordion-body">
 
                           <h6 class="fs-sm mb-2">상세 설명</h6>
                           <ul class="fs-sm ps-4">
-                            <li th:text="${ product.explanation }"></li>
+                            <li class="" th:text="${ product.explanation }"></li>
                           </ul>
+
 
                           <h6 class="fs-sm mb-2">마감시간</h6>
                           <ul class="fs-sm ps-4">
@@ -411,9 +396,9 @@
                         </div>
                       </div>
                     </div>
-
-
                   </div>
+
+                  <button class="btn btn-primary btn-shadow d-block w-100" type="submit"><i class="ci-cart fs-lg me-2"></i>Add to Cart</button>
                   <!-- Sharing-->
                   <label class="form-label d-inline-block align-middle my-2 me-3">Share:</label><a class="btn-share btn-twitter me-2 my-2" href="#"><i class="ci-twitter"></i>Twitter</a><a class="btn-share btn-instagram me-2 my-2" href="#"><i class="ci-instagram"></i>Instagram</a><a class="btn-share btn-facebook my-2" href="#"><i class="ci-facebook"></i>Facebook</a>
                 </div>

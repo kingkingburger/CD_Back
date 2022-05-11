@@ -2,7 +2,7 @@ package SilkLoad.service;
 
 
 import SilkLoad.dto.ProductFormDto;
-import SilkLoad.dto.ProductSaleDto;
+import SilkLoad.dto.ProductRecordDto;
 import SilkLoad.entity.*;
 import SilkLoad.repository.ProductImageRepository;
 import SilkLoad.repository.ProductRepository;
@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -25,7 +23,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ProductService  {
+public class ProductService {
 
     /**
      * 물품 이미지가 저장될 절대 경로, application properties 참조
@@ -41,11 +39,9 @@ public class ProductService  {
     private final ProductImageRepository productImageRepository;
 
 
-
     public void save(ProductFormDto productFormDto, Members loginMember) throws IOException {
 
         String categoryName = productFormDto.getCategory();
-
         Category category = categoryClassification(categoryName);
 
         Product product = getProduct(productFormDto, loginMember);
@@ -73,7 +69,7 @@ public class ProductService  {
                 .auctionPrice(productFormDto.getAuctionPrice())
                 .explanation(productFormDto.getExplanation())
                 .createdDate(productFormDto.getCreatedDate())
-                .productTime( productFormDto.getProductTime())
+                .productTime(productFormDto.getProductTime())
                 .productType(ProductType.sale)
                 .members(loginMember)
                 .build();
@@ -161,15 +157,6 @@ public class ProductService  {
         return originalFilename.substring(pos + 1);
     }
 
-
-    /**
-     * product_image db로 부터 모든 파일 추출
-     */
-    public List<ProductImage> findAllProductImage() {
-        return productImageRepository.findAll();
-    }
-
-
     /**
      * id로 Product(물품) 찾기
      *
@@ -184,78 +171,67 @@ public class ProductService  {
 
     /**
      * db에 있는 product 테이블에 있는 모든것
+     *
      * @return List형태로 반환
      */
-    public List<ProductSaleDto> findAllProduct() {
+    public List<ProductRecordDto> findAllProduct() {
         List<Product> allProduct = productRepository.findAll();
 
         return productToProductSaleDto(allProduct);
     }
 
-    public List<ProductSaleDto> productToProductSaleDto(List<Product> allProduct) {
+    public List<ProductRecordDto> productToProductSaleDto(List<Product> allProduct) {
 
-        List<ProductSaleDto> productSaleDtoList = new ArrayList<>();
+        List<ProductRecordDto> productRecordDtoList = new ArrayList<>();
 
+        allProduct.forEach(product -> {
+            ProductRecordDto productRecordDto = getProductSaleDto(product);
+            productRecordDtoList.add(productRecordDto);
+        });
 
-        allProduct.forEach( product -> {
-
-            ProductSaleDto productSaleDto = getProductSaleDto(product);
-
-            productSaleDtoList.add(productSaleDto);
-
-        } );
-        return productSaleDtoList;
+        return productRecordDtoList;
     }
 
     /**
      * 매개변수 product를 통해 ProductSaleDto를 생성
      */
-    public ProductSaleDto getProductSaleDto(Product product) {
-        ProductSaleDto productSaleDto = ProductSaleDto.builder().id(product.getId())
+    public ProductRecordDto getProductSaleDto(Product product) {
+        ProductRecordDto productRecordDto = ProductRecordDto.builder().id(product.getId())
                 .name(product.getName())
                 .auctionPrice(product.getAuctionPrice())
                 .instantPrice(product.getInstantPrice())
                 .explanation(product.getExplanation())
                 .productType(product.getProductType())
                 .category(product.getCategory())
-                .deadLine(productDeadLine( product.getCreatedDate(), product.getProductTime() ))
+                .deadLine(productDeadLine(product.getCreatedDate(), product.getProductTime()))
                 .productTime(product.getProductTime())
                 .productImagesList(product.getProductImagesList())
                 .build();
-        return productSaleDto;
+        return productRecordDto;
     }
 
     /**
-     *
      * @param createdProduct
-     * @param productTime
-     * productTime의 상태가 무엇인지 확인하여 등록 날짜를 통한 마감 시간을 구하는 메소드
-     * localDateTime 형식이 아닌 String 형식의 날짜와 시간을 리턴
+     * @param productTime    productTime의 상태가 무엇인지 확인하여 등록 날짜를 통한 마감 시간을 구하는 메소드
+     *                       localDateTime 형식이 아닌 String 형식의 날짜와 시간을 리턴
      * @return
      */
     private String productDeadLine(LocalDateTime createdProduct, ProductTime productTime) {
 
-        if (productTime == ProductTime.ONE_DAY  ) {
+        if (productTime == ProductTime.ONE_DAY) {
             createdProduct = createdProduct.plusDays(1);
-        }
-        else if (productTime == ProductTime.TWO_DAY) {
+        } else if (productTime == ProductTime.TWO_DAY) {
             createdProduct = createdProduct.plusDays(2);
-
         }
+
         String parsedLocalDateTimeNow = "";
+
         if (createdProduct != null) {
             parsedLocalDateTimeNow = createdProduct.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         }
 
         return parsedLocalDateTimeNow;
-
-
     }
 
-
-    public List<Product> findAllimg() {
-        List<Product> allProduct = productRepository.findAll();
-        return allProduct;
-    }
 
 }

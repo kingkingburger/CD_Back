@@ -30,15 +30,11 @@ public class MemberController {
 
     @PostMapping("/add")
     public String save(@Valid @ModelAttribute MemberFormDto form,
-                       BindingResult bindingResult
-    ) {
-
+                       BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "addMemberForm";
         }
-
         memberService.save(form);
-
         return "redirect:/";
     }
 
