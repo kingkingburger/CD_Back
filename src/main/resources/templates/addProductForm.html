@@ -38,9 +38,9 @@
                 <form class="needs-validation" action="" th:action="@{/addProduct}" th:object="${productData}"
                       method="post" enctype="multipart/form-data" >
 
-<!--                    <div th:if="${#fields.hasGlobalErrors()}">-->
-<!--                        <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>-->
-<!--                    </div>-->
+                    <!--                    <div th:if="${#fields.hasGlobalErrors()}">-->
+                    <!--                        <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>-->
+                    <!--                    </div>-->
 
                     <div class="input-group mb-3 my-2 ">
                         <div class="m-3">상품 명</div>
@@ -99,362 +99,362 @@
                     <div class="m-3">카테고리</div>
                     <div class="navbar-sticky bg-light">
                         <div class="navbar navbar-expand navbar-light navbar-stuck-menu mt-n2 pt-0 pb-2 flex-wrap">
-                                <!-- Primary menu-->
+                            <!-- Primary menu-->
 
-                                <li class="dropdown mx-2 border rounded" style="list-style:none;">여성의류
+                            <li class="dropdown mx-2 border rounded" style="list-style:none;">여성의류
 
-                                    <ul class="dropdown-menu">
+                                <ul class="dropdown-menu">
 
-                                        <select class="form-select dropdown col"
-                                                size="20"
-                                                onchange="handleOnChange(this)"
-                                        >
-                                            <option class="mt-2" value="패딩점퍼,여성의류">패딩/점퍼</option>
-                                            <option class="mt-2" value="맨투맨,여성의류">맨투맨</option>
-                                            <option class="mt-2" value="코드,여성의류">코드</option>
-                                            <option class="mt-2" value="후드티/후드집업,여성의류">후드티/후드집업</option>
-                                            <option class="mt-2" value="티셔츠,여성의류">티셔츠</option>
-                                            <option class="mt-2" value="셔츠,여성의류">셔츠</option>
-                                            <option class="mt-2" value="바지,여성의류">바지</option>
-                                            <option class="mt-2" value="반바지,여성의류">반바지</option>
-                                            <option class="mt-2" value="정장,여성의류">정장</option>
-                                            <option class="mt-2" value="트레이닝,여성의류">트레이닝</option>
-                                            <option class="mt-2" value="언더웨어홈웨어,여성의류">언더웨어/홈웨어</option>
-                                            <option class="mt-2" value="치마,여성의류">치마</option>
-                                            <option class="mt-2" value="원피스,여성의류">원피스</option>
-                                            <option class="mt-2" value="가디건,여성의류">가디건</option>
-                                        </select>
-                                    </ul>
-                                </li>
-
-
-                                <li class="dropdown mx-2 border rounded" style="list-style:none;">남성의류
-
-                                    <ul class="dropdown-menu">
-
-                                        <select class="form-select col"
-                                                size="20"
-                                                onchange="handleOnChange(this)"
-                                        >
-                                            <option class="mt-2" value="패딩점퍼,남성의류">패딩/점퍼</option>
-                                            <option class="mt-2" value="코드,남성의류">코드</option>
-                                            <option class="mt-2" value="맨투맨" ,남성의류>맨투맨</option>
-                                            <option class="mt-2" value="후드티후드집업,남성의류">후드티/후드집업</option>
-                                            <option class="mt-2" value="티셔츠,남성의류">티셔츠</option>
-                                            <option class="mt-2" value="셔츠,남성의류">셔츠</option>
-                                            <option class="mt-2" value="바지,남성의류">바지</option>
-                                            <option class="mt-2" value="반바지,남성의류">반바지</option>
-                                            <option class="mt-2" value="정장,남성의류">정장</option>
-                                            <option class="mt-2" value="트레이닝,남성의류">트레이닝</option>
-                                            <option class="mt-2" value="언더웨어홈웨어,남성의류">언더웨어/홈웨어</option>
-                                            <option class="mt-2" value="가디건,남성의류">가디건</option>
-                                        </select>
-                                    </ul>
-                                </li>
+                                    <select class="form-select dropdown col"
+                                            size="20"
+                                            onchange="handleOnChange(this)"
+                                    >
+                                        <option class="mt-2" value="패딩점퍼,여성의류">패딩/점퍼</option>
+                                        <option class="mt-2" value="맨투맨,여성의류">맨투맨</option>
+                                        <option class="mt-2" value="코드,여성의류">코드</option>
+                                        <option class="mt-2" value="후드티/후드집업,여성의류">후드티/후드집업</option>
+                                        <option class="mt-2" value="티셔츠,여성의류">티셔츠</option>
+                                        <option class="mt-2" value="셔츠,여성의류">셔츠</option>
+                                        <option class="mt-2" value="바지,여성의류">바지</option>
+                                        <option class="mt-2" value="반바지,여성의류">반바지</option>
+                                        <option class="mt-2" value="정장,여성의류">정장</option>
+                                        <option class="mt-2" value="트레이닝,여성의류">트레이닝</option>
+                                        <option class="mt-2" value="언더웨어홈웨어,여성의류">언더웨어/홈웨어</option>
+                                        <option class="mt-2" value="치마,여성의류">치마</option>
+                                        <option class="mt-2" value="원피스,여성의류">원피스</option>
+                                        <option class="mt-2" value="가디건,여성의류">가디건</option>
+                                    </select>
+                                </ul>
+                            </li>
 
 
-                                <li class="dropdown mx-2 border rounded" style="list-style:none;">신발
-                                    <ul class="dropdown-menu">
-                                        <select class="form-select col"
-                                                size="20"
-                                                onchange="handleOnChange(this)"
-                                        >
-                                            <option class="mt-2" value="스니커즈,신발">스니커즈</option>
-                                            <option class="mt-2" value="남성화,신발">남성화</option>
-                                            <option class="mt-2" value="여성화,신발">여성화</option>
-                                        </select>
-                                    </ul>
-                                </li>
+                            <li class="dropdown mx-2 border rounded" style="list-style:none;">남성의류
+
+                                <ul class="dropdown-menu">
+
+                                    <select class="form-select col"
+                                            size="20"
+                                            onchange="handleOnChange(this)"
+                                    >
+                                        <option class="mt-2" value="패딩점퍼,남성의류">패딩/점퍼</option>
+                                        <option class="mt-2" value="코드,남성의류">코드</option>
+                                        <option class="mt-2" value="맨투맨" ,남성의류>맨투맨</option>
+                                        <option class="mt-2" value="후드티후드집업,남성의류">후드티/후드집업</option>
+                                        <option class="mt-2" value="티셔츠,남성의류">티셔츠</option>
+                                        <option class="mt-2" value="셔츠,남성의류">셔츠</option>
+                                        <option class="mt-2" value="바지,남성의류">바지</option>
+                                        <option class="mt-2" value="반바지,남성의류">반바지</option>
+                                        <option class="mt-2" value="정장,남성의류">정장</option>
+                                        <option class="mt-2" value="트레이닝,남성의류">트레이닝</option>
+                                        <option class="mt-2" value="언더웨어홈웨어,남성의류">언더웨어/홈웨어</option>
+                                        <option class="mt-2" value="가디건,남성의류">가디건</option>
+                                    </select>
+                                </ul>
+                            </li>
 
 
-                                <li class="dropdown mx-2 border rounded" style="list-style:none;">가방
-                                    <ul class="dropdown-menu">
-                                        <select class="form-select col"
-                                                size="20"
-                                                onchange="handleOnChange(this)"
-                                        >
-                                            <option class="mt-2" value="여성가방,가방">여성가방</option>
-                                            <option class="mt-2" value="남성가방,가방">남성가방</option>
-                                            <option class="mt-2" value="여행용,가방">여행용</option>
-                                        </select>
-                                    </ul>
-                                </li>
+                            <li class="dropdown mx-2 border rounded" style="list-style:none;">신발
+                                <ul class="dropdown-menu">
+                                    <select class="form-select col"
+                                            size="20"
+                                            onchange="handleOnChange(this)"
+                                    >
+                                        <option class="mt-2" value="스니커즈,신발">스니커즈</option>
+                                        <option class="mt-2" value="남성화,신발">남성화</option>
+                                        <option class="mt-2" value="여성화,신발">여성화</option>
+                                    </select>
+                                </ul>
+                            </li>
 
 
-                                <li class="dropdown mx-2 border rounded" style="list-style:none;">시계/쥬얼리
-                                    <ul class="dropdown-menu">
-                                        <select class="form-select col"
-                                                size="20"
-                                                onchange="handleOnChange(this)"
-                                        >
-                                            <option class="mt-2" value="시계,시계쥬얼리">시계</option>
-                                            <option class="mt-2" value="쥬얼리,시계쥬얼리">쥬얼리</option>
-                                        </select>
-                                    </ul>
-                                </li>
+                            <li class="dropdown mx-2 border rounded" style="list-style:none;">가방
+                                <ul class="dropdown-menu">
+                                    <select class="form-select col"
+                                            size="20"
+                                            onchange="handleOnChange(this)"
+                                    >
+                                        <option class="mt-2" value="여성가방,가방">여성가방</option>
+                                        <option class="mt-2" value="남성가방,가방">남성가방</option>
+                                        <option class="mt-2" value="여행용,가방">여행용</option>
+                                    </select>
+                                </ul>
+                            </li>
 
 
-                                <li class="dropdown mx-2 border rounded" style="list-style:none;">패션 악세서리
-                                    <ul class="dropdown-menu">
-                                        <select class="form-select col"
-                                                size="20"
-                                                onchange="handleOnChange(this)"
-                                        >
-                                            <option class="mt-2" value="지갑,악세서리">지갑</option>
-                                            <option class="mt-2" value="벨트,악세서리">벨트</option>
-                                            <option class="mt-2" value="모자,악세서리">모자</option>
-                                            <option class="mt-2" value="목도리장갑,악세서리">목도리/장갑</option>
-                                            <option class="mt-2" value="스카프넥타이,악세서리">스카프/넥타이</option>
-                                            <option class="mt-2" value="안경선글라스,악세서리">안경/선글라스</option>
-                                            <option class="mt-2" value="양말스타킹,악세서리">양말/스타킹</option>
-                                            <option class="mt-2" value="우산양산,악세서리">우산/양산</option>
-                                            <option class="mt-2" value="기타 악세서리,악세서리">기타 악세서리</option>
-                                        </select>
-                                    </ul>
-                                </li>
+                            <li class="dropdown mx-2 border rounded" style="list-style:none;">시계/쥬얼리
+                                <ul class="dropdown-menu">
+                                    <select class="form-select col"
+                                            size="20"
+                                            onchange="handleOnChange(this)"
+                                    >
+                                        <option class="mt-2" value="시계,시계쥬얼리">시계</option>
+                                        <option class="mt-2" value="쥬얼리,시계쥬얼리">쥬얼리</option>
+                                    </select>
+                                </ul>
+                            </li>
 
 
-                                <li class="dropdown mx-2 border rounded" style="list-style:none;">디지털/가전
-                                    <ul class="dropdown-menu">
-                                        <select class="form-select col"
-                                                size="20"
-                                                onchange="handleOnChange(this)"
-                                        >
-                                            <option class="mt-2" value="모바일,디지털">모바일</option>
-                                            <option class="mt-2" value="가전제품,디지털">가전제품</option>
-                                            <option class="mt-2" value="오디오영상관련기기,디지털">오디오/영상/관련기기</option>
-                                            <option class="mt-2" value="PC노트북,디지털">PC/노트북</option>
-                                            <option class="mt-2" value="게임타이틀,디지털">게임/타이틀</option>
-                                            <option class="mt-2" value="카메라DSLR,디지털">카메라/DSLR</option>
-                                            <option class="mt-2" value="PC부품저장장치,디지털">PC부품/저장장치</option>
-                                        </select>
-                                    </ul>
-                                </li>
+                            <li class="dropdown mx-2 border rounded" style="list-style:none;">패션 악세서리
+                                <ul class="dropdown-menu">
+                                    <select class="form-select col"
+                                            size="20"
+                                            onchange="handleOnChange(this)"
+                                    >
+                                        <option class="mt-2" value="지갑,악세서리">지갑</option>
+                                        <option class="mt-2" value="벨트,악세서리">벨트</option>
+                                        <option class="mt-2" value="모자,악세서리">모자</option>
+                                        <option class="mt-2" value="목도리장갑,악세서리">목도리/장갑</option>
+                                        <option class="mt-2" value="스카프넥타이,악세서리">스카프/넥타이</option>
+                                        <option class="mt-2" value="안경선글라스,악세서리">안경/선글라스</option>
+                                        <option class="mt-2" value="양말스타킹,악세서리">양말/스타킹</option>
+                                        <option class="mt-2" value="우산양산,악세서리">우산/양산</option>
+                                        <option class="mt-2" value="기타 악세서리,악세서리">기타 악세서리</option>
+                                    </select>
+                                </ul>
+                            </li>
 
 
-                                <li class="dropdown mx-2 border rounded" style="list-style:none;">스포츠/레저
-                                    <ul class="dropdown-menu">
-                                        <select class="form-select col"
-                                                size="20"
-                                                onchange="handleOnChange(this)"
-                                        >
-                                            <option class="mt-2" value="골프,스포츠">골프</option>
-                                            <option class="mt-2" value="캠핑,스포츠">캠핑</option>
-                                            <option class="mt-2" value="낚시,스포츠">낚시</option>
-                                            <option class="mt-2" value="축구,스포츠">축구</option>
-                                            <option class="mt-2" value="자전거,스포츠">자전거</option>
-                                            <option class="mt-2" value="테니스,스포츠">테니스</option>
-                                            <option class="mt-2" value="등산클라이밍,스포츠">등산/클라이밍</option>
-                                            <option class="mt-2" value="헬스요가필라테스,스포츠">헬스/요가/필라테스</option>
-                                            <option class="mt-2" value="야구,스포츠">야구</option>
-                                            <option class="mt-2" value="볼링,스포츠">볼링</option>
-                                            <option class="mt-2" value="배트민턴,스포츠">배트민턴</option>
-                                            <option class="mt-2" value="탁구,스포츠">탁구</option>
-                                            <option class="mt-2" value="농구,스포츠">농구</option>
-                                            <option class="mt-2" value="당구,스포츠">당구</option>
-                                            <option class="mt-2" value="기타스포츠,스포츠">기타 스포츠</option>
-                                        </select>
-                                    </ul>
-                                </li>
+                            <li class="dropdown mx-2 border rounded" style="list-style:none;">디지털/가전
+                                <ul class="dropdown-menu">
+                                    <select class="form-select col"
+                                            size="20"
+                                            onchange="handleOnChange(this)"
+                                    >
+                                        <option class="mt-2" value="모바일,디지털">모바일</option>
+                                        <option class="mt-2" value="가전제품,디지털">가전제품</option>
+                                        <option class="mt-2" value="오디오영상관련기기,디지털">오디오/영상/관련기기</option>
+                                        <option class="mt-2" value="PC노트북,디지털">PC/노트북</option>
+                                        <option class="mt-2" value="게임타이틀,디지털">게임/타이틀</option>
+                                        <option class="mt-2" value="카메라DSLR,디지털">카메라/DSLR</option>
+                                        <option class="mt-2" value="PC부품저장장치,디지털">PC부품/저장장치</option>
+                                    </select>
+                                </ul>
+                            </li>
 
 
-                                <li class="dropdown mx-2 border rounded" style="list-style:none;">차량/오토바이
-
-                                    <ul class="dropdown-menu">
-                                        <select class="form-select col"
-                                                size="20"
-                                                onchange="handleOnChange(this)"
-                                        >
-                                            <option class="mt-2" value="국산차,차량">국산차</option>
-                                            <option class="mt-2" value="수입차,차량">수입차</option>
-                                            <option class="mt-2" value="차량용품부품,차량">차량용품/부품</option>
-                                            <option class="mt-2" value="오토바이용품부품,차량">오토바이용품/부품</option>
-                                        </select>
-                                    </ul>
-                                </li>
-
-
-                                <li class="dropdown mx-2 border rounded" style="list-style:none;">스타굿즈
-
-                                    <ul class="dropdown-menu">
-                                        <select class="form-select col"
-                                                size="20"
-                                                onchange="handleOnChange(this)"
-                                        >
-                                            <option class="mt-2" value="보이그룹,굿즈">보이그룹
-                                            </option>
-                                            <option class="mt-2" value="걸그룹,굿즈">걸그룹
-                                            </option>
-                                            <option class="mt-2" value="방송예능캐릭터,굿즈">방송/예능/캐릭터
-                                            </option>
-                                        </select>
-                                    </ul>
-                                </li>
+                            <li class="dropdown mx-2 border rounded" style="list-style:none;">스포츠/레저
+                                <ul class="dropdown-menu">
+                                    <select class="form-select col"
+                                            size="20"
+                                            onchange="handleOnChange(this)"
+                                    >
+                                        <option class="mt-2" value="골프,스포츠">골프</option>
+                                        <option class="mt-2" value="캠핑,스포츠">캠핑</option>
+                                        <option class="mt-2" value="낚시,스포츠">낚시</option>
+                                        <option class="mt-2" value="축구,스포츠">축구</option>
+                                        <option class="mt-2" value="자전거,스포츠">자전거</option>
+                                        <option class="mt-2" value="테니스,스포츠">테니스</option>
+                                        <option class="mt-2" value="등산클라이밍,스포츠">등산/클라이밍</option>
+                                        <option class="mt-2" value="헬스요가필라테스,스포츠">헬스/요가/필라테스</option>
+                                        <option class="mt-2" value="야구,스포츠">야구</option>
+                                        <option class="mt-2" value="볼링,스포츠">볼링</option>
+                                        <option class="mt-2" value="배트민턴,스포츠">배트민턴</option>
+                                        <option class="mt-2" value="탁구,스포츠">탁구</option>
+                                        <option class="mt-2" value="농구,스포츠">농구</option>
+                                        <option class="mt-2" value="당구,스포츠">당구</option>
+                                        <option class="mt-2" value="기타스포츠,스포츠">기타 스포츠</option>
+                                    </select>
+                                </ul>
+                            </li>
 
 
-                                <li class="dropdown mx-2 border rounded" style="list-style:none;">예술/희귀/수집품
+                            <li class="dropdown mx-2 border rounded" style="list-style:none;">차량/오토바이
 
-                                    <ul class="dropdown-menu">
-                                        <select class="form-select col"
-                                                size="20"
-                                                onchange="handleOnChange(this)"
-                                        >
-                                            <option class="mt-2" value="희귀수집품,예술">희귀/수집품
-                                            </option>
-                                            <option class="mt-2" value="골동품,예술">골동품
-                                            </option>
-                                            <option class="mt-2" value="예술작품,예술">예술작품
-                                            </option>
-                                        </select>
-                                    </ul>
-                                </li>
+                                <ul class="dropdown-menu">
+                                    <select class="form-select col"
+                                            size="20"
+                                            onchange="handleOnChange(this)"
+                                    >
+                                        <option class="mt-2" value="국산차,차량">국산차</option>
+                                        <option class="mt-2" value="수입차,차량">수입차</option>
+                                        <option class="mt-2" value="차량용품부품,차량">차량용품/부품</option>
+                                        <option class="mt-2" value="오토바이용품부품,차량">오토바이용품/부품</option>
+                                    </select>
+                                </ul>
+                            </li>
 
 
-                                <li class="dropdown mx-2 border rounded" style="list-style:none;">음반/악기
+                            <li class="dropdown mx-2 border rounded" style="list-style:none;">스타굿즈
 
-                                    <ul class="dropdown-menu">
-                                        <select class="form-select col"
-                                                size="20"
-                                                onchange="handleOnChange(this)"
-                                        >
-                                            <option class="mt-2" value="CDDVDLP,악기">CD/DVD/LP
-                                            </option>
-                                            <option class="mt-2" value="악기,악기">악기
-                                            </option>
-                                        </select>
-                                    </ul>
-                                </li>
-
-
-                                <li class="dropdown mx-2 border rounded" style="list-style:none;">도서/티켓/문구
-
-                                    <ul class="dropdown-menu">
-                                        <select class="form-select col"
-                                                size="20"
-                                                onchange="handleOnChange(this)"
-                                        >
-                                            <option class="mt-2" value="도서,도서">도서
-                                            </option>
-                                            <option class="mt-2" value="문구,도서">문구
-                                            </option>
-                                            <option class="mt-2" value="기프티콘쿠폰,도서">기프티콘/쿠폰
-                                            </option>
-                                            <option class="mt-2" value="상품권,도서">상품권
-                                            </option>
-                                            <option class="mt-2" value="티켓,도서">티켓
-                                            </option>
-                                        </select>
-                                    </ul>
-                                </li>
+                                <ul class="dropdown-menu">
+                                    <select class="form-select col"
+                                            size="20"
+                                            onchange="handleOnChange(this)"
+                                    >
+                                        <option class="mt-2" value="보이그룹,굿즈">보이그룹
+                                        </option>
+                                        <option class="mt-2" value="걸그룹,굿즈">걸그룹
+                                        </option>
+                                        <option class="mt-2" value="방송예능캐릭터,굿즈">방송/예능/캐릭터
+                                        </option>
+                                    </select>
+                                </ul>
+                            </li>
 
 
-                                <li class="dropdown mx-2 border rounded" style="list-style:none;">뷰티/미용
+                            <li class="dropdown mx-2 border rounded" style="list-style:none;">예술/희귀/수집품
 
-                                    <ul class="dropdown-menu">
-                                        <select class="form-select col"
-                                                size="20"
-                                                onchange="handleOnChange(this)"
-                                        >
-                                            <option class="mt-2" value="스킨케어,뷰티">스킨케어
-                                            </option>
-                                            <option class="mt-2" value="색조메이크업,뷰티">색조메이크업
-                                            </option>
-                                            <option class="mt-2" value="베이스메이크업,뷰티">베이스메이크업
-                                            </option>
-                                            <option class="mt-2" value="바디헤어케어,뷰티">바디/헤어케어
-                                            </option>
-                                            <option class="mt-2" value="향수아로마,뷰티">향수/아로마
-                                            </option>
-                                            <option class="mt-2" value="네일아트케어,뷰티">네일아트/케어
-                                            </option>
-                                            <option class="mt-2" value="미용소품기기,뷰티">미용소품/기기
-                                            </option>
-                                            <option class="mt-2" value="아티어트이너뷰티,뷰티">아티어트/이너뷰티
-                                            </option>
-                                            <option class="mt-2" value="남성화장품,뷰티">남성화장품
-                                            </option>
-                                        </select>
-                                    </ul>
-                                </li>
+                                <ul class="dropdown-menu">
+                                    <select class="form-select col"
+                                            size="20"
+                                            onchange="handleOnChange(this)"
+                                    >
+                                        <option class="mt-2" value="희귀수집품,예술">희귀/수집품
+                                        </option>
+                                        <option class="mt-2" value="골동품,예술">골동품
+                                        </option>
+                                        <option class="mt-2" value="예술작품,예술">예술작품
+                                        </option>
+                                    </select>
+                                </ul>
+                            </li>
 
 
-                                <li class="dropdown mx-2 border rounded" style="list-style:none;">가구/인테리어
+                            <li class="dropdown mx-2 border rounded" style="list-style:none;">음반/악기
 
-                                    <ul class="dropdown-menu">
-                                        <select class="form-select col"
-                                                size="20"
-                                                onchange="handleOnChange(this)"
-                                        >
-                                            <option class="mt-2" value="인테리어,가구">인테리어
-                                            </option>
-                                            <option class="mt-2" value="가구,가구">가구
-                                            </option>
-                                        </select>
-                                    </ul>
-                                </li>
-
-
-                                <li class="dropdown mx-2 border rounded" style="list-style:none;">생활/가공식품
-
-                                    <ul class="dropdown-menu">
-                                        <select class="form-select col"
-                                                size="20"
-                                                onchange="handleOnChange(this)"
-                                        >
-                                            <option class="mt-2" value="주방용품,생활">주방용품
-                                            </option>
-                                            <option class="mt-2" value="생활용품,생활">생활용품
-                                            </option>
-                                            <option class="mt-2" value="식품,생활">식품
-                                            </option>
-                                            <option class="mt-2" value="산업용품,생활">산업용품
-                                            </option>
-                                        </select>
-                                    </ul>
-                                </li>
+                                <ul class="dropdown-menu">
+                                    <select class="form-select col"
+                                            size="20"
+                                            onchange="handleOnChange(this)"
+                                    >
+                                        <option class="mt-2" value="CDDVDLP,악기">CD/DVD/LP
+                                        </option>
+                                        <option class="mt-2" value="악기,악기">악기
+                                        </option>
+                                    </select>
+                                </ul>
+                            </li>
 
 
-                                <li class="dropdown mx-2 border rounded" style="list-style:none;">유아동/출산
+                            <li class="dropdown mx-2 border rounded" style="list-style:none;">도서/티켓/문구
 
-                                    <ul class="dropdown-menu">
-                                        <select class="form-select col"
-                                                size="20"
-                                                onchange="handleOnChange(this)"
-                                        >
-                                            <option class="mt-2" value="베이비의류,아동">베이비의류
-                                            </option>
-                                            <option class="mt-2" value="유아동신발잡화,아동">유아동신발/잡화
-                                            </option>
-                                            <option class="mt-2" value="교육완구인형,아동">교육/완구/인형
-                                            </option>
-                                            <option class="mt-2" value="유아용품,아동">유아용품
-                                            </option>
-                                            <option class="mt-2" value="출산임부용품,아동">출산/임부용품
-                                            </option>
-                                            <option class="mt-2" value="이유용품유아식기,아동">이유용품/유아식기
-                                            </option>
-                                        </select>
-                                    </ul>
-                                </li>
+                                <ul class="dropdown-menu">
+                                    <select class="form-select col"
+                                            size="20"
+                                            onchange="handleOnChange(this)"
+                                    >
+                                        <option class="mt-2" value="도서,도서">도서
+                                        </option>
+                                        <option class="mt-2" value="문구,도서">문구
+                                        </option>
+                                        <option class="mt-2" value="기프티콘쿠폰,도서">기프티콘/쿠폰
+                                        </option>
+                                        <option class="mt-2" value="상품권,도서">상품권
+                                        </option>
+                                        <option class="mt-2" value="티켓,도서">티켓
+                                        </option>
+                                    </select>
+                                </ul>
+                            </li>
 
 
-                                <li class="dropdown mx-2 border rounded" style="list-style:none;">동물
-                                    <ul class="dropdown-menu">
-                                        <select class="form-select col"
-                                                size="20"
-                                                onchange="handleOnChange(this)"
-                                        >
-                                            <option class="mt-2" value="강아지,동물">강아지
-                                            </option>
-                                            <option class="mt-2" value="고양이,동물">고양이
-                                            </option>
-                                            <option class="mt-2" value="기타용품,동물">기타용품
-                                            </option>
-                                            <option class="mt-2" value="사료간식">사료/간식
-                                            </option>
-                                        </select>
-                                    </ul>
-                                </li>
+                            <li class="dropdown mx-2 border rounded" style="list-style:none;">뷰티/미용
+
+                                <ul class="dropdown-menu">
+                                    <select class="form-select col"
+                                            size="20"
+                                            onchange="handleOnChange(this)"
+                                    >
+                                        <option class="mt-2" value="스킨케어,뷰티">스킨케어
+                                        </option>
+                                        <option class="mt-2" value="색조메이크업,뷰티">색조메이크업
+                                        </option>
+                                        <option class="mt-2" value="베이스메이크업,뷰티">베이스메이크업
+                                        </option>
+                                        <option class="mt-2" value="바디헤어케어,뷰티">바디/헤어케어
+                                        </option>
+                                        <option class="mt-2" value="향수아로마,뷰티">향수/아로마
+                                        </option>
+                                        <option class="mt-2" value="네일아트케어,뷰티">네일아트/케어
+                                        </option>
+                                        <option class="mt-2" value="미용소품기기,뷰티">미용소품/기기
+                                        </option>
+                                        <option class="mt-2" value="아티어트이너뷰티,뷰티">아티어트/이너뷰티
+                                        </option>
+                                        <option class="mt-2" value="남성화장품,뷰티">남성화장품
+                                        </option>
+                                    </select>
+                                </ul>
+                            </li>
+
+
+                            <li class="dropdown mx-2 border rounded" style="list-style:none;">가구/인테리어
+
+                                <ul class="dropdown-menu">
+                                    <select class="form-select col"
+                                            size="20"
+                                            onchange="handleOnChange(this)"
+                                    >
+                                        <option class="mt-2" value="인테리어,가구">인테리어
+                                        </option>
+                                        <option class="mt-2" value="가구,가구">가구
+                                        </option>
+                                    </select>
+                                </ul>
+                            </li>
+
+
+                            <li class="dropdown mx-2 border rounded" style="list-style:none;">생활/가공식품
+
+                                <ul class="dropdown-menu">
+                                    <select class="form-select col"
+                                            size="20"
+                                            onchange="handleOnChange(this)"
+                                    >
+                                        <option class="mt-2" value="주방용품,생활">주방용품
+                                        </option>
+                                        <option class="mt-2" value="생활용품,생활">생활용품
+                                        </option>
+                                        <option class="mt-2" value="식품,생활">식품
+                                        </option>
+                                        <option class="mt-2" value="산업용품,생활">산업용품
+                                        </option>
+                                    </select>
+                                </ul>
+                            </li>
+
+
+                            <li class="dropdown mx-2 border rounded" style="list-style:none;">유아동/출산
+
+                                <ul class="dropdown-menu">
+                                    <select class="form-select col"
+                                            size="20"
+                                            onchange="handleOnChange(this)"
+                                    >
+                                        <option class="mt-2" value="베이비의류,아동">베이비의류
+                                        </option>
+                                        <option class="mt-2" value="유아동신발잡화,아동">유아동신발/잡화
+                                        </option>
+                                        <option class="mt-2" value="교육완구인형,아동">교육/완구/인형
+                                        </option>
+                                        <option class="mt-2" value="유아용품,아동">유아용품
+                                        </option>
+                                        <option class="mt-2" value="출산임부용품,아동">출산/임부용품
+                                        </option>
+                                        <option class="mt-2" value="이유용품유아식기,아동">이유용품/유아식기
+                                        </option>
+                                    </select>
+                                </ul>
+                            </li>
+
+
+                            <li class="dropdown mx-2 border rounded" style="list-style:none;">동물
+                                <ul class="dropdown-menu">
+                                    <select class="form-select col"
+                                            size="20"
+                                            onchange="handleOnChange(this)"
+                                    >
+                                        <option class="mt-2" value="강아지,동물">강아지
+                                        </option>
+                                        <option class="mt-2" value="고양이,동물">고양이
+                                        </option>
+                                        <option class="mt-2" value="기타용품,동물">기타용품
+                                        </option>
+                                        <option class="mt-2" value="사료간식">사료/간식
+                                        </option>
+                                    </select>
+                                </ul>
+                            </li>
 
 
                         </div>

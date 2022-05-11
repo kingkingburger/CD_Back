@@ -475,12 +475,12 @@
                             <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#" th:text="${product.getCategory().getSecond()}">카테고리</a>
 
                                 <h3 class="product-title fs-sm" >
-                                    <a th:href="@{/Product(id=${product.getId()})}" th:text="${product.getName()}">물품제목</a>
+                                    <a th:href="|판매자: @{/Product(id=${product.getId()})}|" th:text="${product.getName()}">물품제목</a>
                                 </h3>
-                                <div class="d-flex ">
-                                    <div class="product-price"><span class="text-accent" th:text="${product.getInstantPrice()}+원"></span></div>
-                                    <div class="product-price"><span class="text-accent" th:if="${product.getAuctionPrice() != null}" th:text="경매가+${product.getAuctionPrice()}"></span></div>
-                                    <div class="product-price"><span class="clock" ></span></div>
+                                <div class="">
+                                    <div class="product-price "><span class="text-accent" th:text="|즉시 구매가: ${product.getInstantPrice()} 원 |"></span></div>
+                                    <div class="product-price "><span class="text-accent" th:if="${product.getAuctionPrice() != null}" th:text="|경매가: ${product.getAuctionPrice()}원|"></span></div>
+                                    <div class="product-price "><span class="text-accent" th:text="|마감날짜: ${product.getDeadLine()}|"></span></div>
 
                                 </div>
                             </div>

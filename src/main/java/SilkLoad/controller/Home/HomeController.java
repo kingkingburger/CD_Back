@@ -2,14 +2,9 @@ package SilkLoad.controller.Home;
 
 
 import SilkLoad.SessionConst;
-import SilkLoad.dto.LoginFormDto;
 import SilkLoad.dto.MemberFormDto;
-import SilkLoad.dto.ProductFormDto;
-import SilkLoad.dto.ProductSaleDto;
+import SilkLoad.dto.ProductRecordDto;
 import SilkLoad.entity.Members;
-import SilkLoad.entity.Product;
-import SilkLoad.entity.ProductImage;
-import SilkLoad.service.MemberService;
 import SilkLoad.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +29,7 @@ public class HomeController {
                             @ModelAttribute("member") MemberFormDto member) {
 
         //세션에 데이터가 없어도 model을 넣어준다.
-        List<ProductSaleDto> allProduct = productService.findAllProduct();
+        List<ProductRecordDto> allProduct = productService.findAllProduct();
         model.addAttribute("allproduct", allProduct);
 
         //세션에 회원 데이터가 없으면
@@ -57,7 +52,7 @@ public class HomeController {
     @GetMapping("/home")
     public String home(Model model) {
 
-        List<ProductSaleDto> allProduct = productService.findAllProduct();
+        List<ProductRecordDto> allProduct = productService.findAllProduct();
         model.addAttribute("Products", allProduct );
 
         return "home";
