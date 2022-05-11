@@ -3,7 +3,7 @@ package SilkLoad.controller.Product;
 
 import SilkLoad.SessionConst;
 import SilkLoad.dto.ProductFormDto;
-import SilkLoad.dto.ProductSaleDto;
+import SilkLoad.dto.ProductRecordDto;
 import SilkLoad.entity.Product;
 import SilkLoad.entity.ProductTime;
 import SilkLoad.service.ProductService;
@@ -15,9 +15,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -46,13 +44,9 @@ public class ProductController {
     @PostMapping("/addProduct")
     public String saveProduct(@Valid @ModelAttribute("productData") ProductFormDto productData,
                               BindingResult bindingResult,
-                              HttpServletRequest request
+                              HttpServletRequest request) throws IOException {
 
-                              ) throws IOException {
-
-        log.info("productData={}", productData.toString());
-
-        if ( bindingResult.hasErrors() ) {
+        if (bindingResult.hasErrors()) {
             return "addProductForm";
         }
 
@@ -65,9 +59,9 @@ public class ProductController {
     }
 
 
-
     /**
      * product의 상세 페이지
+     *
      * @param id    query string으로 보내옴
      * @param model
      * @return id값으로 찾아온 product 1개를 model에 담아서 보내줌
@@ -76,12 +70,12 @@ public class ProductController {
     public String addProduct(@RequestParam Long id,
                              Model model) {
 
-        List<ProductSaleDto> allProduct = productService.findAllProduct();
+        List<ProductRecordDto> allProduct = productService.findAllProduct();
         Product byId_product = productService.findById_Product(id);
-        ProductSaleDto productSaleDto = productService.getProductSaleDto(byId_product);
+        ProductRecordDto productRecordDto = productService.getProductSaleDto(byId_product);
 
-        model.addAttribute("product", productSaleDto);
-        model.addAttribute("allProduct",allProduct);
+        model.addAttribute("product", productRecordDto);
+        model.addAttribute("allProduct", allProduct);
 
 
         return "DetailProduct";

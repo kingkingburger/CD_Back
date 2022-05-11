@@ -1,12 +1,13 @@
 package SilkLoad.service;
 
-import SilkLoad.controller.Member.MemberController;
 import SilkLoad.dto.MemberFormDto;
 import SilkLoad.entity.Members;
 import SilkLoad.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -17,7 +18,6 @@ public class MemberService  {
     private final MemberRepository memberRepository;
 
     public void save(MemberFormDto form) {
-
         Members member = Members.builder()
                 .loginId(form.getLoginId())
                 .name(form.getName())
@@ -25,8 +25,6 @@ public class MemberService  {
                 .build();
 
         memberRepository.save(member);
-
     }
-
 
 }

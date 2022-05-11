@@ -4,16 +4,13 @@ import SilkLoad.entity.*;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @Builder
-public class ProductSaleDto {
+public class ProductRecordDto {
 
     @NotNull
     private Long id;
@@ -33,6 +30,4 @@ public class ProductSaleDto {
     private Category category;
     @NotNull
     private List<ProductImage> productImagesList;
-
-
 }

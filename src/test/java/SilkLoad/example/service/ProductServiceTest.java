@@ -1,14 +1,12 @@
 package SilkLoad.example.service;
 
-import SilkLoad.dto.ProductSaleDto;
+import SilkLoad.dto.ProductRecordDto;
 import SilkLoad.entity.Product;
 import SilkLoad.entity.ProductType;
-import SilkLoad.entity.productState;
 import SilkLoad.service.ProductService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,10 +34,10 @@ public class ProductServiceTest {
 
     @Test
     void 물품_가져오기_테스트(){
-        List<ProductSaleDto> allProduct = productService.findAllProduct();
+        List<ProductRecordDto> allProduct = productService.findAllProduct();
         Product byId_product = productService.findById_Product((long) 5);
 //        System.out.println("byId_product = " + byId_product);
-        for (ProductSaleDto product : allProduct) {
+        for (ProductRecordDto product : allProduct) {
             System.out.println("product = " + product.getProductImagesList().get(0).getStoreFileName());
         }
     }

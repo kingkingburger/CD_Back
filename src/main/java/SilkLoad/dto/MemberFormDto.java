@@ -1,5 +1,6 @@
 package SilkLoad.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -21,5 +22,12 @@ public class MemberFormDto {
     @NotBlank
     private String password;
 
+
+    @Builder
+    public MemberFormDto(String loginId, String name, String password) {
+        this.loginId = loginId;
+        this.name = name;
+        this.password = password;
+    }
 
 }
