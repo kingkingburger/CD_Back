@@ -439,7 +439,7 @@
                 <div class="card-body py-2">
                   <a class="product-meta d-block fs-xs pb-1" href="#" th:text="${all_product.getCategory().getSecond()}">카테고리</a>
                   <h3 class="product-title fs-sm">
-                    <a th:href="@{/Product(id=${product.getId()})}" th:text="${all_product.name}">물품제목</a>
+                    <a th:href="@{/Product(id=${product.id})}" th:text="${all_product.name}">물품제목</a>
                   </h3>
                   <div class="d-flex justify-content-between">
                     <div class="product-price">
