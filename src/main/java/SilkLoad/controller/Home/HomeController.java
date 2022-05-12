@@ -49,6 +49,7 @@ public class HomeController {
      * model에 반환되는 객체들은 entitiy로 반환 절대 금지 => jSON 생성 무한 루프 (양방향 관계)
      * Dto로 반환해야 한다.
      */
+
     @GetMapping("/home")
     public String home(Model model) {
 
@@ -56,6 +57,7 @@ public class HomeController {
         model.addAttribute("Products", allProduct );
 
         return "home";
+
     }
 
 }

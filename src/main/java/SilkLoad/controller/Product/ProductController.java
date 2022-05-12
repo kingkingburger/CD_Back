@@ -78,7 +78,7 @@ public class ProductController {
         model.addAttribute("allProduct", allProduct);
 
 
-        return "DetailProduct";
+        return "detailProduct";
     }
 
 
