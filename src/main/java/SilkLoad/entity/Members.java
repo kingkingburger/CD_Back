@@ -19,7 +19,7 @@ public class Members {
     @Column(name = "MEMBER_ID")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String loginId;
 
     @Column(nullable = false)
@@ -36,6 +36,7 @@ public class Members {
 
     @Builder
     public Members(Long id, String loginId, String name, String password, Integer ranks, Integer numberPurchase) {
+
         this.id = id;
         this.loginId = loginId;
         this.name = name;
@@ -43,5 +44,7 @@ public class Members {
         this.ranks = ranks;
         this.numberPurchase = numberPurchase;
         this.createDate = LocalDate.now();
+
     }
+
 }

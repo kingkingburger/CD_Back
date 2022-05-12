@@ -23,6 +23,7 @@ public class ProductFormDto {
     private String name; //물품이름
 
     private Long auctionPrice; //경매가격
+
     @NotNull
     private Long instancePrice; //즉시거래가격
     @NotBlank
