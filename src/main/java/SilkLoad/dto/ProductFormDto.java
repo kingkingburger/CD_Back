@@ -1,9 +1,7 @@
 package SilkLoad.dto;
 
 
-import SilkLoad.entity.ProductTime;
-import SilkLoad.entity.ProductType;
-import lombok.Builder;
+import SilkLoad.entity.ProductEnum.ProductTime;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;

@@ -1,6 +1,8 @@
 package SilkLoad.entity;
 
 
+import SilkLoad.entity.ProductEnum.ProductTime;
+import SilkLoad.entity.ProductEnum.ProductType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,7 +16,6 @@ import java.util.List;
 @Entity
 @Data
 @AllArgsConstructor
-@ToString(exclude = "category")
 public class Product {
 
     @Id
@@ -35,14 +36,17 @@ public class Product {
 
     private LocalDateTime createdDate = LocalDateTime.now(); //생성일자
 
+    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID", nullable = false) //Product 테이블에 있는 것을 매핑 , nullable을 false로 해서 내부 join으로 변경
     private Members members;
 
+    @ToString.Exclude
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "CATEGORY_ID", nullable = false)
     private Category category;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private List<ProductImage> productImagesList = new ArrayList<ProductImage>();
 
@@ -57,7 +61,6 @@ public class Product {
     }
 
     @Builder
-
     public Product(Long id,
                    String name,
                    Long auctionPrice,

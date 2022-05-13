@@ -23,25 +23,6 @@ public class HomeController {
 
     private final ProductService productService;
 
-    @GetMapping("/")
-    public String homeLogin(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Members loginMember,
-                            Model model,
-                            @ModelAttribute("member") MemberFormDto member) {
-
-        //세션에 데이터가 없어도 model을 넣어준다.
-        List<ProductRecordDto> allProduct = productService.findAllProduct();
-        model.addAttribute("allproduct", allProduct);
-
-        //세션에 회원 데이터가 없으면
-        if (loginMember == null) {
-
-            return "index";
-        }
-
-        //세션이 유지되면 로그인으로 이동
-        model.addAttribute("member", loginMember);
-        return "index";
-    }
 
     /**
      * @param model product들을 담기위한 매개변수
@@ -50,14 +31,16 @@ public class HomeController {
      * Dto로 반환해야 한다.
      */
 
-    @GetMapping("/home")
+    @GetMapping("/")
     public String home(Model model) {
 
         List<ProductRecordDto> allProduct = productService.findAllProduct();
         model.addAttribute("Products", allProduct );
 
-        return "home";
+        return "index";
 
     }
+
+
 
 }

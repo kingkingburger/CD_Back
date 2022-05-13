@@ -1,9 +1,13 @@
 package SilkLoad.entity;
 
+import SilkLoad.dto.ProductFormDto;
+import SilkLoad.dto.ProductRecordDto;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -34,6 +38,9 @@ public class Members {
 
     private LocalDate createDate = LocalDate.now();
 
+    @OneToMany(mappedBy = "members", fetch = FetchType.EAGER)
+    private List<Product> productList = new ArrayList<Product>();
+
     @Builder
     public Members(Long id, String loginId, String name, String password, Integer ranks, Integer numberPurchase) {
 
@@ -44,6 +51,7 @@ public class Members {
         this.ranks = ranks;
         this.numberPurchase = numberPurchase;
         this.createDate = LocalDate.now();
+        this.productList = new ArrayList<Product>();
 
     }
 

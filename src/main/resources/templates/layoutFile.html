@@ -50,7 +50,7 @@
                         <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-menu"></i></div>
                     </a>
                     <!-- 위시리스트 -->
-                    <a class="navbar-tool d-none d-lg-flex" href="account-wishlist.html" th:href="@{/account-wishlist}">
+                    <a class="navbar-tool d-none d-lg-flex" href="memberWishlist.html" th:href="@{/members/myPage/profile}">
                         <span class="navbar-tool-tooltip">Wishlist</span>
                         <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-heart"></i></div>
                     </a>
@@ -171,11 +171,11 @@
                     <!-- Primary menu-->
                     <ul class="navbar-nav">
                         <a class="nav-link dropdown-toggle" type="button"
-                           th:onclick="|location.href='@{/home}'|">
+                           th:onclick="|location.href='@{/}'|">
                             Home
                         </a>
                         <a class="nav-link dropdown-toggle" type="button"
-                           th:onclick="|location.href='@{/}'|">
+                           th:onclick="|location.href='@{/shop}'|">
                             Shop
                         </a>
                         <a class="nav-link dropdown-toggle" type="button"
@@ -230,6 +230,7 @@
                         <div class="ps-3">
                             <h6 class="fs-base text-light mb-1">Secure online payment</h6>
                             <p class="mb-0 fs-ms text-light opacity-50">We possess SSL / Secure сertificate</p>
+
                         </div>
                     </div>
                 </div>
@@ -237,9 +238,9 @@
             <hr class="hr-light mb-5">
             <div class="row pb-2">
                 <div class="col-md-6 text-center text-md-start mb-4">
-                    <div class="text-nowrap mb-4"><a class="d-inline-block align-middle mt-n1 me-3" href="#"><img class="d-block" src="img/footer-logo-light.png" width="117" alt="Cartzilla"></a>
+                    <div class="text-nowrap mb-4"><a class="d-inline-block align-middle mt-n1 me-3" href="#"><img class="d-block" src="/img/footer-logo-light.png" width="117" alt="Cartzilla"></a>
                         <div class="btn-group dropdown disable-autohide">
-                            <button class="btn btn-outline-light border-light btn-sm dropdown-toggle px-2" type="button" data-bs-toggle="dropdown"><img class="me-2" src="img/flags/en.png" width="20" alt="English">Eng / $</button>
+                            <button class="btn btn-outline-light border-light btn-sm dropdown-toggle px-2" type="button" data-bs-toggle="dropdown"><img class="me-2" src="/img/flags/en.png" width="20" alt="English">Eng / $</button>
                             <ul class="dropdown-menu my-1">
                                 <li class="dropdown-item">
                                     <select class="form-select form-select-sm">
@@ -249,9 +250,9 @@
                                         <option value="jpy">¥ JPY</option>
                                     </select>
                                 </li>
-                                <li><a class="dropdown-item pb-1" href="#"><img class="me-2" src="img/flags/fr.png" width="20" alt="Français">Français</a></li>
-                                <li><a class="dropdown-item pb-1" href="#"><img class="me-2" src="img/flags/de.png" width="20" alt="Deutsch">Deutsch</a></li>
-                                <li><a class="dropdown-item" href="#"><img class="me-2" src="img/flags/it.png" width="20" alt="Italiano">Italiano</a></li>
+                                <li><a class="dropdown-item pb-1" href="#"><img class="me-2" src="/img/flags/fr.png" width="20" alt="Français">Français</a></li>
+                                <li><a class="dropdown-item pb-1" href="#"><img class="me-2" src="/img/flags/de.png" width="20" alt="Deutsch">Deutsch</a></li>
+                                <li><a class="dropdown-item" href="#"><img class="me-2" src="/img/flags/it.png" width="20" alt="Italiano">Italiano</a></li>
                             </ul>
                         </div>
                     </div>
@@ -266,7 +267,7 @@
                     </div>
                 </div>
                 <div class="col-md-6 text-center text-md-end mb-4">
-                    <div class="mb-3"><a class="btn-social bs-light bs-twitter ms-2 mb-2" href="#"><i class="ci-twitter"></i></a><a class="btn-social bs-light bs-facebook ms-2 mb-2" href="#"><i class="ci-facebook"></i></a><a class="btn-social bs-light bs-instagram ms-2 mb-2" href="#"><i class="ci-instagram"></i></a><a class="btn-social bs-light bs-pinterest ms-2 mb-2" href="#"><i class="ci-pinterest"></i></a><a class="btn-social bs-light bs-youtube ms-2 mb-2" href="#"><i class="ci-youtube"></i></a></div><img class="d-inline-block" src="img/cards-alt.png" width="187" alt="Payment methods">
+                    <div class="mb-3"><a class="btn-social bs-light bs-twitter ms-2 mb-2" href="#"><i class="ci-twitter"></i></a><a class="btn-social bs-light bs-facebook ms-2 mb-2" href="#"><i class="ci-facebook"></i></a><a class="btn-social bs-light bs-instagram ms-2 mb-2" href="#"><i class="ci-instagram"></i></a><a class="btn-social bs-light bs-pinterest ms-2 mb-2" href="#"><i class="ci-pinterest"></i></a><a class="btn-social bs-light bs-youtube ms-2 mb-2" href="#"><i class="ci-youtube"></i></a></div><img class="d-inline-block" src="/img/cards-alt.png" width="187" alt="Payment methods">
                 </div>
             </div>
             <div class="pb-4 fs-xs text-light opacity-50 text-center text-md-start">© All rights reserved. Made by <a class="text-light" href="https://createx.studio/" target="_blank" rel="noopener">Createx Studio</a></div>

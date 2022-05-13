@@ -4,6 +4,8 @@ package SilkLoad.service;
 import SilkLoad.dto.ProductFormDto;
 import SilkLoad.dto.ProductRecordDto;
 import SilkLoad.entity.*;
+import SilkLoad.entity.ProductEnum.ProductTime;
+import SilkLoad.entity.ProductEnum.ProductType;
 import SilkLoad.repository.ProductImageRepository;
 import SilkLoad.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -177,15 +179,15 @@ public class ProductService {
     public List<ProductRecordDto> findAllProduct() {
         List<Product> allProduct = productRepository.findAll();
 
-        return productToProductSaleDto(allProduct);
+        return productToProductRecordDto(allProduct);
     }
 
-    public List<ProductRecordDto> productToProductSaleDto(List<Product> allProduct) {
+    public List<ProductRecordDto> productToProductRecordDto(List<Product> allProduct) {
 
         List<ProductRecordDto> productRecordDtoList = new ArrayList<>();
 
         allProduct.forEach(product -> {
-            ProductRecordDto productRecordDto = getProductSaleDto(product);
+            ProductRecordDto productRecordDto = getProductRecordDto(product);
             productRecordDtoList.add(productRecordDto);
         });
 
@@ -195,7 +197,7 @@ public class ProductService {
     /**
      * 매개변수 product를 통해 ProductSaleDto를 생성
      */
-    public ProductRecordDto getProductSaleDto(Product product) {
+    public ProductRecordDto getProductRecordDto(Product product) {
         ProductRecordDto productRecordDto = ProductRecordDto.builder().id(product.getId())
                 .name(product.getName())
                 .auctionPrice(product.getAuctionPrice())
@@ -208,6 +210,27 @@ public class ProductService {
                 .productImagesList(product.getProductImagesList())
                 .build();
         return productRecordDto;
+    }
+
+    public List<ProductRecordDto> getProductRecordDtoList(List<Product> productList) {
+
+        List<ProductRecordDto> productRecordDtoList = new ArrayList<>();
+        productList.forEach( (product -> {
+            ProductRecordDto productRecordDto = ProductRecordDto.builder().id(product.getId())
+                    .name(product.getName())
+                    .auctionPrice(product.getAuctionPrice())
+                    .instantPrice(product.getInstantPrice())
+                    .explanation(product.getExplanation())
+                    .productType(product.getProductType())
+                    .category(product.getCategory())
+                    .deadLine(productDeadLine(product.getCreatedDate(), product.getProductTime()))
+                    .productTime(product.getProductTime())
+                    .productImagesList(product.getProductImagesList())
+                    .build();
+            productRecordDtoList.add(productRecordDto);
+        }) );
+
+        return productRecordDtoList;
     }
 
     /**

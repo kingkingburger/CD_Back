@@ -100,7 +100,7 @@
                         <div class="d-sm-flex text-center text-sm-start"><a class="d-inline-block flex-shrink-0 mx-auto"
                                                                             href="shop-single-v1.html"
                                                                             style="width: 10rem;"><img
-                                src="img/shop/cart/01.jpg" alt="Product"></a>
+                                src="/img/shop/cart/01.jpg" alt="Product"></a>
                             <div class="ps-sm-4 pt-2">
                                 <h3 class="product-title fs-base mb-2"><a href="shop-single-v1.html">Women Colorblock
                                     Sneakers</a></h3>
@@ -123,7 +123,7 @@
                         <div class="d-sm-flex text-center text-sm-start"><a class="d-inline-block flex-shrink-0 mx-auto"
                                                                             href="shop-single-v1.html"
                                                                             style="width: 10rem;"><img
-                                src="img/shop/cart/02.jpg" alt="Product"></a>
+                                src="/img/shop/cart/02.jpg" alt="Product"></a>
                             <div class="ps-sm-4 pt-2">
                                 <h3 class="product-title fs-base mb-2"><a href="shop-single-v1.html">TH Jeans City
                                     Backpack</a></h3>
@@ -146,7 +146,7 @@
                         <div class="d-sm-flex text-center text-sm-start"><a class="d-inline-block flex-shrink-0 mx-auto"
                                                                             href="shop-single-v1.html"
                                                                             style="width: 10rem;"><img
-                                src="img/shop/cart/03.jpg" alt="Product"></a>
+                                src="/img/shop/cart/03.jpg" alt="Product"></a>
                             <div class="ps-sm-4 pt-2">
                                 <h3 class="product-title fs-base mb-2"><a href="shop-single-v1.html">3-Color Sun Stash
                                     Hat</a></h3>
@@ -170,7 +170,7 @@
                         <div class="d-sm-flex text-center text-sm-start"><a class="d-inline-block flex-shrink-0 mx-auto"
                                                                             href="shop-single-v1.html"
                                                                             style="width: 10rem;"><img
-                                src="img/shop/cart/04.jpg" alt="Product"></a>
+                                src="/shop/cart/04.jpg" alt="Product"></a>
                             <div class="ps-sm-4 pt-2">
                                 <h3 class="product-title fs-base mb-2"><a href="shop-single-v1.html">Cotton Polo Regular
                                     Fit</a></h3>
@@ -211,7 +211,7 @@
             <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
-                        <li class="breadcrumb-item"><a class="text-nowrap" href="index.html"><i class="ci-home"></i>Home</a>
+                        <li class="breadcrumb-item"><a class="text-nowrap" href="shop.html"><i class="ci-home"></i>Home</a>
                         </li>
                         <li class="breadcrumb-item text-nowrap"><a href="#">Account</a>
                         </li>
@@ -235,7 +235,7 @@
                                  style="width: 6.375rem;">
                                 <span class="badge bg-warning position-absolute end-0 mt-n2" data-bs-toggle="tooltip"
                                       title="Reward points">384</span>
-                                <img class="rounded-circle" src="img/logo-icon-light.png" alt="Susan Gardner">
+                                <img class="rounded-circle" src="/img/logo-icon-light.png" alt="Susan Gardner">
                             </div>
                             <div class="ps-md-3">
                             </div>
@@ -250,14 +250,14 @@
                         <ul class="list-unstyled mb-0">
                             <li class="border-bottom mb-0">
                                 <a class="nav-link-style d-flex align-items-center px-4 py-3 active"
-                                   th:href="@{/account-orders}">
+                                   th:href="@{/members/myPage/orders}">
                                     <i class="ci-bag opacity-60 me-2"></i>Orders
                                     <span class="fs-sm text-muted ms-auto">1</span>
                                 </a>
                             </li>
                             <li class="border-bottom mb-0">
                                 <a class="nav-link-style d-flex align-items-center px-4 py-3"
-                                   th:href="@{/account-wishlist}">
+                                   th:href="@{/members/myPage/wishlist}">
                                     <i class="ci-heart opacity-60 me-2"></i>Wishlist<span
                                         class="fs-sm text-muted ms-auto">3</span>
                                 </a>
@@ -268,7 +268,7 @@
                         </div>
                         <ul class="list-unstyled mb-0">
                             <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
-                                                              th:href="@{/MyPage}">
+                                                              th:href="@{/members/myPage/profile}">
                                 <i class="ci-user opacity-60 me-2"></i>Profile info</a></li>
 
                             <li class="d-lg-none border-top mb-0">
@@ -304,20 +304,37 @@
                     <table class="table table-hover mb-0">
                         <thead>
                         <tr>
-                            <th>Order #</th>
-                            <th>Date Purchased</th>
-                            <th>Status</th>
-                            <th>Total</th>
+                            <th>물품 이름</th>
+                            <th>구매날짜</th>
+                            <th>거래 상태</th>
+                            <th>가격</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+
+                        <tr th:each="product : ${productRecordDtoList}">
+
+                            <td class="py-3" th:text="${product.id}">  </td>
+
+                            <td class="py-3" th:text="${product.name}"></td>
+
+                            <td class="py-3" th:text="${product.productType.getDescription()}"></td>
+
+                            <td class="py-3" th:text="${product.instantPrice}"></td>
+
+                        </tr>
+                        <!-- 판매, 마감, 판매중, 판매 완료-->
+
+
+
+
+             <!--           <tr>
                             <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="#order-details"
                                                 data-bs-toggle="modal">34VB5540K83</a></td>
                             <td class="py-3">May 21, 2019</td>
                             <td class="py-3"><span class="badge bg-info m-0">In Progress</span></td>
                             <td class="py-3">$358.75</td>
-                        </tr>
+                        </tr>-->
                         <tr>
                             <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="#order-details"
                                                 data-bs-toggle="modal">78A643CD409</a></td>

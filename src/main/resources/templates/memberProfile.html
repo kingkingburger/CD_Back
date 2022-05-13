@@ -12,9 +12,9 @@
             <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
-                        <li class="breadcrumb-item"><a class="text-nowrap" href="index.html"><i class="ci-home"></i>Home</a>
+                        <li class="breadcrumb-item"><a class="text-nowrap" href="shop.html"><i class="ci-home"></i>Home</a>
                         </li>
-                        <li class="breadcrumb-item text-nowrap"><a href="#">Account</a>
+                        <li class="breadcrumb-item text-nowrap"><a href="#">member</a>
                         </li>
                         <li class="breadcrumb-item text-nowrap active" aria-current="page">Profile info</li>
                     </ol>
@@ -36,13 +36,13 @@
                                  style="width: 6.375rem;">
                                 <span class="badge bg-warning position-absolute end-0 mt-n2" data-bs-toggle="tooltip"
                                       title="Reward points"></span>
-                                <img class="rounded-circle" src="img/logo-icon-light.png" alt="Susan Gardner">
+                                <img class="rounded-circle" src="/img/logo-icon-light.png" alt="Susan Gardner">
                             </div>
                             <div class="ps-md-3">
                             </div>
                         </div>
                         <a class="btn btn-primary d-lg-none mb-2 mt-3 mt-md-0" href="#account-menu"
-                           data-bs-toggle="collapse" aria-expanded="false"><i class="ci-menu me-2"></i>Account menu</a>
+                           data-bs-toggle="collapse" aria-expanded="false"><i class="ci-menu me-2"></i>Member menu</a>
                     </div>
                     <div class="d-lg-block collapse" id="account-menu">
                         <div class="bg-secondary px-4 py-3">
@@ -51,26 +51,26 @@
                         <ul class="list-unstyled mb-0">
                             <li class="border-bottom mb-0">
                                 <a class="nav-link-style d-flex align-items-center px-4 py-3"
-                                   th:href="@{/account-orders}">
+                                   th:href="@{/members/myPage/orders}">
                                     <i class="ci-bag opacity-60 me-2"></i>Orders
                                     <span class="fs-sm text-muted ms-auto">1</span>
                                 </a>
                             </li>
                             <li class="border-bottom mb-0">
                                 <a class="nav-link-style d-flex align-items-center px-4 py-3"
-                                   th:href="@{/account-wishlist}">
+                                   th:href="@{/members/myPage/wishlist}">
                                     <i class="ci-heart opacity-60 me-2"></i>Wishlist<span
                                         class="fs-sm text-muted ms-auto">3</span>
                                 </a>
                             </li>
                         </ul>
                         <div class="bg-secondary px-4 py-3">
-                            <h3 class="fs-sm mb-0 text-muted">Account settings</h3>
+                            <h3 class="fs-sm mb-0 text-muted">member settings</h3>
                         </div>
                         <ul class="list-unstyled mb-0">
                             <li class="border-bottom mb-0"><a
                                     class="nav-link-style d-flex align-items-center px-4 py-3 active"
-                                    th:href="@{/MyPage}">
+                                    th:href="@{/members/myPage/profile}">
                                 <i class="ci-user opacity-60 me-2"></i>Profile info</a></li>
 
                             <li class="d-lg-none border-top mb-0">
