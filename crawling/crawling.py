@@ -1,3 +1,4 @@
+from ast import Bytes
 from itertools import product
 import time
 import pymysql
@@ -24,7 +25,7 @@ from selenium.webdriver.support import expected_conditions as EC
 #         data.append(prod_link)
 #         data.append(img_link)
 #         dataset.append(data)
-
+    
 #     return dataset
 
 options = webdriver.ChromeOptions()
@@ -111,7 +112,7 @@ for data in dataset:
     price = str(data[2])
     prod_link = str(data[3])
     img_link = str(data[4])
-
+            
     sql = """insert into crawling 
     (category, name, price, link, img_link) 
     values ('%s', '%s', '%s', '%s', '%s')
@@ -119,5 +120,5 @@ for data in dataset:
 
     cursor.execute(sql)
     connect.commit()
-
+    
 connect.close()
