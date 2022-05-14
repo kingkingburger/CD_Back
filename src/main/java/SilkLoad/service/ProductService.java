@@ -60,8 +60,6 @@ public class ProductService {
             productImage.changeProduct(product);
             productImageRepository.save(productImage);
         });
-
-
     }
 
     private Product getProduct(ProductFormDto productFormDto, Members loginMember) {
@@ -77,6 +75,7 @@ public class ProductService {
                 .build();
         return product;
     }
+
 
     private Category categoryClassification(String categoryName) {
 
@@ -195,10 +194,11 @@ public class ProductService {
     }
 
     /**
-     * 매개변수 product를 통해 ProductSaleDto를 생성
+     * 매개변수 product를 통해 ProductRecordDto를 생성
      */
     public ProductRecordDto getProductRecordDto(Product product) {
-        ProductRecordDto productRecordDto = ProductRecordDto.builder().id(product.getId())
+        ProductRecordDto productRecordDto = ProductRecordDto.builder()
+                .id(product.getId())
                 .name(product.getName())
                 .auctionPrice(product.getAuctionPrice())
                 .instantPrice(product.getInstantPrice())
@@ -213,10 +213,10 @@ public class ProductService {
     }
 
     public List<ProductRecordDto> getProductRecordDtoList(List<Product> productList) {
-
         List<ProductRecordDto> productRecordDtoList = new ArrayList<>();
-        productList.forEach( (product -> {
-            ProductRecordDto productRecordDto = ProductRecordDto.builder().id(product.getId())
+        productList.forEach((product -> {
+            ProductRecordDto productRecordDto = ProductRecordDto.builder()
+                    .id(product.getId())
                     .name(product.getName())
                     .auctionPrice(product.getAuctionPrice())
                     .instantPrice(product.getInstantPrice())
@@ -228,7 +228,7 @@ public class ProductService {
                     .productImagesList(product.getProductImagesList())
                     .build();
             productRecordDtoList.add(productRecordDto);
-        }) );
+        }));
 
         return productRecordDtoList;
     }
