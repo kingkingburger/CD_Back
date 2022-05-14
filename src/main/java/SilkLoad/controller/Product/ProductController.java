@@ -5,7 +5,7 @@ import SilkLoad.SessionConst;
 import SilkLoad.dto.ProductFormDto;
 import SilkLoad.dto.ProductRecordDto;
 import SilkLoad.entity.Product;
-import SilkLoad.entity.ProductTime;
+import SilkLoad.entity.ProductEnum.ProductTime;
 import SilkLoad.service.ProductService;
 import SilkLoad.entity.Members;
 import lombok.RequiredArgsConstructor;
@@ -54,31 +54,8 @@ public class ProductController {
         Members loginMember = (Members) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
         productService.save(productData, loginMember);
-
         return "redirect:/";
-    }
 
-
-    /**
-     * product의 상세 페이지
-     *
-     * @param id    query string으로 보내옴
-     * @param model
-     * @return id값으로 찾아온 product 1개를 model에 담아서 보내줌
-     */
-    @GetMapping("/Product")
-    public String addProduct(@RequestParam Long id,
-                             Model model) {
-
-        List<ProductRecordDto> allProduct = productService.findAllProduct();
-        Product byId_product = productService.findById_Product(id);
-        ProductRecordDto productRecordDto = productService.getProductSaleDto(byId_product);
-
-        model.addAttribute("product", productRecordDto);
-        model.addAttribute("allProduct", allProduct);
-
-
-        return "detailProduct";
     }
 
 

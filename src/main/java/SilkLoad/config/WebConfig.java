@@ -17,8 +17,8 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new ErrorPageCheckInterceptor())
                 .order(0)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/", "/members/add", "/login", "/logout","/home","/addProduct","/Product", "/Cart","/MyPage",
-                        "/account-wishlist","/account-orders",
+                .excludePathPatterns("/", "/members/**", "/login", "/logout","/home","/addProduct", "/Cart","/myPage",
+                        "/shop/**",
                         "/images/**","/css/**", "/*.ico", "/error","/vendor/**", "/img/**","/js/**","/fonts/**" );
 
         //로그인 인증
@@ -26,7 +26,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .order(1)
                 .addPathPatterns("/**")
                 .excludePathPatterns(
-                        "/", "/members/add", "/login", "/logout","/home","/images/**","/Product",
+                        "/", "/members/add", "/login", "/logout","/home","/images/**","/shop/**",
                         "/css/**", "/*.ico", "/error","/vendor/**", "/img/**","/js/**","/fonts/**"
                 );
 

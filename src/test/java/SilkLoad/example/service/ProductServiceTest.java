@@ -2,7 +2,7 @@ package SilkLoad.example.service;
 
 import SilkLoad.dto.ProductRecordDto;
 import SilkLoad.entity.Product;
-import SilkLoad.entity.ProductType;
+import SilkLoad.entity.ProductEnum.ProductType;
 import SilkLoad.service.ProductService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

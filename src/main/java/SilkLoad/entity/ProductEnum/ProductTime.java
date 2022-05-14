@@ -1,4 +1,4 @@
-package SilkLoad.entity;
+package SilkLoad.entity.ProductEnum;
 
 public enum ProductTime {
 

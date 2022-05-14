@@ -1,6 +1,8 @@
 package SilkLoad.dto;
 
 import SilkLoad.entity.*;
+import SilkLoad.entity.ProductEnum.ProductTime;
+import SilkLoad.entity.ProductEnum.ProductType;
 import lombok.Builder;
 import lombok.Data;
 
@@ -30,4 +32,5 @@ public class ProductRecordDto {
     private Category category;
     @NotNull
     private List<ProductImage> productImagesList;
+
 }

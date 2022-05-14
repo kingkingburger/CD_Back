@@ -1,7 +1,9 @@
 package SilkLoad.service;
 
 import SilkLoad.dto.MemberFormDto;
+import SilkLoad.dto.ProductFormDto;
 import SilkLoad.entity.Members;
+import SilkLoad.entity.Product;
 import SilkLoad.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +15,7 @@ import java.io.IOException;
 import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.RecursiveTask;
 
 @Slf4j
 @Service
@@ -49,19 +52,19 @@ public class MemberService  {
             }
 
         }
+        return null;
+    }
+
+    public Members findByLoginId( String loginId ) {
+
+        Optional<Members> optionalMember = memberRepository.findByLoginId(loginId);
+
+        if (optionalMember.isPresent()) {
+            return (Members) optionalMember.get();
+        }
 
         return null;
 
-
-//        Optional<Members> optionalMember = memberRepository.findByLoginId(loginId);
-//
-//        if (optionalMember.isPresent()) {
-//            Members member = optionalMember.get();
-//            return member.getPassword().equals(password) ? member : null;
-//        }
-//        return null;
-
     }
-
 
 }
