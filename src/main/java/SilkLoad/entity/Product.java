@@ -83,8 +83,6 @@ public class Product {
         this.category = category;
         this.productTime = productTime;
         this.productImagesList = new ArrayList<>();
-
-
     }
 
 }

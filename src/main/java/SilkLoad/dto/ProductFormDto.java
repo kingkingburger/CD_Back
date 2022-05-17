@@ -1,7 +1,11 @@
 package SilkLoad.dto;
 
 
+import SilkLoad.entity.Category;
+import SilkLoad.entity.Members;
 import SilkLoad.entity.ProductEnum.ProductTime;
+import SilkLoad.entity.ProductEnum.ProductType;
+import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,4 +37,18 @@ public class ProductFormDto {
     @NotNull
     private ProductTime productTime;
 
+    @Builder
+    public  ProductFormDto(String name,
+                        Long auctionPrice,
+                        Long instancePrice,
+                        String category,
+                        List<MultipartFile> imageFileList,
+                        String Explanation) {
+        this.name=name;
+        this.auctionPrice=auctionPrice;
+        this.instancePrice=instancePrice;
+        this.category=category;
+        this.imageFileList=imageFileList;
+        this.Explanation=Explanation;
+    }
 }
