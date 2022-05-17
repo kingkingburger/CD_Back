@@ -3,8 +3,6 @@ package SilkLoad.controller.Product;
 
 import SilkLoad.SessionConst;
 import SilkLoad.dto.ProductFormDto;
-import SilkLoad.dto.ProductRecordDto;
-import SilkLoad.entity.Product;
 import SilkLoad.entity.ProductEnum.ProductTime;
 import SilkLoad.service.ProductService;
 import SilkLoad.entity.Members;
@@ -13,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +19,6 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -50,6 +46,8 @@ public class ProductController {
         if (bindingResult.hasErrors()) {
             return "addProductForm";
         }
+
+
 
         HttpSession session = request.getSession();
         Members loginMember = (Members) session.getAttribute(SessionConst.LOGIN_MEMBER);

@@ -12,6 +12,8 @@ import SilkLoad.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Hibernate;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -30,13 +32,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class ProductServiceTest {
 
     @Autowired
     ProductService productService;
     @Autowired
     MemberService memberService;
-
 
     @Test
     void 물품_save_테스트(){
@@ -66,7 +68,7 @@ public class ProductServiceTest {
     void productLazeTest() throws IOException {
 
         ProductFormDto productFormDto = new ProductFormDto();
-        productFormDto.getImageFileList().add(new MockMultipartFile("test1","test1.PNG", MediaType.IMAGE_PNG_VALUE,"test1".getBytes(StandardCharsets.UTF_8)) );
+        productFormDto.getImageFileList().add(new MockMultipartFile("test1", "test1.PNG", MediaType.IMAGE_PNG_VALUE, "test1".getBytes(StandardCharsets.UTF_8)));
 
 
         productFormDto.setCategory("옷,바지");
@@ -88,7 +90,7 @@ public class ProductServiceTest {
 //        List<ProductRecordDto> allProduct = productService.findAllProduct();
 //        Product byId_product = productService.findById_Product(1L);
 
-          ProductRecordDto productRecordDto = productService.findById_ProductRecordDto(1L);
+        ProductRecordDto productRecordDto = productService.findById_ProductRecordDto(1L);
         System.out.println(productRecordDto.getProductImagesList());
 //        System.out.println(byId_product.getProductImagesList());
 //        System.out.println( allProduct.get(0).getProductImagesList());

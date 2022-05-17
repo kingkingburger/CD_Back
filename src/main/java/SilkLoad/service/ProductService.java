@@ -80,6 +80,7 @@ public class ProductService {
         return product;
     }
 
+
     private Category categoryClassification(String categoryName) {
 
         String[] splitCategory = categoryName.split(",");
@@ -205,12 +206,14 @@ public class ProductService {
     }
 
     /**
-     * 매개변수 product를 통해 ProductSaleDto를 생성
+     * 매개변수 product를 통해 ProductRecordDto를 생성
      */
     @Transactional
     public ProductRecordDto getProductRecordDto(Product product) {
 
+
         ProductRecordDto productRecordDto = ProductRecordDto.builder().id(product.getId())
+
                 .name(product.getName())
                 .auctionPrice(product.getAuctionPrice())
                 .instantPrice(product.getInstantPrice())
@@ -245,10 +248,10 @@ public class ProductService {
 
 
     public List<ProductRecordDto> getProductRecordDtoList(List<Product> productList) {
-
         List<ProductRecordDto> productRecordDtoList = new ArrayList<>();
-        productList.forEach( (product -> {
-            ProductRecordDto productRecordDto = ProductRecordDto.builder().id(product.getId())
+        productList.forEach((product -> {
+            ProductRecordDto productRecordDto = ProductRecordDto.builder()
+                    .id(product.getId())
                     .name(product.getName())
                     .auctionPrice(product.getAuctionPrice())
                     .instantPrice(product.getInstantPrice())
@@ -260,7 +263,7 @@ public class ProductService {
                     .productImagesList( getProductRecordImageListDto(product.getProductImagesList()))
                     .build();
             productRecordDtoList.add(productRecordDto);
-        }) );
+        }));
 
         return productRecordDtoList;
     }
