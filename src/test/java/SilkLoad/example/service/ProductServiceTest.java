@@ -1,18 +1,34 @@
 package SilkLoad.example.service;
 
+import SilkLoad.dto.MemberFormDto;
+import SilkLoad.dto.ProductFormDto;
 import SilkLoad.dto.ProductRecordDto;
+import SilkLoad.entity.Members;
 import SilkLoad.entity.Product;
+import SilkLoad.entity.ProductEnum.ProductTime;
 import SilkLoad.entity.ProductEnum.ProductType;
-import SilkLoad.repository.ProductImageRepository;
-import SilkLoad.repository.ProductRepository;
+import SilkLoad.service.MemberService;
 import SilkLoad.service.ProductService;
+import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
+import org.springframework.web.multipart.support.MultipartFilter;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
@@ -21,12 +37,8 @@ public class ProductServiceTest {
 
     @Autowired
     ProductService productService;
-
     @Autowired
-    ProductRepository productRepository;
-
-    @Autowired
-    ProductImageRepository productImageRepository;
+    MemberService memberService;
 
     @Test
     void 물품_save_테스트(){
@@ -45,7 +57,7 @@ public class ProductServiceTest {
     @Test
     void 물품_가져오기_테스트(){
         List<ProductRecordDto> allProduct = productService.findAllProduct();
-        Product byId_product = productService.findById_Product((long) 5);
+        ProductRecordDto byId_product = productService.findById_ProductRecordDto(5L);
 //        System.out.println("byId_product = " + byId_product);
         for (ProductRecordDto product : allProduct) {
             System.out.println("product = " + product.getProductImagesList().get(0).getStoreFileName());
@@ -53,31 +65,35 @@ public class ProductServiceTest {
     }
 
     @Test
-    void 물품_DB에많이넣기_테스트(){
-        Product byId_product = productService.findById_Product((long) 1);
-//        ProductRecordDto productRecordDto = productService.getProductRecordDto(byId_product);
+    void productLazeTest() throws IOException {
 
-//        ProductFormDtoTest test_product = ProductFormDtoTest.builder()
-//                .name(byId_product.getName())
-//                .instancePrice(byId_product.getInstantPrice())
-//                .auctionPrice(byId_product.getAuctionPrice())
-//                .Explanation(byId_product.getExplanation())
-//                .category("패딩점퍼,여성의류")
-//                .imageFileList(productRecordDto.getProductImagesList())
-//                .build();
-//
-//        Members test_member = Members.builder()
-//                .name(byId_product.getMembers().getName())
-//                .loginId(byId_product.getMembers().getLoginId())
-//                .password(byId_product.getMembers().getPassword())
-//                .numberPurchase(byId_product.getMembers().getNumberPurchase())
-//                .ranks(byId_product.getMembers().getRanks())
-//                .build();
+        ProductFormDto productFormDto = new ProductFormDto();
+        productFormDto.getImageFileList().add(new MockMultipartFile("test1", "test1.PNG", MediaType.IMAGE_PNG_VALUE, "test1".getBytes(StandardCharsets.UTF_8)));
 
-//        byId_product.changeCategory(productService.categoryClassification("패딩점퍼,여성의류"));
-        productRepository.save(byId_product);
-        productImageRepository.save(byId_product.getProductImagesList().get(0));
 
-        System.out.println("저장됨");
+        productFormDto.setCategory("옷,바지");
+        productFormDto.setName("사과");
+        productFormDto.setAuctionPrice(1L);
+        productFormDto.setInstancePrice(2L);
+        productFormDto.setExplanation("테스트 중");
+        productFormDto.setProductTime(ProductTime.ONE_DAY);
+
+        MemberFormDto mDto = MemberFormDto.builder().loginId("강준호")
+                .name("준호")
+                .password("1234")
+                .build();
+
+        memberService.save(mDto);
+        Members member = memberService.findByLoginId("강준호");
+        productService.save(productFormDto, member);
+
+//        List<ProductRecordDto> allProduct = productService.findAllProduct();
+//        Product byId_product = productService.findById_Product(1L);
+
+        ProductRecordDto productRecordDto = productService.findById_ProductRecordDto(1L);
+        System.out.println(productRecordDto.getProductImagesList());
+//        System.out.println(byId_product.getProductImagesList());
+//        System.out.println( allProduct.get(0).getProductImagesList());
+
     }
 }

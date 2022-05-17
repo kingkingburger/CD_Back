@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layoutFile :: layout(~{::body})}">
+      th:replace="~{layoutFile :: layout(~{::body}, 'shop')}">
 <!-- Body-->
 <body class="handheld-toolbar-enabled">
     <!-- Page Title-->
@@ -465,12 +465,12 @@
                 <!-- Products grid-->
                 <div class="row mx-n2" >
                     <!-- Product-->
-                    <div class="col-md-4 col-sm-6 px-2 mb-4" th:each="product : ${allproduct}">
-                        <div class="card product-card">
+                    <div class="col-md-4 col-sm-6 px-2 mb-4" th:each="product : ${allProduct}">
+                        <div class="card product-card" th:if="${product.getProductType == sale}" >
 
                             <a class="card-img-top d-block overflow-hidden" th:href="@{/shop/detailProduct(id=${product.getId()})}">
                                 <!--                        <img alt="Product"  th:src="|/images/${imageFile.getStoreFileName()}|"/>-->
-                                <img alt="Product"  th:src="|/images/${product.getProductImagesList().get(0).getStoreFileName()}|"/>
+                                <img alt="Product"  th:src="|/product/images/${product.getProductImagesList().get(0).getStoreFileName()}|"/>
                             </a>
                             <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#" th:text="${product.getCategory().getSecond()}">카테고리</a>
 
@@ -875,7 +875,7 @@
                                     <div class="form-check form-option form-check-inline mb-2">
                                         <input class="form-check-input" type="radio" name="size7" id="xl6">
                                         <label class="form-option-label" for="xl6">XL</label>
-                                    </div>
+                                    </div>3
                                 </div>
                                 <button class="btn btn-primary btn-sm d-block w-100 mb-2" type="button"><i
                                         class="ci-cart fs-sm me-1"></i>Add to Cart
@@ -965,7 +965,7 @@
     <div class="d-table table-layout-fixed w-100"><a class="d-table-cell handheld-toolbar-item" href="#"
                                                      data-bs-toggle="offcanvas" data-bs-target="#shop-sidebar"><span
             class="handheld-toolbar-icon"><i class="ci-filter-alt"></i></span><span class="handheld-toolbar-label">Filters</span></a><a
-            class="d-table-cell handheld-toolbar-item" href="memberWishlist.html"><span class="handheld-toolbar-icon"><i
+            class="d-table-cell handheld-toolbar-item" href="myPage/memberWishlist.html"><span class="handheld-toolbar-icon"><i
             class="ci-heart"></i></span><span class="handheld-toolbar-label">Wishlist</span></a><a
             class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" data-bs-toggle="collapse"
             data-bs-target="#navbarCollapse" onclick="window.scrollTo(0, 0)"><span class="handheld-toolbar-icon"><i

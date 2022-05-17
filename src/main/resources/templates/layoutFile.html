@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:fragment="layout (content)" xmlns:th="http://www.thymeleaf.org">
+<html th:fragment="layout (content, paramActive)" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <title>Silk Load</title>
@@ -50,7 +50,7 @@
                         <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-menu"></i></div>
                     </a>
                     <!-- 위시리스트 -->
-                    <a class="navbar-tool d-none d-lg-flex" href="memberWishlist.html" th:href="@{/members/myPage/profile}">
+                    <a class="navbar-tool d-none d-lg-flex" href="myPage/memberWishlist.html" th:href="@{/members/myPage/profile}">
                         <span class="navbar-tool-tooltip">Wishlist</span>
                         <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-heart"></i></div>
                     </a>
@@ -79,6 +79,7 @@
                             <span class="navbar-tool-label">4</span>
                             <i class="navbar-tool-icon ci-cart"></i>
                         </a>
+
                         <a class="navbar-tool-text" th:href="@{/members/myPage/profile}">
                             <small>My Page</small>
                             $265.00
@@ -170,16 +171,16 @@
 
                     <!-- Primary menu-->
                     <ul class="navbar-nav">
-                        <a class="nav-link dropdown-toggle" type="button"
+                        <a class="nav-link dropdown-toggle" th:classappend="${paramActive == 'home'} ? active" type="button"
                            th:onclick="|location.href='@{/}'|">
                             Home
                         </a>
-                        <a class="nav-link dropdown-toggle" type="button"
+                        <a class="nav-link dropdown-toggle" th:classappend="${paramActive == 'shop'} ? active" type="button"
                            th:onclick="|location.href='@{/shop}'|">
                             Shop
                         </a>
-                        <a class="nav-link dropdown-toggle" type="button"
-                           th:onclick="|location.href='@{/addProduct}'|">
+                        <a class="nav-link dropdown-toggle" th:classappend="${paramActive == 'selling'} ? active" type="button"
+                           th:onclick="|location.href='@{/product/add}'|">
                             Selling
                         </a>
                     </ul>

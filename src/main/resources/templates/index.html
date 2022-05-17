@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layoutFile :: layout(~{::body})}">
+      th:replace="~{layoutFile :: layout(~{::body}, 'home')}">
 <!-- Body-->
 <body class="handheld-toolbar-enabled">
 
@@ -24,13 +24,13 @@
 
             <!-- Product 모든 등록된 물품 이미지를 가지고 오는 부분-->
 
-            <div class="col-lg-3 col-md-4 col-sm-6 px-2 mb-4" th:each="product : ${Products}" >
+            <div class="col-lg-3 col-md-4 col-sm-6 px-2 mb-4" th:each="product : ${Products}">
 
-                <div class="card product-card">
+                <div class="card product-card" th:if="${product.getProductType == sale}" >
 
                     <a class="card-img-top d-block overflow-hidden" th:href="@{/shop/detailProduct(id=${product.getId()})}">
 <!--                        <img alt="Product"  th:src="|/images/${imageFile.getStoreFileName()}|"/>-->
-                        <img alt="Product"  th:src="|/images/${product.getProductImagesList().get(0).getStoreFileName()}|"/>
+                        <img alt="Product"  th:src="|/product/images/${product.getProductImagesList().get(0).getStoreFileName()}|"/>
                     </a>
                     <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#" th:text="${product.getCategory().getSecond()}">카테고리</a>
 
@@ -39,7 +39,8 @@
                         </h3>
                         <div >
                             <div class="product-price col"><span class="text-accent" th:text="|즉시 구매가: ${product.getInstantPrice()} 원 |"></span></div>
-                            <div class="product-price col"><span class="text-accent" th:if="${product.getAuctionPrice() != null}" th:text="|경매가: ${product.getAuctionPrice()}원|"></span></div>
+                            <div class="product-price col"><span class="text-accent" th:if="${product.getAuctionPrice() != null}"
+                                                                 text="|경매가: ${product.getAuctionPrice()}원|"></span></div>
                             <div class="product-price col"><span class="text-accent" th:text="|마감날짜: ${product.getDeadLine()}|">   </span></div>
                         </div>
                     </div>
@@ -282,7 +283,7 @@
 
 <div class="handheld-toolbar">
     <div class="d-table table-layout-fixed w-100"><a class="d-table-cell handheld-toolbar-item"
-                                                     href="memberWishlist.html"><span class="handheld-toolbar-icon"><i
+                                                     href="myPage/memberWishlist.html"><span class="handheld-toolbar-icon"><i
             class="ci-heart"></i></span><span class="handheld-toolbar-label">Wishlist</span></a><a
             class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" data-bs-toggle="collapse"
             data-bs-target="#navbarCollapse" onclick="window.scrollTo(0, 0)"><span class="handheld-toolbar-icon"><i

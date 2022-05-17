@@ -8,14 +8,13 @@ import SilkLoad.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.transaction.Transactional;
-import java.io.IOException;
-import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.RecursiveTask;
+
+
 
 @Slf4j
 @Service
@@ -38,6 +37,13 @@ public class MemberService  {
 
     }
 
+    @Transactional
+    public Members findByLoginId( String id){
+
+        return memberRepository.findByLoginId( id ).get();
+    }
+
+    @Transactional
     public Members updatePassword( MemberFormDto memberFormDto) {
 
         Optional<Members> optionalMember = memberRepository.findByLoginId(memberFormDto.getLoginId());
@@ -55,12 +61,19 @@ public class MemberService  {
         return null;
     }
 
-    public Members findByLoginId( String loginId ) {
+    @Transactional(readOnly = true)
+    public List<Product> findByLoginIdProductList( String loginId ) {
 
         Optional<Members> optionalMember = memberRepository.findByLoginId(loginId);
 
         if (optionalMember.isPresent()) {
-            return (Members) optionalMember.get();
+            List<Product> productListDto = new ArrayList<Product>();
+            List<Product> productList = optionalMember.get().getProductList();
+            productList.forEach( product -> {
+                productListDto.add(product);
+            });
+
+            return productListDto;
         }
 
         return null;

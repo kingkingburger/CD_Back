@@ -31,6 +31,6 @@ public class ProductRecordDto {
     @NotNull
     private Category category;
     @NotNull
-    private List<ProductImage> productImagesList;
+    private List<ProductImageRecordDto> productImagesList;
 
 }

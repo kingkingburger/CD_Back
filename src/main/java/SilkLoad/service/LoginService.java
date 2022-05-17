@@ -5,6 +5,7 @@ import SilkLoad.entity.Members;
 import SilkLoad.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -15,6 +16,8 @@ public class LoginService  {
 
     private final MemberRepository memberRepository;
 
+    //성능향상상
+   @Transactional(readOnly = true)
     public Members login(String loginId, String password) {
 
         Optional<Members> optionalMember = memberRepository.findByLoginId(loginId);

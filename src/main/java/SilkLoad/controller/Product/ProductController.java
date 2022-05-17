@@ -23,6 +23,7 @@ import java.net.MalformedURLException;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/product")
 public class ProductController {
 
     private final ProductService productService;
@@ -32,12 +33,12 @@ public class ProductController {
         return ProductTime.values();
     }
 
-    @GetMapping("/addProduct")
+    @GetMapping("/add")
     public String addProduct(@ModelAttribute("productData") ProductFormDto productData) {
         return "addProductForm";
     }
 
-    @PostMapping("/addProduct")
+    @PostMapping("/add")
     public String saveProduct(@Valid @ModelAttribute("productData") ProductFormDto productData,
                               BindingResult bindingResult,
                               HttpServletRequest request) throws IOException {
