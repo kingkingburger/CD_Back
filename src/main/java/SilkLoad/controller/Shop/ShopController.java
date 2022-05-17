@@ -34,17 +34,6 @@ public class ShopController {
         model.addAttribute("allProduct", allProduct);
         model.addAttribute("sale", ProductType.sale);
 
-
-    /*
-        //세션에 회원 데이터가 없으면
-        if (loginMember == null) {
-
-            return "shop";
-       }
-
-        //세션이 유지되면 로그인으로 이동
-        model.addAttribute("member", loginMember);
-    */
         return "shop";
     }
 
@@ -68,8 +57,6 @@ public class ShopController {
         if (byId_productRecordDto.getProductType() != ProductType.sale) {
             return "error";
         }
-
-
 
         model.addAttribute("product", byId_productRecordDto);
         model.addAttribute("allProduct", allProduct);

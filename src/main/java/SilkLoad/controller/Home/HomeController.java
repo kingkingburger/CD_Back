@@ -1,20 +1,21 @@
 package SilkLoad.controller.Home;
 
 
-import SilkLoad.SessionConst;
-import SilkLoad.dto.MemberFormDto;
 import SilkLoad.dto.ProductRecordDto;
-import SilkLoad.entity.Members;
+import SilkLoad.entity.Product;
 import SilkLoad.entity.ProductEnum.ProductType;
+import SilkLoad.repository.ProductRepository;
 import SilkLoad.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Hibernate;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.SessionAttribute;
+
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ import java.util.List;
 public class HomeController {
 
     private final ProductService productService;
-
+    private final ProductRepository productRepository;
 
     /**
      * @param model product들을 담기위한 매개변수
@@ -32,12 +33,12 @@ public class HomeController {
      * model에 반환되는 객체들은 entitiy로 반환 절대 금지 => jSON 생성 무한 루프 (양방향 관계)
      * Dto로 반환해야 한다.
      */
-
     @GetMapping("/")
-    public String home(Model model) {
+    public String home(Model model, @PageableDefault(size=8) Pageable pageable) {//@PageableDefault로 기본 8개를 가지고 오게했다.
+        List<ProductRecordDto> content = productService.paged_product(pageable).getContent();
 
-        List<ProductRecordDto> allProduct = productService.findAllProduct();
-        model.addAttribute("Products", allProduct );
+
+        model.addAttribute("Products", content);
         model.addAttribute("sale", ProductType.sale);
         return "index";
 

@@ -10,7 +10,6 @@ import java.util.List;
 
 @Data
 @Entity
-@ToString(exclude = "ProductList")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Category {
@@ -22,6 +21,7 @@ public class Category {
     private String first;
     private String second;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "category")
     private List<Product> productList = new ArrayList<Product>();
 

@@ -3,6 +3,7 @@ package SilkLoad.dto;
 
 import SilkLoad.entity.Category;
 import SilkLoad.entity.Members;
+import SilkLoad.entity.Product;
 import SilkLoad.entity.ProductEnum.ProductTime;
 import SilkLoad.entity.ProductEnum.ProductType;
 import lombok.Builder;
@@ -53,4 +54,6 @@ public class ProductFormDto {
         this.imageFileList=imageFileList;
         this.Explanation=Explanation;
     }
+
+
 }

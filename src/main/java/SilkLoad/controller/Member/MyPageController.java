@@ -60,8 +60,9 @@ public class MyPageController {
         HttpSession session = request.getSession();
         Object memberObject = session.getAttribute(SessionConst.LOGIN_MEMBER);
         Members sessionMember = (Members) memberObject;
+
         List<ProductRecordDto> byIdProductDtoList = orderService.findByIdProductDtoList(sessionMember.getLoginId());
-        log.info("물품리스트={}",byIdProductDtoList.getClass() );
+        //log.info("물품리스트={}",byIdProductDtoList.getClass() );
         model.addAttribute("productRecordDtoList", byIdProductDtoList);
 
         return "myPage/memberOrders";

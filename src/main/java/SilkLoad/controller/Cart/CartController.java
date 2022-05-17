@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 public class CartController {
 
-    private final ProductService productService;
-
     @GetMapping("/Cart")
     public String UserCart() {
         return "shop-cart";

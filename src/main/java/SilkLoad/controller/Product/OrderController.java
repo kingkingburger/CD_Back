@@ -24,14 +24,12 @@ public class OrderController {
     private final ProductService productService;
 
     @PostMapping("/buyNow")
-    public String orderSave(@ModelAttribute("orderFormDto")OrderFormDto orderFormDto) {
+    public String orderSave(@ModelAttribute("orderFormDto") OrderFormDto orderFormDto) {
 
-        log.info("orderFormDto ={}",orderFormDto);
+        log.info("orderFormDto ={}", orderFormDto);
 
-        if ( orderService.save(orderFormDto)) {
-
+        if (orderService.save(orderFormDto)) {
             productService.changeTypeToWaiting(orderFormDto.getProductId());
-
             return "redirect:/";
         }
 

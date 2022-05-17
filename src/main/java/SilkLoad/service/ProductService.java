@@ -12,6 +12,8 @@ import SilkLoad.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,6 +37,7 @@ public class ProductService {
      */
     @Value("${imgFile.dir}")
     private String imgFileDir;
+
 
     private final ProductRepository productRepository;
 
@@ -211,9 +214,8 @@ public class ProductService {
     @Transactional
     public ProductRecordDto getProductRecordDto(Product product) {
 
-
-        ProductRecordDto productRecordDto = ProductRecordDto.builder().id(product.getId())
-
+        ProductRecordDto productRecordDto = ProductRecordDto.builder()
+                .id(product.getId())
                 .name(product.getName())
                 .auctionPrice(product.getAuctionPrice())
                 .instantPrice(product.getInstantPrice())
@@ -227,22 +229,27 @@ public class ProductService {
 
         return productRecordDto;
     }
-    
-    private List<ProductImageRecordDto> getProductRecordImageListDto( List<ProductImage> productImageList ) {
 
-        List<ProductImageRecordDto>  productImageRecordDtoList = new ArrayList<ProductImageRecordDto>();
-        productImageList.forEach( productImage -> {
+    /**
+     * ProductImage의 List를 Dto로 만드는 메서드
+     *
+     * @param productImageList
+     * @return
+     */
+    private List<ProductImageRecordDto> getProductRecordImageListDto(List<ProductImage> productImageList) {
 
+        List<ProductImageRecordDto> productImageRecordDtoList = new ArrayList<ProductImageRecordDto>();
+
+        productImageList.forEach(productImage -> {
             ProductImageRecordDto buildImage = ProductImageRecordDto.builder()
                     .storeFileName(productImage.getStoreFileName())
                     .uploadFileName(productImage.getStoreFileName())
                     .build();
 
             productImageRecordDtoList.add(buildImage);
+        });
 
-        } );
-
-        return  productImageRecordDtoList;
+        return productImageRecordDtoList;
 
     }
 
@@ -260,7 +267,7 @@ public class ProductService {
                     .category(product.getCategory())
                     .deadLine(productDeadLine(product.getCreatedDate(), product.getProductTime()))
                     .productTime(product.getProductTime())
-                    .productImagesList( getProductRecordImageListDto(product.getProductImagesList()))
+                    .productImagesList(getProductRecordImageListDto(product.getProductImagesList()))
                     .build();
             productRecordDtoList.add(productRecordDto);
         }));
@@ -291,21 +298,34 @@ public class ProductService {
         return parsedLocalDateTimeNow;
     }
 
+
+    /**
+     * 주문이 성공하면 거래중 상태로 만듬
+     *
+     * @param productid
+     */
     @Transactional
-    public void changeTypeToWaiting(Long id) {
+    public void changeTypeToWaiting(Long productid) {
 
-        Optional<Product> byIdProduct = productRepository.findById(id);
+        Optional<Product> byIdProduct = productRepository.findById(productid);
 
-        if( byIdProduct.isPresent()) {
-
+        if (byIdProduct.isPresent()) {
             Product product = byIdProduct.get();
-
             product.setProductType(ProductType.waiting);
-
             productRepository.save(product);
         }
-
     }
 
+
+    /**
+     * 테이블에 product 를 가져와서 map으로 ProductRecordDto로 만들어준다.
+     * @param pageable
+     * @return
+     */
+    @Transactional
+    public Page<ProductRecordDto> paged_product(Pageable pageable){
+        Page<ProductRecordDto> sale = productRepository.findByProductTypeOrderByIdDesc(ProductType.sale, pageable).map(this::getProductRecordDto);
+        return sale;
+    }
 
 }

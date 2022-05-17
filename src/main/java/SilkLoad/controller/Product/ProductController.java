@@ -47,8 +47,6 @@ public class ProductController {
             return "addProductForm";
         }
 
-
-
         HttpSession session = request.getSession();
         Members loginMember = (Members) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
