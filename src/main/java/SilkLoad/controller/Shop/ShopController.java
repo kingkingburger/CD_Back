@@ -2,9 +2,10 @@ package SilkLoad.controller.Shop;
 
 import SilkLoad.SessionConst;
 import SilkLoad.dto.MemberFormDto;
+import SilkLoad.dto.OrderFormDto;
 import SilkLoad.dto.ProductRecordDto;
 import SilkLoad.entity.Members;
-import SilkLoad.entity.Product;
+import SilkLoad.entity.ProductEnum.ProductType;
 import SilkLoad.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,28 +19,32 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/shop")
-public class shopController {
+public class ShopController {
 
     private final ProductService productService;
 
-
     @GetMapping
-    public String homeLogin(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Members loginMember,
-                            Model model,
-                            @ModelAttribute("member") MemberFormDto member) {
+    public String homeLogin(/*@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Members loginMember,*/
+                            Model model
+                            /*,@ModelAttribute("member") MemberFormDto member*/
+                            ) {
 
         //세션에 데이터가 없어도 model을 넣어준다.
         List<ProductRecordDto> allProduct = productService.findAllProduct();
-        model.addAttribute("allproduct", allProduct);
+        model.addAttribute("allProduct", allProduct);
+        model.addAttribute("sale", ProductType.sale);
 
+
+    /*
         //세션에 회원 데이터가 없으면
         if (loginMember == null) {
 
             return "shop";
-        }
+       }
 
         //세션이 유지되면 로그인으로 이동
         model.addAttribute("member", loginMember);
+    */
         return "shop";
     }
 
@@ -55,10 +60,18 @@ public class shopController {
                              Model model) {
 
         List<ProductRecordDto> allProduct = productService.findAllProduct();
-        Product byId_product = productService.findById_Product(id);
-        ProductRecordDto productRecordDto = productService.getProductRecordDto(byId_product);
 
-        model.addAttribute("product", productRecordDto);
+        ProductRecordDto byId_productRecordDto = productService.findById_ProductRecordDto(id);
+/*      Product byId_product = productService.findById_Product(id);
+        ProductRecordDto productRecordDto = productService.getProductRecordDto(byId_product);*/
+        //productType.sale이 판매 중이 아니라면 error 페이저로 보내기
+        if (byId_productRecordDto.getProductType() != ProductType.sale) {
+            return "error";
+        }
+
+
+
+        model.addAttribute("product", byId_productRecordDto);
         model.addAttribute("allProduct", allProduct);
 
         return "detailProduct";

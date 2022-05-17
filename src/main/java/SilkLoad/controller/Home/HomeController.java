@@ -5,9 +5,11 @@ import SilkLoad.SessionConst;
 import SilkLoad.dto.MemberFormDto;
 import SilkLoad.dto.ProductRecordDto;
 import SilkLoad.entity.Members;
+import SilkLoad.entity.ProductEnum.ProductType;
 import SilkLoad.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,11 +38,9 @@ public class HomeController {
 
         List<ProductRecordDto> allProduct = productService.findAllProduct();
         model.addAttribute("Products", allProduct );
-
+        model.addAttribute("sale", ProductType.sale);
         return "index";
 
     }
-
-
 
 }

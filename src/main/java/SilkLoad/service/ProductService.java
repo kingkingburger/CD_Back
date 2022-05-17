@@ -2,6 +2,7 @@ package SilkLoad.service;
 
 
 import SilkLoad.dto.ProductFormDto;
+import SilkLoad.dto.ProductImageRecordDto;
 import SilkLoad.dto.ProductRecordDto;
 import SilkLoad.entity.*;
 import SilkLoad.entity.ProductEnum.ProductTime;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -20,6 +22,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -40,7 +43,7 @@ public class ProductService {
      */
     private final ProductImageRepository productImageRepository;
 
-
+    @Transactional
     public void save(ProductFormDto productFormDto, Members loginMember) throws IOException {
 
         String categoryName = productFormDto.getCategory();
@@ -60,7 +63,6 @@ public class ProductService {
             productImage.changeProduct(product);
             productImageRepository.save(productImage);
         });
-
 
     }
 
@@ -103,6 +105,7 @@ public class ProductService {
      * @return 리스트의 productImage 객체에 upload 파일명과 store 파일 명을 저장한 후 그 list를 반환한다.
      * @throws IOException
      */
+
     private List<ProductImage> filesImgSave(List<MultipartFile> imgFileList) throws IOException {
 
         List<ProductImage> storeFileResult = new ArrayList<>();
@@ -122,6 +125,7 @@ public class ProductService {
      * @return
      * @throws IOException
      */
+    @Transactional
     public ProductImage fileImgSave(MultipartFile multipartFile) throws IOException {
 
         if (multipartFile.isEmpty()) {
@@ -165,9 +169,14 @@ public class ProductService {
      * @param id
      * @return id로 1개의 물품만 반환
      */
-    public Product findById_Product(long id) {
+    @Transactional(readOnly = true)
+    public ProductRecordDto findById_ProductRecordDto(long id) {
+
+
         Product product = productRepository.findById(id).get();
-        return product;
+        ProductRecordDto productRecordDto = getProductRecordDto(product);
+
+        return productRecordDto;
     }
 
 
@@ -176,12 +185,13 @@ public class ProductService {
      *
      * @return List형태로 반환
      */
+    @Transactional
     public List<ProductRecordDto> findAllProduct() {
         List<Product> allProduct = productRepository.findAll();
-
         return productToProductRecordDto(allProduct);
     }
 
+    @Transactional
     public List<ProductRecordDto> productToProductRecordDto(List<Product> allProduct) {
 
         List<ProductRecordDto> productRecordDtoList = new ArrayList<>();
@@ -197,7 +207,9 @@ public class ProductService {
     /**
      * 매개변수 product를 통해 ProductSaleDto를 생성
      */
+    @Transactional
     public ProductRecordDto getProductRecordDto(Product product) {
+
         ProductRecordDto productRecordDto = ProductRecordDto.builder().id(product.getId())
                 .name(product.getName())
                 .auctionPrice(product.getAuctionPrice())
@@ -207,10 +219,30 @@ public class ProductService {
                 .category(product.getCategory())
                 .deadLine(productDeadLine(product.getCreatedDate(), product.getProductTime()))
                 .productTime(product.getProductTime())
-                .productImagesList(product.getProductImagesList())
+                .productImagesList(getProductRecordImageListDto(product.getProductImagesList()))
                 .build();
+
         return productRecordDto;
     }
+    
+    private List<ProductImageRecordDto> getProductRecordImageListDto( List<ProductImage> productImageList ) {
+
+        List<ProductImageRecordDto>  productImageRecordDtoList = new ArrayList<ProductImageRecordDto>();
+        productImageList.forEach( productImage -> {
+
+            ProductImageRecordDto buildImage = ProductImageRecordDto.builder()
+                    .storeFileName(productImage.getStoreFileName())
+                    .uploadFileName(productImage.getStoreFileName())
+                    .build();
+
+            productImageRecordDtoList.add(buildImage);
+
+        } );
+
+        return  productImageRecordDtoList;
+
+    }
+
 
     public List<ProductRecordDto> getProductRecordDtoList(List<Product> productList) {
 
@@ -225,7 +257,7 @@ public class ProductService {
                     .category(product.getCategory())
                     .deadLine(productDeadLine(product.getCreatedDate(), product.getProductTime()))
                     .productTime(product.getProductTime())
-                    .productImagesList(product.getProductImagesList())
+                    .productImagesList( getProductRecordImageListDto(product.getProductImagesList()))
                     .build();
             productRecordDtoList.add(productRecordDto);
         }) );
@@ -254,6 +286,22 @@ public class ProductService {
         }
 
         return parsedLocalDateTimeNow;
+    }
+
+    @Transactional
+    public void changeTypeToWaiting(Long id) {
+
+        Optional<Product> byIdProduct = productRepository.findById(id);
+
+        if( byIdProduct.isPresent()) {
+
+            Product product = byIdProduct.get();
+
+            product.setProductType(ProductType.waiting);
+
+            productRepository.save(product);
+        }
+
     }
 
 

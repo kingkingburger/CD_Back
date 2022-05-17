@@ -22,7 +22,7 @@ public class Category {
     private String first;
     private String second;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "category")
     private List<Product> productList = new ArrayList<Product>();
 
     @Builder

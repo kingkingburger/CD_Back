@@ -12,7 +12,6 @@ import java.util.List;
 
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-
 @Entity
 @Data
 @AllArgsConstructor
@@ -47,7 +46,7 @@ public class Product {
     private Category category;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product")
     private List<ProductImage> productImagesList = new ArrayList<ProductImage>();
 
     /**
@@ -83,7 +82,6 @@ public class Product {
         this.category = category;
         this.productTime = productTime;
         this.productImagesList = new ArrayList<>();
-
 
     }
 

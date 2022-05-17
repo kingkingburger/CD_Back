@@ -17,16 +17,20 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new ErrorPageCheckInterceptor())
                 .order(0)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/", "/members/**", "/login", "/logout","/home","/addProduct", "/Cart","/myPage",
+                .excludePathPatterns("/",
+                        "/members/add","/members/myPage/profile","/members/myPage/wishlist","/members/myPage/orders",
+                        "/login", "/logout","/home",
+                        "/product/add","/product/order/buyNow","/product/images/**",
+                        "/Cart","/myPage",
                         "/shop/**",
-                        "/images/**","/css/**", "/*.ico", "/error","/vendor/**", "/img/**","/js/**","/fonts/**" );
+                        "/css/**", "/*.ico", "/error","/vendor/**", "/img/**","/js/**","/fonts/**" );
 
         //로그인 인증
         registry.addInterceptor(new LoginCheckInterceptor())
                 .order(1)
                 .addPathPatterns("/**")
                 .excludePathPatterns(
-                        "/", "/members/add", "/login", "/logout","/home","/images/**","/shop/**",
+                        "/", "/members/add", "/login", "/logout","/home","/product/images/**","/shop/**",
                         "/css/**", "/*.ico", "/error","/vendor/**", "/img/**","/js/**","/fonts/**"
                 );
 

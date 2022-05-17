@@ -5,9 +5,8 @@ import SilkLoad.dto.MemberFormDto;
 import SilkLoad.dto.ProductFormDto;
 import SilkLoad.dto.ProductRecordDto;
 import SilkLoad.entity.Members;
-import SilkLoad.entity.Product;
 import SilkLoad.service.MemberService;
-import SilkLoad.service.ProductService;
+import SilkLoad.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -29,12 +28,12 @@ import java.util.List;
 public class MyPageController {
 
     private final MemberService memberService;
-    private final ProductService productService;
+    private final OrderService orderService;
 
     @GetMapping("/profile")
     public String MyPage(@ModelAttribute("memberFormDto")MemberFormDto memberFormDto) {
 
-        return "memberProfile";
+        return "myPage/memberProfile";
     }
 
     @PostMapping("/profile")
@@ -46,12 +45,12 @@ public class MyPageController {
             bindingResult.rejectValue("loginId","nonExistence");
         }
 
-        return "memberProfile";
+        return "myPage/memberProfile";
     }
 
     @GetMapping("/wishlist")
     public String Wishlist(@ModelAttribute("productData") ProductFormDto productData) {
-        return "memberWishlist";
+        return "myPage/memberWishlist";
 
     }
 
@@ -61,20 +60,13 @@ public class MyPageController {
         HttpSession session = request.getSession();
         Object memberObject = session.getAttribute(SessionConst.LOGIN_MEMBER);
         Members sessionMember = (Members) memberObject;
-        Members member = memberService.findByLoginId( sessionMember.getLoginId());
-        List<Product> memberProductList = member.getProductList();
-        List<ProductRecordDto> productRecordDtoList = productService.getProductRecordDtoList(memberProductList);
-        model.addAttribute("productRecordDtoList", productRecordDtoList);
-        log.info("물품리스트={}",productRecordDtoList );
+        List<ProductRecordDto> byIdProductDtoList = orderService.findByIdProductDtoList(sessionMember.getLoginId());
+        log.info("물품리스트={}",byIdProductDtoList.getClass() );
+        model.addAttribute("productRecordDtoList", byIdProductDtoList);
 
-
-
-        return "memberOrders";
+        return "myPage/memberOrders";
 
     }
-
-
-
 
 
 }

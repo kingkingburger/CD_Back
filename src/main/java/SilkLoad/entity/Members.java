@@ -3,6 +3,7 @@ package SilkLoad.entity;
 import SilkLoad.dto.ProductFormDto;
 import SilkLoad.dto.ProductRecordDto;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -11,11 +12,10 @@ import java.util.List;
 
 
 @Entity
-@Getter
-@Setter
-@ToString
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Members {
 
     @Id
@@ -38,7 +38,9 @@ public class Members {
 
     private LocalDate createDate = LocalDate.now();
 
-    @OneToMany(mappedBy = "members", fetch = FetchType.EAGER)
+//    @BatchSize(size = 100)
+    @ToString.Exclude
+    @OneToMany(mappedBy = "members", fetch = FetchType.LAZY)
     private List<Product> productList = new ArrayList<Product>();
 
     @Builder
