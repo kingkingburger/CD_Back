@@ -17,7 +17,10 @@ class CrawlingRepositoryTest {
 
     @Test
     void 크롤링데이터가져오기_테스트(){
-        List<Crawling> all = crawlingRepository.findAll();
-        System.out.println("all = " + all);
+
+//        List<Crawling> 여성의류 = crawlingRepository.findByCategory("여성의류");
+//        for (Crawling crawling : 여성의류) {
+//            System.out.println("crawling = " + crawling);
+//        }
     }
 }

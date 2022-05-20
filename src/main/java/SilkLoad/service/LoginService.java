@@ -16,8 +16,9 @@ public class LoginService  {
 
     private final MemberRepository memberRepository;
 
+
     //성능향상상
-   @Transactional(readOnly = true)
+    @Transactional(readOnly = true)
     public Members login(String loginId, String password) {
 
         Optional<Members> optionalMember = memberRepository.findByLoginId(loginId);

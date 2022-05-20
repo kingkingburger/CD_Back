@@ -21,7 +21,9 @@ public class CrawlingDto {
 
     @Builder
     public CrawlingDto(String name,
-                        String price, String link, String img_link,
+                       String price,
+                       String link,
+                       String img_link,
                        String category) {
         this.category=category;
         this.name=name;
