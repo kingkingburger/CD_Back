@@ -1,9 +1,6 @@
 package SilkLoad.entity;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -29,4 +26,11 @@ public class Cart {
     private Product productid; //물품의 id
 
     private LocalDate createDate = LocalDate.now();
+
+    @Builder
+    public Cart(Members memberid,
+                Product productid) {
+        this.memberid = memberid;
+        this.productid = productid;
+    }
 }
