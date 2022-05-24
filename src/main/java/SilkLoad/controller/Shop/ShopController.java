@@ -9,6 +9,8 @@ import SilkLoad.entity.ProductEnum.ProductType;
 import SilkLoad.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,14 +26,27 @@ public class ShopController {
     private final ProductService productService;
 
     @GetMapping
-    public String homeLogin(/*@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Members loginMember,*/
-                            Model model
-                            /*,@ModelAttribute("member") MemberFormDto member*/
-                            ) {
+    public String shop(Model model, @PageableDefault(size = 9) Pageable pageable) {
 
-        //세션에 데이터가 없어도 model을 넣어준다.
-        List<ProductRecordDto> allProduct = productService.findAllProduct();
-        model.addAttribute("allProduct", allProduct);
+        //페이징화 된 객체
+        List<ProductRecordDto> content = productService.paged_product(pageable).getContent();
+
+        //전체 페이지 수
+        int totalPages = productService.paged_product(pageable).getTotalPages();
+
+        //현제 페이지
+        int presentPage = productService.paged_product(pageable).getNumber();
+        
+        //페이징된 물품들 모델로 보내기
+        model.addAttribute("allProduct", content);
+
+        //전체 페이지 수 모델로 보내기
+        model.addAttribute("totalPages",totalPages);
+
+        //현제 페이지  모델로 보내기
+        model.addAttribute("presentPage",presentPage);
+
+
         model.addAttribute("sale", ProductType.sale);
 
         return "shop";
