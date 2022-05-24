@@ -1,9 +1,6 @@
 package SilkLoad.controller.Product;
 
-import SilkLoad.SessionConst;
-import SilkLoad.dto.MemberFormDto;
 import SilkLoad.dto.OrderFormDto;
-import SilkLoad.entity.Members;
 import SilkLoad.service.OrderService;
 import SilkLoad.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Slf4j
 @Controller
@@ -28,8 +24,13 @@ public class OrderController {
 
         log.info("orderFormDto ={}", orderFormDto);
 
-        if (orderService.save(orderFormDto)) {
-            productService.changeTypeToWaiting(orderFormDto.getProductId());
+        if ( orderService.saveFormDto(orderFormDto) != null) {
+            log.info("order 저장 성공");
+             if( productService.changeTypeToWaiting(orderFormDto.getProductId()) != null)  {
+                 log.info("TypeToWaiting 성공");
+
+             }
+
             return "redirect:/";
         }
 

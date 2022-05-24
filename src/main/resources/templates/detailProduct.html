@@ -379,9 +379,9 @@
                             <div class="fs-sm mb-4">
                                 <span class="text-heading fw-medium me-1">카테고리:</span>
                                 <span class="text-muted" id="colorOption1"
-                                      th:utext="${product.getCategory().getSecond()}"></span>
+                                      th:utext="${product.categoryRecordDto.getSecond()}"></span>
                                 <span class="text-muted" id="colorOption2"
-                                      th:text="${product.getCategory().getFirst()}"></span>
+                                      th:text="${product.categoryRecordDto.getFirst()}"></span>
                             </div>
 
 
@@ -468,7 +468,7 @@
                             </a>
                             <div class="card-body py-2">
                                 <a class="product-meta d-block fs-xs pb-1" href="#"
-                                   th:text="${all_product.getCategory().getSecond()}">카테고리</a>
+                                   th:text="${all_product.categoryRecordDto.getSecond()}">카테고리</a>
                                 <h3 class="product-title fs-sm">
                                     <a th:href="@{/Product(id=${product.id})}" th:text="${all_product.name}">물품제목</a>
                                 </h3>
@@ -621,7 +621,7 @@
 <script th:inline="javascript">
 
     const timeType = [[${product.productTime}]];
-    const deadLineString = [[${product.deadLine}]]
+    const deadLineString = [[${#temporals.format( product.deadLine , 'yyyy-MM-dd HH:mm:ss')}]]
     const now = new Date();
     const deadLine = new Date(Number(deadLineString.slice(0, 4)),
         Number(deadLineString.slice(5, 7)) - 1,
@@ -659,6 +659,7 @@
     } else {
         $("#" + timeType).text("마감");
     }
+
 </script>
 </body>
 </html>

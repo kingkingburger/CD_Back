@@ -468,19 +468,19 @@
                     <div class="col-md-4 col-sm-6 px-2 mb-4" th:each="product : ${allProduct}">
                         <div class="card product-card" th:if="${product.getProductType == sale}" >
 
-                            <a class="card-img-top d-block overflow-hidden" th:href="@{/shop/detailProduct(id=${product.getId()})}">
+                            <a class="card-img-top d-block overflow-hidden" th:href="@{/shop/detailProduct(id=${product.id})}">
                                 <!--                        <img alt="Product"  th:src="|/images/${imageFile.getStoreFileName()}|"/>-->
-                                <img alt="Product"  th:src="|/product/images/${product.getProductImagesList().get(0).getStoreFileName()}|"/>
+                                <img alt="Product"  th:src="|/product/images/${product.productImagesList.get(0).getStoreFileName()}|"/>
                             </a>
-                            <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#" th:text="${product.getCategory().getSecond()}">카테고리</a>
+                            <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#" th:text="${ product.categoryRecordDto.getSecond() }">카테고리</a>
 
                                 <h3 class="product-title fs-sm" >
-                                    <a th:href="|판매자: @{/shop/detailProduct(id=${product.getId()})}|" th:text="${product.getName()}">물품제목</a>
+                                    <a th:href="|판매자: @{/shop/detailProduct(id=${product.id})}|" th:text="${product.getName()}">물품제목</a>
                                 </h3>
                                 <div class="">
-                                    <div class="product-price "><span class="text-accent" th:text="|즉시 구매가: ${product.getInstantPrice()} 원 |"></span></div>
-                                    <div class="product-price "><span class="text-accent" th:if="${product.getAuctionPrice() != null}" th:text="|경매가: ${product.getAuctionPrice()}원|"></span></div>
-                                    <div class="product-price "><span class="text-accent" th:text="|마감날짜: ${product.getDeadLine()}|"></span></div>
+                                    <div class="product-price "><span class="text-accent" th:text="|즉시 구매가: ${product.instantPrice} 원 |"></span></div>
+                                    <div class="product-price "><span class="text-accent" th:if="${product.auctionPrice != null}" th:text="|경매가: ${product.auctionPrice}원|"></span></div>
+                                    <div class="product-price "><span class="text-accent" th:text="|마감날짜: ${product.deadLine}|"></span></div>
 
                                 </div>
                             </div>

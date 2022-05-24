@@ -5,9 +5,11 @@ import SilkLoad.entity.ProductEnum.ProductTime;
 import SilkLoad.entity.ProductEnum.ProductType;
 import lombok.Builder;
 import lombok.Data;
+import org.apache.tomcat.jni.Local;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -23,13 +25,13 @@ public class ProductRecordDto {
     private Long instantPrice; //즉시거래가격
     private String explanation; //물품상세설명
     @NotBlank
-    private String deadLine;
+    private LocalDateTime deadLine;
     @NotNull
     private ProductTime productTime;
     @NotNull
     private ProductType productType;
     @NotNull
-    private Category category;
+    private CategoryRecordDto categoryRecordDto;
     @NotNull
     private List<ProductImageRecordDto> productImagesList;
 

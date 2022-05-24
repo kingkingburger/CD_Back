@@ -4,6 +4,8 @@ package SilkLoad.entity;
 import SilkLoad.entity.ProductEnum.ProductTime;
 import SilkLoad.entity.ProductEnum.ProductType;
 import lombok.*;
+import org.aspectj.weaver.ast.Or;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -36,18 +38,19 @@ public class Product {
     private LocalDateTime createdDate = LocalDateTime.now(); //생성일자
 
     @ToString.Exclude
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID", nullable = false) //Product 테이블에 있는 것을 매핑 , nullable을 false로 해서 내부 join으로 변경
     private Members members;
 
     @ToString.Exclude
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "CATEGORY_ID", nullable = false)
     private Category category;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "product")
     private List<ProductImage> productImagesList = new ArrayList<ProductImage>();
+
 
     /**
      * Product <=> Category 양방향 연관관계

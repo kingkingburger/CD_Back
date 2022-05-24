@@ -19,7 +19,7 @@ public class ProductImage {
     @Column(name = "ProductImage_ID")
     private Long id; // PK
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PRODUCT_ID", nullable = false)
     private Product product;
 

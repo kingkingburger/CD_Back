@@ -1,32 +1,28 @@
 package SilkLoad.example.service;
 
-import SilkLoad.dto.MemberFormDto;
-import SilkLoad.dto.ProductFormDto;
-import SilkLoad.dto.ProductRecordDto;
+import SilkLoad.dto.*;
 import SilkLoad.entity.Members;
 import SilkLoad.entity.Product;
 import SilkLoad.entity.ProductEnum.ProductTime;
 import SilkLoad.entity.ProductEnum.ProductType;
 import SilkLoad.repository.MemberRepository;
+import SilkLoad.repository.OrderRepository;
 import SilkLoad.repository.ProductRepository;
 import SilkLoad.service.MemberService;
+import SilkLoad.service.OrderService;
 import SilkLoad.service.ProductService;
-import lombok.RequiredArgsConstructor;
-import org.hibernate.Hibernate;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartRequest;
-import org.springframework.web.multipart.support.MultipartFilter;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -35,6 +31,7 @@ import java.util.List;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
+@Slf4j
 public class ProductServiceTest {
 
     @Autowired
@@ -47,6 +44,10 @@ public class ProductServiceTest {
     @Autowired
     MemberRepository memberRepository;
 
+    @Autowired
+    OrderService orderService;
+    @Autowired
+    OrderRepository orderRepository;
 
 
     @Test
@@ -94,7 +95,7 @@ public class ProductServiceTest {
                 .build();
 
         memberService.save(mDto);
-        Members member = memberService.findByLoginId("강준호");
+        Members member = memberService.findByLoginId("1");
         productService.save(productFormDto, member);
 
 //        List<ProductRecordDto> allProduct = productService.findAllProduct();
@@ -142,8 +143,76 @@ public class ProductServiceTest {
 
 
     @Test
-    void 페이징처리_테스트(){
+    void 페이징처리_테스트() throws IOException{
+
+
+        List<MultipartFile> multipartFiles = new ArrayList<MultipartFile>();
+        multipartFiles.add(new MockMultipartFile("test1", "test1.PNG", MediaType.IMAGE_PNG_VALUE, "test1".getBytes(StandardCharsets.UTF_8)));
+
+        PageRequest product = PageRequest.of(0, 3);
+        for (int i = 0; i < 100; i++) {
+
+            ProductFormDto test_product1 = ProductFormDto.builder()
+                    .name( "test" + i )
+                    .instancePrice((long) i+1000)
+                    .auctionPrice((long)i)
+                    .Explanation("test 설명" + i)
+                    .category("패딩점퍼,여성의류")
+                    .productTime(ProductTime.NONE)
+                    .imageFileList(multipartFiles)
+                    .build();
+
+            ProductFormDto test_product2 = ProductFormDto.builder()
+                    .name( "test2" + i )
+                    .instancePrice((long) i+100)
+                    .auctionPrice((long)i)
+                    .Explanation("test 설명" + i)
+                    .productTime(ProductTime.NONE)
+                    .category("패딩점퍼,여성의류")
+                    .imageFileList(multipartFiles)
+                    .build();
+
+            MemberFormDto mDto = MemberFormDto.builder()
+                    .loginId(Integer.toString(i))
+                    .name("1")
+                    .password("1")
+                    .build();
+
+            memberService.save(mDto);
+            Members member = memberService.findByLoginId(Integer.toString(i));
+            productService.save( test_product1, member);
+            productService.save( test_product2, member);
+
+            if ( i > 0 ) {
+
+                OrderFormDto build = OrderFormDto.builder()
+                        .memberId((long) 1)
+                        .productId((long) i)
+                        .build();
+
+                orderService.saveFormDto(build);
+
+            }
+
+
+
+
+
+        }
+
+
+        List<Page> content = orderRepository.findMemberPurchaseOrder(1L, product).getContent();
+
+        log.info("byProductId= {}",content.size());
+
+        Page<ProductRecordDto> productRecordDtoList = productService.paged_product(product);
+        System.out.println(productRecordDtoList);
+        PageRequest product2 = PageRequest.of(1, 3);
+        Page<ProductRecordDto> productRecordDtoList2 = productService.paged_product(product2);
+        System.out.println(productRecordDtoList2);
+
 
     }
+
 
 }
