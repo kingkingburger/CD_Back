@@ -39,7 +39,6 @@ public class MemberService  {
 
     @Transactional
     public Members findByLoginId( String id){
-
         return memberRepository.findByLoginId( id ).get();
     }
 
@@ -75,9 +74,7 @@ public class MemberService  {
 
             return productListDto;
         }
-
         return null;
-
     }
 
 }

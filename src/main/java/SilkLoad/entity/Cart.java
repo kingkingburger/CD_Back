@@ -19,18 +19,18 @@ public class Cart {
 
     @OneToOne
     @JoinColumn(name = "MEMBER_ID")
-    private Members memberid;  //구매자의 id
+    private Members member;  //구매자의 id
 
     @OneToOne
     @JoinColumn(name = "PRODUCT_ID")
-    private Product productid; //물품의 id
+    private Product product; //물품의 id
 
     private LocalDate createDate = LocalDate.now();
 
     @Builder
     public Cart(Members memberid,
                 Product productid) {
-        this.memberid = memberid;
-        this.productid = productid;
+        this.member = memberid;
+        this.product = productid;
     }
 }
