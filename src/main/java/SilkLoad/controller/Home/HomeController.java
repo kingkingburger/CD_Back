@@ -1,10 +1,12 @@
 package SilkLoad.controller.Home;
 
 
+import SilkLoad.dto.CrawlingDto;
 import SilkLoad.dto.ProductRecordDto;
 import SilkLoad.entity.Product;
 import SilkLoad.entity.ProductEnum.ProductType;
 import SilkLoad.repository.ProductRepository;
+import SilkLoad.service.CrawlingService;
 import SilkLoad.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +27,7 @@ import java.util.List;
 public class HomeController {
 
     private final ProductService productService;
-    private final ProductRepository productRepository;
+    private final CrawlingService crawlingService;
 
     /**
      * @param model product들을 담기위한 매개변수
@@ -40,7 +42,17 @@ public class HomeController {
         model.addAttribute("Products", content);
         model.addAttribute("sale", ProductType.sale);
 
-        return "index";
 
+        Page<CrawlingDto> women_close = crawlingService.getwomenclose(pageable);
+        Page<CrawlingDto> men_close = crawlingService.getmenclose(pageable);
+        Page<CrawlingDto> shose = crawlingService.getshose(pageable);
+
+        model.addAttribute("women_close",women_close);
+        model.addAttribute("men_close",men_close);
+        model.addAttribute("shose",shose);
+
+
+        return "index";
     }
+
 }

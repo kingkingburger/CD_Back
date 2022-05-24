@@ -90,7 +90,7 @@ for category_num in category_list:
     for product in products:
         name = product.find_element(by=By.CLASS_NAME, value='hmkmpv')
         # price = product.find_element(by=By.CLASS_NAME, value='kwIxAx')
-        price = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CLASS_NAME, 'kwIxAx')))
+        price = WebDriverWait(driver, 40).until(EC.presence_of_element_located((By.CLASS_NAME, 'kwIxAx')))
         prod_link = product.get_attribute('href')
         img_link = product.find_element(by=By.TAG_NAME, value='img')
         img_link = img_link.get_attribute('src')
@@ -103,7 +103,7 @@ for category_num in category_list:
         data.append(img_link)
         dataset.append(data)
 
-connect = pymysql.connect(host='localhost', user='root', password='root', db='silk_road', charset='utf8mb4')
+connect = pymysql.connect(host='localhost', user='root', password='1234', db='silkload', charset='utf8mb4')
 cursor = connect.cursor()
 
 for data in dataset:

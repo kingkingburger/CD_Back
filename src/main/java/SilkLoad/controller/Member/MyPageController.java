@@ -2,11 +2,12 @@ package SilkLoad.controller.Member;
 
 import SilkLoad.SessionConst;
 import SilkLoad.dto.MemberFormDto;
+import SilkLoad.dto.ProductRecordDto;
 import SilkLoad.dto.TradeOrderDto;
-import SilkLoad.dto.ProductFormDto;
 import SilkLoad.entity.Members;
 import SilkLoad.entity.OrderEnum.OrderType;
 import SilkLoad.entity.ProductEnum.ProductTime;
+import SilkLoad.service.CartService;
 import SilkLoad.service.MemberService;
 import SilkLoad.service.OrderService;
 import SilkLoad.service.ProductService;
@@ -36,6 +37,7 @@ public class MyPageController {
     private final MemberService memberService;
     private final OrderService orderService;
     private final ProductService productService;
+    private final CartService cartService;
 
     @GetMapping("/profile")
     public String MyPage(@ModelAttribute("memberFormDto")MemberFormDto memberFormDto) {
@@ -56,9 +58,20 @@ public class MyPageController {
     }
 
     @GetMapping("/wishlist")
-    public String Wishlist(@ModelAttribute("productData") ProductFormDto productData) {
-        return "myPage/memberWishlist";
+    public String Wishlist(Model model, HttpServletRequest request) {
 
+        HttpSession session = request.getSession();
+        Object memberObject = session.getAttribute(SessionConst.LOGIN_MEMBER);
+        Members sessionMember = (Members) memberObject;
+        String loginId = sessionMember.getLoginId();
+
+        // cartid 가져오기
+        List<ProductRecordDto> sellerProduct = cartService.getSellerProduct(loginId);
+
+        for (ProductRecordDto productRecordDto : sellerProduct) {
+            System.out.println("productRecordDto = " + productRecordDto);
+        }
+        return "myPage/memberWishlist";
     }
 
     @GetMapping("/saleOrders")

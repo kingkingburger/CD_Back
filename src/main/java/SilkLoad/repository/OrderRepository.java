@@ -16,7 +16,6 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends JpaRepository<Orders, Long>  {
 
-
 /*
     @Query("SELECT new SilkLoad.dto.SaleOrderDto(p.id, p.name, p.auctionPrice, p.instantPrice, p.explanation, p.productType, p.productTime, p.createdDate, o.offerPrice, o.memberBuyer.name, o.orderDateTime )  FROM Product p join Orders o on p.id = o.product.id where p.members.id = :memberId")
     Page<SaleOrderDto> findMemberProduct(@Param("memberId") Long memberId, Pageable pageable);
@@ -57,8 +56,6 @@ public interface OrderRepository extends JpaRepository<Orders, Long>  {
             "AND o.memberBuyer.id = :memberId"
     )
     Page<TradeOrderDto> findMemberPurchaseOrder(@Param("memberId") Long memberId, Pageable pageable);
-
-
 
 
 

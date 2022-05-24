@@ -342,7 +342,9 @@ public class ProductService {
      */
     @Transactional
     public Page<ProductRecordDto> paged_product(Pageable pageable){
-        Page<ProductRecordDto> sale = productRepository.findByProductTypeOrderByIdDesc(ProductType.sale, pageable).map(this::getProductRecordDto);
+        Page<ProductRecordDto> sale = productRepository
+                                        .findByProductTypeOrderByIdDesc(ProductType.sale, pageable)
+                                        .map(this::getProductRecordDto);
         return sale;
     }
 

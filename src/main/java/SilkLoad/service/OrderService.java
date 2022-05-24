@@ -33,6 +33,7 @@ public class OrderService {
     @Transactional
     public Orders saveFormDto(OrderFormDto orderFormDto) {
 
+
         Long memberId = orderFormDto.getMemberId();
         Long productId = orderFormDto.getProductId();
 
@@ -95,22 +96,6 @@ public class OrderService {
         }
         return null;
     }
-
-
-/*
-    @Transactional
-    public Orders findById (Long id) {
-
-        Optional<Orders> byIdOptionalOrder = orderRepository.findById(id);
-        if ( byIdOptionalOrder.isPresent()) {
-
-            return byIdOptionalOrder.get();
-
-        }
-        return null;
-    }
-*/
-
 
 
     //즉시 거래일 때의 createOrder
