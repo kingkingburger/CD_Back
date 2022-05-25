@@ -48,4 +48,15 @@ public class CartRepositoryTest {
             System.out.println("cart = " + cart.toString());
         }
     }
+
+    @Test
+    void 카트에서_물품꺼내기_테스트(){
+        List<ProductRecordDto> sellerProduct = cartService.getSellerProduct("1");
+        System.out.println("sellerProduct = " + sellerProduct);
+    }
+
+    @Test
+    void 카트에서_물품제거_테스트(){
+        cartRepository.deleteByProductId((long)98);
+    }
 }

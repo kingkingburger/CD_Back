@@ -193,15 +193,10 @@ public class ProductServiceTest {
                 orderService.saveFormDto(build);
 
             }
-
-
-
-
-
         }
 
 
-        List<Page> content = orderRepository.findMemberPurchaseOrder(1L, product).getContent();
+        List<TradeOrderDto> content = orderRepository.findMemberPurchaseOrder(1L, product).getContent();
 
         log.info("byProductId= {}",content.size());
 
@@ -211,8 +206,6 @@ public class ProductServiceTest {
         Page<ProductRecordDto> productRecordDtoList2 = productService.paged_product(product2);
         System.out.println(productRecordDtoList2);
 
-
     }
-
 
 }

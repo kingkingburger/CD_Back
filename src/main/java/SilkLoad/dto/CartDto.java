@@ -17,10 +17,7 @@ import javax.persistence.OneToOne;
 public class CartDto {
 
     private Long id; // PK
-
-    private Members memberid;  //구매자의 id
-
-    private Product productid; //물품의 id
-
+    private Long memberid;  //구매자의 id
+    private Long productid; //물품의 id
 
 }
