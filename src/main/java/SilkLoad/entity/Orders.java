@@ -4,7 +4,6 @@ import SilkLoad.entity.OrderEnum.OrderType;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,20 +19,21 @@ public class Orders {
     private Long id;
 
     @ToString.Exclude
-    @ManyToOne
-    @JoinColumn(name = "MEMBER_ID", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MEMBER_ID")
     private Members memberBuyer;
 
     @ToString.Exclude
-    @ManyToOne
-    @JoinColumn(name = "PRODUCT_ID", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PRODUCT_ID")
     private Product product;
 
     private Long offerPrice;
 
+    @Enumerated(EnumType.STRING)
     private OrderType orderType;
 
-    @NotNull
-    private LocalDateTime orderDate;
+    private LocalDateTime orderDateTime;
+
 
 }

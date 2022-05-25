@@ -2,8 +2,8 @@ package SilkLoad.entity.OrderEnum;
 
 public enum OrderType {
 
-    waiting("주문 대기"), refusal("주문 거부"), trading("거래 중"), complete("주문 완료");
-
+    unRegistered("미신청"),waiting("대기"), cancel("취소"),
+    trading("거래 중"), complete("완료");
     private final String description;
 
     OrderType(String description) {

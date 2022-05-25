@@ -16,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@BatchSize(size=100)
 public class Members {
 
     @Id
@@ -38,9 +39,8 @@ public class Members {
 
     private LocalDate createDate = LocalDate.now();
 
-//    @BatchSize(size = 100)
-    @ToString.Exclude
-    @OneToMany(mappedBy = "members", fetch = FetchType.LAZY)
+
+    @OneToMany(mappedBy = "members", fetch = FetchType.EAGER)
     private List<Product> productList = new ArrayList<Product>();
 
     @Builder

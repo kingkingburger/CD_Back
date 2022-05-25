@@ -12,9 +12,6 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-//    Page<Product> findAll(Pageable pageable);
-
-    Product findFirstByOrderById();
 
     //ProductType이 sale인것을 가져오는 쿼리(pagenation 가능)
     //select * from Product limit ? ;
@@ -23,4 +20,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     //ProductType이 sale인것을 가져오는 쿼리
     //select * from product where ProductType == sale;
     List<Product> findAllByProductType(ProductType type);
+
+
+
 }
+

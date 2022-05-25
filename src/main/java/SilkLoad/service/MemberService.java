@@ -2,13 +2,20 @@ package SilkLoad.service;
 
 import SilkLoad.dto.MemberFormDto;
 import SilkLoad.dto.ProductFormDto;
+import SilkLoad.dto.ProductRecordDto;
 import SilkLoad.entity.Members;
 import SilkLoad.entity.Product;
+import SilkLoad.entity.ProductEnum.ProductType;
 import SilkLoad.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +47,13 @@ public class MemberService  {
     @Transactional
     public Members findByLoginId( String id){
         return memberRepository.findByLoginId( id ).get();
+    }
+    @Transactional
+    public Members findById(Long id){
+        if( memberRepository.findById(id).isPresent()) {
+            return memberRepository.findById(id).get();
+        }
+        return null;
     }
 
     @Transactional
@@ -76,5 +90,14 @@ public class MemberService  {
         }
         return null;
     }
+
+
+/*    @Transactional
+    public Page<ProductRecordDto> paged_product(Pageable pageable){
+        Page<ProductRecordDto> sale = productRepository.findByProductTypeOrderByIdDesc(ProductType.sale, pageable).map(this::getProductRecordDto);
+        return sale;
+    }*/
+
+
 
 }

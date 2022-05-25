@@ -1,12 +1,12 @@
 package SilkLoad.service;
 
 
-import SilkLoad.dto.ProductFormDto;
-import SilkLoad.dto.ProductImageRecordDto;
-import SilkLoad.dto.ProductRecordDto;
+import SilkLoad.dto.*;
 import SilkLoad.entity.*;
+import SilkLoad.entity.OrderEnum.OrderType;
 import SilkLoad.entity.ProductEnum.ProductTime;
 import SilkLoad.entity.ProductEnum.ProductType;
+import SilkLoad.repository.OrderRepository;
 import SilkLoad.repository.ProductImageRepository;
 import SilkLoad.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -40,7 +39,7 @@ public class ProductService {
 
 
     private final ProductRepository productRepository;
-
+    private final OrderRepository orderRepository;
     /**
      * imageRepository.... 서비스를 따로 분리해야 하나 생각 중
      */
@@ -57,16 +56,33 @@ public class ProductService {
         product.changeCategory(category);
 
         //product 저장
-        productRepository.save(product);
+        Product savedProduct = productRepository.save(product);
 
+        Orders order = getOrders(loginMember, savedProduct);
+
+        orderRepository.save(order);
 
         //이미지등록
         List<ProductImage> productImages = filesImgSave(productFormDto.getImageFileList());
         productImages.forEach(productImage -> {
+
             productImage.changeProduct(product);
             productImageRepository.save(productImage);
+
         });
 
+    }
+
+
+    private Orders getOrders(Members loginMember, Product savedProduct) {
+        Orders order = Orders.builder()
+                .product(savedProduct)
+                .offerPrice(null)
+                .memberBuyer(loginMember)
+                .orderDateTime(LocalDateTime.now())
+                .orderType(OrderType.unRegistered)
+                .build();
+        return order;
     }
 
     private Product getProduct(ProductFormDto productFormDto, Members loginMember) {
@@ -221,7 +237,7 @@ public class ProductService {
                 .instantPrice(product.getInstantPrice())
                 .explanation(product.getExplanation())
                 .productType(product.getProductType())
-                .category(product.getCategory())
+                .categoryRecordDto(getCategoryRecordDto(product.getCategory()))
                 .deadLine(productDeadLine(product.getCreatedDate(), product.getProductTime()))
                 .productTime(product.getProductTime())
                 .productImagesList(getProductRecordImageListDto(product.getProductImagesList()))
@@ -264,7 +280,7 @@ public class ProductService {
                     .instantPrice(product.getInstantPrice())
                     .explanation(product.getExplanation())
                     .productType(product.getProductType())
-                    .category(product.getCategory())
+                    .categoryRecordDto( getCategoryRecordDto(product.getCategory()))
                     .deadLine(productDeadLine(product.getCreatedDate(), product.getProductTime()))
                     .productTime(product.getProductTime())
                     .productImagesList(getProductRecordImageListDto(product.getProductImagesList()))
@@ -275,45 +291,47 @@ public class ProductService {
         return productRecordDtoList;
     }
 
+    private CategoryRecordDto getCategoryRecordDto(Category category) {
+
+        return CategoryRecordDto.builder()
+                .first(category.getFirst())
+                .second(category.getSecond())
+                .build();
+    }
+
     /**
      * @param createdProduct
      * @param productTime    productTime의 상태가 무엇인지 확인하여 등록 날짜를 통한 마감 시간을 구하는 메소드
      *                       localDateTime 형식이 아닌 String 형식의 날짜와 시간을 리턴
      * @return
      */
-    private String productDeadLine(LocalDateTime createdProduct, ProductTime productTime) {
+    public LocalDateTime productDeadLine(LocalDateTime createdProduct, ProductTime productTime) {
 
         if (productTime == ProductTime.ONE_DAY) {
             createdProduct = createdProduct.plusDays(1);
         } else if (productTime == ProductTime.TWO_DAY) {
             createdProduct = createdProduct.plusDays(2);
         }
-
-        String parsedLocalDateTimeNow = "";
-
-        if (createdProduct != null) {
-            parsedLocalDateTimeNow = createdProduct.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        }
-
-        return parsedLocalDateTimeNow;
+        return createdProduct;
     }
 
 
     /**
      * 주문이 성공하면 거래중 상태로 만듬
      *
-     * @param productid
+     * @param productId
      */
     @Transactional
-    public void changeTypeToWaiting(Long productid) {
+    public Product changeTypeToWaiting(Long productId) {
 
-        Optional<Product> byIdProduct = productRepository.findById(productid);
+        Optional<Product> byIdProduct = productRepository.findById(productId);
 
         if (byIdProduct.isPresent()) {
             Product product = byIdProduct.get();
             product.setProductType(ProductType.waiting);
-            productRepository.save(product);
+            return productRepository.save(product);
         }
+        return null;
     }
 
 
@@ -329,5 +347,19 @@ public class ProductService {
                                         .map(this::getProductRecordDto);
         return sale;
     }
+
+    @Transactional
+    public Product findById(Long id) {
+
+        Optional<Product> optionalProduct = productRepository.findById(id);
+
+        if(  optionalProduct.isPresent() ) {
+            return  optionalProduct.get();
+        }
+        return null;
+    }
+
+
+
 
 }

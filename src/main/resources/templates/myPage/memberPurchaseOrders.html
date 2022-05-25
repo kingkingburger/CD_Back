@@ -1,0 +1,197 @@
+
+
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layoutFile :: layout(~{::body},'myPage')}">
+
+<!-- Body-->
+<body class="handheld-toolbar-enabled">
+
+<main class="page-wrapper">
+
+    <!-- Page Title-->
+    <div class="page-title-overlap bg-dark pt-4">
+        <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+            <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
+                        <li class="breadcrumb-item"><a class="text-nowrap" href="../shop.html"><i class="ci-home"></i>Home</a>
+                        </li>
+                        <li class="breadcrumb-item text-nowrap"><a href="#">Account</a>
+                        </li>
+                        <li class="breadcrumb-item text-nowrap active" aria-current="page">Orders history</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
+                <h1 class="h3 text-light mb-0">My orders</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container pb-5 mb-2 mb-md-4">
+        <div class="row">
+            <!-- Sidebar-->
+            <div th:replace="~{myPage/myPageSidebar:: sidebar ('purchaseOrders')}"></div>
+            <!-- Content  -->
+            <section class="col-lg-8">
+                <!-- Toolbar-->
+                <div class="d-flex justify-content-between align-items-center pt-lg-2 pb-4 pb-lg-5 mb-lg-3">
+                    <div class="d-flex align-items-center">
+                        <label class="d-none d-lg-block fs-sm text-light text-nowrap opacity-75 me-2" for="order-sort">Sort
+                            orders:</label>
+                        <label class="d-lg-none fs-sm text-nowrap opacity-75 me-2" for="order-sort">Sort orders:</label>
+                        <select class="form-select" id="order-sort">
+                            <option>All</option>
+                            <option>Delivered</option>
+                            <option>In Progress</option>
+                            <option>Delayed</option>
+                            <option>Canceled</option>
+                        </select>
+                    </div>
+                    <a class="btn btn-primary btn-sm d-none d-lg-inline-block" href="account-signin.html"><i
+                            class="ci-sign-out me-2"></i>Sign out</a>
+                </div>
+
+                <th:block th:each="purchaseOrder, purchaseStat : ${purchaseOrders}">
+
+                    <!-- The Modal -->
+                    <div class="modal" th:id="|myModal${purchaseStat.index}|">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header border border-0">
+                                    <h4 class="modal-title mt-1">주문 상세 내용</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <hr class="mx-3 border border-2 rounded border-primary bg-primary">
+
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+
+                                    <div class="py-2"> 물품 번호:&nbsp&nbsp<span th:text="${purchaseOrder.productId}"></span></div>
+                                    <div class="py-2"> 물품 이름:&nbsp&nbsp<span th:text="${purchaseOrder.productName}"></span></div>
+                                    <div class="py-2"> 경매 가격:&nbsp&nbsp<span
+                                            th:text=" ( ${purchaseOrder.auctionPrice} == null ) ? '-': ${purchaseOrder.auctionPrice} "></span>
+                                    </div>
+                                    <div class="py-2"> 즉시 구매가:&nbsp&nbsp<span th:text="${purchaseOrder.instantPrice}"></span>
+
+                                    </div>
+
+                                    <div class="py-2"> 물품 상태:&nbsp&nbsp<span th:text="${purchaseOrder.productType.description}"></span>
+
+                                    </div>
+                                    <div class="py-2"> 등록 상태:&nbsp&nbsp<span th:text="${purchaseOrder.productTime.description}"></span>
+
+                                    </div>
+                                    <div class="py-2"> 마감 시간:&nbsp&nbsp<span th:text=" (${purchaseOrder.deadLine} == null ) ? '-' : ${#temporals.format( purchaseOrder.deadLine , 'yyyy-MM-dd HH:mm:ss')}"></span>
+
+                                    </div>
+
+                                    <div class="py-2"> 물품 등록 날짜:&nbsp&nbsp<span th:text="${#temporals.format( purchaseOrder.productDateTime , 'yyyy-MM-dd HH:mm:ss')}"></span>
+
+                                        <br>
+                                    </div>
+
+                                    <hr class="my-1 border border-2 rounded border-primary bg-primary">
+
+                                    <div class="py-2"> 주문 상태:&nbsp&nbsp<span th:text="${purchaseOrder.orderType.description}"></span>
+
+                                    </div>
+                                    <div class="py-2"> 주문 제시 가격:&nbsp&nbsp<span th:text=" ( ${purchaseOrder.offerPrice} == null ) ? '-' : ${purchaseOrder.offerPrice}"></span>
+
+                                    </div>
+                                    <div class="py-2"> 구매자 이름:&nbsp&nbsp<span th:text=" ( ${purchaseOrder.orderType } == ${orderType[0] } ) ? '-' : ${purchaseOrder.buyerName}"></span>
+
+                                    </div>
+                                    <div class="py-2"> 주문 신청 시간:&nbsp&nbsp<span th:text=" ( ${purchaseOrder.orderType } == ${orderType[0] }) ? '-' : ${#temporals.format( purchaseOrder.orderDateTime , 'yyyy-MM-dd HH:mm:ss')}"></span>
+
+                                    </div>
+
+                                </div>
+                                <hr class="mx-3 border rounded border-2 border-primary bg-primary">
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer border border-0">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- modal end -->
+                </th:block>
+
+                <!--unRegistered("미신청"),waiting("대기"), refusal("거부"),
+                trading("거래 중"), complete("완료");-->
+                <!-- Orders list-->
+                <div class="table-responsive fs-md mb-4">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                        <tr>
+                            <th>물품 이름</th>
+                            <th>물품 상태</th>
+                            <th>경매 가</th>
+                            <th>즉시 구매가</th>
+                            <th>등록 날짜</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr th:each="purchaseOrder, purchaseStat : ${purchaseOrders}">
+
+                            <td class="py-3">
+                                <button type="button" class="btn-primary border border-0 rounded "
+                                        th:text="${ purchaseOrder.productName }" data-bs-toggle="modal"
+                                        th:data-bs-target="|#myModal${purchaseStat.index}|"></button>
+                            </td>
+                            <td class="py-3 align-middle" th:text="${ purchaseOrder.productType.description }"></td>
+                            <td class="py-3 align-middle" th:text=" (${purchaseOrder.auctionPrice} == null) ? '-' : ${ purchaseOrder.auctionPrice }"></td>
+                            <td class="py-3 align-middle" th:text="${ purchaseOrder.instantPrice}"></td>
+                            <td class="py-3 align-middle"
+                                th:text="${#temporals.format( purchaseOrder.productDateTime , 'yy-MM-dd HH:mm')}"></td>
+
+                        </tr>
+                        <!-- 판매, 마감, 판매중, 판매 완료-->
+
+
+                        <!--           <tr>
+                                       <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="#order-details"
+                                                           data-bs-toggle="modal">34VB5540K83</a></td>
+                                       <td class="py-3">May 21, 2019</td>
+                                       <td class="py-3"><span class="badge bg-info m-0">In Progress</span></td>
+                                       <td class="py-3">$358.75</td>
+                                   </tr>-->
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Pagination-->
+                <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#"><i class="ci-arrow-left me-2"></i>Prev</a>
+                        </li>
+                    </ul>
+                    <ul class="pagination">
+                        <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span></li>
+                        <li class="page-item active d-none d-sm-block" aria-current="page"><span
+                                class="page-link">1<span class="visually-hidden">(current)</span></span></li>
+                        <li class="page-item d-none d-sm-block"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item d-none d-sm-block"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item d-none d-sm-block"><a class="page-link" href="#">4</a></li>
+                        <li class="page-item d-none d-sm-block"><a class="page-link" href="#">5</a></li>
+                    </ul>
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#" aria-label="Next">Next<i
+                                class="ci-arrow-right ms-2"></i></a></li>
+                    </ul>
+                </nav>
+            </section>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

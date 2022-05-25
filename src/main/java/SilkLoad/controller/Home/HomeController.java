@@ -42,6 +42,7 @@ public class HomeController {
         model.addAttribute("Products", content);
         model.addAttribute("sale", ProductType.sale);
 
+
         Page<CrawlingDto> women_close = crawlingService.getwomenclose(pageable);
         Page<CrawlingDto> men_close = crawlingService.getmenclose(pageable);
         Page<CrawlingDto> shose = crawlingService.getshose(pageable);
@@ -53,7 +54,5 @@ public class HomeController {
 
         return "index";
     }
-
-
 
 }

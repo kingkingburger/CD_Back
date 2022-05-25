@@ -46,12 +46,14 @@ public class ProductFormDto {
                         Long instancePrice,
                         String category,
                         List<MultipartFile> imageFileList,
+                        ProductTime productTime,
                         String Explanation) {
         this.name=name;
         this.auctionPrice=auctionPrice;
         this.instancePrice=instancePrice;
         this.category=category;
         this.imageFileList=imageFileList;
+        this.productTime = productTime;
         this.Explanation=Explanation;
     }
 

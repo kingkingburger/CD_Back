@@ -22,10 +22,11 @@
             <ul class="list-unstyled mb-0">
                 <li class="border-bottom mb-0">
                     <a class="nav-link-style d-flex align-items-center px-4 py-3"
-                       th:classappend="${paramActive == 'orders'} ? active"
-                       th:href="@{/members/myPage/orders}">
-                        <i class="ci-bag opacity-60 me-2"></i>Orders
-                        <span class="fs-sm text-muted ms-auto"></span>
+                       th:classappend="${paramActive == 'saleOrders'} ? active"
+                       th:href="@{/members/myPage/saleOrders}">
+                        <i class="ci-bag opacity-60 me-2"></i>sale Orders
+                        <span class="fs-sm text-muted ms-auto">1</span>
+
                     </a>
                 </li>
                 <li class="border-bottom mb-0">
@@ -36,6 +37,18 @@
                             class="fs-sm text-muted ms-auto"></span>
                     </a>
                 </li>
+
+                <li class="border-bottom mb-0">
+                    <a class="nav-link-style d-flex align-items-center px-4 py-3"
+                       th:classappend="${paramActive == 'purchaseOrders'} ? active"
+                       th:href="@{/members/myPage/purchaseOrders}">
+                        <i class="ci-bag opacity-60 me-2"></i>purchase Orders
+                        <span class="fs-sm text-muted ms-auto">1</span>
+                    </a>
+                </li>
+
+
+
             </ul>
             <div class="bg-secondary px-4 py-3">
                 <h3 class="fs-sm mb-0 text-muted">Account settings</h3>
