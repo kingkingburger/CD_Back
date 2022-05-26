@@ -21,7 +21,8 @@ public class WebConfig implements WebMvcConfigurer {
                         "/members/add","/members/myPage/profile","/members/myPage/wishlist","/members/myPage/saleOrders",
                         "/members/myPage/purchaseOrders","/members/transaction/*",
                         "/login", "/logout","/home",
-                        "/product/add","/product/order/buyNow","/product/order/inCart","/product/images/**",
+                        "/product/add","/product/order/buyNow","/product/order/inCart","/product/order/deleteCart",
+                        "/product/images/**",
                         "/Cart","/myPage",
                         "/shop/**",
                         "/css/**", "/*.ico", "/error","/vendor/**", "/img/**","/js/**","/fonts/**" );

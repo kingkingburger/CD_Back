@@ -68,9 +68,9 @@ public class MyPageController {
         // cartid 가져오기
         List<ProductRecordDto> sellerProduct = cartService.getSellerProduct(loginId);
 
-        for (ProductRecordDto productRecordDto : sellerProduct) {
-            System.out.println("productRecordDto = " + productRecordDto);
-        }
+        log.info("sellerProduct : {}", sellerProduct);
+        model.addAttribute("Products", sellerProduct);
+
         return "myPage/memberWishlist";
     }
 

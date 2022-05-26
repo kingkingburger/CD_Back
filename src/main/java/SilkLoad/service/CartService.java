@@ -44,6 +44,7 @@ public class CartService {
         List<Cart> byMemberid = cartRepository.findByMember(members);
 
         List<Product> productList = new ArrayList<>();
+
         for (Cart cart : byMemberid) {
             Product product = cart.getProduct();
             productList.add(product);
@@ -52,6 +53,11 @@ public class CartService {
         List<ProductRecordDto> productRecordDtoList = productService.getProductRecordDtoList(productList);
 
         return productRecordDtoList;
+    }
+
+    @Transactional
+    public void deleteProductInCart(Long id){
+        cartRepository.deleteByProductId(id);
     }
 
     /**
@@ -72,17 +78,13 @@ public class CartService {
 
             Members member = byMemberId.get();
             Product product = byProductId.get();
-            //product와 memberid가 같다면?
-            if( product.getId() == member.getId()){
-                return false;
-            }
-
             Cart cart = crateCart(member, product);
             cartRepository.save(cart);
             return true;
         }
         return false;
     }
+
 
     private Cart crateCart(Members member_id, Product product_id) {
         return Cart.builder()
