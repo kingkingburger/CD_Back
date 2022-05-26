@@ -7,12 +7,14 @@ import SilkLoad.dto.TradeOrderDto;
 import SilkLoad.entity.Members;
 import SilkLoad.entity.OrderEnum.OrderType;
 import SilkLoad.entity.ProductEnum.ProductTime;
+import SilkLoad.entity.ProductEnum.ProductType;
 import SilkLoad.service.CartService;
 import SilkLoad.service.MemberService;
 import SilkLoad.service.OrderService;
 import SilkLoad.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -58,7 +60,7 @@ public class MyPageController {
     }
 
     @GetMapping("/wishlist")
-    public String Wishlist(Model model, HttpServletRequest request) {
+    public String Wishlist(@PageableDefault(size=6)Pageable pageable, Model model, HttpServletRequest request) {
 
         HttpSession session = request.getSession();
         Object memberObject = session.getAttribute(SessionConst.LOGIN_MEMBER);
@@ -66,11 +68,29 @@ public class MyPageController {
         String loginId = sessionMember.getLoginId();
 
         // cartid 가져오기
-        List<ProductRecordDto> sellerProduct = cartService.getSellerProduct(loginId);
+        Page<ProductRecordDto> sellerProduct = cartService.getSellerProduct(loginId, pageable);
 
-        log.info("sellerProduct : {}", sellerProduct);
         model.addAttribute("Products", sellerProduct);
+        //페이징화 된 객체
+        List<ProductRecordDto> content = productService.paged_product(pageable).getContent();
 
+        //전체 페이지 수
+        int totalPages = productService.paged_product(pageable).getTotalPages();
+
+        //현제 페이지
+        int presentPage = productService.paged_product(pageable).getNumber();
+
+        //페이징된 물품들 모델로 보내기
+        model.addAttribute("allProduct", content);
+
+        //전체 페이지 수 모델로 보내기
+        model.addAttribute("totalPages",totalPages);
+
+        //현제 페이지  모델로 보내기
+        model.addAttribute("presentPage",presentPage);
+
+
+        model.addAttribute("sale", ProductType.sale);
         return "myPage/memberWishlist";
     }
 
@@ -83,16 +103,8 @@ public class MyPageController {
 
         calculationDeadLine(saleOrders);
 
-        log.info("saleOrders 내용={}", saleOrders);
         model.addAttribute("saleOrders", saleOrders);
         model.addAttribute("orderType", OrderType.values() );
-
-/*
-        List<ProductRecordDto> byIdProductDtoList = orderService.findByIdProductDtoList(sessionMember.getLoginId());
-        //log.info("물품리스트={}",byIdProductDtoList.getClass());
-
-        model.addAttribute("productRecordDtoList", byIdProductDtoList);
-*/
 
 
         return "/myPage/memberSaleOrders";

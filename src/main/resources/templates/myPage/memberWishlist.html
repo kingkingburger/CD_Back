@@ -90,7 +90,7 @@
                         </div>
                     </div>
 
-                    <form class="pt-2 ps-sm-3 mx-auto mx-sm-0 text-center" th:action="@{/product/order/deleteCart}" method="post"  >
+                    <form class="pt-2 ps-sm-3 mx-auto mx-sm-0 text-center" th:action="@{/product/order/deleteCart}" method="post">
                         <input type="hidden" th:name="productid"  th:value="${product.id}" />
 
                         <button class="btn btn-outline-danger btn-sm" type="submit">
@@ -100,6 +100,51 @@
 
                 </div>
 
+                <!-- Pagination-->
+                <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
+
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" th:href="@{/members/myPage/wishlist(page=${presentPage}-1)}">
+                                <i class="ci-arrow-left me-2"></i>Prev
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" th:href="@{/members/myPage/wishlist(page=0)}">
+                                <i class="ci-arrow-left me-2"></i>First
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="pagination">
+                        <th:block th:with="start = ${T(Math).floor(presentPage/10) * 10 +1},
+                                            end = (${start + 9 < totalPages ? start+9 : totalPages})">
+                            <li class="page-item"
+                                th:each="pageButton : ${#numbers.sequence(start, end)}">
+                                <a class="page-link" th:href="@{/members/myPage/wishlist(page = ${pageButton})}" th:text="${pageButton}"></a>
+                            </li>
+                        </th:block>
+                    </ul>
+
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link"th:href="@{/members/myPage/wishlist(page=${totalPages})}" aria-label="Next">Last
+                                <i class="ci-arrow-right ms-2"></i>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link"th:href="@{/members/myPage/wishlist(page=${presentPage}+1)}" aria-label="Next">Next
+                                <i class="ci-arrow-right ms-2"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </section>
         </div>
     </div>

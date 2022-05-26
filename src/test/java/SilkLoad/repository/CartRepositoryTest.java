@@ -10,6 +10,8 @@ import SilkLoad.service.OrderService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,17 +43,23 @@ public class CartRepositoryTest {
 
     @Test
     void 카트에서memberid별로_물품꺼내기_테스트(){
+        PageRequest pageRequest = PageRequest.of(1,8);
+        PageRequest next = pageRequest.next();
+        pageRequest.getPageSize();
+
         Members members = memberRepository.findById((long) 1).get();
-        List<Cart> byMemberid = cartRepository.findByMember(members);
-        System.out.println(byMemberid.size());
-        for (Cart cart : byMemberid) {
+        List<Cart> content = cartRepository.findByMember(members, next).getContent();
+        System.out.println(content.size());
+        for (Cart cart : content) {
             System.out.println("cart = " + cart.toString());
         }
     }
 
     @Test
     void 카트에서_물품꺼내기_테스트(){
-        List<ProductRecordDto> sellerProduct = cartService.getSellerProduct("1");
+        PageRequest pageRequest = PageRequest.of(1,8);
+        PageRequest next = pageRequest.next();
+        List<ProductRecordDto> sellerProduct = cartService.getSellerProduct("1",next).getContent();
         System.out.println("sellerProduct = " + sellerProduct);
     }
 
