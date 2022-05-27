@@ -72,13 +72,13 @@ public class MyPageController {
 
         model.addAttribute("Products", sellerProduct);
         //페이징화 된 객체
-        List<ProductRecordDto> content = productService.paged_product(pageable).getContent();
+        List<ProductRecordDto> content = sellerProduct.getContent();
 
         //전체 페이지 수
-        int totalPages = productService.paged_product(pageable).getTotalPages();
+        int totalPages = sellerProduct.getTotalPages();
 
         //현제 페이지
-        int presentPage = productService.paged_product(pageable).getNumber();
+        int presentPage = sellerProduct.getNumber();
 
         //페이징된 물품들 모델로 보내기
         model.addAttribute("allProduct", content);
@@ -88,7 +88,6 @@ public class MyPageController {
 
         //현제 페이지  모델로 보내기
         model.addAttribute("presentPage",presentPage);
-
 
         model.addAttribute("sale", ProductType.sale);
         return "myPage/memberWishlist";
