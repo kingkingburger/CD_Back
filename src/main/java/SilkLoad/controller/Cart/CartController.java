@@ -20,7 +20,6 @@ public class CartController {
 
     @PostMapping("/inCart")
     public String UserCart(@ModelAttribute("orderFormDto") OrderFormDto orderFormDto) {
-        log.info("orderFormDto ={}", orderFormDto);
 
         if (cartService.save(orderFormDto)) {
             return "redirect:/";

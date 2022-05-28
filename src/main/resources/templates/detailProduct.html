@@ -420,18 +420,22 @@
                             </div>
 
 
-                            <form action="" th:action="@{/product/order/inCart}" method="post"  >
-                                <input type="hidden" th:id="memberId" th:name="memberId" th:if="${session.loginMember != null}" th:value="${session.loginMember.getId()}" />
-                                <input type="hidden" th:id="productId" th:name="productId" th:value="${product.id}" />
+                            <form action="" th:action="@{/product/order/inCart}" method="post">
+                                <input type="hidden" th:id="memberId" th:name="memberId"
+                                       th:if="${session.loginMember != null}"
+                                       th:value="${session.loginMember.getId()}"/>
+                                <input type="hidden" th:id="productId" th:name="productId" th:value="${product.id}"/>
 
                                 <button class="btn btn-primary btn-shadow d-block w-100" type="submit"><i
                                         class="ci-cart fs-lg me-2"></i>카트에 담기
                                 </button>
                             </form>
 
-                            <form action="" th:action="@{/product/order/buyNow}" method="post"  >
-                                <input type="hidden" th:id="memberId" th:name="memberId" th:if="${session.loginMember != null}" th:value="${session.loginMember.getId()}" />
-                                <input type="hidden" th:id="productId" th:name="productId" th:value="${product.id}" />
+                            <form action="" th:action="@{/product/order/buyNow}" method="post">
+                                <input type="hidden" th:id="memberId" th:name="memberId"
+                                       th:if="${session.loginMember != null}"
+                                       th:value="${session.loginMember.getId()}"/>
+                                <input type="hidden" th:id="productId" th:name="productId" th:value="${product.id}"/>
 
                                 <button class="btn btn-danger d-block w-100 my-1" type="submit"><i
                                         class="ci-send fs-lg me-2"></i>즉시 구매
@@ -479,28 +483,28 @@
                                 </h3>
                                 <div class="d-flex justify-content-between">
                                     <div class="product-price">
-                      <span class="text-accent" th:text="${all_product.instantPrice}+원">
-                        <small></small>
-                      </span>
-                                    </div>
-                                    <div class="star-rating">
-                                        <i class="star-rating-icon ci-star-filled active">
+                                    <span class="text-accent" th:text="${all_product.instantPrice}+원">
+                                      <small></small>
+                                    </span>
+                                </div>
 
-                                        </i>
-                                        <i class="star-rating-icon ci-star-filled active"></i>
-                                        <i class="star-rating-icon ci-star-filled active"></i>
-                                        <i class="star-rating-icon ci-star-filled active"></i>
-                                        <i class="star-rating-icon ci-star"></i>
-                                    </div>
+                                <div class="star-rating">
+                                    <i class="star-rating-icon ci-star-filled active">
+
+                                    </i>
+                                    <i class="star-rating-icon ci-star-filled active"></i>
+                                    <i class="star-rating-icon ci-star-filled active"></i>
+                                    <i class="star-rating-icon ci-star-filled active"></i>
+                                    <i class="star-rating-icon ci-star"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
+
             </div>
         </div>
+    </div>
         <!-- Product carousel (You may also like)-->
         <div class="container py-5 my-md-3">
             <h2 class="h3 text-center pb-4">You may also like</h2>
