@@ -19,9 +19,11 @@ public class CartController {
     private final CartService cartService;
 
     @PostMapping("/inCart")
-    public String UserCart(@ModelAttribute("orderFormDto") OrderFormDto orderFormDto) {
+    public String UserCart(@ModelAttribute("CartDto") CartDto cartDto) {
 
-        if (cartService.save(orderFormDto)) {
+        log.info("cart : {}",cartDto);
+
+        if (cartService.save(cartDto)) {
             return "redirect:/";
         }
 

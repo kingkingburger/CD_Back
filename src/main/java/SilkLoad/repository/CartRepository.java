@@ -19,4 +19,6 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
     @Transactional
     void deleteByProductId(Long productid);
 
+    boolean existsByProductId(Long productid);
+
 }

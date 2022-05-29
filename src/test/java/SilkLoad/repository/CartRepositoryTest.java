@@ -67,4 +67,10 @@ public class CartRepositoryTest {
     void 카트에서_물품제거_테스트(){
         cartRepository.deleteByProductId((long)98);
     }
+
+    @Test
+    void 카트중복_테스트(){
+        boolean b = cartRepository.existsByProductId((long) 98);
+        System.out.println("b = " + b);
+    }
 }

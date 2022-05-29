@@ -1,7 +1,6 @@
 package SilkLoad.service;
 
-import SilkLoad.dto.OrderFormDto;
-import SilkLoad.dto.ProductFormDto;
+import SilkLoad.dto.CartDto;
 import SilkLoad.dto.ProductRecordDto;
 import SilkLoad.entity.Cart;
 import SilkLoad.entity.Members;
@@ -56,6 +55,10 @@ public class CartService {
         return productRecordDtos;
     }
 
+    /**
+     * id로 Cart에 있는 물품 제거 
+     * @param id
+     */
     @Transactional
     public void deleteProductInCart(Long id){
         cartRepository.deleteByProductId(id);
@@ -63,14 +66,14 @@ public class CartService {
 
     /**
      * Cart에 담기 service
-     * @param orderFormDto
+     * @param cartDto
      * @return
      */
     @Transactional
-    public boolean save(OrderFormDto orderFormDto) {
+    public boolean save(CartDto cartDto) {
 
-        Long memberId = orderFormDto.getMemberId();
-        Long productId = orderFormDto.getProductId();
+        Long memberId = cartDto.getMemberid();
+        Long productId = cartDto.getProductid();
 
         Optional<Members> byMemberId = memberRepository.findById(memberId);
         Optional<Product> byProductId = productRepository.findById(productId);
@@ -80,7 +83,11 @@ public class CartService {
             Members member = byMemberId.get();
             Product product = byProductId.get();
             Cart cart = crateCart(member, product);
-            cartRepository.save(cart);
+
+            //카트안에 물품이 존재 하는지
+            if(!cartRepository.existsByProductId(product.getId())){
+                cartRepository.save(cart);
+            }
             return true;
         }
         return false;
