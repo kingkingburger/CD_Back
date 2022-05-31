@@ -1,6 +1,7 @@
 package SilkLoad.service;
 
-import SilkLoad.dto.OrderBuyNowDto;
+
+import SilkLoad.dto.CartDto;
 import SilkLoad.dto.ProductRecordDto;
 import SilkLoad.entity.Cart;
 import SilkLoad.entity.Members;
@@ -9,6 +10,9 @@ import SilkLoad.repository.CartRepository;
 import SilkLoad.repository.MemberRepository;
 import SilkLoad.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,32 +37,44 @@ public class CartService {
      * @return
      */
     @Transactional
-    public List<ProductRecordDto> getSellerProduct(String id) {
+    public Page<ProductRecordDto> getSellerProduct(String id, Pageable pageable) {
         Members members = memberRepository.findByLoginId(id).get();
 
-        List<Cart> byMemberid = cartRepository.findByMember(members);
+        Page<Cart> byMemberid = cartRepository.findByMember(members, pageable);
 
         List<Product> productList = new ArrayList<>();
+
         for (Cart cart : byMemberid) {
             Product product = cart.getProduct();
             productList.add(product);
         }
 
+        //List 를 Page로 변환
         List<ProductRecordDto> productRecordDtoList = productService.getProductRecordDtoList(productList);
+        Page<ProductRecordDto> productRecordDtos = new PageImpl<>(productRecordDtoList, pageable, productList.size());
+        
+        return productRecordDtos;
+    }
 
-        return productRecordDtoList;
+    /**
+     * id로 Cart에 있는 물품 제거 
+     * @param id
+     */
+    @Transactional
+    public void deleteProductInCart(Long id){
+        cartRepository.deleteByProductId(id);
     }
 
     /**
      * Cart에 담기 service
-     * @param orderFormDto
+     * @param cartDto
      * @return
      */
     @Transactional
-    public boolean save(OrderBuyNowDto orderFormDto) {
+    public boolean save(CartDto cartDto) {
 
-        Long memberId = orderFormDto.getMemberId();
-        Long productId = orderFormDto.getProductId();
+        Long memberId = cartDto.getMemberid();
+        Long productId = cartDto.getProductid();
 
         Optional<Members> byMemberId = memberRepository.findById(memberId);
         Optional<Product> byProductId = productRepository.findById(productId);
@@ -67,17 +83,17 @@ public class CartService {
 
             Members member = byMemberId.get();
             Product product = byProductId.get();
-            //product와 memberid가 같다면?
-            if( product.getId() == member.getId()){
-                return false;
-            }
-
             Cart cart = crateCart(member, product);
-            cartRepository.save(cart);
+
+            //카트안에 물품이 존재 하는지
+            if(!cartRepository.existsByProductId(product.getId())){
+                cartRepository.save(cart);
+            }
             return true;
         }
         return false;
     }
+
 
     private Cart crateCart(Members member_id, Product product_id) {
         return Cart.builder()

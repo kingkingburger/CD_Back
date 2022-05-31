@@ -193,12 +193,8 @@ public class ProductServiceTest {
                 orderService.saveBuyNowDto(build);
 
             }
-
-
-
-
-
         }
+
 
 
         List<OrderHistoryDto> content = orderRepository.findMemberPurchaseOrder(1L, product).getContent();
@@ -211,8 +207,6 @@ public class ProductServiceTest {
         Page<ProductRecordDto> productRecordDtoList2 = productService.paged_product(product2);
         System.out.println(productRecordDtoList2);
 
-
     }
-
 
 }
