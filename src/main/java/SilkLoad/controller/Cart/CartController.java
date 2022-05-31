@@ -1,13 +1,11 @@
 package SilkLoad.controller.Cart;
 
 
-import SilkLoad.dto.OrderFormDto;
+import SilkLoad.dto.OrderBuyNowDto;
 import SilkLoad.service.CartService;
-import SilkLoad.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +19,7 @@ public class CartController {
     private final CartService cartService;
 
     @PostMapping("/inCart")
-    public String UserCart(@ModelAttribute("orderFormDto") OrderFormDto orderFormDto) {
+    public String UserCart(@ModelAttribute("orderFormDto") OrderBuyNowDto orderFormDto) {
         log.info("orderFormDto ={}", orderFormDto);
 
         if (cartService.save(orderFormDto)) {

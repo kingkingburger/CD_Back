@@ -77,7 +77,7 @@ public class ProductService {
     private Orders getOrders(Members loginMember, Product savedProduct) {
         Orders order = Orders.builder()
                 .product(savedProduct)
-                .offerPrice(null)
+                .offerPrice(-1L)
                 .memberBuyer(loginMember)
                 .orderDateTime(LocalDateTime.now())
                 .orderType(OrderType.unRegistered)
@@ -328,7 +328,7 @@ public class ProductService {
 
         if (byIdProduct.isPresent()) {
             Product product = byIdProduct.get();
-            product.setProductType(ProductType.waiting);
+            product.setProductType(ProductType.trading);
             return productRepository.save(product);
         }
         return null;

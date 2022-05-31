@@ -1,22 +1,17 @@
 package SilkLoad.service;
 
-import SilkLoad.dto.OrderFormDto;
-import SilkLoad.dto.ProductFormDto;
+import SilkLoad.dto.OrderBuyNowDto;
 import SilkLoad.dto.ProductRecordDto;
 import SilkLoad.entity.Cart;
 import SilkLoad.entity.Members;
-import SilkLoad.entity.OrderEnum.OrderType;
-import SilkLoad.entity.Orders;
 import SilkLoad.entity.Product;
 import SilkLoad.repository.CartRepository;
 import SilkLoad.repository.MemberRepository;
 import SilkLoad.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -60,7 +55,7 @@ public class CartService {
      * @return
      */
     @Transactional
-    public boolean save(OrderFormDto orderFormDto) {
+    public boolean save(OrderBuyNowDto orderFormDto) {
 
         Long memberId = orderFormDto.getMemberId();
         Long productId = orderFormDto.getProductId();

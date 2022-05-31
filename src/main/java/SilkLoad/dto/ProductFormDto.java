@@ -41,7 +41,7 @@ public class ProductFormDto {
     private ProductTime productTime;
 
     @Builder
-    public  ProductFormDto(String name,
+    public ProductFormDto(String name,
                         Long auctionPrice,
                         Long instancePrice,
                         String category,

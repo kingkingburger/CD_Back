@@ -1,11 +1,9 @@
 package SilkLoad.controller.Shop;
 
-import SilkLoad.SessionConst;
-import SilkLoad.dto.MemberFormDto;
-import SilkLoad.dto.OrderFormDto;
 import SilkLoad.dto.ProductRecordDto;
-import SilkLoad.entity.Members;
+import SilkLoad.entity.ProductEnum.ProductTime;
 import SilkLoad.entity.ProductEnum.ProductType;
+import SilkLoad.service.OrderService;
 import SilkLoad.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +22,7 @@ import java.util.List;
 public class ShopController {
 
     private final ProductService productService;
+    private final OrderService orderService;
 
     @GetMapping
     public String shop(Model model, @PageableDefault(size = 9) Pageable pageable) {
@@ -66,6 +65,8 @@ public class ShopController {
         List<ProductRecordDto> allProduct = productService.findAllProduct();
 
         ProductRecordDto byId_productRecordDto = productService.findById_ProductRecordDto(id);
+
+        Long maxAuctionPrice = orderService.findByMaxAuctionPrice(id);
 /*      Product byId_product = productService.findById_Product(id);
         ProductRecordDto productRecordDto = productService.getProductRecordDto(byId_product);*/
         //productType.sale이 판매 중이 아니라면 error 페이저로 보내기
@@ -73,6 +74,8 @@ public class ShopController {
             return "error";
         }
 
+        model.addAttribute("maxAuctionPrice", maxAuctionPrice);
+        model.addAttribute("productTime", ProductTime.values());
         model.addAttribute("product", byId_productRecordDto);
         model.addAttribute("allProduct", allProduct);
 
