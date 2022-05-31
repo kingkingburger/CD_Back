@@ -56,7 +56,7 @@ def crawling():
     prod_link = soup.find_all('a', 'card-link')
     img_link = soup.find_all('div', 'card-photo')
 
-    connect = pymysql.connect(host='localhost', user='root', password='root', db='silk_road', charset='utf8mb4')
+    connect = pymysql.connect(host='localhost', user='root', password='1234', db='silkload', charset='utf8mb4')
     cursor = connect.cursor()
 
     for data in zip(name, price, prod_link, img_link):

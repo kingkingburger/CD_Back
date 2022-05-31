@@ -29,8 +29,9 @@
                 <div class="card product-card" th:if="${product.getProductType == sale}" >
 
                     <a class="card-img-top d-block overflow-hidden" th:href="@{/shop/detailProduct(id=${product.id})}">
-<!--                        <img alt="Product"  th:src="|/images/${imageFile.getStoreFileName()}|"/>-->
-                        <img alt="Product"  th:src="|/product/images/${product.productImagesList.get(0).getStoreFileName()}|"/>
+                        <figure class="image is-4by3">
+                            <img alt="Product"  th:src="|/product/images/${product.productImagesList.get(0).getStoreFileName()}|"/>
+                        </figure>
                     </a>
                     <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#" th:text="${product.categoryRecordDto.getSecond()}">카테고리</a>
 
@@ -44,13 +45,18 @@
                             <div class="product-price col"><span class="text-accent" th:text="|마감날짜: ${#temporals.format( product.deadLine , 'yyyy-MM-dd HH:mm:ss')}|">   </span></div>
                         </div>
                     </div>
+                    <!--카트에 담기-->
                     <div class="card-body card-body-hidden">
-                        <button class="btn btn-primary btn-sm d-block w-100 mb-2" type="button"><i
-                                class="ci-cart fs-sm me-1"></i>Add to Cart
-                        </button>
-                        <div class="text-center"><a class="nav-link-style fs-ms" href="#quick-view-electro"
-                                                    data-bs-toggle="modal"><i class="ci-eye align-middle me-1"></i>Quick
-                            view</a></div>
+                        <form action="" th:action="@{/product/order/inCart}" method="post">
+                            <input type="hidden" th:id="memberId" th:name="memberId"
+                                   th:if="${session.loginMember != null}"
+                                   th:value="${session.loginMember.getId()}"/>
+                            <input type="hidden" th:id="productId" th:name="productId" th:value="${product.id}"/>
+
+                            <button class="btn btn-primary btn-sm d-block w-100 mb-2" type="button">
+                                <i class="ci-cart fs-sm me-2"></i>Add to Cart
+                            </button>
+                        </form>
                     </div>
                 </div>
                 <hr class="d-sm-none">
@@ -58,120 +64,316 @@
         </div>
     </section>
 
-    <!-- Brands carousel-->
-    <section class="container mb-5">
+    <!-- 번개장터에서 가저온 물품-->
+    <section class="container mb-5 mt-2">
+        <h3>번개장터</h3>
         <div class="tns-carousel border-end">
             <div class="tns-carousel-inner"
-                 data-carousel-options="{ &quot;nav&quot;: false, &quot;controls&quot;: false, &quot;autoplay&quot;: true, &quot;autoplayTimeout&quot;: 4000, &quot;loop&quot;: true, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;360&quot;:{&quot;items&quot;:2},&quot;600&quot;:{&quot;items&quot;:3},&quot;991&quot;:{&quot;items&quot;:4},&quot;1200&quot;:{&quot;items&quot;:4}} }">
-                <div><a class="d-block bg-white border py-4 py-sm-5 px-2" href="#" style="margin-right: -.0625rem;"><img
-                        class="d-block mx-auto" src="/img/shop/brands/13.png" style="width: 165px;" alt="Brand"></a>
+                 data-carousel-options="{ &quot;nav&quot;: false, &quot;controls&quot;: false,
+&quot;autoplay&quot;: true, &quot;autoplayTimeout&quot;: 4000,
+&quot;loop&quot;: true,
+&quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},
+&quot;360&quot;:{&quot;items&quot;:2},&quot;600&quot;:{&quot;items&quot;:3},
+&quot;991&quot;:{&quot;items&quot;:4},&quot;1200&quot;:{&quot;items&quot;:4}} }">
+                <div>
+                    <div class="widget">
+                        <h3 class="widget-title">여성의류</h3>
+
+                        <div class="d-flex align-items-center pb-2 border-bottom" th:each="product : ${women_close}">
+                            <a class="d-block flex-shrink-0" th:href="${product.getLink()}" >
+                                <img th:src="${product.getImg_link()}" width="64" alt="Product"></a>
+                            <div class="ps-2">
+                                <h6 class="widget-product-title">
+                                    <a th:href="${product.getLink()}" th:text="${product.getName()}">물품 이름</a>
+                                </h6>
+                                <div class="widget-product-meta">
+                                    <span class="text-accent" th:text="${product.getPrice()}">가격</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="mb-0">...</p>
+                        <a class="fs-sm" href="shop-grid-ls.html">View more<i class="ci-arrow-right fs-xs ms-1"></i></a>
+                    </div>
                 </div>
-                <div><a class="d-block bg-white border py-4 py-sm-5 px-2" href="#" style="margin-right: -.0625rem;"><img
-                        class="d-block mx-auto" src="/img/shop/brands/14.png" style="width: 165px;" alt="Brand"></a>
+                <div>
+                    <div class="widget">
+                        <h3 class="widget-title">남성의류</h3>
+
+                        <div class="d-flex align-items-center pb-2 border-bottom" th:each="product : ${men_close}">
+                            <a class="d-block flex-shrink-0" th:href="${product.getLink()}" >
+                                <img th:src="${product.getImg_link()}" width="64" alt="Product"></a>
+                            <div class="ps-2">
+                                <h6 class="widget-product-title">
+                                    <a th:href="${product.getLink()}" th:text="${product.getName()}">물품 이름</a>
+                                </h6>
+                                <div class="widget-product-meta">
+                                    <span class="text-accent" th:text="${product.getPrice()}">가격</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="mb-0">...</p>
+                        <a class="fs-sm" href="shop-grid-ls.html">View more<i class="ci-arrow-right fs-xs ms-1"></i></a>
+                    </div>
                 </div>
-                <div><a class="d-block bg-white border py-4 py-sm-5 px-2" href="#" style="margin-right: -.0625rem;"><img
-                        class="d-block mx-auto" src="/img/shop/brands/17.png" style="width: 165px;" alt="Brand"></a>
+                <div>
+                    <div class="widget">
+                        <h3 class="widget-title">패션잡화</h3>
+
+                        <div class="d-flex align-items-center pb-2 border-bottom" th:each="product : ${shose}">
+                            <a class="d-block flex-shrink-0" th:href="${product.getLink()}" >
+                                <img th:src="${product.getImg_link()}" width="64" alt="Product"></a>
+                            <div class="ps-2">
+                                <h6 class="widget-product-title">
+                                    <a th:href="${product.getLink()}" th:text="${product.getName()}">물품 이름</a>
+                                </h6>
+                                <div class="widget-product-meta">
+                                    <span class="text-accent" th:text="${product.getPrice()}">가격</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="mb-0">...</p>
+                        <a class="fs-sm" href="shop-grid-ls.html">View more<i class="ci-arrow-right fs-xs ms-1"></i></a>
+                    </div>
                 </div>
-                <div><a class="d-block bg-white border py-4 py-sm-5 px-2" href="#" style="margin-right: -.0625rem;"><img
-                        class="d-block mx-auto" src="/img/shop/brands/16.png" style="width: 165px;" alt="Brand"></a>
+                <div>
+                    <div class="widget">
+                        <h3 class="widget-title">스포츠/레저</h3>
+
+                        <div class="d-flex align-items-center pb-2 border-bottom" th:each="product : ${sport}">
+                            <a class="d-block flex-shrink-0" th:href="${product.getLink()}" >
+                                <img th:src="${product.getImg_link()}" width="64" alt="Product"></a>
+                            <div class="ps-2">
+                                <h6 class="widget-product-title">
+                                    <a th:href="${product.getLink()}" th:text="${product.getName()}">물품 이름</a>
+                                </h6>
+                                <div class="widget-product-meta">
+                                    <span class="text-accent" th:text="${product.getPrice()}">가격</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="mb-0">...</p>
+                        <a class="fs-sm" href="shop-grid-ls.html">View more<i class="ci-arrow-right fs-xs ms-1"></i></a>
+                    </div>
                 </div>
-                <div><a class="d-block bg-white border py-4 py-sm-5 px-2" href="#" style="margin-right: -.0625rem;"><img
-                        class="d-block mx-auto" src="/img/shop/brands/15.png" style="width: 165px;" alt="Brand"></a>
+                <div>
+                    <div class="widget">
+                        <h3 class="widget-title">차량/오토바이</h3>
+
+                        <div class="d-flex align-items-center pb-2 border-bottom" th:each="product : ${car}">
+                            <a class="d-block flex-shrink-0" th:href="${product.getLink()}" >
+                                <img th:src="${product.getImg_link()}" width="64" alt="Product"></a>
+                            <div class="ps-2">
+                                <h6 class="widget-product-title">
+                                    <a th:href="${product.getLink()}" th:text="${product.getName()}">물품 이름</a>
+                                </h6>
+                                <div class="widget-product-meta">
+                                    <span class="text-accent" th:text="${product.getPrice()}">가격</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="mb-0">...</p>
+                        <a class="fs-sm" href="shop-grid-ls.html">View more<i class="ci-arrow-right fs-xs ms-1"></i></a>
+                    </div>
                 </div>
-                <div><a class="d-block bg-white border py-4 py-sm-5 px-2" href="#" style="margin-right: -.0625rem;"><img
-                        class="d-block mx-auto" src="/img/shop/brands/18.png" style="width: 165px;" alt="Brand"></a>
+                <div>
+                    <div class="widget">
+                        <h3 class="widget-title">스타굿즈</h3>
+
+                        <div class="d-flex align-items-center pb-2 border-bottom" th:each="product : ${star}">
+                            <a class="d-block flex-shrink-0" th:href="${product.getLink()}" >
+                                <img th:src="${product.getImg_link()}" width="64" alt="Product"></a>
+                            <div class="ps-2">
+                                <h6 class="widget-product-title">
+                                    <a th:href="${product.getLink()}" th:text="${product.getName()}">물품 이름</a>
+                                </h6>
+                                <div class="widget-product-meta">
+                                    <span class="text-accent" th:text="${product.getPrice()}">가격</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="mb-0">...</p>
+                        <a class="fs-sm" href="shop-grid-ls.html">View more<i class="ci-arrow-right fs-xs ms-1"></i></a>
+                    </div>
                 </div>
-                <div><a class="d-block bg-white border py-4 py-sm-5 px-2" href="#" style="margin-right: -.0625rem;"><img
-                        class="d-block mx-auto" src="/img/shop/brands/19.png" style="width: 165px;" alt="Brand"></a>
+                <div>
+                    <div class="widget">
+                        <h3 class="widget-title">키덜트</h3>
+
+                        <div class="d-flex align-items-center pb-2 border-bottom" th:each="product : ${toy}">
+                            <a class="d-block flex-shrink-0" th:href="${product.getLink()}" >
+                                <img th:src="${product.getImg_link()}" width="64" alt="Product"></a>
+                            <div class="ps-2">
+                                <h6 class="widget-product-title">
+                                    <a th:href="${product.getLink()}" th:text="${product.getName()}">물품 이름</a>
+                                </h6>
+                                <div class="widget-product-meta">
+                                    <span class="text-accent" th:text="${product.getPrice()}">가격</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="mb-0">...</p>
+                        <a class="fs-sm" href="shop-grid-ls.html">View more<i class="ci-arrow-right fs-xs ms-1"></i></a>
+                    </div>
                 </div>
-                <div><a class="d-block bg-white border py-4 py-sm-5 px-2" href="#" style="margin-right: -.0625rem;"><img
-                        class="d-block mx-auto" src="/img/shop/brands/20.png" style="width: 165px;" alt="Brand"></a>
+                <div>
+                    <div class="widget">
+                        <h3 class="widget-title">예술/희귀/수집품</h3>
+
+                        <div class="d-flex align-items-center pb-2 border-bottom" th:each="product : ${art}">
+                            <a class="d-block flex-shrink-0" th:href="${product.getLink()}" >
+                                <img th:src="${product.getImg_link()}" width="64" alt="Product"></a>
+                            <div class="ps-2">
+                                <h6 class="widget-product-title">
+                                    <a th:href="${product.getLink()}" th:text="${product.getName()}">물품 이름</a>
+                                </h6>
+                                <div class="widget-product-meta">
+                                    <span class="text-accent" th:text="${product.getPrice()}">가격</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="mb-0">...</p>
+                        <a class="fs-sm" href="shop-grid-ls.html">View more<i class="ci-arrow-right fs-xs ms-1"></i></a>
+                    </div>
                 </div>
+                <div>
+                    <div class="widget">
+                        <h3 class="widget-title">도서/티켓/문구/음악</h3>
+
+                        <div class="d-flex align-items-center pb-2 border-bottom" th:each="product : ${book}">
+                            <a class="d-block flex-shrink-0" th:href="${product.getLink()}" >
+                                <img th:src="${product.getImg_link()}" width="64" alt="Product"></a>
+                            <div class="ps-2">
+                                <h6 class="widget-product-title">
+                                    <a th:href="${product.getLink()}" th:text="${product.getName()}">물품 이름</a>
+                                </h6>
+                                <div class="widget-product-meta">
+                                    <span class="text-accent" th:text="${product.getPrice()}">가격</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="mb-0">...</p>
+                        <a class="fs-sm" href="shop-grid-ls.html">View more<i class="ci-arrow-right fs-xs ms-1"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <div class="widget">
+                        <h3 class="widget-title">가구/인테리어</h3>
+
+                        <div class="d-flex align-items-center pb-2 border-bottom" th:each="product : ${family}">
+                            <a class="d-block flex-shrink-0" th:href="${product.getLink()}" >
+                                <img th:src="${product.getImg_link()}" width="64" alt="Product"></a>
+                            <div class="ps-2">
+                                <h6 class="widget-product-title">
+                                    <a th:href="${product.getLink()}" th:text="${product.getName()}">물품 이름</a>
+                                </h6>
+                                <div class="widget-product-meta">
+                                    <span class="text-accent" th:text="${product.getPrice()}">가격</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="mb-0">...</p>
+                        <a class="fs-sm" href="shop-grid-ls.html">View more<i class="ci-arrow-right fs-xs ms-1"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <div class="widget">
+                        <h3 class="widget-title">생활/가공식품</h3>
+
+                        <div class="d-flex align-items-center pb-2 border-bottom" th:each="product : ${life}">
+                            <a class="d-block flex-shrink-0" th:href="${product.getLink()}" >
+                                <img th:src="${product.getImg_link()}" width="64" alt="Product"></a>
+                            <div class="ps-2">
+                                <h6 class="widget-product-title">
+                                    <a th:href="${product.getLink()}" th:text="${product.getName()}">물품 이름</a>
+                                </h6>
+                                <div class="widget-product-meta">
+                                    <span class="text-accent" th:text="${product.getPrice()}">가격</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="mb-0">...</p>
+                        <a class="fs-sm" href="shop-grid-ls.html">View more<i class="ci-arrow-right fs-xs ms-1"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <div class="widget">
+                        <h3 class="widget-title">유아동/출산</h3>
+
+                        <div class="d-flex align-items-center pb-2 border-bottom" th:each="product : ${kid}">
+                            <a class="d-block flex-shrink-0" th:href="${product.getLink()}" >
+                                <img th:src="${product.getImg_link()}" width="64" alt="Product"></a>
+                            <div class="ps-2">
+                                <h6 class="widget-product-title">
+                                    <a th:href="${product.getLink()}" th:text="${product.getName()}">물품 이름</a>
+                                </h6>
+                                <div class="widget-product-meta">
+                                    <span class="text-accent" th:text="${product.getPrice()}">가격</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="mb-0">...</p>
+                        <a class="fs-sm" href="shop-grid-ls.html">View more<i class="ci-arrow-right fs-xs ms-1"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <div class="widget">
+                        <h3 class="widget-title">반려동물용품</h3>
+
+                        <div class="d-flex align-items-center pb-2 border-bottom" th:each="product : ${animal}">
+                            <a class="d-block flex-shrink-0" th:href="${product.getLink()}" >
+                                <img th:src="${product.getImg_link()}" width="64" alt="Product"></a>
+                            <div class="ps-2">
+                                <h6 class="widget-product-title">
+                                    <a th:href="${product.getLink()}" th:text="${product.getName()}">물품 이름</a>
+                                </h6>
+                                <div class="widget-product-meta">
+                                    <span class="text-accent" th:text="${product.getPrice()}">가격</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="mb-0">...</p>
+                        <a class="fs-sm" href="shop-grid-ls.html">View more<i class="ci-arrow-right fs-xs ms-1"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <div class="widget">
+                        <h3 class="widget-title">기타</h3>
+
+                        <div class="d-flex align-items-center pb-2 border-bottom" th:each="product : ${etc}">
+                            <a class="d-block flex-shrink-0" th:href="${product.getLink()}" >
+                                <img th:src="${product.getImg_link()}" width="64" alt="Product"></a>
+                            <div class="ps-2">
+                                <h6 class="widget-product-title">
+                                    <a th:href="${product.getLink()}" th:text="${product.getName()}">물품 이름</a>
+                                </h6>
+                                <div class="widget-product-meta">
+                                    <span class="text-accent" th:text="${product.getPrice()}">가격</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="mb-0">...</p>
+                        <a class="fs-sm" href="shop-grid-ls.html">View more<i class="ci-arrow-right fs-xs ms-1"></i></a>
+                    </div>
+                </div>
+
+<!--            </div>-->
             </div>
         </div>
     </section>
-
-
-    <!-- Product widgets-->
-    <section class="container pb-4 pb-md-5">
-        <div class="row">
-
-            <!-- Bestsellers-->
-            <div class="col-md-4 col-sm-6 mb-2 py-3" >
-                <div class="widget">
-                    <h3 class="widget-title">번개장터 물품(여성의류)</h3>
-
-                    <div class="d-flex align-items-center pb-2 border-bottom" th:each="product : ${women_close}">
-                        <a class="d-block flex-shrink-0" th:href="${product.getLink()}" >
-                            <img th:src="${product.getImg_link()}" width="64" alt="Product"></a>
-                        <div class="ps-2">
-                            <h6 class="widget-product-title">
-                                <a th:href="${product.getLink()}" th:text="${product.getName()}">물품 이름</a>
-                            </h6>
-                            <div class="widget-product-meta">
-                                <span class="text-accent" th:text="${product.getPrice()}">가격</span>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <p class="mb-0">...</p>
-                    <a class="fs-sm" href="shop-grid-ls.html">View more<i class="ci-arrow-right fs-xs ms-1"></i></a>
-                </div>
-            </div>
-
-            <!-- Bestsellers-->
-            <div class="col-md-4 col-sm-6 mb-2 py-3" >
-                <div class="widget">
-                    <h3 class="widget-title">번개장터 물품(남성의류)</h3>
-
-                    <div class="d-flex align-items-center pb-2 border-bottom" th:each="product : ${men_close}">
-                        <a class="d-block flex-shrink-0" th:href="${product.getLink()}" >
-                            <img th:src="${product.getImg_link()}" width="64" alt="Product"></a>
-                        <div class="ps-2">
-                            <h6 class="widget-product-title">
-                                <a th:href="${product.getLink()}" th:text="${product.getName()}">물품 이름</a>
-                            </h6>
-                            <div class="widget-product-meta">
-                                <span class="text-accent" th:text="${product.getPrice()}">가격</span>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <p class="mb-0">...</p>
-                    <a class="fs-sm" href="shop-grid-ls.html">View more<i class="ci-arrow-right fs-xs ms-1"></i></a>
-                </div>
-            </div>
-
-            <!-- Bestsellers-->
-            <div class="col-md-4 col-sm-6 mb-2 py-3" >
-                <div class="widget">
-                    <h3 class="widget-title">번개장터 물품(신발)</h3>
-
-                    <div class="d-flex align-items-center pb-2 border-bottom" th:each="product : ${shose}">
-                        <a class="d-block flex-shrink-0" th:href="${product.getLink()}" >
-                            <img th:src="${product.getImg_link()}" width="64" alt="Product"></a>
-                        <div class="ps-2">
-                            <h6 class="widget-product-title">
-                                <a th:href="${product.getLink()}" th:text="${product.getName()}">물품 이름</a>
-                            </h6>
-                            <div class="widget-product-meta">
-                                <span class="text-accent" th:text="${product.getPrice()}">가격</span>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <p class="mb-0">...</p>
-                    <a class="fs-sm" href="shop-grid-ls.html">View more<i class="ci-arrow-right fs-xs ms-1"></i></a>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-
 </main>
 
 <div class="handheld-toolbar">

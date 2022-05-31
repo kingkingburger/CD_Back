@@ -65,18 +65,18 @@ def crawling():
         
         i = 0
         for data in zip(name, price, prod_link, img_link):
-            if i > 49:
+            if i > 10:
                 break
             data = list(data)
             data.insert(0, category)
             dataset.append(data)
             i += 1
 
-    connect = pymysql.connect(host='localhost', user='root', password='root', db='silk_road', charset='utf8mb4')
+    connect = pymysql.connect(host='localhost', user='root', password='1234', db='silkload', charset='utf8mb4')
     cursor = connect.cursor()
     
-    delete = """delete from crawling where exists(select * from crawling)"""
-    cursor.execute(delete)
+    # delete = """delete from crawling where exists(select * from (select * from crawling) c)"""
+    # cursor.execute(delete)
         
     alter = """alter table crawling auto_increment=1"""
     cursor.execute(alter)

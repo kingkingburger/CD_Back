@@ -39,32 +39,19 @@ public class CrawlingService {
         return crawlingDto;
     }
 
+    /**
+     * 크롤링 데이터를 카태고리 별로 가지고 온다.
+     * @param pageable
+     * @param category
+     * @return
+     */
     @Transactional(readOnly = true)
-    public Page<CrawlingDto> getwomenclose(Pageable pageable) {
+    public Page<CrawlingDto> getcrawlingdata(Pageable pageable, String category) {
 
-        Page<CrawlingDto> 여성의류 = crawlingRepository
-                                    .findByCategory("여성의류", pageable)
+        Page<CrawlingDto> data = crawlingRepository
+                                    .findByCategory(category, pageable)
                                     .map(this::getCrawlingDtoList);
-        return 여성의류;
-    }
-
-    @Transactional(readOnly = true)
-    public Page<CrawlingDto> getmenclose(Pageable pageable) {
-
-        Page<CrawlingDto> 남성의류 = crawlingRepository
-                .findByCategory("남성의류", pageable)
-                .map(this::getCrawlingDtoList);
-
-        return 남성의류;
-    }
-
-    @Transactional(readOnly = true)
-    public Page<CrawlingDto> getshose(Pageable pageable) {
-
-        Page<CrawlingDto> 신발 = crawlingRepository
-                .findByCategory("신발", pageable)
-                .map(this::getCrawlingDtoList);
-        return 신발;
+        return data;
     }
 
 
