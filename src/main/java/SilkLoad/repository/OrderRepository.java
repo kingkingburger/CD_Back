@@ -1,6 +1,6 @@
 package SilkLoad.repository;
 
-import SilkLoad.dto.TradeOrderDto;
+import SilkLoad.dto.OrderHistoryDto;
 import SilkLoad.entity.OrderEnum.OrderType;
 import SilkLoad.entity.Orders;
 import org.springframework.data.domain.Page;
@@ -22,10 +22,13 @@ public interface OrderRepository extends JpaRepository<Orders, Long>  {
 
 */
 
-    List<Orders> findByProduct_IdAndOrderDateTime(Long product_id, LocalDateTime localDateTime);
+    List<Orders> findByProduct_IdAndOrderDateTime(Long productId, LocalDateTime localDateTime);
 
 
-    List<Orders> findByProduct_IdAndOrderTypeNot (Long product_id, OrderType orderType);
+    List<Orders> findByProduct_IdAndOrderTypeNot (Long productId, OrderType orderType);
+
+    @Query("SELECT MAX(o.offerPrice) FROM Orders o GROUP BY o.product.id HAVING o.product.id = :productId")
+    Long findByProductIdMaxAuctionPrice(@Param("productId") Long productId);
 
 
     /**
@@ -33,7 +36,7 @@ public interface OrderRepository extends JpaRepository<Orders, Long>  {
      * @return product id에 맞는 최신(orderDateTime) order
      */
     @Query("SELECT " +
-            "NEW SilkLoad.dto.TradeOrderDto(p.id, p.name, p.auctionPrice, p.instantPrice, p.productType, p.productTime, p.createdDate," +
+            "NEW SilkLoad.dto.OrderHistoryDto(p.id, p.name, p.auctionPrice, p.instantPrice, p.productType, p.productTime, p.createdDate," +
             " original.id, original.orderType, original.offerPrice, original.memberBuyer.name, original.orderDateTime) " +
             "FROM Orders original " +
             "LEFT JOIN Orders copy " +
@@ -42,11 +45,11 @@ public interface OrderRepository extends JpaRepository<Orders, Long>  {
             "JOIN Product p ON p.id = original.product.id " +
             "WHERE copy.product.id IS NULL AND p.members.id = :memberId ORDER BY original.product.id"
     )
-    Page<TradeOrderDto> findMemberSaleOrder(@Param("memberId") Long memberId, Pageable pageable);
+    Page<OrderHistoryDto> findMemberSaleOrder(@Param("memberId") Long memberId, Pageable pageable);
 
 
     @Query("SELECT " +
-            "NEW SilkLoad.dto.TradeOrderDto(p.id, p.name, p.auctionPrice, p.instantPrice, p.productType, p.productTime, p.createdDate," +
+            "NEW SilkLoad.dto.OrderHistoryDto(p.id, p.name, p.auctionPrice, p.instantPrice, p.productType, p.productTime, p.createdDate," +
             " o.id, o.orderType, o.offerPrice, o.memberBuyer.name, o.orderDateTime) " +
             "FROM Orders o " +
             "join Product p " +
@@ -55,7 +58,7 @@ public interface OrderRepository extends JpaRepository<Orders, Long>  {
             "AND o.orderType <> SilkLoad.entity.OrderEnum.OrderType.waiting " +
             "AND o.memberBuyer.id = :memberId"
     )
-    Page<TradeOrderDto> findMemberPurchaseOrder(@Param("memberId") Long memberId, Pageable pageable);
+    Page<OrderHistoryDto> findMemberPurchaseOrder(@Param("memberId") Long memberId, Pageable pageable);
 
 
 

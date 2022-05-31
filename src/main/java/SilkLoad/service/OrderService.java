@@ -1,7 +1,8 @@
 package SilkLoad.service;
 
-import SilkLoad.dto.OrderFormDto;
-import SilkLoad.dto.TradeOrderDto;
+import SilkLoad.dto.OrderBuyAuctionDto;
+import SilkLoad.dto.OrderBuyNowDto;
+import SilkLoad.dto.OrderHistoryDto;
 import SilkLoad.entity.Members;
 import SilkLoad.entity.OrderEnum.OrderType;
 import SilkLoad.entity.Orders;
@@ -29,34 +30,25 @@ public class OrderService {
     private final MemberRepository memberRepository;
     private final ProductRepository productRepository;
 
-
     @Transactional
-    public Orders saveFormDto(OrderFormDto orderFormDto) {
+    public Orders saveBuyNowDto(OrderBuyNowDto orderBuyNowDto) {
 
 
-        Long memberId = orderFormDto.getMemberId();
-        Long productId = orderFormDto.getProductId();
+        Long memberId = orderBuyNowDto.getMemberId();
+        Long productId = orderBuyNowDto.getProductId();
 
         Members member = memberRepository.findById(memberId).get();
         Product product = productRepository.findById(productId).get();
 
-        if( (member != null && product != null) && (product.getId() != member.getId()) ) {
+        if( (member != null && product != null) && (product.getMembers().getId() != member.getId()) ) {
 
-
-            Orders order = createOrder(member, product);
-            LocalDateTime orderDateTime = order.getOrderDateTime();
-            LocalDateTime generateDateTime = LocalDateTime.of(orderDateTime.getYear(), orderDateTime.getMonthValue(), orderDateTime.getDayOfMonth(),
-                    orderDateTime.getHour(), orderDateTime.getMinute(), orderDateTime.getSecond());
-            order.getOrderDateTime().getYear();
-            List<Orders> byProduct_idAndOrderDateTime = orderRepository.findByProduct_IdAndOrderDateTime(
-                                                                            order.getProduct().getId(),
-                                                                            generateDateTime
-                                                                        );
+            Orders order = createBuyNowOrder(member, product);
+            List<Orders> SameTimeOrderList = getSameTimeOrders(order);
             log.info("겹치는 시간 여부 ={}, {}", order.getProduct().getId(), order.getOrderDateTime());
 
             List<Orders> byProduct_idANDOrderTypeNot = orderRepository.findByProduct_IdAndOrderTypeNot (order.getProduct().getId(), OrderType.unRegistered);
 
-            if (byProduct_idAndOrderDateTime.isEmpty() && byProduct_idANDOrderTypeNot.isEmpty() ) {
+            if (SameTimeOrderList.isEmpty() && byProduct_idANDOrderTypeNot.isEmpty() ) {
                 return orderRepository.save(order);
             }
 
@@ -64,15 +56,63 @@ public class OrderService {
         return null;
 
     }
+
     @Transactional
-    public List<TradeOrderDto> findMemberSaleOrder(Long memberId, Pageable pageable) {
+    public Orders saveBuyAuctionDto(OrderBuyAuctionDto orderBuyAuctionDto) {
+
+
+        Long memberId = orderBuyAuctionDto.getMemberId();
+        Long productId = orderBuyAuctionDto.getProductId();
+
+        Members member = memberRepository.findById(memberId).get();
+        Product product = productRepository.findById(productId).get();
+
+        if( (member != null && product != null) && (product.getMembers().getId() != member.getId()) ) {
+
+            Orders order = createBuyAuctionOrder(member, product, orderBuyAuctionDto.getAuctionPrice());
+            List<Orders> SameTimeOrderList = getSameTimeOrders(order);
+            log.info("겹치는 시간 여부 ={}, {}", order.getProduct().getId(), order.getOrderDateTime());
+
+            List<Orders> byProduct_idANDOrderTypeNot = orderRepository.findByProduct_IdAndOrderTypeNot (order.getProduct().getId(), OrderType.unRegistered);
+
+
+            Long maxAuctionPrice = orderRepository.findByProductIdMaxAuctionPrice(order.getProduct().getId());
+
+
+            if (SameTimeOrderList.isEmpty() && byProduct_idANDOrderTypeNot.isEmpty() && order.getOfferPrice() > maxAuctionPrice ) {
+                return orderRepository.save(order);
+            }
+
+        }
+        return null;
+
+
+
+
+    }
+
+    private List<Orders> getSameTimeOrders(Orders order) {
+        LocalDateTime orderDateTime = order.getOrderDateTime();
+        LocalDateTime generateDateTime = LocalDateTime.of(orderDateTime.getYear(), orderDateTime.getMonthValue(), orderDateTime.getDayOfMonth(),
+                orderDateTime.getHour(), orderDateTime.getMinute(), orderDateTime.getSecond());
+
+
+        List<Orders> SameTimeOrderList = orderRepository.findByProduct_IdAndOrderDateTime(
+                order.getProduct().getId(),
+                generateDateTime
+        );
+        return SameTimeOrderList;
+    }
+
+    @Transactional
+    public List<OrderHistoryDto> findMemberSaleOrder(Long memberId, Pageable pageable) {
 
         return orderRepository.findMemberSaleOrder(memberId, pageable).getContent();
 
     }
 
     @Transactional
-    public List<TradeOrderDto> findMemberPurchaseOrder (Long memberId, Pageable pageable) {
+    public List<OrderHistoryDto> findMemberPurchaseOrder (Long memberId, Pageable pageable) {
 
         return orderRepository.findMemberPurchaseOrder(memberId, pageable).getContent();
 
@@ -87,7 +127,8 @@ public class OrderService {
 
             Orders order = optionalOrders.get();
 
-            if( order.getOrderType() == OrderType.trading) {
+            if( order.getOrderType() == OrderType.trading
+            && order.getProduct().getProductType() == ProductType.trading) {
 
                 order.setOrderType(OrderType.complete);
                 order.getProduct().setProductType(ProductType.soldOut);
@@ -97,16 +138,77 @@ public class OrderService {
         return null;
     }
 
+    @Transactional
+    public Orders tradingOrder(Long id) {
+
+        Optional<Orders> optionalOrders = orderRepository.findById(id);
+        if(optionalOrders.isPresent()) {
+
+            Orders order = optionalOrders.get();
+
+            if( order.getOrderType() == OrderType.waiting
+                    &&  order.getProduct().getProductType() == ProductType.sale) {
+
+                order.setOrderType(OrderType.trading);
+                order.getProduct().setProductType(ProductType.trading );
+                return orderRepository.save(order);
+            }
+        }
+        return null;
+    }
+
+    @Transactional
+    public Orders cancelOrder(Long id) {
+
+        Optional<Orders> optionalOrders = orderRepository.findById(id);
+        if(optionalOrders.isPresent()) {
+
+            Orders order = optionalOrders.get();
+
+            if( (order.getOrderType() != OrderType.complete && order.getOrderType() != OrderType.cancel)
+                    &&  (order.getProduct().getProductType() != ProductType.cancel || order.getProduct().getProductType() != ProductType.soldOut) ) {
+
+                order.setOrderType(OrderType.cancel );
+                order.getProduct().setProductType(ProductType.cancel );
+                return orderRepository.save(order);
+            }
+        }
+        return null;
+    }
+
+
+    @Transactional
+    public Long findByMaxAuctionPrice( Long productId) {
+
+        return orderRepository.findByProductIdMaxAuctionPrice(productId);
+
+    }
+
 
     //즉시 거래일 때의 createOrder
-   private Orders createOrder(Members member, Product product) {
-        return Orders.builder()
+   private Orders createBuyAuctionOrder(Members member, Product product, Long offerPrice) {
+
+       Orders order = Orders.builder()
+               .memberBuyer(member)
+               .product(product)
+               .offerPrice(offerPrice)
+               .orderType(OrderType.waiting)
+               .orderDateTime(LocalDateTime.now())
+               .build();
+       return  order;
+
+   }
+
+    private Orders createBuyNowOrder(Members member, Product product) {
+
+        Orders order = Orders.builder()
                 .memberBuyer(member)
                 .product(product)
                 .offerPrice(product.getInstantPrice())
                 .orderType(OrderType.trading)
                 .orderDateTime(LocalDateTime.now())
                 .build();
+        return  order;
 
     }
 

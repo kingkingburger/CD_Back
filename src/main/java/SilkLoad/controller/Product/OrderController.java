@@ -1,14 +1,19 @@
 package SilkLoad.controller.Product;
 
-import SilkLoad.dto.OrderFormDto;
+import SilkLoad.dto.OrderBuyAuctionDto;
+import SilkLoad.dto.OrderBuyNowDto;
+import SilkLoad.entity.Orders;
 import SilkLoad.service.OrderService;
 import SilkLoad.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
 @Controller
@@ -20,13 +25,13 @@ public class OrderController {
     private final ProductService productService;
 
     @PostMapping("/buyNow")
-    public String orderSave(@ModelAttribute("orderFormDto") OrderFormDto orderFormDto) {
+    public String saveBuyNow(@ModelAttribute("orderBuyNowDto") OrderBuyNowDto orderBuyNowDto) {
 
-        log.info("orderFormDto ={}", orderFormDto);
+        log.info("orderBuyNowDto ={}", orderBuyNowDto);
 
-        if ( orderService.saveFormDto(orderFormDto) != null) {
+        if ( orderService.saveBuyNowDto(orderBuyNowDto) != null) {
             log.info("order 저장 성공");
-             if( productService.changeTypeToWaiting(orderFormDto.getProductId()) != null)  {
+             if( productService.changeTypeToWaiting(orderBuyNowDto.getProductId()) != null)  {
                  log.info("TypeToWaiting 성공");
 
              }
@@ -38,6 +43,58 @@ public class OrderController {
         return "redirect:/";
 
     }
+
+    @PostMapping("/buyAuction")
+    public String SaveAuction(@ModelAttribute("orderBuyAuctionDto")OrderBuyAuctionDto orderBuyAuctionDto, HttpServletRequest request) {
+
+        Orders order = orderService.saveBuyAuctionDto(orderBuyAuctionDto);
+
+        if ( order == null) {
+            log.info("order null 에러");
+        } else {
+            log.info("order = {}",order);
+        }
+
+        String referer = request.getHeader("Referer");
+
+        return "redirect:" + referer;
+
+    }
+
+    // => 거래 성립은 판매자가 끝내면 끝, 주도권은 판매자
+    @PostMapping("/transaction/complete/{orderId}")
+    public String completeTransaction(@PathVariable Long orderId, HttpServletRequest request) {
+
+        orderService.completeOrder(orderId);
+
+        //이전 페이지 url
+        String referer = request.getHeader("Referer");
+
+        return "redirect:" + referer;
+    }
+
+    @PostMapping("/transaction/trading/{orderId}")
+    public String tradingTransaction(@PathVariable Long orderId, HttpServletRequest request) {
+
+        orderService.tradingOrder(orderId);
+
+        //이전 페이지 url
+        String referer = request.getHeader("Referer");
+
+        return "redirect:" + referer;
+    }
+
+    @PostMapping("/transaction/cancel/{orderId}")
+    public String cancelTransaction(@PathVariable Long orderId, HttpServletRequest request) {
+
+        orderService.cancelOrder(orderId);
+
+        //이전 페이지 url
+        String referer = request.getHeader("Referer");
+
+        return "redirect:" + referer;
+    }
+
 
 
 }

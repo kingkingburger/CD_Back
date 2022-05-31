@@ -3,7 +3,7 @@ package SilkLoad.controller.Member;
 import SilkLoad.SessionConst;
 import SilkLoad.dto.MemberFormDto;
 import SilkLoad.dto.ProductRecordDto;
-import SilkLoad.dto.TradeOrderDto;
+import SilkLoad.dto.OrderHistoryDto;
 import SilkLoad.entity.Members;
 import SilkLoad.entity.OrderEnum.OrderType;
 import SilkLoad.entity.ProductEnum.ProductTime;
@@ -60,7 +60,7 @@ public class MyPageController {
     }
 
     @GetMapping("/wishlist")
-    public String Wishlist(@PageableDefault(size=6)Pageable pageable, Model model, HttpServletRequest request) {
+    public String Wishlist(@PageableDefault(size=6) Pageable pageable, Model model, HttpServletRequest request) {
 
         HttpSession session = request.getSession();
         Object memberObject = session.getAttribute(SessionConst.LOGIN_MEMBER);
@@ -98,7 +98,7 @@ public class MyPageController {
 
         Members sessionMember = getSessionMembers(request);
 
-        List<TradeOrderDto> saleOrders =  orderService.findMemberSaleOrder(sessionMember.getId(), pageable);
+        List<OrderHistoryDto> saleOrders =  orderService.findMemberSaleOrder(sessionMember.getId(), pageable);
 
         calculationDeadLine(saleOrders);
 
@@ -113,7 +113,7 @@ public class MyPageController {
     public String purchaseOrders(@PageableDefault(size=6)Pageable pageable, Model model, HttpServletRequest request) {
 
         Members sessionMembers = getSessionMembers(request);
-        List<TradeOrderDto> purchaseOrders = orderService.findMemberPurchaseOrder(sessionMembers.getId(), pageable);
+        List<OrderHistoryDto> purchaseOrders = orderService.findMemberPurchaseOrder(sessionMembers.getId(), pageable);
         calculationDeadLine(purchaseOrders);
 
         log.info("purchaseOrders => {}", purchaseOrders);
@@ -125,7 +125,7 @@ public class MyPageController {
 
     }
 
-    private void calculationDeadLine(List<TradeOrderDto> tradeOrders) {
+    private void calculationDeadLine(List<OrderHistoryDto> tradeOrders) {
         tradeOrders.forEach(tradeOrder -> {
 
             if (tradeOrder.getProductTime() != ProductTime.NONE) {

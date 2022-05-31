@@ -185,18 +185,19 @@ public class ProductServiceTest {
 
             if ( i > 0 ) {
 
-                OrderFormDto build = OrderFormDto.builder()
+                OrderBuyNowDto build = OrderBuyNowDto.builder()
                         .memberId((long) 1)
                         .productId((long) i)
                         .build();
 
-                orderService.saveFormDto(build);
+                orderService.saveBuyNowDto(build);
 
             }
         }
 
 
-        List<TradeOrderDto> content = orderRepository.findMemberPurchaseOrder(1L, product).getContent();
+
+        List<OrderHistoryDto> content = orderRepository.findMemberPurchaseOrder(1L, product).getContent();
 
         log.info("byProductId= {}",content.size());
 

@@ -73,8 +73,7 @@
 
                                     <div class="py-2"> 물품 번호:&nbsp&nbsp<span th:text="${purchaseOrder.productId}"></span></div>
                                     <div class="py-2"> 물품 이름:&nbsp&nbsp<span th:text="${purchaseOrder.productName}"></span></div>
-                                    <div class="py-2"> 경매 가격:&nbsp&nbsp<span
-                                            th:text=" ( ${purchaseOrder.auctionPrice} == null ) ? '-': ${purchaseOrder.auctionPrice} "></span>
+                                    <div class="py-2"> 경매 가격:&nbsp&nbsp<span th:text=" ( ${purchaseOrder.auctionPrice} == null ) ? '-': ${purchaseOrder.auctionPrice} "></span>
                                     </div>
                                     <div class="py-2"> 즉시 구매가:&nbsp&nbsp<span th:text="${purchaseOrder.instantPrice}"></span>
 
@@ -100,7 +99,7 @@
                                     <div class="py-2"> 주문 상태:&nbsp&nbsp<span th:text="${purchaseOrder.orderType.description}"></span>
 
                                     </div>
-                                    <div class="py-2"> 주문 제시 가격:&nbsp&nbsp<span th:text=" ( ${purchaseOrder.offerPrice} == null ) ? '-' : ${purchaseOrder.offerPrice}"></span>
+                                    <div class="py-2"> 주문 제시 가격:&nbsp&nbsp<span th:text=" ( ${purchaseOrder.offerPrice} == -1 ) ? '-' : ${purchaseOrder.offerPrice}"></span>
 
                                     </div>
                                     <div class="py-2"> 구매자 이름:&nbsp&nbsp<span th:text=" ( ${purchaseOrder.orderType } == ${orderType[0] } ) ? '-' : ${purchaseOrder.buyerName}"></span>

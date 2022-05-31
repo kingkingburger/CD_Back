@@ -301,6 +301,41 @@
         </div>
     </div>
 
+    <!-- The auction Modal -->
+    <div class="modal" id="auctionModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header border border-0">
+                    <h4 class="modal-title">경매 가격 등록</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <hr class="mx-3 border border-2 rounded border-primary bg-primary">
+
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="" th:action="@{/product/order/buyAuction}" method="post" >
+                    <input class="mb-3 form-control rounded-start" th:id="auctionPrice" type="text" th:name="auctionPrice"
+                           placeholder="경매 가격을 입력해주세요" value="">
+                    <input type="hidden" th:id="memberId" th:name="memberId"
+                           th:if="${session.loginMember != null}"
+                           th:value="${session.loginMember.getId()}"/>
+                    <input type="hidden" th:id="productId" th:name="productId" th:value="${product.id}"/>
+
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-danger me-2" data-bs-dismiss="modal">경매 주문</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
     <!-- Page Title-->
     <div class="page-title-overlap bg-dark pt-4">
         <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
@@ -398,6 +433,16 @@
                                          data-bs-parent="#productPanels">
                                         <div class="accordion-body">
 
+                                            <h6 class="fs-sm mb-2">등록 형태 </h6>
+                                            <ul class="fs-sm ps-4">
+                                                <li class="" th:text="${product.productTime.getDescription()}"></li>
+                                            </ul>
+
+                                            <h6 class="fs-sm mb-2">경매 가격 </h6>
+                                            <ul class="fs-sm ps-4" th:classappend="${product.productTime} == productTime[2] ?  'hidden' : ''">
+                                                <li class="" th:text=" ${maxAuctionPrice} == -1 ? ${product.auctionPrice} : ${ maxAuctionPrice }"></li>
+                                            </ul>
+
                                             <h6 class="fs-sm mb-2">상세 설명</h6>
                                             <ul class="fs-sm ps-4">
                                                 <li class="" th:text="${ product.explanation }"></li>
@@ -421,10 +466,12 @@
 
 
                             <form action="" th:action="@{/product/order/inCart}" method="post">
+
                                 <input type="hidden" th:id="memberId" th:name="memberid"
                                        th:if="${session.loginMember != null}"
                                        th:value="${session.loginMember.getId()}"/>
                                 <input type="hidden" th:id="productId" th:name="productid" th:value="${product.id}"/>
+
 
                                 <button class="btn btn-primary btn-shadow d-block w-100" type="submit"><i
                                         class="ci-cart fs-lg me-2"></i>카트에 담기
@@ -443,8 +490,9 @@
                             </form>
 
 
-                            <button class="btn btn-info d-block w-100 my-1" type="submit"><i
-                                    class="ci-store fs-lg me-2"></i>경매 구매
+                            <button type="button" class="btn btn-info d-block w-100 my-1" data-bs-toggle="modal"
+                                    data-bs-target="#auctionModal">
+                                <i class="ci-store fs-lg me-2"></i>경매 구매
                             </button>
 
                             <!-- Sharing-->
