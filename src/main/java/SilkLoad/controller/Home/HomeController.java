@@ -42,7 +42,6 @@ public class HomeController {
         model.addAttribute("Products", content);
         model.addAttribute("sale", ProductType.sale);
 
-
         Page<CrawlingDto> women_close = crawlingService.getcrawlingdata(pageable, "여성의류");
         Page<CrawlingDto> men_close = crawlingService.getcrawlingdata(pageable,"남성의류");
         Page<CrawlingDto> shose = crawlingService.getcrawlingdata(pageable, "패션잡화");
