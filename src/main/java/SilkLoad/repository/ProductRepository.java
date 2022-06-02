@@ -5,6 +5,8 @@ import SilkLoad.entity.ProductEnum.ProductType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,7 +23,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     //select * from product where ProductType == sale;
     List<Product> findAllByProductType(ProductType type);
 
-
+    //Product 안에 원하는 category 빼오는 쿼리
+    @Query(value = "select p from Product p left join fetch p.category c where c.second = :second")
+    List<Product> findA(@Param("second")String categoryName);
 
 }
 

@@ -1,6 +1,7 @@
 package SilkLoad.repository;
 
 import SilkLoad.dto.ProductRecordDto;
+import SilkLoad.entity.Product;
 import SilkLoad.entity.ProductEnum.ProductType;
 import SilkLoad.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @SpringBootTest
@@ -43,5 +45,14 @@ class ProductRepositoryTest {
     @Test
     void 타입별로모두가져오기_테스트() {
         productRepository.findAllByProductType(ProductType.sale);
+    }
+
+    @Test
+    void 카테고리별로_product가져오기_테스트(){
+        List<Product> all = productRepository.findA("예술");
+
+        for (Product product : all) {
+            System.out.println("product = " + product);
+        }
     }
 }
