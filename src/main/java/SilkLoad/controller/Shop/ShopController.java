@@ -25,10 +25,12 @@ public class ShopController {
     private final OrderService orderService;
 
     @GetMapping
-    public String shop(Model model, @PageableDefault(size = 9) Pageable pageable) {
-
+    public String shop(Model model, @RequestParam String category, @PageableDefault(size = 9) Pageable pageable) {
+        
         //페이징화 된 객체
         List<ProductRecordDto> content = productService.paged_product(pageable).getContent();
+        List<ProductRecordDto> content1 = productService.pagedBycategoryProduct(category, pageable).getContent();
+        log.info("카테고리는 = {}" + content1);
 
         //전체 페이지 수
         int totalPages = productService.paged_product(pageable).getTotalPages();
@@ -37,14 +39,16 @@ public class ShopController {
         int presentPage = productService.paged_product(pageable).getNumber();
         
         //페이징된 물품들 모델로 보내기
-        model.addAttribute("allProduct", content);
+        model.addAttribute("allProduct", content1);
 
+        //선택된 카테고리 보내기
+        model.addAttribute("category",category);
+        
         //전체 페이지 수 모델로 보내기
         model.addAttribute("totalPages",totalPages);
 
         //현제 페이지  모델로 보내기
         model.addAttribute("presentPage",presentPage);
-
 
         model.addAttribute("sale", ProductType.sale);
 

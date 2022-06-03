@@ -35,4 +35,25 @@ public class ProductRecordDto {
     @NotNull
     private List<ProductImageRecordDto> productImagesList;
 
+    public ProductRecordDto(Long id,
+                            String name,
+                            Long auctionPrice,
+                            Long instantPrice,
+                            String explanation,
+                            LocalDateTime deadLine,
+                            ProductTime productTime,
+                            ProductType productType,
+                            CategoryRecordDto categoryRecordDto,
+                            List<ProductImageRecordDto> productImagesList) {
+        this.id = id;
+        this.name = name;
+        this.auctionPrice = auctionPrice;
+        this.instantPrice = instantPrice;
+        this.explanation = explanation;
+        this.deadLine = null;
+        this.productTime = productTime;
+        this.productType = productType;
+        this.categoryRecordDto = categoryRecordDto;
+        this.productImagesList = productImagesList;
+    }
 }
