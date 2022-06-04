@@ -45,15 +45,15 @@ public class HomeController {
         Page<CrawlingDto> women_close = crawlingService.getcrawlingdata(pageable, "여성의류");
         Page<CrawlingDto> men_close = crawlingService.getcrawlingdata(pageable,"남성의류");
         Page<CrawlingDto> shose = crawlingService.getcrawlingdata(pageable, "패션잡화");
-        Page<CrawlingDto> sport = crawlingService.getcrawlingdata(pageable, "스포츠/레저");
-        Page<CrawlingDto> car = crawlingService.getcrawlingdata(pageable, "차량/오토바이");
+        Page<CrawlingDto> sport = crawlingService.getcrawlingdata(pageable, "스포츠레저");
+        Page<CrawlingDto> car = crawlingService.getcrawlingdata(pageable, "차량오토바이");
         Page<CrawlingDto> star = crawlingService.getcrawlingdata(pageable, "스타굿즈");
         Page<CrawlingDto> toy = crawlingService.getcrawlingdata(pageable, "키덜트");
-        Page<CrawlingDto> art = crawlingService.getcrawlingdata(pageable, "예술/희귀/수집품");
-        Page<CrawlingDto> book = crawlingService.getcrawlingdata(pageable, "도서/티켓/문구/음악");
-        Page<CrawlingDto> family = crawlingService.getcrawlingdata(pageable, "가구/인테리어");
-        Page<CrawlingDto> life = crawlingService.getcrawlingdata(pageable, "생활/가공식품");
-        Page<CrawlingDto> kid = crawlingService.getcrawlingdata(pageable, "유아동/출산");
+        Page<CrawlingDto> art = crawlingService.getcrawlingdata(pageable, "예술희귀수집품");
+        Page<CrawlingDto> book = crawlingService.getcrawlingdata(pageable, "도서티켓문구음악");
+        Page<CrawlingDto> family = crawlingService.getcrawlingdata(pageable, "가구인테리어");
+        Page<CrawlingDto> life = crawlingService.getcrawlingdata(pageable, "생활가공식품");
+        Page<CrawlingDto> kid = crawlingService.getcrawlingdata(pageable, "유아동출산");
         Page<CrawlingDto> animal = crawlingService.getcrawlingdata(pageable, "반려동물용품");
         Page<CrawlingDto> etc = crawlingService.getcrawlingdata(pageable, "기타");
 

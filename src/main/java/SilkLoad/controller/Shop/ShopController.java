@@ -1,12 +1,15 @@
 package SilkLoad.controller.Shop;
 
+import SilkLoad.dto.CrawlingDto;
 import SilkLoad.dto.ProductRecordDto;
 import SilkLoad.entity.ProductEnum.ProductTime;
 import SilkLoad.entity.ProductEnum.ProductType;
+import SilkLoad.service.CrawlingService;
 import SilkLoad.service.OrderService;
 import SilkLoad.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -23,34 +26,33 @@ public class ShopController {
 
     private final ProductService productService;
     private final OrderService orderService;
+    private final CrawlingService crawlingService;
 
     @GetMapping
-    public String shop(Model model, @RequestParam String category, @PageableDefault(size = 9) Pageable pageable) {
+    public String shop(Model model, @RequestParam("category") String category, @PageableDefault(size = 9) Pageable pageable) {
         
         //페이징화 된 객체
-        List<ProductRecordDto> content = productService.paged_product(pageable).getContent();
         List<ProductRecordDto> content1 = productService.pagedBycategoryProduct(category, pageable).getContent();
-        log.info("카테고리는 = {}" + content1);
 
         //전체 페이지 수
         int totalPages = productService.paged_product(pageable).getTotalPages();
-
         //현제 페이지
         int presentPage = productService.paged_product(pageable).getNumber();
         
         //페이징된 물품들 모델로 보내기
         model.addAttribute("allProduct", content1);
-
-        //선택된 카테고리 보내기
-        model.addAttribute("category",category);
-        
         //전체 페이지 수 모델로 보내기
         model.addAttribute("totalPages",totalPages);
-
         //현제 페이지  모델로 보내기
         model.addAttribute("presentPage",presentPage);
-
+        //판매중인 상태 보내기
         model.addAttribute("sale", ProductType.sale);
+
+        log.info("카테고리는 = {}", category);
+        //--------------------크롤링 데이터 보내는 부분----------------------
+        Page<CrawlingDto> crawlingdata = crawlingService.getcrawlingdata(pageable, category);
+        model.addAttribute("crawlingdata",crawlingdata);
+        log.info("카테고리는 = {}", category);
 
         return "shop";
     }
