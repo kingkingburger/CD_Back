@@ -31,6 +31,15 @@
                 </li>
                 <li class="border-bottom mb-0">
                     <a class="nav-link-style d-flex align-items-center px-4 py-3"
+                       th:classappend="${paramActive == 'purchaseOrders'} ? active"
+                       th:href="@{/members/myPage/purchaseOrders}">
+                        <i class="ci-bag opacity-60 me-2"></i>purchase Orders
+                        <span class="fs-sm text-muted ms-auto">1</span>
+                    </a>
+                </li>
+
+                <li class="border-bottom mb-0">
+                    <a class="nav-link-style d-flex align-items-center px-4 py-3"
                        th:classappend="${paramActive == 'wishlist'} ? active"
                        th:href="@{/members/myPage/wishlist}">
                         <i class="ci-heart opacity-60 me-2"></i>Wishlist<span
@@ -38,12 +47,14 @@
                     </a>
                 </li>
 
+
+
                 <li class="border-bottom mb-0">
                     <a class="nav-link-style d-flex align-items-center px-4 py-3"
-                       th:classappend="${paramActive == 'purchaseOrders'} ? active"
-                       th:href="@{/members/myPage/purchaseOrders}">
-                        <i class="ci-bag opacity-60 me-2"></i>purchase Orders
-                        <span class="fs-sm text-muted ms-auto">1</span>
+                       th:classappend="${paramActive == 'myChatRoomList'} ? active"
+                       th:href="@{/members/myPage/myChatRoomList}">
+                        <i class="ci-bag opacity-60 me-2"></i>채팅방
+                        <!--<span class="fs-sm text-muted ms-auto">1</span>-->
                     </a>
                 </li>
 

@@ -19,6 +19,8 @@ public interface MemberRepository extends JpaRepository<Members, Long>{
 
     Optional<Members> findByLoginId(String LoginId);
 
+    Optional<Members> findByName(String name);
+
     @Query("select distinct m from Members m left join fetch m.productList")
     List<Members> findAllJPQLFetch();
 

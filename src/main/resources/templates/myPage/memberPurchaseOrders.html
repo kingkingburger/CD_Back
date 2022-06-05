@@ -129,7 +129,7 @@
                 <div class="table-responsive fs-md mb-4">
                     <table class="table table-hover mb-0">
                         <thead>
-                        <tr>
+                        <tr class="text-center">
                             <th>물품 이름</th>
                             <th>물품 상태</th>
                             <th>경매 가</th>
@@ -139,10 +139,10 @@
                         </thead>
                         <tbody>
 
-                        <tr th:each="purchaseOrder, purchaseStat : ${purchaseOrders}">
+                        <tr class="text-center" th:each="purchaseOrder, purchaseStat : ${purchaseOrders}">
 
                             <td class="py-3">
-                                <button type="button" class="btn-primary border border-0 rounded "
+                                <button type="button" class="btn btn-primary btn-sm d-none d-lg-inline-block"
                                         th:text="${ purchaseOrder.productName }" data-bs-toggle="modal"
                                         th:data-bs-target="|#myModal${purchaseStat.index}|"></button>
                             </td>

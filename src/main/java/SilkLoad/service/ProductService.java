@@ -316,23 +316,6 @@ public class ProductService {
     }
 
 
-    /**
-     * 주문이 성공하면 거래중 상태로 만듬
-     *
-     * @param productId
-     */
-    @Transactional
-    public Product changeTypeToWaiting(Long productId) {
-
-        Optional<Product> byIdProduct = productRepository.findById(productId);
-
-        if (byIdProduct.isPresent()) {
-            Product product = byIdProduct.get();
-            product.setProductType(ProductType.trading);
-            return productRepository.save(product);
-        }
-        return null;
-    }
 
 
     /**

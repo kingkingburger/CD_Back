@@ -29,12 +29,8 @@ public class OrderController {
 
         log.info("orderBuyNowDto ={}", orderBuyNowDto);
 
-        if ( orderService.saveBuyNowDto(orderBuyNowDto) != null) {
+        if ( orderService.saveBuyNow(orderBuyNowDto) != null) {
             log.info("order 저장 성공");
-             if( productService.changeTypeToWaiting(orderBuyNowDto.getProductId()) != null)  {
-                 log.info("TypeToWaiting 성공");
-
-             }
 
             return "redirect:/";
         }
@@ -76,7 +72,10 @@ public class OrderController {
     @PostMapping("/transaction/trading/{orderId}")
     public String tradingTransaction(@PathVariable Long orderId, HttpServletRequest request) {
 
-        orderService.tradingOrder(orderId);
+        Orders orders = orderService.tradingOrder(orderId);
+        if (orders == null) {
+            log.info("Orders null error");
+        }
 
         //이전 페이지 url
         String referer = request.getHeader("Referer");

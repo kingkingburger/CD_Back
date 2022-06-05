@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layoutFile :: layout(~{::body},'myPage')}">
+
+<!-- Body-->
+<body class="handheld-toolbar-enabled">
+
+<main class="page-wrapper">
+    <!-- Page Title-->
+    <div class="page-title-overlap bg-dark pt-4">
+        <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+            <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
+                        <li class="breadcrumb-item"><a class="text-nowrap" href="../shop.html"><i class="ci-home"></i>Home</a>
+                        </li>
+                        <li class="breadcrumb-item text-nowrap"><a href="#">member</a>
+                        </li>
+                        <li class="breadcrumb-item text-nowrap active" aria-current="page">Profile info</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
+                <h1 class="h3 text-light mb-0">Profile info</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container pb-5 mb-2 mb-md-4">
+        <div class="row">
+            <!-- Sidebar-->
+            <div th:replace="~{myPage/myPageSidebar:: sidebar ('myChatRoomList')}"></div>
+            <!-- Content  -->
+            <section class="col-lg-8">
+                <div class="d-flex justify-content-between align-items-center pt-lg-2 pb-4 pb-lg-5 mb-lg-3">
+                    <h6 class="text-white" th:text="${chatRoomDto.name}"></h6>
+                    <a class="btn btn-primary btn-sm d-none d-lg-inline-block" href="account-signin.html"><i
+                            class="ci-sign-out me-2"></i>Sign out</a>
+                </div>
+
+
+                <div class="chat_wrap">
+                    <div class="inner">
+                        <!-- <div class="item">
+                                <div class="chat_box">
+                                    <p class="msg">안녕하세요</p>
+                                    <span class="time">오전 10:05</span>
+                                </div>
+                            </div>
+
+                            <div class="item mymsg">
+                                <div class="chat_box">
+                                    <p class="msg">안녕하세요</p>
+                                    <span class="time">오전 10:05</span>
+                                </div>
+                            </div> -->
+                    </div>
+
+                    <div class="d-flex">
+                        <input
+                                type="text"
+                                class="mymsg"
+                                id="mymsg-input"
+                                placeholder="내용 입력"
+                        />
+                        <button class="btn btn-primary" id="btn-chat">
+                            <svg
+                                    viewchat_box="0 0 24 24"
+                                    width="24px"
+                                    height="24px"
+                                    class="GfYBMd v6TC2e"
+                            >
+                                <path
+                                        d="M6.7,17.9v-3.7l4-1.8c0.4-0.2,0.4-0.7,0-0.9l-4-1.8V6.1L19.8,12L6.7,17.9z M23.7,11.5L5.4,3.3  c-0.1,0-0.1,0-0.2,0C5,3.3,4.7,3.5,4.7,3.8v5.9v4.8v5.9c0,0.3,0.2,0.5,0.5,0.5c0.1,0,0.1,0,0.2,0l18.3-8.2  C24.1,12.3,24.1,11.7,23.7,11.5z"
+                                ></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <!--                    <input type="text" class="yourmsg" placeholder="내용 입력" />-->
+                </div>
+
+
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+</main>
+<style>
+    .chat_wrap {
+        border: 3px solid #999;
+        border-radius: 10px;
+        max-width: 700px;
+        padding: 5px;
+        font-size: 13px;
+        color: #333;
+    }
+
+    .chat_wrap .inner {
+        background-color: #f7dcfaad;
+        border-radius: 5px;
+        padding: 10px;
+        overflow-y: scroll;
+        height: 400px;
+    }
+
+    .chat_wrap .inner::-webkit-scrollbar {
+        width: 8px; /* 스크롤바의 너비 */
+    }
+
+    .chat_wrap .inner::-webkit-scrollbar-thumb {
+        height: 30%; /* 스크롤바의 길이 */
+        background: #39414d; /* 스크롤바의 색상 */
+
+        border-radius: 10px;
+    }
+
+    .chat_wrap .inner::-webkit-scrollbar-track {
+        background: rgba(33, 122, 244, 0.1); /*스크롤바 뒷 배경 색상*/
+    }
+
+    .chat_wrap .item {
+        margin-top: 15px;
+    }
+
+    .chat_wrap .item:first-child {
+        margin-top: 0px;
+    }
+
+    .chat_wrap .item .chat_box {
+        display: inline-block;
+
+        max-width: 200px;
+        position: relative;
+    }
+
+    .chat_wrap .item .chat_box::before {
+        content: "";
+        position: absolute;
+        left: 33px;
+        top: 9px;
+        border-top: 0px solid transparent;
+        border-bottom: 8px solid transparent;
+        border-right: 8px solid #fff;
+    }
+
+    .chat_wrap .item .chat_box .msg {
+        background: #fff;
+        border-radius: 10px;
+        padding: 8px;
+        text-align: left;
+        word-break: break-all;
+
+    }
+
+    .chat_wrap .item .chat_box .time {
+        font-size: 11px;
+        color: #999;
+        position: absolute;
+        right: -75px;
+        bottom: 2px;
+        width: 70px;
+    }
+
+    .chat_wrap .item.mymsg {
+        text-align: right;
+    }
+
+    .chat_wrap .item.mymsg .chat_box::before {
+        left: auto;
+        right: -8px;
+        border-left: 8px solid #f5f598;
+        border-right: 0;
+    }
+
+    .chat_wrap .item.yourmsg .chat_box .msg {
+        margin-left: 40px;
+    }
+
+    .chat_wrap .item.mymsg .chat_box .msg {
+        background: #f5f598;
+    }
+
+    .chat_wrap .item.mymsg .chat_box .time {
+        right: auto;
+        left: -75px;
+        width: 70px;
+    }
+
+    .chat_wrap .item .chat_box {
+        transition: all 0.3s ease-out;
+        padding: 0;
+        margin: 0 0 0 20px;
+        opacity: 0;
+    }
+
+    .chat_wrap .item.mymsg .chat_box {
+        transition: all 0.3s ease-out;
+        margin: 0 20px 0 0;
+    }
+
+    .chat_wrap .item.on .chat_box {
+        margin: 0;
+        opacity: 1;
+
+    }
+
+    .chat_wrap .item .yourName {
+        font-size: 12px;
+        margin-bottom: 3px;
+        margin-left: 42px;
+    }
+
+    .chat_wrap input {
+        border: 0;
+        width: 100%;
+        background: rgb(221, 221, 221);
+        border-radius: 5px;
+        /*클릭시 나오는 테두리 제거*/
+        outline: none;
+        padding-left: 5px;
+        chat_box-sizing: border-chat_box;
+    }
+
+    .chat_wrap input::placeholder {
+        color: rgb(153, 153, 153);
+    }
+
+    .chat-name {
+        position: absolute;
+    }
+</style>
+<script th:inline="javascript">
+    //$(function() {})은 $(document).ready(function(){}); 와 동일한 의미
+
+    const roomName = [[${chatRoomDto.name}]];
+    const roomId = [[${chatRoomDto.id}]];
+    const memberName = [[${session.loginMember.getName()}]];
+    const memberId = [[${session.loginMember.getId()}]];
+    console.log(roomName + ", " + roomId + ", " + memberName);
+
+
+    function msgAnimation() {
+        var lastItem = $(".chat_wrap .inner").find(".item:last");
+        setTimeout(function () {
+            lastItem.addClass("on");
+        }, 10);
+
+        var position =
+            lastItem.position().top + $(".chat_wrap .inner").scrollTop();
+        console.log(position);
+
+        $(".chat_wrap .inner").stop().animate({scrollTop: position}, 500);
+    }
+
+    function senderMessage(stomp) {
+        var msg = $("#mymsg-input").val();
+
+        console.log(memberName + ":" + msg)
+        stomp.send('/pub/chat/message', {}, JSON.stringify({
+            roomId: roomId,
+            writer: memberName,
+            writerId: memberId,
+            message: msg
+        }))
+
+        $("#mymsg-input").val("")
+
+    }
+
+    function myMsg(message) {
+
+        $(".chat_wrap .inner").append(
+            '<div class="item ' +
+            "mymsg" +
+            '">' +
+            '<div class="chat_box">' +
+            '<p class="msg">' +
+            message.message +
+            '</p><span class="time">' +
+            message.createMessageTime +
+            "</span></div></div>"
+        );
+
+    }
+    function yourMsg(message) {
+
+        $(".chat_wrap .inner").append(
+            '<div class="item ' +
+            "yourmsg" +
+            '"><div class="yourName">' +
+            message.writer +
+            ' </div>' +
+            '<div class="chat_box">' +
+            '<div class="chat-name ci-user-circle fs-3">' +
+            '</div><p class="msg">' +
+            message.message +
+            '</p><span class="time">' +
+            message.createMessageTime +
+            "</span></div></div>"
+        );
+
+    }
+
+    const messageList = [[${chatMessageList}]]
+    for (var i = 0; i < messageList.length; i++) {
+
+        message = messageList[i];
+        if (message.writerId === memberId) {
+
+           myMsg(message);
+
+        } else {
+
+            yourMsg(message);
+
+        }
+        msgAnimation()
+    }
+
+    $(document).ready((function () {
+
+        //socket end point와 연결하기
+        const sockJs = new SockJS("/stomp/chat");
+        //1. SockJS를 내부에 들고있는 stomp를 내어줌
+        const stomp = Stomp.over(sockJs);
+
+        stomp.connect({}, function () {
+            console.log("STOMP Connection")
+
+            stomp.subscribe("/sub/chat/room/" + roomId, function (content) {
+
+                const message = JSON.parse(content.body);
+
+                if (message.writerId === memberId) {
+
+                    myMsg(message);
+
+                } else {
+
+                  yourMsg(message);
+
+                }
+                msgAnimation()
+
+            })
+
+            //3. send(path, header, message)로 메세지를 보낼 수 있음
+            stomp.send('/pub/chat/enter', {}, JSON.stringify({roomId: roomId, writer: memberName, writerId: memberId}))
+
+        });
+
+        $("#btn-chat").click(function (e) {
+
+            if ($("#mymsg-input").val().length) {
+                senderMessage(stomp)
+
+            }
+        });
+
+        $("#mymsg-input").keypress(function (e) {
+
+            if (e.keyCode == 13 && $("#mymsg-input").val().length) {
+                senderMessage(stomp)
+            }
+        });
+    }));
+
+</script>
+
+
+</body>
+
+</html>

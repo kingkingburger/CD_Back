@@ -3,11 +3,13 @@ package SilkLoad.service;
 import SilkLoad.dto.OrderBuyAuctionDto;
 import SilkLoad.dto.OrderBuyNowDto;
 import SilkLoad.dto.OrderHistoryDto;
+import SilkLoad.entity.ChatRoom;
 import SilkLoad.entity.Members;
 import SilkLoad.entity.OrderEnum.OrderType;
 import SilkLoad.entity.Orders;
 import SilkLoad.entity.Product;
 import SilkLoad.entity.ProductEnum.ProductType;
+import SilkLoad.repository.ChatRoomRepository;
 import SilkLoad.repository.MemberRepository;
 import SilkLoad.repository.OrderRepository;
 import SilkLoad.repository.ProductRepository;
@@ -29,9 +31,10 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final MemberRepository memberRepository;
     private final ProductRepository productRepository;
+    private final ChatRoomRepository chatRoomRepository;
 
     @Transactional
-    public Orders saveBuyNowDto(OrderBuyNowDto orderBuyNowDto) {
+    public Orders saveBuyNow(OrderBuyNowDto orderBuyNowDto) {
 
 
         Long memberId = orderBuyNowDto.getMemberId();
@@ -49,7 +52,16 @@ public class OrderService {
             List<Orders> byProduct_idANDOrderTypeNot = orderRepository.findByProduct_IdAndOrderTypeNot (order.getProduct().getId(), OrderType.unRegistered);
 
             if (SameTimeOrderList.isEmpty() && byProduct_idANDOrderTypeNot.isEmpty() ) {
-                return orderRepository.save(order);
+
+                product.setProductType(ProductType.trading);
+                Product saveProduct = productRepository.save(product);
+                Orders saveOrder = orderRepository.save(order);
+
+                if (saveOrder != null && saveProduct != null) {
+                    ChatRoom chatRoom = createChatRoom(member, saveProduct);
+                    if (chatRoom != null)
+                        return saveOrder;
+                }
             }
 
         }
@@ -151,7 +163,9 @@ public class OrderService {
 
                 order.setOrderType(OrderType.trading);
                 order.getProduct().setProductType(ProductType.trading );
-                return orderRepository.save(order);
+                ChatRoom chatRoom = createChatRoom(order.getMemberBuyer(), order.getProduct());
+                if (chatRoom != null)
+                    return orderRepository.save(order);
             }
         }
         return null;
@@ -208,7 +222,21 @@ public class OrderService {
                 .orderType(OrderType.trading)
                 .orderDateTime(LocalDateTime.now())
                 .build();
+
         return  order;
+
+    }
+
+    private ChatRoom createChatRoom(Members members, Product product) {
+
+        ChatRoom chatRoom = ChatRoom.builder()
+                .name(product.getMembers().getName() + "님의" +  product.getName() + " 방")
+                .membersBuyer(members)
+                .product(product)
+                .createDateTime(LocalDateTime.now())
+                .build();
+
+        return  chatRoomRepository.save(chatRoom);
 
     }
 
