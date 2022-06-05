@@ -24,16 +24,16 @@
                     <a class="nav-link-style d-flex align-items-center px-4 py-3"
                        th:classappend="${paramActive == 'saleOrders'} ? active"
                        th:href="@{/members/myPage/saleOrders}">
-                        <i class="ci-bag opacity-60 me-2"></i>sale Orders
-                        <span class="fs-sm text-muted ms-auto">1</span>
-
+                        <i class="ci-bag opacity-60 me-2"></i>판매 중
+                        <!--몇개가 있는지 보여주기-->
+                        <span class="fs-sm text-muted ms-auto"></span>
                     </a>
                 </li>
                 <li class="border-bottom mb-0">
                     <a class="nav-link-style d-flex align-items-center px-4 py-3"
                        th:classappend="${paramActive == 'wishlist'} ? active"
                        th:href="@{/members/myPage/wishlist}">
-                        <i class="ci-heart opacity-60 me-2"></i>Wishlist<span
+                        <i class="ci-heart opacity-60 me-2"></i>장바구니<span
                             class="fs-sm text-muted ms-auto"></span>
                     </a>
                 </li>
@@ -42,8 +42,8 @@
                     <a class="nav-link-style d-flex align-items-center px-4 py-3"
                        th:classappend="${paramActive == 'purchaseOrders'} ? active"
                        th:href="@{/members/myPage/purchaseOrders}">
-                        <i class="ci-bag opacity-60 me-2"></i>purchase Orders
-                        <span class="fs-sm text-muted ms-auto">1</span>
+                        <i class="ci-bag opacity-60 me-2"></i>구매 중
+                        <span class="fs-sm text-muted ms-auto"></span>
                     </a>
                 </li>
 
@@ -57,7 +57,7 @@
                 <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
                                                   th:classappend="${paramActive == 'profile'} ? active"
                                                   th:href="@{/members/myPage/profile}">
-                    <i class="ci-user opacity-60 me-2"></i>Profile info</a></li>
+                    <i class="ci-user opacity-60 me-2"></i>Profile 변경</a></li>
 
                 <li class="d-lg-none border-top mb-0">
                     <a class="nav-link-style d-flex align-items-center px-4 py-3" th:action="@{/logout}">

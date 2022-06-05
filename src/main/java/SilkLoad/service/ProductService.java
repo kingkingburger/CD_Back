@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -252,7 +254,8 @@ public class ProductService {
      * @param productImageList
      * @return
      */
-    private List<ProductImageRecordDto> getProductRecordImageListDto(List<ProductImage> productImageList) {
+    @Transactional
+    List<ProductImageRecordDto> getProductRecordImageListDto(List<ProductImage> productImageList) {
 
         List<ProductImageRecordDto> productImageRecordDtoList = new ArrayList<ProductImageRecordDto>();
 
@@ -290,6 +293,7 @@ public class ProductService {
 
         return productRecordDtoList;
     }
+
 
     private CategoryRecordDto getCategoryRecordDto(Category category) {
 
@@ -348,19 +352,81 @@ public class ProductService {
         return sale;
     }
 
-
+    /**
+     * 카테고리 별로 물품을 가져오기
+     * 아래 3종 세트
+     * @param category
+     * @param pageable
+     * @return
+     */
     @Transactional
-    public Product findById(Long id) {
+    public Page<ProductRecordDto> pagedBycategoryProduct(String category, Pageable pageable){
 
-        Optional<Product> optionalProduct = productRepository.findById(id);
+        Page<ProductCategoryDto> productCategoryDtos = productRepository.findD(category,pageable);
+        List<ProductRecordDto> productRecordDtoList = new ArrayList<>();
 
-        if(  optionalProduct.isPresent() ) {
-            return  optionalProduct.get();
+
+        //ProductRecordDto로 바꾸기
+        for (ProductCategoryDto productCategoryDto : productCategoryDtos) {
+            List<ProductImageRecordDto> list = categoryedProductImageRecordDto(productCategoryDto);
+            categoryToProductRecordDto(productRecordDtoList, list, productCategoryDto);
         }
-        return null;
+        //List 를 Page로 변환
+        return ListToPage(pageable, productRecordDtoList);
     }
 
+    /**
+     * 카테고리화 된 객체 ProductRecordDto로 만들기
+     * @param productRecordDtoList
+     * @param list
+     * @param productCategoryDto
+     */
+    private void categoryToProductRecordDto(List<ProductRecordDto> productRecordDtoList, List<ProductImageRecordDto> list, ProductCategoryDto productCategoryDto) {
+        String first = productCategoryDto.getFirst();
+        String second = productCategoryDto.getSecond();
+        CategoryRecordDto build = CategoryRecordDto.builder().first(first).second(second).build();
 
+        ProductRecordDto productRecordDto = ProductRecordDto.builder()
+                .id(productCategoryDto.getId())
+                .name(productCategoryDto.getName())
+                .auctionPrice(productCategoryDto.getAuctionPrice())
+                .instantPrice(productCategoryDto.getInstantPrice())
+                .explanation(productCategoryDto.getExplanation())
+                .productType(productCategoryDto.getProductType())
+                .categoryRecordDto(build)
+                .deadLine(this.productDeadLine(productCategoryDto.getCreatedDate(), productCategoryDto.getProductTime()))
+                .productTime(productCategoryDto.getProductTime())
+                .productImagesList(list)
+                .build();
+        productRecordDtoList.add(productRecordDto);
+    }
 
+    /**
+     * 카테고리로 잘라온 물품의 이미지 리스트 만들기
+     * @param productCategoryDto
+     * @return
+     */
+    private List<ProductImageRecordDto> categoryedProductImageRecordDto(ProductCategoryDto productCategoryDto) {
+        List<ProductImageRecordDto> list = new ArrayList<>();
+
+        ProductImageRecordDto imageRecordDto = ProductImageRecordDto.builder()
+                .storeFileName(productCategoryDto.getStoreFileName())
+                .uploadFileName(productCategoryDto.getUploadFileName())
+                .build();
+        list.add(imageRecordDto);
+
+        return list;
+    }
+
+    /**
+     * List로 된 객체를 Page객체로 변환
+     * @param pageable
+     * @param productRecordDtoList
+     * @return
+     */
+    private Page<ProductRecordDto> ListToPage(Pageable pageable, List<ProductRecordDto> productRecordDtoList) {
+        Page<ProductRecordDto> productRecordDtos = new PageImpl<>(productRecordDtoList, pageable, productRecordDtoList.size());
+        return productRecordDtos;
+    }
 
 }
