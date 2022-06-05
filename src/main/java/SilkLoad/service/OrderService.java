@@ -230,7 +230,7 @@ public class OrderService {
     private ChatRoom createChatRoom(Members members, Product product) {
 
         ChatRoom chatRoom = ChatRoom.builder()
-                .name(product.getMembers().getName() + "님의" +  product.getName() + " 방")
+                .name(product.getMembers().getName() + "님의 " +  product.getName() + " 방")
                 .membersBuyer(members)
                 .product(product)
                 .createDateTime(LocalDateTime.now())

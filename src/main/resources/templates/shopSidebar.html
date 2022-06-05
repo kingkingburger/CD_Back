@@ -1,0 +1,970 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<aside class="col-lg-3" th:fragment="sidebar (paramActive)">
+    <!-- Sidebar-->
+    <div class="offcanvas offcanvas-collapse bg-white w-100 rounded-3 shadow-lg py-1" id="shop-sidebar"
+         style="max-width: 22rem;">
+        <div class="offcanvas-header align-items-center shadow-sm">
+            <h2 class="h5 mb-0">Filters</h2>
+            <button class="btn-close ms-auto" type="button" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body py-grid-gutter px-lg-grid-gutter">
+
+            <!-- Categories-->
+            <div class="widget widget-categories mb-4 pb-4 border-bottom">
+                <h3 class="widget-title">Categories</h3>
+                <div class="accordion mt-n1" id="shop-categories">
+                    <!-- 여성의류-->
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <a class="accordion-button collapsed" href="#women"
+                                                        role="button" data-bs-toggle="collapse"
+                                                        aria-expanded="false"
+                                                        aria-controls="shoes">여성의류
+                            </a>
+                        </h3>
+                        <div class="accordion-collapse collapse" id="women" data-bs-parent="#shop-categories">
+                            <div class="accordion-body">
+                                <div class="widget widget-links widget-filter">
+                                    <ul class="widget-list widget-filter-list pt-1" style="height: 12rem;"
+                                        data-simplebar data-simplebar-auto-hide="false">
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='여성의류', first='패딩점퍼')}"  href="#">
+                                                <span class="widget-filter-item-text">패딩점퍼</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='여성의류', first='맨투맨')}"  href="#">
+                                                <span class="widget-filter-item-text">맨투맨</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='여성의류', first='코드')}"  href="#">
+                                                <span class="widget-filter-item-text">코드</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='여성의류', first='후드티')}"  href="#">
+                                                <span class="widget-filter-item-text">후드티</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='여성의류', first='티셔츠')}"  href="#">
+                                                <span class="widget-filter-item-text">티셔츠</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='여성의류', first='셔츠')}"  href="#">
+                                                <span class="widget-filter-item-text">셔츠</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='여성의류', first='바지')}" href="#">
+                                                <span class="widget-filter-item-text">바지</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='여성의류', first='반바지')}" href="#">
+                                                <span class="widget-filter-item-text">반바지</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='여성의류', first='정장')}"  href="#">
+                                                <span class="widget-filter-item-text">정장</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='여성의류', first='트레이닝')}"  href="#">
+                                                <span class="widget-filter-item-text">트레이닝</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='여성의류', first='언더웨어홈웨어')}"  href="#">
+                                                <span class="widget-filter-item-text">언더웨어홈웨어</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='여성의류', first='치마')}"  href="#">
+                                                <span class="widget-filter-item-text">치마</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='여성의류', first='원피스')}"  href="#">
+                                                <span class="widget-filter-item-text">원피스</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='여성의류', first='가디건')}"  href="#">
+                                                <span class="widget-filter-item-text">가디건</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 남성의류-->
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <a class="accordion-button collapsed" href="#men"
+                                                        role="button" data-bs-toggle="collapse"
+                                                        aria-expanded="false"
+                                                        aria-controls="men">남성의류</a></h3>
+                        <div class="accordion-collapse collapse" id="men" data-bs-parent="#shop-categories">
+                            <div class="accordion-body">
+                                <div class="widget widget-links widget-filter">
+                                    <ul class="widget-list widget-filter-list pt-1" style="height: 12rem;"
+                                        data-simplebar data-simplebar-auto-hide="false">
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='남성의류', first='패딩점퍼')}"  href="#">
+                                                <span class="widget-filter-item-text">패딩점퍼</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='남성의류', first='맨투맨')}"  href="#">
+                                                <span class="widget-filter-item-text">맨투맨</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='남성의류', first='코드')}"  href="#">
+                                                <span class="widget-filter-item-text">코드</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='남성의류', first='후드티후드집업')}"  href="#">
+                                                <span class="widget-filter-item-text">후드티후드집업</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='남성의류', first='티셔츠')}"  href="#">
+                                                <span class="widget-filter-item-text">티셔츠</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='남성의류', first='셔츠')}"  href="#">
+                                                <span class="widget-filter-item-text">셔츠</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='남성의류', first='바지')}"  href="#">
+                                                <span class="widget-filter-item-text">바지</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='남성의류', first='반바지')}"  href="#">
+                                                <span class="widget-filter-item-text">반바지</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='남성의류', first='정장')}"  href="#">
+                                                <span class="widget-filter-item-text">정장</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='남성의류', first='트레이닝')}"  href="#">
+                                                <span class="widget-filter-item-text">트레이닝</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='남성의류', first='언더웨어홈웨어')}"  href="#">
+                                                <span class="widget-filter-item-text">언더웨어홈웨어</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='남성의류', first='가디건')}"  href="#">
+                                                <span class="widget-filter-item-text">가디건</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 신발-->
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <a class="accordion-button collapsed" href="#shoes"
+                               role="button" data-bs-toggle="collapse"
+                               aria-expanded="false"
+                               aria-controls="men">신발</a></h3>
+                        <div class="accordion-collapse collapse" id="shoes" data-bs-parent="#shop-categories">
+                            <div class="accordion-body">
+                                <div class="widget widget-links widget-filter">
+                                    <ul class="widget-list widget-filter-list pt-1" style="height: 12rem;"
+                                        data-simplebar data-simplebar-auto-hide="false">
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='신발', first='가디건')}" href="#">
+                                                <span class="widget-filter-item-text">스니커즈</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='신발', first='남성화')}" href="#">
+                                                <span class="widget-filter-item-text">남성화</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='신발', first='여성화')}" href="#">
+                                                <span class="widget-filter-item-text">여성화</span>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--가방-->
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <a class="accordion-button collapsed" href="#bag"
+                               role="button" data-bs-toggle="collapse"
+                               aria-expanded="false"
+                               aria-controls="men">가방</a></h3>
+                        <div class="accordion-collapse collapse" id="bag" data-bs-parent="#shop-categories">
+                            <div class="accordion-body">
+                                <div class="widget widget-links widget-filter">
+                                    <ul class="widget-list widget-filter-list pt-1" style="height: 12rem;"
+                                        data-simplebar data-simplebar-auto-hide="false">
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='가방', first='여성가방')}" href="#">
+                                                <span class="widget-filter-item-text">여성가방</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='가방', first='남성가방')}" href="#">
+                                                <span class="widget-filter-item-text">남성가방</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='가방', first='여행용')}" href="#">
+                                                <span class="widget-filter-item-text">여행용</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 시계쥬얼리-->
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <a class="accordion-button collapsed" href="#clock"
+                               role="button" data-bs-toggle="collapse"
+                               aria-expanded="false"
+                               aria-controls="men">시계/쥬얼리</a></h3>
+                        <div class="accordion-collapse collapse" id="clock" data-bs-parent="#shop-categories">
+                            <div class="accordion-body">
+                                <div class="widget widget-links widget-filter">
+                                    <ul class="widget-list widget-filter-list pt-1" style="height: 12rem;"
+                                        data-simplebar data-simplebar-auto-hide="false">
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='시계', first='시계')}" href="#">
+                                                <span class="widget-filter-item-text">시계</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='시계', first='쥬얼리')}" href="#">
+                                                <span class="widget-filter-item-text">쥬얼리</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 패션악세서리-->
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <a class="accordion-button collapsed" href="#feshion"
+                               role="button" data-bs-toggle="collapse"
+                               aria-expanded="false"
+                               aria-controls="men">패션 악세서리</a></h3>
+                        <div class="accordion-collapse collapse" id="feshion" data-bs-parent="#shop-categories">
+                            <div class="accordion-body">
+                                <div class="widget widget-links widget-filter">
+                                    <ul class="widget-list widget-filter-list pt-1" style="height: 12rem;"
+                                        data-simplebar data-simplebar-auto-hide="false">
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='패션', first='지갑')}" href="#">
+                                                <span class="widget-filter-item-text">지갑</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='패션', first='벨트')}" href="#">
+                                                <span class="widget-filter-item-text">벨트</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='패션', first='모자')}" href="#">
+                                                <span class="widget-filter-item-text">모자</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='패션', first='스카프넥타이')}" href="#">
+                                                <span class="widget-filter-item-text">스카프넥타이</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='패션', first='안경선글라스')}" href="#">
+                                                <span class="widget-filter-item-text">안경선글라스</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='패션', first='양말스타킹')}" href="#">
+                                                <span class="widget-filter-item-text">양말스타킹</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='패션', first='우산양산')}" href="#">
+                                                <span class="widget-filter-item-text">우산양산</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='패션', first='기타')}" href="#">
+                                                <span class="widget-filter-item-text">기타 악세서리</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--디지털가전-->
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <a class="accordion-button collapsed" href="#digital"
+                               role="button" data-bs-toggle="collapse"
+                               aria-expanded="false"
+                               aria-controls="men">디지털/가전</a></h3>
+                        <div class="accordion-collapse collapse" id="digital" data-bs-parent="#shop-categories">
+                            <div class="accordion-body">
+                                <div class="widget widget-links widget-filter">
+                                    <ul class="widget-list widget-filter-list pt-1" style="height: 12rem;"
+                                        data-simplebar data-simplebar-auto-hide="false">
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='디지털', first='모바일')}" href="#">
+                                                <span class="widget-filter-item-text">모바일</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='디지털', first='가전제품')}" href="#">
+                                                <span class="widget-filter-item-text">가전제품</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='디지털', first='오디오영상관련기기')}" href="#">
+                                                <span class="widget-filter-item-text">오디오영상관련기기</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='디지털', first='PC노트북')}" href="#">
+                                                <span class="widget-filter-item-text">PC노트북</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='디지털', first='게임타이틀')}" href="#">
+                                                <span class="widget-filter-item-text">게임타이틀</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='디지털', first='카메라DSLR')}" href="#">
+                                                <span class="widget-filter-item-text">카메라DSLR</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='디지털', first='PC부품저장장치')}" href="#">
+                                                <span class="widget-filter-item-text">PC부품저장장치</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--스포츠레저-->
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <a class="accordion-button collapsed" href="#sport"
+                               role="button" data-bs-toggle="collapse"
+                               aria-expanded="false"
+                               aria-controls="men">스포츠/레저</a></h3>
+                        <div class="accordion-collapse collapse" id="sport" data-bs-parent="#shop-categories">
+                            <div class="accordion-body">
+                                <div class="widget widget-links widget-filter">
+                                    <ul class="widget-list widget-filter-list pt-1" style="height: 12rem;"
+                                        data-simplebar data-simplebar-auto-hide="false">
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='스포츠', first='골프')}" href="#">
+                                                <span class="widget-filter-item-text">골프</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='스포츠', first='캠핑')}" href="#">
+                                                <span class="widget-filter-item-text">캠핑</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='스포츠', first='낚시')}" href="#">
+                                                <span class="widget-filter-item-text">낚시</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='스포츠', first='축구')}" href="#">
+                                                <span class="widget-filter-item-text">축구</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='스포츠', first='자전거')}" href="#">
+                                                <span class="widget-filter-item-text">자전거</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='스포츠', first='테니스')}" href="#">
+                                                <span class="widget-filter-item-text">테니스</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='스포츠', first='등산클라이밍')}" href="#">
+                                                <span class="widget-filter-item-text">등산클라이밍</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='스포츠', first='헬스요가필라테스')}" href="#">
+                                                <span class="widget-filter-item-text">헬스요가필라테스</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='스포츠', first='야구')}" href="#">
+                                                <span class="widget-filter-item-text">야구</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='스포츠', first='볼링')}" href="#">
+                                                <span class="widget-filter-item-text">볼링</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='스포츠', first='배트민턴')}" href="#">
+                                                <span class="widget-filter-item-text">배트민턴</span>
+                                            </a>
+
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='스포츠', first='탁구')}" href="#">
+                                                <span class="widget-filter-item-text">탁구</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='스포츠', first='농구')}" href="#">
+                                                <span class="widget-filter-item-text">농구</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='스포츠', first='당구')}" href="#">
+                                                <span class="widget-filter-item-text">당구</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='스포츠', first='기타스포츠')}" href="#">
+                                                <span class="widget-filter-item-text">기타스포츠</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--차량/오토바이-->
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <a class="accordion-button collapsed" href="#car"
+                               role="button" data-bs-toggle="collapse"
+                               aria-expanded="false"
+                               aria-controls="men">차량/오토바이</a></h3>
+                        <div class="accordion-collapse collapse" id="car" data-bs-parent="#shop-categories">
+                            <div class="accordion-body">
+                                <div class="widget widget-links widget-filter">
+                                    <ul class="widget-list widget-filter-list pt-1" style="height: 12rem;"
+                                        data-simplebar data-simplebar-auto-hide="false">
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='차량', first='국산차')}" href="#">
+                                                <span class="widget-filter-item-text">국산차</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='차량', first='수입차')}" href="#">
+                                                <span class="widget-filter-item-text">수입차</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='차량', first='차량용품부품')}" href="#">
+                                                <span class="widget-filter-item-text">차량용품부품</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='차량', first='오토바이용품부품')}" href="#">
+                                                <span class="widget-filter-item-text">오토바이용품부품</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--스타굿즈-->
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <a class="accordion-button collapsed" href="#star"
+                               role="button" data-bs-toggle="collapse"
+                               aria-expanded="false"
+                               aria-controls="men">스타굿즈</a></h3>
+                        <div class="accordion-collapse collapse" id="star" data-bs-parent="#shop-categories">
+                            <div class="accordion-body">
+                                <div class="widget widget-links widget-filter">
+                                    <ul class="widget-list widget-filter-list pt-1" style="height: 12rem;"
+                                        data-simplebar data-simplebar-auto-hide="false">
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='굿즈', first='보이그룹')}" href="#">
+                                                <span class="widget-filter-item-text">보이그룹</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='굿즈', first='걸그룹')}" href="#">
+                                                <span class="widget-filter-item-text">걸그룹</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='굿즈류', first='방송예능캐릭터')}" href="#">
+                                                <span class="widget-filter-item-text">방송예능캐릭터</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--예술/희귀/수집품-->
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <a class="accordion-button collapsed" href="#old"
+                               role="button" data-bs-toggle="collapse"
+                               aria-expanded="false"
+                               aria-controls="men">예술/희귀/수집품</a></h3>
+                        <div class="accordion-collapse collapse" id="old" data-bs-parent="#shop-categories">
+                            <div class="accordion-body">
+                                <div class="widget widget-links widget-filter">
+                                    <ul class="widget-list widget-filter-list pt-1" style="height: 12rem;"
+                                        data-simplebar data-simplebar-auto-hide="false">
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='예술', first='희귀수집품')}" href="#">
+                                                <span class="widget-filter-item-text">희귀수집품</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='예술', first='골동품')}" href="#">
+                                                <span class="widget-filter-item-text">골동품</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='예술', first='예술작품')}" href="#">
+                                                <span class="widget-filter-item-text">예술작품</span>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--음반/악기-->
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <a class="accordion-button collapsed" href="#music"
+                               role="button" data-bs-toggle="collapse"
+                               aria-expanded="false"
+                               aria-controls="men">음반/악기</a></h3>
+                        <div class="accordion-collapse collapse" id="music" data-bs-parent="#shop-categories">
+                            <div class="accordion-body">
+                                <div class="widget widget-links widget-filter">
+                                    <ul class="widget-list widget-filter-list pt-1" style="height: 12rem;"
+                                        data-simplebar data-simplebar-auto-hide="false">
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='악기', first='CDDVDLP')}" href="#">
+                                                <span class="widget-filter-item-text">CDDVDLP</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='악기', first='악기')}" href="#">
+                                                <span class="widget-filter-item-text">악기</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--도서/티켓/문구-->
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <a class="accordion-button collapsed" href="#book"
+                               role="button" data-bs-toggle="collapse"
+                               aria-expanded="false"
+                               aria-controls="men">도서/티켓/문구</a></h3>
+                        <div class="accordion-collapse collapse" id="book" data-bs-parent="#shop-categories">
+                            <div class="accordion-body">
+                                <div class="widget widget-links widget-filter">
+                                    <ul class="widget-list widget-filter-list pt-1" style="height: 12rem;"
+                                        data-simplebar data-simplebar-auto-hide="false">
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='도서', first='도서')}" href="#">
+                                                <span class="widget-filter-item-text">도서</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='도서', first='문구')}" href="#">
+                                                <span class="widget-filter-item-text">문구</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='도서', first='기프티콘쿠폰')}" href="#">
+                                                <span class="widget-filter-item-text">기프티콘쿠폰</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='도서', first='상품권')}" href="#">
+                                                <span class="widget-filter-item-text">상품권</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='도서', first='티켓')}" href="#">
+                                                <span class="widget-filter-item-text">티켓</span>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--뷰티/미용-->
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <a class="accordion-button collapsed" href="#beauty"
+                               role="button" data-bs-toggle="collapse"
+                               aria-expanded="false"
+                               aria-controls="men">뷰티/미용</a></h3>
+                        <div class="accordion-collapse collapse" id="beauty" data-bs-parent="#shop-categories">
+                            <div class="accordion-body">
+                                <div class="widget widget-links widget-filter">
+                                    <ul class="widget-list widget-filter-list pt-1" style="height: 12rem;"
+                                        data-simplebar data-simplebar-auto-hide="false">
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='뷰티', first='스킨케어')}" href="#">
+                                                <span class="widget-filter-item-text">스킨케어</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='뷰티', first='색조메이크업')}" href="#">
+                                                <span class="widget-filter-item-text">색조메이크업</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='뷰티', first='베이스메이크업')}" href="#">
+                                                <span class="widget-filter-item-text">베이스메이크업</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='뷰티', first='바디헤어케어')}" href="#">
+                                                <span class="widget-filter-item-text">바디헤어케어</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='뷰티', first='향수아로마')}" href="#">
+                                                <span class="widget-filter-item-text">향수아로마</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='뷰티', first='네일아트케어')}" href="#">
+                                                <span class="widget-filter-item-text">네일아트케어</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='뷰티', first='미용소품기기')}" href="#">
+                                                <span class="widget-filter-item-text">미용소품기기</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='뷰티', first='아티어트이너뷰티')}" href="#">
+                                                <span class="widget-filter-item-text">아티어트이너뷰티</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='뷰티', first='남성화장품')}" href="#">
+                                                <span class="widget-filter-item-text">남성화장품</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--가구/인테리어-->
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <a class="accordion-button collapsed" href="#family"
+                               role="button" data-bs-toggle="collapse"
+                               aria-expanded="false"
+                               aria-controls="men">가구/인테리어</a></h3>
+                        <div class="accordion-collapse collapse" id="family" data-bs-parent="#shop-categories">
+                            <div class="accordion-body">
+                                <div class="widget widget-links widget-filter">
+                                    <ul class="widget-list widget-filter-list pt-1" style="height: 12rem;"
+                                        data-simplebar data-simplebar-auto-hide="false">
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='가구', first='인테리어')}" href="#">
+                                                <span class="widget-filter-item-text">인테리어</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='가구', first='가구')}" href="#">
+                                                <span class="widget-filter-item-text">가구</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--생활/가공식품-->
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <a class="accordion-button collapsed" href="#life"
+                               role="button" data-bs-toggle="collapse"
+                               aria-expanded="false"
+                               aria-controls="men">생활/가공식품</a></h3>
+                        <div class="accordion-collapse collapse" id="life" data-bs-parent="#shop-categories">
+                            <div class="accordion-body">
+                                <div class="widget widget-links widget-filter">
+                                    <ul class="widget-list widget-filter-list pt-1" style="height: 12rem;"
+                                        data-simplebar data-simplebar-auto-hide="false">
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='생활', first='주방용품')}" href="#">
+                                                <span class="widget-filter-item-text">주방용품</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='생활', first='식품')}" href="#">
+                                                <span class="widget-filter-item-text">식품</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='생활', first='생활용품')}" href="#">
+                                                <span class="widget-filter-item-text">생활용품</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='생활', first='산업용품')}" href="#">
+                                                <span class="widget-filter-item-text">산업용품</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--유아동/출산-->
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <a class="accordion-button collapsed" href="#kid"
+                               role="button" data-bs-toggle="collapse"
+                               aria-expanded="false"
+                               aria-controls="men">유아동/출산</a></h3>
+                        <div class="accordion-collapse collapse" id="kid" data-bs-parent="#shop-categories">
+                            <div class="accordion-body">
+                                <div class="widget widget-links widget-filter">
+                                    <ul class="widget-list widget-filter-list pt-1" style="height: 12rem;"
+                                        data-simplebar data-simplebar-auto-hide="false">
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='아동', first='베이비의류')}" href="#">
+                                                <span class="widget-filter-item-text">베이비의류</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='아동', first='유아동신발잡화')}" href="#">
+                                                <span class="widget-filter-item-text">유아동신발잡화</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='아동', first='교육완구인형')}" href="#">
+                                                <span class="widget-filter-item-text">교육완구인형</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='아동', first='유아용품')}" href="#">
+                                                <span class="widget-filter-item-text">유아용품</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='아동', first='출산임부용품')}" href="#">
+                                                <span class="widget-filter-item-text">출산임부용품</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='아동', first='이유용품유아식기')}" href="#">
+                                                <span class="widget-filter-item-text">이유용품유아식기</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--동물-->
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <a class="accordion-button collapsed" href="#animal"
+                               role="button" data-bs-toggle="collapse"
+                               aria-expanded="false"
+                               aria-controls="men">동물</a></h3>
+                        <div class="accordion-collapse collapse" id="animal" data-bs-parent="#shop-categories">
+                            <div class="accordion-body">
+                                <div class="widget widget-links widget-filter">
+                                    <ul class="widget-list widget-filter-list pt-1" style="height: 12rem;"
+                                        data-simplebar data-simplebar-auto-hide="false">
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='동물', first='강아지')}" href="#">
+                                                <span class="widget-filter-item-text">강아지</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='동물', first='고양이')}" href="#">
+                                                <span class="widget-filter-item-text">고양이</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='동물', first='기타용품')}" href="#">
+                                                <span class="widget-filter-item-text">기타용품</span>
+                                            </a>
+                                        </li>
+                                        <li class="widget-list-item widget-filter-item">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center"
+                                               th:href="@{/shop/(category='동물', first='사료간식')}" href="#">
+                                                <span class="widget-filter-item-text">사료간식</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</aside>

@@ -29,32 +29,38 @@ def crawling():
             category = "여성의류"
         elif category_num == "320":
             category = "남성의류"
-        elif category_num == "405" or category_num == "430" or category_num == "420" or category_num == "400": # 신발, 가방, 시계/쥬얼리, 패션 악세서리
-            category = "패션잡화"
+        elif category_num == "405": # 신발, 가방, 시계/쥬얼리, 패션 악세서리
+            category = "신발"
+        elif category_num == "430": # 신발, 가방, 시계/쥬얼리, 패션 악세서리
+            category = "가방"
+        elif category_num == "420": # 신발, 가방, 시계/쥬얼리, 패션 악세서리
+            category = "시계"
+        elif category_num == "400": # 신발, 가방, 시계/쥬얼리, 패션 악세서리
+            category = "패션"
         elif category_num == "600":
-            category = "디지털/가전"
+            category = "디지털"
         elif category_num == "700":
-            category = "스포츠/레저"
+            category = "스포츠"
         elif category_num == "750":
-            category = "차량/오토바이"
+            category = "차량"
         elif category_num == "910":
-            category = "스타굿즈"
+            category = "굿즈"
         elif category_num == "930":
             category = "키덜트"
         elif category_num == "990":
-            category = "예술/희귀/수집품"
+            category = "예술"
         elif category_num == "900" or category_num == "920":
-            category = "도서/티켓/문구/음악"
+            category = "도서"
         elif category_num == "410":
-            category = "뷰티/미용"
+            category = "뷰티"
         elif category_num == "810":
-            category = "가구/인테리어"
+            category = "가구"
         elif category_num == "800":
-            category = "생활/가공식품"
+            category = "생활"
         elif category_num == "500":
-            category = "유아동/출산"
+            category = "유아"
         elif category_num == "980":
-            category = "반려동물용품"
+            category = "동물"
         else:
             category = "기타"    
         
@@ -72,11 +78,11 @@ def crawling():
             dataset.append(data)
             i += 1
 
-    connect = pymysql.connect(host='localhost', user='junho', password='1234', db='silkload', charset='utf8mb4')
+    connect = pymysql.connect(host='localhost', user='root', password='1234', db='silkload', charset='utf8mb4')
     cursor = connect.cursor()
     
-    # delete = """delete from crawling where exists(select * from (select * from crawling) c)"""
-    # cursor.execute(delete)
+    delete = """delete from crawling where exists(select * from (select * from crawling) c)"""
+    cursor.execute(delete)
         
     alter = """alter table crawling auto_increment=1"""
     cursor.execute(alter)

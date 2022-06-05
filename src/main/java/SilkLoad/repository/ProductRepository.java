@@ -1,10 +1,16 @@
 package SilkLoad.repository;
 
+import SilkLoad.dto.OrderHistoryDto;
+import SilkLoad.dto.ProductCategoryDto;
+import SilkLoad.dto.ProductRecordDto;
 import SilkLoad.entity.Product;
 import SilkLoad.entity.ProductEnum.ProductType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,7 +27,16 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     //select * from product where ProductType == sale;
     List<Product> findAllByProductType(ProductType type);
 
-
+    //Product 안에 원하는 category 빼오는 쿼리
+    @Query(value = "SELECT " +
+            "new SilkLoad.dto.ProductCategoryDto(p.id, p.name, p.auctionPrice, p.instantPrice, p.explanation, " +
+            "p.createdDate, p.productTime ,p.productType, p.category.first, p.category.second, img.uploadFileName, img.storeFileName) " +
+            "from Product p " +
+            "left join ProductImage img " +
+            "on p.id = img.id " +
+            "where p.category.second = :second"
+            )
+    Page<ProductCategoryDto> findD(@Param("second")String categoryName, Pageable pageable);
 
 }
 

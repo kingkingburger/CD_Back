@@ -38,7 +38,7 @@
                         <h3 class="product-title fs-sm" >
                             <a th:href="@{/shop/detailProduct(id=${product.id})}" th:text="${product.getName()}">물품제목</a>
                         </h3>
-                        <div >
+                        <div>
                             <div class="product-price col"><span class="text-accent" th:text="|즉시 구매가: ${product.instantPrice} 원 |"></span></div>
                             <div class="product-price col"><span class="text-accent" th:if="${product.auctionPrice != null}"
                                                                  text="|경매가: ${product.getAuctionPrice()}원|"></span></div>
