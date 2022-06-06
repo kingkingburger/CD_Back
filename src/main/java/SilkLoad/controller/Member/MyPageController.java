@@ -1,17 +1,13 @@
 package SilkLoad.controller.Member;
 
 import SilkLoad.SessionConst;
-import SilkLoad.dto.MemberFormDto;
-import SilkLoad.dto.ProductRecordDto;
-import SilkLoad.dto.OrderHistoryDto;
+import SilkLoad.dto.*;
+import SilkLoad.entity.ChatRoom;
 import SilkLoad.entity.Members;
 import SilkLoad.entity.OrderEnum.OrderType;
 import SilkLoad.entity.ProductEnum.ProductTime;
 import SilkLoad.entity.ProductEnum.ProductType;
-import SilkLoad.service.CartService;
-import SilkLoad.service.MemberService;
-import SilkLoad.service.OrderService;
-import SilkLoad.service.ProductService;
+import SilkLoad.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -20,13 +16,12 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -40,6 +35,7 @@ public class MyPageController {
     private final OrderService orderService;
     private final ProductService productService;
     private final CartService cartService;
+    private final ChatService chatService;
 
     @GetMapping("/profile")
     public String MyPage(@ModelAttribute("memberFormDto")MemberFormDto memberFormDto) {
@@ -105,7 +101,6 @@ public class MyPageController {
         model.addAttribute("saleOrders", saleOrders);
         model.addAttribute("orderType", OrderType.values() );
 
-
         return "/myPage/memberSaleOrders";
     }
 
@@ -122,6 +117,36 @@ public class MyPageController {
         model.addAttribute("orderType", OrderType.values() );
 
         return "/myPage/memberPurchaseOrders";
+
+    }
+
+    @GetMapping("/myChatRoomList")
+    public String myChatRoomList(Model model ,
+                                 HttpServletRequest request,
+                                 @PageableDefault(size=6)Pageable pageable){
+        Members sessionMembers = getSessionMembers(request);
+
+        List<ChatRoomTableDto> memberChatRoomList = chatService.getMemberChatRoomList(sessionMembers.getId(), pageable);
+        model.addAttribute("memberChatRoomList", memberChatRoomList);
+
+        return "/myPage/memberChatRoomList";
+    }
+
+    @GetMapping("/room/{roomId}")
+    public String myRoom(@PathVariable("roomId") Long roomId,
+                         Model model,
+                         HttpServletRequest request,
+                         HttpServletResponse response) throws IOException {
+
+        ChatRoomDto chatRoomDto = chatService.getChatRoom(roomId);
+        Members sessionMembers = getSessionMembers(request);
+        List<ChatMessageDto> chatMessageList = chatService.getChatMessageList(roomId, sessionMembers.getId());
+        log.info("chatmessageList: {}", chatMessageList);
+
+        model.addAttribute("chatRoomDto", chatRoomDto);
+        model.addAttribute( "chatMessageList", chatMessageList);
+
+        return "/myPage/memberChatRoom";
 
     }
 

@@ -190,7 +190,7 @@ public class ProductServiceTest {
                         .productId((long) i)
                         .build();
 
-                orderService.saveBuyNowDto(build);
+                orderService.saveBuyNow(build);
 
             }
         }

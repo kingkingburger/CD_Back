@@ -24,11 +24,20 @@
                     <a class="nav-link-style d-flex align-items-center px-4 py-3"
                        th:classappend="${paramActive == 'saleOrders'} ? active"
                        th:href="@{/members/myPage/saleOrders}">
-                        <i class="ci-bag opacity-60 me-2"></i>판매 중
+                        <i class="ci-bag opacity-60 me-2"></i>판매 주문
                         <!--몇개가 있는지 보여주기-->
                         <span class="fs-sm text-muted ms-auto"></span>
                     </a>
                 </li>
+                <li class="border-bottom mb-0">
+                    <a class="nav-link-style d-flex align-items-center px-4 py-3"
+                       th:classappend="${paramActive == 'purchaseOrders'} ? active"
+                       th:href="@{/members/myPage/purchaseOrders}">
+                        <i class="ci-bag opacity-60 me-2"></i>구매 주문
+                        <span class="fs-sm text-muted ms-auto">1</span>
+                    </a>
+                </li>
+
                 <li class="border-bottom mb-0">
                     <a class="nav-link-style d-flex align-items-center px-4 py-3"
                        th:classappend="${paramActive == 'wishlist'} ? active"
@@ -38,15 +47,16 @@
                     </a>
                 </li>
 
+
+
                 <li class="border-bottom mb-0">
                     <a class="nav-link-style d-flex align-items-center px-4 py-3"
-                       th:classappend="${paramActive == 'purchaseOrders'} ? active"
-                       th:href="@{/members/myPage/purchaseOrders}">
-                        <i class="ci-bag opacity-60 me-2"></i>구매 중
-                        <span class="fs-sm text-muted ms-auto"></span>
+                       th:classappend="${paramActive == 'myChatRoomList'} ? active"
+                       th:href="@{/members/myPage/myChatRoomList}">
+                        <i class="ci-bag opacity-60 me-2"></i>채팅방
+                        <!--<span class="fs-sm text-muted ms-auto">1</span>-->
                     </a>
                 </li>
-
 
 
             </ul>
@@ -57,7 +67,7 @@
                 <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
                                                   th:classappend="${paramActive == 'profile'} ? active"
                                                   th:href="@{/members/myPage/profile}">
-                    <i class="ci-user opacity-60 me-2"></i>Profile 변경</a></li>
+                    <i class="ci-user opacity-60 me-2"></i>개인정보</a></li>
 
                 <li class="d-lg-none border-top mb-0">
                     <a class="nav-link-style d-flex align-items-center px-4 py-3" th:action="@{/logout}">
