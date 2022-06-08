@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Slf4j
@@ -36,12 +37,14 @@ public class HomeController {
      * Dto로 반환해야 한다.
      */
     @GetMapping("/")
-    public String home(Model model, @PageableDefault(size=8) Pageable pageable) {//@PageableDefault로 기본 8개를 가지고 오게했다.
+    public String home(Model model,
+                       HttpServletRequest request,
+                       @PageableDefault(size=8) Pageable pageable) {//@PageableDefault로 기본 8개를 가지고 오게했다.
         List<ProductRecordDto> content = productService.paged_product(pageable).getContent();
 
         model.addAttribute("Products", content);
         model.addAttribute("sale", ProductType.sale);
-
+//        model.addAttribute("member")
         Page<CrawlingDto> women_close = crawlingService.getcrawlingdata(pageable, "여성의류");
         Page<CrawlingDto> men_close = crawlingService.getcrawlingdata(pageable,"남성의류");
         Page<CrawlingDto> shose = crawlingService.getcrawlingdata(pageable, "패션잡화");

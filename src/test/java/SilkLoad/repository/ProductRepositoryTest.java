@@ -49,10 +49,7 @@ class ProductRepositoryTest {
     @Transactional
     void 카테고리별로_product가져오기_테스트(){
         PageRequest pageRequest = PageRequest.of(0,2);
-        Page<ProductCategoryDto> 예술 = productRepository.findD("예술",pageRequest);
-        for (ProductCategoryDto productCategoryDto : 예술) {
-            System.out.println("productCategoryDto = " + productCategoryDto);
-        }
+        Page<ProductCategoryDto> 예술 = productRepository.findD("신발",pageRequest);
 
         for (ProductCategoryDto productCategoryDto : 예술) {
             List<ProductImageRecordDto> list = new ArrayList<>();

@@ -29,18 +29,28 @@ public class ShopController {
     private final CrawlingService crawlingService;
 
     @GetMapping
-    public String shop(Model model, @RequestParam("category") String category, @PageableDefault(size = 9) Pageable pageable) {
+    public String shop(Model model,
+                       @RequestParam("category") String category,
+                       @RequestParam(required = false, name = "first") String first,
+                       @PageableDefault(size = 9) Pageable pageable) {
         
-        //페이징화 된 객체
-        List<ProductRecordDto> content1 = productService.pagedBycategoryProduct(category, pageable).getContent();
 
         //전체 페이지 수
         int totalPages = productService.paged_product(pageable).getTotalPages();
         //현제 페이지
         int presentPage = productService.paged_product(pageable).getNumber();
-        
-        //페이징된 물품들 모델로 보내기
-        model.addAttribute("allProduct", content1);
+
+        List<ProductRecordDto> content;
+        //first가 있는지 없는지에 따라 content가 변한다.
+        if(first != null)
+            //페이징화 된 객체
+            content = productService.pagedByfirstcategoryProduct(first, pageable).getContent();
+        else
+            //페이징화 된 객체
+            content = productService.pagedBysecondcategoryProduct(category, pageable).getContent();
+
+
+        model.addAttribute("allProduct", content);
         //전체 페이지 수 모델로 보내기
         model.addAttribute("totalPages",totalPages);
         //현제 페이지  모델로 보내기
@@ -49,6 +59,8 @@ public class ShopController {
         model.addAttribute("sale", ProductType.sale);
 
         log.info("카테고리는 = {}", category);
+        log.info("first 카테고리는 = {}", first);
+
         //--------------------크롤링 데이터 보내는 부분----------------------
         Page<CrawlingDto> crawlingdata = crawlingService.getcrawlingdata(pageable, category);
         model.addAttribute("crawlingdata",crawlingdata);
@@ -65,8 +77,10 @@ public class ShopController {
      * @return id값으로 찾아온 product 1개를 model에 담아서 보내줌
      */
     @GetMapping("/detailProduct")
-    public String addProduct(@RequestParam Long id,
-                             Model model) {
+    public String detailProduct(@RequestParam Long id,
+                                @RequestParam(required = false, name = "category") String category,
+                                @RequestParam(required = false, name = "first") String first,
+                                Model model) {
 
         List<ProductRecordDto> allProduct = productService.findAllProduct();
 
