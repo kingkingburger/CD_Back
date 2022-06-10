@@ -384,7 +384,9 @@ public class ProductService {
      * @param list
      * @param productCategoryDto
      */
-    private void categoryToProductRecordDto(List<ProductRecordDto> productRecordDtoList, List<ProductImageRecordDto> list, ProductCategoryDto productCategoryDto) {
+    private void categoryToProductRecordDto(List<ProductRecordDto> productRecordDtoList,
+                                            List<ProductImageRecordDto> list,
+                                            ProductCategoryDto productCategoryDto) {
         String first = productCategoryDto.getFirst();
         String second = productCategoryDto.getSecond();
         CategoryRecordDto build = CategoryRecordDto.builder().first(first).second(second).build();
@@ -400,10 +402,14 @@ public class ProductService {
                 .explanation(productCategoryDto.getExplanation())
                 .productType(productCategoryDto.getProductType())
                 .categoryRecordDto(build)
-                .deadLine(this.productDeadLine(productCategoryDto.getCreatedDate(), productCategoryDto.getProductTime()))
+                .deadLine(productDeadLine(productCategoryDto.getCreatedDate(), productCategoryDto.getProductTime()))
                 .productTime(productCategoryDto.getProductTime())
                 .productImagesList(list)
                 .build();
+
+        log.info("ddddd : {} ", productRecordDto.getDeadLine());
+
+
         productRecordDtoList.add(productRecordDto);
     }
 
