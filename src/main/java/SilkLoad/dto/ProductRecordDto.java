@@ -50,7 +50,7 @@ public class ProductRecordDto {
         this.auctionPrice = auctionPrice;
         this.instantPrice = instantPrice;
         this.explanation = explanation;
-        this.deadLine = null;
+        this.deadLine = deadLine;
         this.productTime = productTime;
         this.productType = productType;
         this.categoryRecordDto = categoryRecordDto;

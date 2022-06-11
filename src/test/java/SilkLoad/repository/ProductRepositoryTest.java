@@ -1,7 +1,6 @@
 package SilkLoad.repository;
 
 import SilkLoad.dto.*;
-import SilkLoad.entity.Product;
 import SilkLoad.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -10,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +47,7 @@ class ProductRepositoryTest {
     @Transactional
     void 카테고리별로_product가져오기_테스트(){
         PageRequest pageRequest = PageRequest.of(0,2);
-        Page<ProductCategoryDto> 예술 = productRepository.findD("신발",pageRequest);
+        Page<ProductCategoryDto> 예술 = productRepository.findfirstcategory("신발",pageRequest);
 
         for (ProductCategoryDto productCategoryDto : 예술) {
             List<ProductImageRecordDto> list = new ArrayList<>();
@@ -80,4 +78,15 @@ class ProductRepositoryTest {
         }
     }
 
+    @Test
+    @Transactional
+    void 검색으로_product가져오기_테스트(){
+        PageRequest pageRequest = PageRequest.of(0,2);
+        Page<ProductRecordDto> po = productService.SearchToProductname("test" , pageRequest);
+        for (ProductRecordDto productRecordDto : po.getContent()) {
+            System.out.println("productRecordDto = " + productRecordDto);
+        }
+    }
+
 }
+

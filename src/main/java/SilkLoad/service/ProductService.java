@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.BiFunction;
 
 @Service
 @RequiredArgsConstructor
@@ -439,6 +440,20 @@ public class ProductService {
     private Page<ProductRecordDto> ListToPage(Pageable pageable, List<ProductRecordDto> productRecordDtoList) {
         Page<ProductRecordDto> productRecordDtos = new PageImpl<>(productRecordDtoList, pageable, productRecordDtoList.size());
         return productRecordDtos;
+    }
+
+    /**
+     * keyword를 기준으로 Paging된 productRecordDto를 반환
+     * @param keyword
+     * @param pageable
+     * @return
+     */
+    public Page<ProductRecordDto> SearchToProductname( String keyword, Pageable pageable){
+        Page<ProductRecordDto> productRecordDtoPage = productRepository
+                .findByNameContainingIgnoreCase(keyword, pageable)
+                .map(this::getProductRecordDto);
+
+        return productRecordDtoPage;
     }
 
 }

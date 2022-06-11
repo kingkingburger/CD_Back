@@ -33,7 +33,10 @@ public class ShopController {
                        @RequestParam("category") String category,
                        @RequestParam(required = false, name = "first") String first,
                        @PageableDefault(size = 9) Pageable pageable) {
-        
+        //카테고리들
+        model.addAttribute("category", category);
+        model.addAttribute("first",first);
+
 
         //전체 페이지 수
         int totalPages = productService.paged_product(pageable).getTotalPages();

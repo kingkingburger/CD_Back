@@ -80,6 +80,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="col-md-4 col-sm-6 px-2 mb-4" th:each="crawlingdata : ${crawlingdata}">
                         <div class="card product-card" >
                             <a class="card-img-top d-block overflow-hidden" th:href="${crawlingdata.getLink()}">
@@ -108,7 +109,7 @@
 
                     <ul class="pagination">
                         <li class="page-item">
-                            <a class="page-link" th:href="@{/shop(page=${presentPage}-1)}">
+                            <a class="page-link"  th:href="@{/shop(category=${category}, first=${first}, page=${presentPage}-1)}">
                                 <i class="ci-arrow-left me-2"></i>Prev
                             </a>
                         </li>
@@ -116,7 +117,7 @@
 
                     <ul class="pagination">
                         <li class="page-item">
-                            <a class="page-link" th:href="@{/shop(page=1)}">
+                            <a class="page-link" th:href="@{/shop(category=${category}, first=${first},page = 1)}">
                                 <i class="ci-arrow-left me-2"></i>First
                             </a>
                         </li>
@@ -127,14 +128,14 @@
                                             end = (${start + 9 < totalPages ? start+9 : totalPages})">
                             <li class="page-item"
                                 th:each="pageButton : ${#numbers.sequence(start, end)}">
-                                <a class="page-link" th:href="@{/shop(category=${category}, page = ${pageButton} - 1)}" th:text="${pageButton}"></a>
+                                <a class="page-link" th:href="@{/shop(category=${category}, first=${first},page = ${pageButton})}" th:text="${pageButton}"></a>
                             </li>
                         </th:block>
                     </ul>
 
                     <ul class="pagination">
                         <li class="page-item">
-                            <a class="page-link"th:href="@{/shop(page=${totalPages})}" aria-label="Next">Last
+                            <a class="page-link"th:href="@{/shop(category=${category}, first=${first}, page=${totalPages})}" aria-label="Next">Last
                                 <i class="ci-arrow-right ms-2"></i>
                             </a>
                         </li>
@@ -142,7 +143,7 @@
 
                     <ul class="pagination">
                         <li class="page-item">
-                            <a class="page-link"th:href="@{/shop(page=${presentPage}+1)}" aria-label="Next">Next
+                            <a class="page-link"th:href="@{/shop(category=${category}, first=${first}, page=${presentPage}+1)}" aria-label="Next">Next
                                 <i class="ci-arrow-right ms-2"></i>
                             </a>
                         </li>

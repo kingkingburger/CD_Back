@@ -5,6 +5,7 @@ import SilkLoad.dto.ProductCategoryDto;
 import SilkLoad.dto.ProductRecordDto;
 import SilkLoad.entity.Product;
 import SilkLoad.entity.ProductEnum.ProductType;
+import org.hibernate.procedure.ProcedureOutputs;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -48,5 +49,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "where p.category.first = :first "
     )
     Page<ProductCategoryDto> findfirstcategory(@Param("first")String categoryName, Pageable pageable);
+
+    //검색해서 Product를 반환하는 쿼리
+    Page<Product> findByNameContainingIgnoreCase(String keyword, Pageable pageable);
 }
 
