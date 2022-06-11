@@ -12,11 +12,11 @@ public class DemoApplication {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
-	@Bean
+	@Bean // page 객체의 시작을 1부터 시작하게끔
 	public PageableHandlerMethodArgumentResolverCustomizer customize() {
 		return p -> {
 			p.setOneIndexedParameters(true);	// 1부터 시작
-			p.setMaxPageSize(10);				// size=10
+			//p.setMaxPageSize(10);				// size=10
 		};
 	}
 }

@@ -61,13 +61,10 @@ public class ShopController {
         //판매중인 상태 보내기
         model.addAttribute("sale", ProductType.sale);
 
-        log.info("카테고리는 = {}", category);
-        log.info("first 카테고리는 = {}", first);
 
         //--------------------크롤링 데이터 보내는 부분----------------------
         Page<CrawlingDto> crawlingdata = crawlingService.getcrawlingdata(pageable, category);
         model.addAttribute("crawlingdata",crawlingdata);
-        log.info("카테고리는 = {}", category);
 
         return "shop";
     }
