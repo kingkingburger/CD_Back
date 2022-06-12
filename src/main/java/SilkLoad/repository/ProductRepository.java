@@ -50,7 +50,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     )
     Page<ProductCategoryDto> findfirstcategory(@Param("first")String categoryName, Pageable pageable);
 
-    //검색해서 Product를 반환하는 쿼리 %aaaaaaaa%
+    //검색해서 Product를 반환하는 쿼리
     Page<Product> findByNameContainingIgnoreCase(String keyword, Pageable pageable);
 
 }

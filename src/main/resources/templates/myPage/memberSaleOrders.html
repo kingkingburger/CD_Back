@@ -225,7 +225,7 @@
                                             end = (${start + 9 < totalPages ? start+9 : totalPages})">
                         <li class="page-item"
                             th:each="pageButton : ${#numbers.sequence(start, end)}">
-                            <a class="page-link" th:href="@{/members/myPage/saleOrders(page = ${pageButton})}" th:text="${pageButton}"></a>
+                            <a class="page-link" th:classappend="( ${ pageButton == presentPage + 1 }) ? 'bg-primary text-white'  : '' " th:href="@{/members/myPage/saleOrders(page = ${pageButton})}" th:text="${pageButton}"></a>
                         </li>
                     </th:block>
                 </ul>
