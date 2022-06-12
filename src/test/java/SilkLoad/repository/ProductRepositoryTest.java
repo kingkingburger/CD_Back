@@ -82,8 +82,8 @@ class ProductRepositoryTest {
     @Transactional
     void 검색으로_product가져오기_테스트(){
         PageRequest pageRequest = PageRequest.of(0,2);
-        Page<ProductRecordDto> po = productService.SearchToProductname("test" , pageRequest);
-        for (ProductRecordDto productRecordDto : po.getContent()) {
+        List<ProductRecordDto> test = productService.SearchToProductname("test", pageRequest).getContent();
+        for (ProductRecordDto productRecordDto : test) {
             System.out.println("productRecordDto = " + productRecordDto);
         }
     }

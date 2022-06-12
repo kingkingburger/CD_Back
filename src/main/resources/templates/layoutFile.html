@@ -41,12 +41,14 @@
                 </a>
 
                 <div class="input-group d-none d-lg-flex mx-4">
-                    <input class="form-control rounded-end pe-5" type="text" placeholder="Search for products">
-                    <i class="ci-search position-absolute top-50 end-0 translate-middle-y text-muted fs-base me-3"></i>
+                    <form class="form-control" method="get" th:action="@{/shop(page = 1)}" >
+                        <input class="form-control rounded-end pe-5" type="text" placeholder="Search for products"
+                        th:name="keyword" th:value="${keyword}">
+                    </form>
+
 
                 </div>
-                <div th:if="${session.loginMember != null }" th:text="|${session.loginMember.name} 님 반갑습니다!|">
-                </div>
+
                 <div class="navbar-toolbar d-flex flex-shrink-0 align-items-center">
 
                     <!-- 위시리스트 -->
@@ -110,7 +112,7 @@
                         </a>
                         <a class="nav-link dropdown-toggle" th:classappend="${paramActive == 'shop'} ? active"
                            type="button"
-                           th:onclick="|location.href='@{/shop/(category=여성의류)}'|">
+                           th:onclick="|location.href='@{/shop/(category=여성의류,first=패딩점퍼)}'|">
                             Shop
                         </a>
                         <a class="nav-link dropdown-toggle" th:classappend="${paramActive == 'selling'} ? active"
