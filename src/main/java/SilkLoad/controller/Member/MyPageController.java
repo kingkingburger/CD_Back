@@ -90,13 +90,23 @@ public class MyPageController {
     }
 
     @GetMapping("/saleOrders")
-    public String saleOrders(@PageableDefault(size=6)Pageable pageable, Model model, HttpServletRequest request) {
+    public String saleOrders(@PageableDefault(size=6)Pageable pageable,
+                             Model model,
+                             HttpServletRequest request) {
 
         Members sessionMember = getSessionMembers(request);
 
-        List<OrderHistoryDto> saleOrders =  orderService.findMemberSaleOrder(sessionMember.getId(), pageable);
+        Page<OrderHistoryDto> saleOrders = orderService.findMemberSaleOrder(sessionMember.getId(), pageable);
 
         calculationDeadLine(saleOrders);
+        //전체 페이지 수
+        int totalPages = saleOrders.getTotalPages();
+        //현제 페이지
+        int presentPage = saleOrders.getNumber();
+        //전체 페이지 수 모델로 보내기
+        model.addAttribute("totalPages",totalPages);
+        //현제 페이지  모델로 보내기
+        model.addAttribute("presentPage",presentPage);
 
         model.addAttribute("saleOrders", saleOrders);
         model.addAttribute("orderType", OrderType.values() );
@@ -108,13 +118,17 @@ public class MyPageController {
     public String purchaseOrders(@PageableDefault(size=6)Pageable pageable, Model model, HttpServletRequest request) {
 
         Members sessionMembers = getSessionMembers(request);
-        List<OrderHistoryDto> purchaseOrders = orderService.findMemberPurchaseOrder(sessionMembers.getId(), pageable);
-        calculationDeadLine(purchaseOrders);
+        Page<OrderHistoryDto> purchaseOrders = orderService.findMemberPurchaseOrder(sessionMembers.getId(), pageable);
 
-        log.info("purchaseOrders => {}", purchaseOrders);
+        calculationDeadLine(purchaseOrders);
+        
+        int totalPages = purchaseOrders.getTotalPages(); //전체 페이지 수
+        int presentPage = purchaseOrders.getNumber(); //현재 페이지
+        model.addAttribute("totalPages",totalPages); //전체 페이지  모델로 보내기
+        model.addAttribute("presentPage",presentPage); //현재 페이지  모델로 보내기
 
         model.addAttribute("purchaseOrders", purchaseOrders);
-        model.addAttribute("orderType", OrderType.values() );
+        model.addAttribute("orderType", OrderType.values());
 
         return "/myPage/memberPurchaseOrders";
 
@@ -126,8 +140,13 @@ public class MyPageController {
                                  @PageableDefault(size=6)Pageable pageable){
         Members sessionMembers = getSessionMembers(request);
 
-        List<ChatRoomTableDto> memberChatRoomList = chatService.getMemberChatRoomList(sessionMembers.getId(), pageable);
+        Page<ChatRoomTableDto> memberChatRoomList = chatService.getMemberChatRoomList(sessionMembers.getId(), pageable);
         model.addAttribute("memberChatRoomList", memberChatRoomList);
+
+        int totalPages = memberChatRoomList.getTotalPages(); //전체 페이지 수
+        int presentPage = memberChatRoomList.getNumber(); //현재 페이지
+        model.addAttribute("totalPages",totalPages); //전체 페이지  모델로 보내기
+        model.addAttribute("presentPage",presentPage); //현재 페이지  모델로 보내기
 
         return "/myPage/memberChatRoomList";
     }
@@ -150,7 +169,7 @@ public class MyPageController {
 
     }
 
-    private void calculationDeadLine(List<OrderHistoryDto> tradeOrders) {
+    private void calculationDeadLine(Page<OrderHistoryDto> tradeOrders) {
         tradeOrders.forEach(tradeOrder -> {
 
             if (tradeOrder.getProductTime() != ProductTime.NONE) {

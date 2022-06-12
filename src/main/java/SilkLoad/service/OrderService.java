@@ -15,6 +15,7 @@ import SilkLoad.repository.OrderRepository;
 import SilkLoad.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -117,16 +118,16 @@ public class OrderService {
     }
 
     @Transactional
-    public List<OrderHistoryDto> findMemberSaleOrder(Long memberId, Pageable pageable) {
+    public Page<OrderHistoryDto> findMemberSaleOrder(Long memberId, Pageable pageable) {
 
-        return orderRepository.findMemberSaleOrder(memberId, pageable).getContent();
+        return orderRepository.findMemberSaleOrder(memberId, pageable);
 
     }
 
     @Transactional
-    public List<OrderHistoryDto> findMemberPurchaseOrder (Long memberId, Pageable pageable) {
+    public Page<OrderHistoryDto> findMemberPurchaseOrder (Long memberId, Pageable pageable) {
 
-        return orderRepository.findMemberPurchaseOrder(memberId, pageable).getContent();
+        return orderRepository.findMemberPurchaseOrder(memberId, pageable);
 
     }
 

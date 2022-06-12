@@ -28,7 +28,7 @@
 
                 <div class="card product-card" th:if="${product.getProductType == sale}" >
 
-                    <a class="card-img-top d-block overflow-hidden" th:href="@{/shop/detailProduct(id=${product.id})}">
+                    <a class="card-img-top d-block overflow-hidden" th:href="@{/shop/detailProduct(id=${product.id}, category=${product.categoryRecordDto.getSecond()}, first=${product.categoryRecordDto.getFirst()})}">
                         <figure class="image is-4by3">
                             <img alt="Product"  th:src="|/product/images/${product.productImagesList.get(0).getStoreFileName()}|"/>
                         </figure>
@@ -36,7 +36,7 @@
                     <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#" th:text="${product.categoryRecordDto.getSecond()}">카테고리</a>
 
                         <h3 class="product-title fs-sm" >
-                            <a th:href="@{/shop/detailProduct(id=${product.id})}" th:text="${product.getName()}">물품제목</a>
+                            <a th:href="@{/shop/detailProduct(id=${product.id}, category=${product.categoryRecordDto.getSecond()}, first=${product.categoryRecordDto.getFirst()})}" th:text="${product.getName()}">물품제목</a>
                         </h3>
                         <div>
                             <div class="product-price col"><span class="text-accent" th:text="|즉시 구매가: ${product.instantPrice} 원 |"></span></div>

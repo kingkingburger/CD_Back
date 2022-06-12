@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.BiFunction;
 
 @Service
 @RequiredArgsConstructor
@@ -336,18 +337,38 @@ public class ProductService {
     }
 
     /**
-     * 카테고리 별로 물품을 가져오기
+     * second 카테고리 별로 물품을 가져오기
      * 아래 3종 세트
      * @param category
      * @param pageable
      * @return
      */
     @Transactional
-    public Page<ProductRecordDto> pagedBycategoryProduct(String category, Pageable pageable){
+    public Page<ProductRecordDto> pagedBysecondcategoryProduct(String category, Pageable pageable){
 
-        Page<ProductCategoryDto> productCategoryDtos = productRepository.findD(category,pageable);
+        Page<ProductCategoryDto> productCategoryDtos = productRepository.findsecondcategory(category,pageable);
         List<ProductRecordDto> productRecordDtoList = new ArrayList<>();
 
+        //ProductRecordDto로 바꾸기
+        for (ProductCategoryDto productCategoryDto : productCategoryDtos) {
+            List<ProductImageRecordDto> list = categoryedProductImageRecordDto(productCategoryDto);
+            categoryToProductRecordDto(productRecordDtoList, list, productCategoryDto);
+        }
+        //List 를 Page로 변환
+        return ListToPage(pageable, productRecordDtoList);
+    }
+    /**
+     * first 카테고리 별로 물품을 가져오기
+     * 아래 3종 세트
+     * @param category
+     * @param pageable
+     * @return
+     */
+    @Transactional
+    public Page<ProductRecordDto> pagedByfirstcategoryProduct(String category, Pageable pageable){
+
+        Page<ProductCategoryDto> productCategoryDtos = productRepository.findfirstcategory(category,pageable);
+        List<ProductRecordDto> productRecordDtoList = new ArrayList<>();
 
         //ProductRecordDto로 바꾸기
         for (ProductCategoryDto productCategoryDto : productCategoryDtos) {
@@ -364,10 +385,15 @@ public class ProductService {
      * @param list
      * @param productCategoryDto
      */
-    private void categoryToProductRecordDto(List<ProductRecordDto> productRecordDtoList, List<ProductImageRecordDto> list, ProductCategoryDto productCategoryDto) {
+    private void categoryToProductRecordDto(List<ProductRecordDto> productRecordDtoList,
+                                            List<ProductImageRecordDto> list,
+                                            ProductCategoryDto productCategoryDto) {
         String first = productCategoryDto.getFirst();
         String second = productCategoryDto.getSecond();
         CategoryRecordDto build = CategoryRecordDto.builder().first(first).second(second).build();
+
+        log.info("product craetedate : {} ", productCategoryDto.getCreatedDate());
+        log.info("product time : {} ", productCategoryDto.getProductTime());
 
         ProductRecordDto productRecordDto = ProductRecordDto.builder()
                 .id(productCategoryDto.getId())
@@ -377,10 +403,14 @@ public class ProductService {
                 .explanation(productCategoryDto.getExplanation())
                 .productType(productCategoryDto.getProductType())
                 .categoryRecordDto(build)
-                .deadLine(this.productDeadLine(productCategoryDto.getCreatedDate(), productCategoryDto.getProductTime()))
+                .deadLine(productDeadLine(productCategoryDto.getCreatedDate(), productCategoryDto.getProductTime()))
                 .productTime(productCategoryDto.getProductTime())
                 .productImagesList(list)
                 .build();
+
+        log.info("ddddd : {} ", productRecordDto.getDeadLine());
+
+
         productRecordDtoList.add(productRecordDto);
     }
 
@@ -410,6 +440,20 @@ public class ProductService {
     private Page<ProductRecordDto> ListToPage(Pageable pageable, List<ProductRecordDto> productRecordDtoList) {
         Page<ProductRecordDto> productRecordDtos = new PageImpl<>(productRecordDtoList, pageable, productRecordDtoList.size());
         return productRecordDtos;
+    }
+
+    /**
+     * keyword를 기준으로 Paging된 productRecordDto를 반환
+     * @param keyword
+     * @param pageable
+     * @return
+     */
+    public Page<ProductRecordDto> SearchToProductname( String keyword, Pageable pageable){
+        Page<ProductRecordDto> productRecordDtoPage = productRepository
+                .findByNameContainingIgnoreCase(keyword, pageable)
+                .map(this::getProductRecordDto);
+
+        return productRecordDtoPage;
     }
 
 }
