@@ -370,45 +370,30 @@
                                     <img th:src="|/product/images/${product.getProductImagesList().get(0).getStoreFileName()}|"
                                          alt="Product image">
                                 </div>
-
-                                <div class="product-gallery-preview-item" id="fourth"><img class="image-zoom"
-                                                                                           src="/img/shop/single/gallery/04.jpg"
-                                                                                           data-zoom="/img/shop/single/gallery/04.jpg"
-                                                                                           alt="Product image">
-                                    <div class="image-zoom-pane"></div>
-                                </div>
                             </div>
                             <div class="product-gallery-thumblist order-sm-1">
                                 <a class="product-gallery-thumblist-item active" href="#first">
                                     <img th:src="|/product/images/${product.getProductImagesList().get(0).getStoreFileName()}|"
                                          alt="Product thumb"></a>
-                                <a class="product-gallery-thumblist-item" href="#fourth">
-                                    <img src="/img/shop/single/gallery/th04.jpg" alt="Product thumb"></a>
                             </div>
                         </div>
                     </div>
                     <!-- Product details-->
                     <div class="col-lg-5 pt-4 pt-lg-0">
                         <div class="product-details ms-auto pb-3">
-                            <div class="d-flex justify-content-between align-items-center mb-2"><a href="#reviews"
-                                                                                                   data-scroll>
-                                <div class="star-rating">
-                                    <i class="star-rating-icon ci-star-filled active"></i>
-                                    <i class="star-rating-icon ci-star-filled active"></i>
-                                    <i class="star-rating-icon ci-star-filled active"></i>
-                                    <i class="star-rating-icon ci-star-filled active"></i>
-                                    <i class="star-rating-icon ci-star"></i>
-                                </div>
-                                <span class="d-inline-block fs-sm text-body align-middle mt-1 ms-1"></span></a>
-                                <button class="btn-wishlist me-0 me-lg-n3" type="button" data-bs-toggle="tooltip"
-                                        title="Add to wishlist"><i class="ci-heart"></i></button>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <a href="#reviews" data-scroll>
+                                    <span class="d-inline-block fs-sm text-body align-middle mt-1 ms-1"></span>
+                                </a>
+                                <button class="btn-wishlist me-0 me-lg-n3" type="button" data-bs-toggle="tooltip" title="Add to wishlist">
+                                    <i class="ci-heart"></i>
+                                </button>
                             </div>
 
                             <!--가격-->
                             <div class="mb-3"><span class="h3 fw-normal text-accent me-1"
                                                     th:text="${product.instantPrice}"><small>원</small></span>
-                                <del class="text-muted fs-lg me-3">원</del>
-                                <span class="badge bg-danger badge-shadow align-middle mt-n2">Sale</span>
+                                <del class="fs-lg me-3">원</del>
                             </div>
 
                             <div class="fs-sm mb-4">

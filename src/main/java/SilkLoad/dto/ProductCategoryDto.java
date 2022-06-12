@@ -28,7 +28,18 @@ public class ProductCategoryDto {
     private String uploadFileName;  //회원이 올린 파일 이름
     private String storeFileName;   //실제 저장 될 파일 이름
 
-    public ProductCategoryDto(Long id, String name, Long auctionPrice, Long instantPrice, String explanation, LocalDateTime createdDate, ProductTime productTime, ProductType productType, String first, String second, String uploadFileName, String storeFileName) {
+    public ProductCategoryDto(Long id,
+                              String name,
+                              Long auctionPrice,
+                              Long instantPrice,
+                              String explanation,
+                              LocalDateTime createdDate,
+                              ProductTime productTime,
+                              ProductType productType,
+                              String first,
+                              String second,
+                              String uploadFileName,
+                              String storeFileName) {
         this.id = id;
         this.name = name;
         this.auctionPrice = auctionPrice;

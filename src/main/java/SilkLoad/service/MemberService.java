@@ -45,8 +45,8 @@ public class MemberService  {
     }
 
     @Transactional
-    public Members findByLoginId( String id){
-        return memberRepository.findByLoginId( id ).get();
+    public Members findByLoginId(String id){
+        return memberRepository.findByLoginId(id).get();
     }
     @Transactional
     public Members findById(Long id){

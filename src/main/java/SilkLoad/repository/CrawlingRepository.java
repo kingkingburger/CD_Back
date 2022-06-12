@@ -10,4 +10,7 @@ import org.springframework.data.domain.Pageable;
 public interface CrawlingRepository extends JpaRepository<Crawling, Long> {
 
     Page<Crawling> findByCategory(String category, Pageable pageable);
+
+
+
 }

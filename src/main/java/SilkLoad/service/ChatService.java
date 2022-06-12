@@ -10,6 +10,7 @@ import SilkLoad.repository.ChatMessageRepository;
 import SilkLoad.repository.ChatRoomRepository;
 import SilkLoad.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,8 +39,8 @@ public class ChatService {
     }
 
     @Transactional
-    public List<ChatRoomTableDto> getMemberChatRoomList(Long memberId, Pageable pageable) {
-        return chatRoomRepository.findByMemberChatRoomList(memberId, pageable).getContent();
+    public Page<ChatRoomTableDto> getMemberChatRoomList(Long memberId, Pageable pageable) {
+        return chatRoomRepository.findByMemberChatRoomList(memberId, pageable);
     }
 
     //방에 들어오면 기존 채팅 기록들을 찾아서 뽑아내야한다.
