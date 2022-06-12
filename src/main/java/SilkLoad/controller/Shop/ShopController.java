@@ -1,6 +1,7 @@
 package SilkLoad.controller.Shop;
 
 import SilkLoad.dto.CrawlingDto;
+import SilkLoad.dto.MemberFormDto;
 import SilkLoad.dto.ProductRecordDto;
 import SilkLoad.entity.ProductEnum.ProductTime;
 import SilkLoad.entity.ProductEnum.ProductType;
@@ -30,8 +31,9 @@ public class ShopController {
 
     @GetMapping
     public String shop(Model model,
-                       @RequestParam("category") String category,
+                       @RequestParam(required = false, name = "category") String category,
                        @RequestParam(required = false, name = "first") String first,
+                       @RequestParam(required = false, name = "keyword")String keyword,
                        @PageableDefault(size = 9) Pageable pageable) {
         //카테고리들
         model.addAttribute("category", category);
@@ -43,11 +45,14 @@ public class ShopController {
         //현제 페이지
         int presentPage = productService.paged_product(pageable).getNumber();
 
+        log.info("keyword입니다. = {}",keyword);
+
         List<ProductRecordDto> content;
         //first가 있는지 없는지에 따라 content가 변한다.
         if(first != null)
-            //페이징화 된 객체
             content = productService.pagedByfirstcategoryProduct(first, pageable).getContent();
+        else if(keyword != null)
+            content = productService.SearchToProductname(keyword, pageable).getContent();
         else
             //페이징화 된 객체
             content = productService.pagedBysecondcategoryProduct(category, pageable).getContent();
@@ -80,6 +85,7 @@ public class ShopController {
     public String detailProduct(@RequestParam Long id,
                                 @RequestParam(required = false, name = "category") String category,
                                 @RequestParam(required = false, name = "first") String first,
+                                @PageableDefault(size = 9) Pageable pageable,
                                 Model model) {
 
         List<ProductRecordDto> allProduct = productService.findAllProduct();
@@ -87,12 +93,15 @@ public class ShopController {
         ProductRecordDto byId_productRecordDto = productService.findById_ProductRecordDto(id);
 
         Long maxAuctionPrice = orderService.findByMaxAuctionPrice(id);
-/*      Product byId_product = productService.findById_Product(id);
-        ProductRecordDto productRecordDto = productService.getProductRecordDto(byId_product);*/
+
         //productType.sale이 판매 중이 아니라면 error 페이저로 보내기
         if (byId_productRecordDto.getProductType() != ProductType.sale) {
             return "error";
         }
+
+        //--------------------크롤링 데이터 보내는 부분----------------------
+        Page<CrawlingDto> crawlingdata = crawlingService.getcrawlingdata(pageable, category);
+        model.addAttribute("crawlingdata",crawlingdata);
 
         model.addAttribute("maxAuctionPrice", maxAuctionPrice);
         model.addAttribute("productTime", ProductTime.values());

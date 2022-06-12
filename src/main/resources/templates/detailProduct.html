@@ -493,43 +493,32 @@
 
         <!-- Product carousel (Style with)-->
         <div class="container pt-5">
-            <h2 class="h3 text-center pb-4">Style with</h2>
+            <h2 class="h3 text-center pb-4">이런 물품도 있어요</h2>
             <div class="tns-carousel tns-controls-static tns-controls-outside">
                 <div class="tns-carousel-inner"
                      data-carousel-options="{&quot;items&quot;: 2, &quot;controls&quot;: true, &quot;nav&quot;: false, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;500&quot;:{&quot;items&quot;:2, &quot;gutter&quot;: 18},&quot;768&quot;:{&quot;items&quot;:3, &quot;gutter&quot;: 20}, &quot;1100&quot;:{&quot;items&quot;:4, &quot;gutter&quot;: 30}}}">
                     <!-- Product-->
-                    <div th:each="all_product : ${allProduct}">
+                    <div th:each="product : ${crawlingdata}">
                         <div class="card product-card card-static">
                             <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip"
                                     data-bs-placement="left" title="Add to wishlist">
                                 <i class="ci-heart"></i>
                             </button>
                             <a class="card-img-top d-block overflow-hidden" href="#">
-                                <img th:src="|/product/images/${all_product.getProductImagesList().get(0).getStoreFileName()}|"
+                                <img th:src="${product.getImg_link()}"
                                      alt="Product">
                             </a>
                             <div class="card-body py-2">
-                                <a class="product-meta d-block fs-xs pb-1" href="#"
-                                   th:text="${all_product.categoryRecordDto.getSecond()}">카테고리</a>
                                 <h3 class="product-title fs-sm">
-                                    <a th:href="@{/Product(id=${product.id})}" th:text="${all_product.name}">물품제목</a>
+                                    <a th:href="${product.getLink()}" th:text="${product.getName()}">물품제목</a>
                                 </h3>
                                 <div class="d-flex justify-content-between">
                                     <div class="product-price">
-                                    <span class="text-accent" th:text="${all_product.instantPrice}+원">
+                                    <span class="text-accent" th:text="|${product.getPrice()} 원|">
                                       <small></small>
                                     </span>
                                 </div>
 
-                                <div class="star-rating">
-                                    <i class="star-rating-icon ci-star-filled active">
-
-                                    </i>
-                                    <i class="star-rating-icon ci-star-filled active"></i>
-                                    <i class="star-rating-icon ci-star-filled active"></i>
-                                    <i class="star-rating-icon ci-star-filled active"></i>
-                                    <i class="star-rating-icon ci-star"></i>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -538,126 +527,6 @@
             </div>
         </div>
     </div>
-        <!-- Product carousel (You may also like)-->
-        <div class="container py-5 my-md-3">
-            <h2 class="h3 text-center pb-4">You may also like</h2>
-            <div class="tns-carousel tns-controls-static tns-controls-outside">
-                <div class="tns-carousel-inner"
-                     data-carousel-options="{&quot;items&quot;: 2, &quot;controls&quot;: true, &quot;nav&quot;: false, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;500&quot;:{&quot;items&quot;:2, &quot;gutter&quot;: 18},&quot;768&quot;:{&quot;items&quot;:3, &quot;gutter&quot;: 20}, &quot;1100&quot;:{&quot;items&quot;:4, &quot;gutter&quot;: 30}}}">
-                    <!-- Product-->
-                    <div>
-                        <div class="card product-card card-static">
-                            <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip"
-                                    data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button>
-                            <a class="card-img-top d-block overflow-hidden" href="#"><img src="/img/shop/catalog/20.jpg"
-                                                                                          alt="Product"></a>
-                            <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">Men’s
-                                Hoodie</a>
-                                <h3 class="product-title fs-sm"><a href="#">Block-colored Hooded Top</a></h3>
-                                <div class="d-flex justify-content-between">
-                                    <div class="product-price"><span class="text-accent">$24.<small>99</small></span>
-                                    </div>
-                                    <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i
-                                            class="star-rating-icon ci-star-filled active"></i><i
-                                            class="star-rating-icon ci-star-filled active"></i><i
-                                            class="star-rating-icon ci-star-half active"></i><i
-                                            class="star-rating-icon ci-star"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Product-->
-                    <div>
-                        <div class="card product-card card-static">
-                            <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip"
-                                    data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button>
-                            <a class="card-img-top d-block overflow-hidden" href="#"><img src="/img/shop/catalog/21.jpg"
-                                                                                          alt="Product"></a>
-                            <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">Men’s
-                                Hoodie</a>
-                                <h3 class="product-title fs-sm"><a href="#">Block-colored Hooded Top</a></h3>
-                                <div class="d-flex justify-content-between">
-                                    <div class="product-price text-accent">$26.<small>99</small></div>
-                                    <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i
-                                            class="star-rating-icon ci-star-filled active"></i><i
-                                            class="star-rating-icon ci-star-filled active"></i><i
-                                            class="star-rating-icon ci-star-filled active"></i><i
-                                            class="star-rating-icon ci-star-filled active"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Product-->
-                    <div>
-                        <div class="card product-card card-static">
-                            <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip"
-                                    data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button>
-                            <a class="card-img-top d-block overflow-hidden" href="#"><img src="/img/shop/catalog/22.jpg"
-                                                                                          alt="Product"></a>
-                            <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">Men’s
-                                Hoodie</a>
-                                <h3 class="product-title fs-sm"><a href="#">Block-colored Hooded Top</a></h3>
-                                <div class="d-flex justify-content-between">
-                                    <div class="product-price text-accent">$24.<small>99</small></div>
-                                    <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i
-                                            class="star-rating-icon ci-star-filled active"></i><i
-                                            class="star-rating-icon ci-star-half active"></i><i
-                                            class="star-rating-icon ci-star"></i><i
-                                            class="star-rating-icon ci-star"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Product-->
-                    <div>
-                        <div class="card product-card card-static">
-                            <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip"
-                                    data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button>
-                            <a class="card-img-top d-block overflow-hidden" href="#"><img src="/img/shop/catalog/23.jpg"
-                                                                                          alt="Product"></a>
-                            <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">Men’s
-                                Hoodie</a>
-                                <h3 class="product-title fs-sm"><a href="#">Block-colored Hooded Top</a></h3>
-                                <div class="d-flex justify-content-between">
-                                    <div class="product-price text-accent">$24.<small>99</small></div>
-                                    <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i
-                                            class="star-rating-icon ci-star-filled active"></i><i
-                                            class="star-rating-icon ci-star-filled active"></i><i
-                                            class="star-rating-icon ci-star-filled active"></i><i
-                                            class="star-rating-icon ci-star"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Product-->
-                    <div>
-                        <div class="card product-card card-static">
-                            <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip"
-                                    data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button>
-                            <a class="card-img-top d-block overflow-hidden" href="#"><img src="/img/shop/catalog/24.jpg"
-                                                                                          alt="Product"></a>
-                            <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">Men’s
-                                Hoodie</a>
-                                <h3 class="product-title fs-sm"><a href="#">Block-colored Hooded Top</a></h3>
-                                <div class="d-flex justify-content-between">
-                                    <div class="product-price text-accent">$25.<small>00</small></div>
-                                    <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i
-                                            class="star-rating-icon ci-star-filled active"></i><i
-                                            class="star-rating-icon ci-star-filled active"></i><i
-                                            class="star-rating-icon ci-star"></i><i
-                                            class="star-rating-icon ci-star"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </main>
 <script th:inline="javascript">

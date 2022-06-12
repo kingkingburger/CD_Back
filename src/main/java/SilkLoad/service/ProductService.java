@@ -448,11 +448,11 @@ public class ProductService {
      * @param pageable
      * @return
      */
+    @Transactional
     public Page<ProductRecordDto> SearchToProductname( String keyword, Pageable pageable){
         Page<ProductRecordDto> productRecordDtoPage = productRepository
-                .findByNameContainingIgnoreCase(keyword, pageable)
-                .map(this::getProductRecordDto);
-
+                                                    .findByNameContainingIgnoreCase(keyword, pageable)
+                                                    .map(this::getProductRecordDto);
         return productRecordDtoPage;
     }
 
