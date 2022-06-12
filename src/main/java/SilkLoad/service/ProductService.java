@@ -231,7 +231,6 @@ public class ProductService {
      */
     @Transactional
     public ProductRecordDto getProductRecordDto(Product product) {
-
         ProductRecordDto productRecordDto = ProductRecordDto.builder()
                 .id(product.getId())
                 .name(product.getName())
@@ -244,7 +243,6 @@ public class ProductService {
                 .productTime(product.getProductTime())
                 .productImagesList(getProductRecordImageListDto(product.getProductImagesList()))
                 .build();
-
         return productRecordDto;
     }
 
@@ -310,12 +308,12 @@ public class ProductService {
      * @return
      */
     public LocalDateTime productDeadLine(LocalDateTime createdProduct, ProductTime productTime) {
-
         if (productTime == ProductTime.ONE_DAY) {
             createdProduct = createdProduct.plusDays(1);
         } else if (productTime == ProductTime.TWO_DAY) {
             createdProduct = createdProduct.plusDays(2);
         }
+
         return createdProduct;
     }
 
@@ -332,6 +330,8 @@ public class ProductService {
         Page<ProductRecordDto> sale = productRepository
                                         .findByProductTypeOrderByIdDesc(ProductType.sale, pageable)
                                         .map(this::getProductRecordDto);
+
+
         return sale;
     }
 
@@ -377,7 +377,7 @@ public class ProductService {
                 .explanation(productCategoryDto.getExplanation())
                 .productType(productCategoryDto.getProductType())
                 .categoryRecordDto(build)
-                .deadLine(this.productDeadLine(productCategoryDto.getCreatedDate(), productCategoryDto.getProductTime()))
+                .deadLine(productDeadLine(productCategoryDto.getCreatedDate(), productCategoryDto.getProductTime()))
                 .productTime(productCategoryDto.getProductTime())
                 .productImagesList(list)
                 .build();

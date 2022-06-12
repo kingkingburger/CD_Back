@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 public class OrderController {
 
     private final OrderService orderService;
-    private final ProductService productService;
 
     @PostMapping("/buyNow")
     public String saveBuyNow(@ModelAttribute("orderBuyNowDto") OrderBuyNowDto orderBuyNowDto) {

@@ -78,11 +78,8 @@ def crawling():
 
 crawling()
 
-<<<<<<< HEAD
+
 schedule.every().hours.do(crawling)
-=======
-#schedule.every(24).hours.do(crawling)
->>>>>>> fb0acf17d73c230833dddd03a71c9f5b80ad0574
 
 #while True:
     #schedule.run_pending()

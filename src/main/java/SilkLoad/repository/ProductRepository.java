@@ -33,7 +33,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "p.createdDate, p.productTime ,p.productType, p.category.first, p.category.second, img.uploadFileName, img.storeFileName) " +
             "from Product p " +
             "left join ProductImage img " +
-            "on p.id = img.id " +
+            "on p.id = img.product.id " +
             "where p.category.second = :second"
             )
     Page<ProductCategoryDto> findD(@Param("second")String categoryName, Pageable pageable);

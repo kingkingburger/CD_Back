@@ -449,16 +449,15 @@
                                             </ul>
 
 
-                                            <h6 class="fs-sm mb-2">마감시간</h6>
+                                            <h6 th:id="deadLine" class="fs-sm mb-2">마감시간</h6>
                                             <ul class="fs-sm ps-4">
                                                 <li th:id="*{ product.productTime}"></li>
                                             </ul>
 
-
-                                            <h6 class="fs-sm mb-2">Art. No.</h6>
+                                    <!--   <h6 class="fs-sm mb-2">Art. No.</h6>
                                             <ul class="fs-sm ps-4 mb-0">
-                                                <li>183260098</li>
-                                            </ul>
+                                                <li>"*{}"</li>
+                                            </ul>-->
                                         </div>
                                     </div>
                                 </div>
@@ -714,7 +713,7 @@
 
         }, 1000);
     } else {
-        $("#" + timeType).text("마감");
+        $("#" + timeType).text("-");
     }
 
 </script>

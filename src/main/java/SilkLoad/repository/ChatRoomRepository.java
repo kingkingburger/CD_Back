@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
 
     @Query("SELECT " +
-            "NEW SilkLoad.dto.ChatRoomTableDto(c.id, c.name, c.product.name, c.membersBuyer.name) " +
+            "NEW SilkLoad.dto.ChatRoomTableDto(c.id, c.name, c.product.name, c.membersBuyer.name ) " +
             "FROM ChatRoom c " +
             "WHERE  c.product.members.id = :memberId " +
             "OR c.membersBuyer.id = :memberId")

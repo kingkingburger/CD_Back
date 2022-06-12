@@ -209,4 +209,14 @@ public class ProductServiceTest {
 
     }
 
+    @Test
+    void 물품가져오기_테스트() {
+        PageRequest product = PageRequest.of(0, 4);
+
+        List<ProductCategoryDto> list = repository.findD("생활", product).getContent();
+
+        log.info("카테고리 리스트 {}",list);
+
+    }
+
 }
