@@ -48,7 +48,7 @@
                     </div>
 
                     <!--paging 처리 부분 -->
-                    <div class="d-flex pb-3">
+                    <div class="d-flex pb-3 " th:if="${totalPages != 0}">
                         <a class="nav-link-style nav-link-light me-3" th:if="${presentPage}" th:href="@{/shop(page=${presentPage}-1)}" href="#">
                             <i class="ci-arrow-left"></i>
                         </a>
@@ -107,7 +107,7 @@
                 <hr class="my-3">
 
                 <!-- Pagination-->
-                <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
+                <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation"  th:if="${totalPages != 0}" >
 
                     <ul class="pagination">
                         <li class="page-item">
@@ -124,13 +124,13 @@
                             </a>
                         </li>
                     </ul>
-
+<
                     <ul class="pagination">
-                        <th:block th:with="start = ${T(Math).floor(presentPage/10) * 10 +1},
+                        <th:block th:with="start = ${ T(Math).floor( presentPage/10 ) * 10 +1},
                                             end = (${start + 9 < totalPages ? start+9 : totalPages})">
                             <li class="page-item"
                                 th:each="pageButton : ${#numbers.sequence(start, end)}">
-                                <a class="page-link" th:href="@{/shop(category=${category}, first=${first},page = ${pageButton})}" th:text="${pageButton}"></a>
+                                <a class="page-link" th:classappend="( ${ pageButton == presentPage + 1 }) ? 'bg-primary text-white'  : '' " th:href="@{/shop(category=${category}, first=${first},page = ${pageButton})}" th:text="${pageButton}"></a>
                             </li>
                         </th:block>
                     </ul>

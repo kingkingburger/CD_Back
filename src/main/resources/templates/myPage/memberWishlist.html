@@ -101,7 +101,7 @@
                 </div>
 
                 <!-- Pagination-->
-                <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
+                <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation " th:if="${totalPages != 0}">
 
                     <ul class="pagination">
                         <li class="page-item">
@@ -124,7 +124,7 @@
                                             end = (${start + 9 < totalPages ? start+9 : totalPages})">
                             <li class="page-item"
                                 th:each="pageButton : ${#numbers.sequence(start, end)}">
-                                <a class="page-link" th:href="@{/members/myPage/wishlist(page = ${pageButton})}" th:text="${pageButton}"></a>
+                                <a class="page-link" th:classappend="( ${ pageButton == presentPage + 1 }) ? 'bg-primary text-white'  : '' " th:href="@{/members/myPage/wishlist(page = ${pageButton})}" th:text="${pageButton}"></a>
                             </li>
                         </th:block>
                     </ul>

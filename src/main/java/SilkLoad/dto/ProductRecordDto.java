@@ -21,10 +21,10 @@ public class ProductRecordDto {
     @NotBlank
     private String name;
     private Long auctionPrice; //경매가격
-    @NotBlank
+    @NotNull
     private Long instantPrice; //즉시거래가격
     private String explanation; //물품상세설명
-    @NotBlank
+    @NotNull
     private LocalDateTime deadLine;
     @NotNull
     private ProductTime productTime;

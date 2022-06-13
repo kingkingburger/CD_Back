@@ -52,5 +52,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     //검색해서 Product를 반환하는 쿼리
     Page<Product> findByNameContainingIgnoreCase(String keyword, Pageable pageable);
+
 }
 

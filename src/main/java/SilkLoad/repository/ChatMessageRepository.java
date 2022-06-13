@@ -22,5 +22,4 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> 
             "WHERE c.chatRoom.id = :chatRoomId")
     List<ChatMessageDto>  findByChatRoom_Id(@Param("chatRoomId") Long chatRoomId);
 
-
 }
