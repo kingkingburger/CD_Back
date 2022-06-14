@@ -35,7 +35,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "from Product p " +
             "left join ProductImage img " +
             "on p.id = img.product.id " +
-            "where p.category.second = :second "
+            "where p.category.second = :second " +
+            "AND p.productType = SilkLoad.entity.ProductEnum.ProductType.sale"
             )
     Page<ProductCategoryDto> findsecondcategory(@Param("second")String categoryName, Pageable pageable);
 
@@ -46,12 +47,13 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "from Product p " +
             "left join ProductImage img " +
             "on p.id = img.product.id " +
-            "where p.category.first = :first "
+            "where p.category.first = :first " +
+            "AND p.productType = SilkLoad.entity.ProductEnum.ProductType.sale "
     )
     Page<ProductCategoryDto> findfirstcategory(@Param("first")String categoryName, Pageable pageable);
 
     //검색해서 Product를 반환하는 쿼리
-    Page<Product> findByNameContainingIgnoreCase(String keyword, Pageable pageable);
+    Page<Product> findByNameContainingIgnoreCaseAndProductTypeSale(String keyword, Pageable pageable);
 
 }
 

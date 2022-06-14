@@ -3,10 +3,12 @@ package SilkLoad.controller.Member;
 import SilkLoad.SessionConst;
 import SilkLoad.dto.*;
 import SilkLoad.entity.ChatRoom;
+import SilkLoad.entity.ChatRoomEnum.ChatRoomType;
 import SilkLoad.entity.Members;
 import SilkLoad.entity.OrderEnum.OrderType;
 import SilkLoad.entity.ProductEnum.ProductTime;
 import SilkLoad.entity.ProductEnum.ProductType;
+import SilkLoad.repository.ChatRoomRepository;
 import SilkLoad.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -154,12 +157,16 @@ public class MyPageController {
     @GetMapping("/room/{roomId}")
     public String myRoom(@PathVariable("roomId") Long roomId,
                          Model model,
-                         HttpServletRequest request,
-                         HttpServletResponse response) throws IOException {
+                         HttpServletRequest request) throws IOException {
+        Members sessionMembers = getSessionMembers(request);
+        Long memberId = sessionMembers.getId();
+        if (!chatService.checkRoomPermission(roomId, memberId) ) {
+            return "redirect:/members/myPage/myChatRoomList";
+        }
 
         ChatRoomDto chatRoomDto = chatService.getChatRoom(roomId);
-        Members sessionMembers = getSessionMembers(request);
-        List<ChatMessageDto> chatMessageList = chatService.getChatMessageList(roomId, sessionMembers.getId());
+
+        List<ChatMessageDto> chatMessageList = chatService.getChatMessageList(roomId, memberId);
         log.info("chatmessageList: {}", chatMessageList);
 
         model.addAttribute("chatRoomDto", chatRoomDto);
@@ -167,6 +174,24 @@ public class MyPageController {
 
         return "/myPage/memberChatRoom";
 
+    }
+
+    @PostMapping("/room/out/{roomId}")
+    public String myRoomOut(@PathVariable("roomId") Long roomId,
+                            HttpServletRequest request,
+                            RedirectAttributes redirectAttributes
+    ) {
+
+        Members sessionMembers = getSessionMembers(request);
+
+        if ( chatService.exitRoom(roomId, sessionMembers.getId()) ) {
+
+            return "redirect:/members/myPage/myChatRoomList";
+        }
+
+        redirectAttributes.addAttribute("roomId", roomId);
+
+        return "redirect:/members/myPage/room/{roomId}";
     }
 
     private void calculationDeadLine(Page<OrderHistoryDto> tradeOrders) {

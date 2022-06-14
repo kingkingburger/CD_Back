@@ -1,6 +1,7 @@
 package SilkLoad.entity;
 
 
+import SilkLoad.entity.ChatRoomEnum.ChatRoomType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,6 +31,9 @@ public class ChatRoom {
     @OneToOne
     @JoinColumn(name= "MEMBER_ID")
     Members membersBuyer;
+
+    @Enumerated(EnumType.STRING)
+    ChatRoomType chatRoomType;
 
     LocalDateTime createDateTime;
 

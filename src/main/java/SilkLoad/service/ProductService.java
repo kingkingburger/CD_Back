@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -232,6 +233,7 @@ public class ProductService {
      */
     @Transactional
     public ProductRecordDto getProductRecordDto(Product product) {
+
         ProductRecordDto productRecordDto = ProductRecordDto.builder()
                 .id(product.getId())
                 .name(product.getName())
@@ -240,10 +242,11 @@ public class ProductService {
                 .explanation(product.getExplanation())
                 .productType(product.getProductType())
                 .categoryRecordDto(getCategoryRecordDto(product.getCategory()))
-                .deadLine(productDeadLine(product.getCreatedDate(), product.getProductTime()))
+                .deadLine( productDeadLine(product.getCreatedDate(), product.getProductTime()) )
                 .productTime(product.getProductTime())
                 .productImagesList(getProductRecordImageListDto(product.getProductImagesList()))
                 .build();
+
         return productRecordDto;
     }
 
@@ -451,9 +454,22 @@ public class ProductService {
     @Transactional
     public Page<ProductRecordDto> SearchToProductname( String keyword, Pageable pageable){
         Page<ProductRecordDto> productRecordDtoPage = productRepository
-                                                    .findByNameContainingIgnoreCase(keyword, pageable)
+                                                    .findByNameContainingIgnoreCaseAndProductTypeSale(keyword, pageable)
                                                     .map(this::getProductRecordDto);
         return productRecordDtoPage;
     }
 
+    //사용법: spring @Scheduled 검색
+    //1시간 마다 실행
+    @Scheduled(cron = "0 0 0/1 * * *")
+    @Transactional
+    public void checkDeadLine() {
+        List<Product> allProduct = productRepository.findAll();
+        allProduct.forEach( product -> {
+            LocalDateTime deadLine = productDeadLine(product.getCreatedDate(), product.getProductTime());
+            if( product.getProductType() == ProductType.sale && deadLine.isAfter(LocalDateTime.now())) {
+                product.setProductType(ProductType.cancel);
+            }
+        });
+    }
 }
