@@ -5,6 +5,7 @@ import SilkLoad.dto.ChatRoomDto;
 import SilkLoad.dto.ChatRoomTableDto;
 import SilkLoad.entity.ChatMessage;
 import SilkLoad.entity.ChatRoom;
+import SilkLoad.entity.ChatRoomEnum.ChatRoomType;
 import SilkLoad.entity.Members;
 import SilkLoad.repository.ChatMessageRepository;
 import SilkLoad.repository.ChatRoomRepository;
@@ -26,6 +27,30 @@ public class ChatService {
     private final ChatMessageRepository chatMessageRepository;
     private final MemberRepository memberRepository;
 
+    @Transactional
+    public boolean checkRoomPermission(Long roomId , Long memberId) {
+
+        Optional<ChatRoom> optionalChatRoom = chatRoomRepository.findById(roomId);
+
+        if (optionalChatRoom.isPresent()) {
+            ChatRoom chatRoom = optionalChatRoom.get();
+            ChatRoomType chatRoomType =chatRoom.getChatRoomType();
+            if ( chatRoomType != ChatRoomType.close) {
+
+                if ( (chatRoomType == ChatRoomType.onlySeller && chatRoom.getProduct().getId() == memberId)
+                    || (chatRoomType == chatRoomType.onlyBuyer && chatRoom.getMembersBuyer().getId() == memberId
+                    || (chatRoomType == chatRoomType.open)
+                        )
+                ) {
+                    return true;
+                }
+
+            } else{
+                return false;
+            }
+        }
+        return false;
+    }
 
     @Transactional
     public ChatRoomDto getChatRoom(Long RoomId) {
@@ -71,6 +96,7 @@ public class ChatService {
         return false;
     }
 
+    @Transactional
     public ChatMessage saveChatMessage(ChatMessageDto chatMessageDto) {
 
         Members members = memberRepository.findById(chatMessageDto.getWriterId()).get();
@@ -87,4 +113,38 @@ public class ChatService {
 
     }
 
+
+
+    @Transactional
+    public boolean exitRoom(Long roomId , Long memberId) {
+
+        Optional<ChatRoom> optionalRoom = chatRoomRepository.findById(roomId);
+
+        if (optionalRoom.isPresent()) {
+
+            ChatRoom chatRoom = optionalRoom.get();
+
+            if ( chatRoom.getChatRoomType() == ChatRoomType.open) {
+
+                if (chatRoom.getMembersBuyer().getId() == memberId) {
+
+                    chatRoom.setChatRoomType(ChatRoomType.onlySeller );
+                }
+                else {
+
+                    chatRoom.setChatRoomType(ChatRoomType.onlyBuyer);
+                }
+
+            } else {
+
+                chatRoom.setChatRoomType(ChatRoomType.close);
+
+            }
+            ChatRoom saveRoom = chatRoomRepository.save(chatRoom);
+
+            return saveRoom != null ? true : false;
+
+        }
+        return false;
+    }
 }

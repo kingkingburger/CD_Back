@@ -4,6 +4,7 @@ import SilkLoad.dto.OrderBuyAuctionDto;
 import SilkLoad.dto.OrderBuyNowDto;
 import SilkLoad.dto.OrderHistoryDto;
 import SilkLoad.entity.ChatRoom;
+import SilkLoad.entity.ChatRoomEnum.ChatRoomType;
 import SilkLoad.entity.Members;
 import SilkLoad.entity.OrderEnum.OrderType;
 import SilkLoad.entity.Orders;
@@ -71,7 +72,7 @@ public class OrderService {
     }
 
     @Transactional
-    public Orders saveBuyAuctionDto(OrderBuyAuctionDto orderBuyAuctionDto) {
+    public Orders saveBuyAuction(OrderBuyAuctionDto orderBuyAuctionDto) {
 
 
         Long memberId = orderBuyAuctionDto.getMemberId();
@@ -98,9 +99,6 @@ public class OrderService {
 
         }
         return null;
-
-
-
 
     }
 
@@ -234,6 +232,7 @@ public class OrderService {
                 .name(product.getMembers().getName() + "님의 " +  product.getName() + " 방")
                 .membersBuyer(members)
                 .product(product)
+                .chatRoomType(ChatRoomType.open)
                 .createDateTime(LocalDateTime.now())
                 .build();
 

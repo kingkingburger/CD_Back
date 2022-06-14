@@ -4,7 +4,6 @@ import SilkLoad.dto.OrderBuyAuctionDto;
 import SilkLoad.dto.OrderBuyNowDto;
 import SilkLoad.entity.Orders;
 import SilkLoad.service.OrderService;
-import SilkLoad.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -42,7 +41,7 @@ public class OrderController {
     @PostMapping("/buyAuction")
     public String SaveAuction(@ModelAttribute("orderBuyAuctionDto")OrderBuyAuctionDto orderBuyAuctionDto, HttpServletRequest request) {
 
-        Orders order = orderService.saveBuyAuctionDto(orderBuyAuctionDto);
+        Orders order = orderService.saveBuyAuction(orderBuyAuctionDto);
 
         if ( order == null) {
             log.info("order null 에러");
