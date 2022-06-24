@@ -6,6 +6,7 @@ import SilkLoad.entity.*;
 import SilkLoad.entity.OrderEnum.OrderType;
 import SilkLoad.entity.ProductEnum.ProductTime;
 import SilkLoad.entity.ProductEnum.ProductType;
+import SilkLoad.repository.CategoryRepository;
 import SilkLoad.repository.OrderRepository;
 import SilkLoad.repository.ProductImageRepository;
 import SilkLoad.repository.ProductRepository;
@@ -48,7 +49,7 @@ public class ProductService {
      * imageRepository.... 서비스를 따로 분리해야 하나 생각 중
      */
     private final ProductImageRepository productImageRepository;
-
+    private final CategoryRepository categoryRepository;
     @Transactional
     public void save(ProductFormDto productFormDto, Members loginMember) throws IOException {
 
@@ -58,7 +59,7 @@ public class ProductService {
         Product product = getProduct(productFormDto, loginMember);
         //카테고리 등록
         product.changeCategory(category);
-
+        category.getProductList().add(product);
         //product 저장
         Product savedProduct = productRepository.save(product);
 
@@ -105,12 +106,18 @@ public class ProductService {
 
 
     private Category categoryClassification(String categoryName) {
-
+        Category category;
         String[] splitCategory = categoryName.split(",");
-        Category category = Category.builder()
-                .first(splitCategory[0])
-                .second(splitCategory[1])
-                .build();
+        List<Category> byFirst = categoryRepository.findByFirst(splitCategory[0]);
+        if(byFirst.size() == 0){
+            category = Category.builder()
+                    .first(splitCategory[0])
+                    .second(splitCategory[1])
+                    .build();
+        }else{
+            category = byFirst.get(0);
+        }
+
         return category;
 
     }
@@ -454,7 +461,7 @@ public class ProductService {
     @Transactional
     public Page<ProductRecordDto> SearchToProductname( String keyword, Pageable pageable){
         Page<ProductRecordDto> productRecordDtoPage = productRepository
-                                                    .findByNameContainingIgnoreCaseAndProductTypeSale(keyword, pageable)
+                                                    .findByNameContainingIgnoreCaseAndProductType(keyword, ProductType.sale, pageable)
                                                     .map(this::getProductRecordDto);
         return productRecordDtoPage;
     }

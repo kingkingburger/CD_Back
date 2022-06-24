@@ -12,6 +12,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@NamedEntityGraph(name = "CategoryWithProduct", attributeNodes = @NamedAttributeNode("productList"))
 public class Category {
 
     @Id
@@ -21,7 +22,7 @@ public class Category {
     private String first;
     private String second;
 
-    @ToString.Exclude
+//    @ToString.Exclude
     @OneToMany(mappedBy = "category")
     private List<Product> productList = new ArrayList<Product>();
 
