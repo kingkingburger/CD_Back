@@ -59,7 +59,7 @@ public class ProductService {
         Product product = getProduct(productFormDto, loginMember);
         //카테고리 등록
         product.changeCategory(category);
-        category.getProductList().add(product);
+        category.getProductList().add(product);//카테고리의 productList에 product값 넣기
         //product 저장
         Product savedProduct = productRepository.save(product);
 
