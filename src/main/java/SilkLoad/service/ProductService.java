@@ -108,14 +108,16 @@ public class ProductService {
     private Category categoryClassification(String categoryName) {
         Category category;
         String[] splitCategory = categoryName.split(",");
-        List<Category> byFirst = categoryRepository.findByFirst(splitCategory[0]);
-        if(byFirst.size() == 0){
+        Optional<Category> categoryWithProduct = categoryRepository.
+                findByFirstAndSecondAndThird(splitCategory[0],splitCategory[1],splitCategory[2]);
+        if(categoryWithProduct.isPresent()){
             category = Category.builder()
                     .first(splitCategory[0])
                     .second(splitCategory[1])
+                    .third(splitCategory[2])
                     .build();
         }else{
-            category = byFirst.get(0);
+            category = categoryWithProduct.get();
         }
 
         return category;

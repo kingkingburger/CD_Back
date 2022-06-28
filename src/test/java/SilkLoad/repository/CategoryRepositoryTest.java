@@ -4,6 +4,7 @@ import SilkLoad.dto.ProductFormDto;
 import SilkLoad.entity.Category;
 import SilkLoad.entity.Members;
 import SilkLoad.entity.Product;
+import SilkLoad.entity.ProductEnum.ProductTime;
 import SilkLoad.service.MemberService;
 import SilkLoad.service.OrderService;
 import SilkLoad.service.ProductService;
@@ -17,8 +18,12 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.swing.text.html.Option;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
@@ -47,7 +52,7 @@ class CategoryRepositoryTest {
     @Rollback(value = false)
     void 카테고리_물품넣기_테스트() throws IOException {
 
-//        Product product = productRepository.findById((long) 1).get();
+        Product product = productRepository.findById((long) 1).get();
 
         //더미 이미지 만들기, jpg -> MultipartFile로 만들기가 힘들다
         List<MultipartFile> imageFiles = List.of(
@@ -62,17 +67,22 @@ class CategoryRepositoryTest {
                 .instancePrice(1234L)
                 .auctionPrice(1234L)
                 .Explanation("test입니다.")
-                .category("a,b")
+                .category("여성의류,코트,겨울")
                 .imageFileList(imageFiles)
+                .productTime(ProductTime.NONE)
                 .build();
 
         //DB에 있는 memeber 가지고 오기, member가 정해지지 않으면 영속성에서 외래키 오류가 발생한다
         Members members = memberRepository.findById((long) 1).get();
         productService.save(test_product, members);
 
-        List<Category> all = categoryRepository.findByFirst("a");
-        categoryRepository.save(all.get(0));
-        all.forEach(System.out::println);
+
+
+        String s = "여성의류,코트,겨울";
+        List<String> collect = Arrays.asList(s.split(",")).stream().collect(Collectors.toList());
+        Category all = categoryRepository.findByFirstAndSecondAndThird(collect.get(0), collect.get(1), collect.get(2)).get();
+//        categoryRepository.save(all.get(0));
+        System.out.println("all = " + all);
 
     }
 }
