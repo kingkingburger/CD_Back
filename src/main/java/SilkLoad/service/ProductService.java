@@ -454,7 +454,7 @@ public class ProductService {
     @Transactional
     public Page<ProductRecordDto> SearchToProductname( String keyword, Pageable pageable){
         Page<ProductRecordDto> productRecordDtoPage = productRepository
-                                                    .findByNameContainingIgnoreCaseAndProductTypeSale(keyword, pageable)
+                                                    .findByNameContainingIgnoreCaseAndProductType(keyword, ProductType.sale,pageable)
                                                     .map(this::getProductRecordDto);
         return productRecordDtoPage;
     }

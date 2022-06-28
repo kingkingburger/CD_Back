@@ -37,10 +37,9 @@ public class ChatService {
             ChatRoomType chatRoomType =chatRoom.getChatRoomType();
             if ( chatRoomType != ChatRoomType.close) {
 
-                if ( (chatRoomType == ChatRoomType.onlySeller && chatRoom.getProduct().getId() == memberId)
-                    || (chatRoomType == chatRoomType.onlyBuyer && chatRoom.getMembersBuyer().getId() == memberId
+                if ( (chatRoomType == ChatRoomType.onlySeller && chatRoom.getProduct().getMembers().getId()  == memberId)
+                    || (chatRoomType == chatRoomType.onlyBuyer && chatRoom.getMembersBuyer().getId() == memberId)
                     || (chatRoomType == chatRoomType.open)
-                        )
                 ) {
                     return true;
                 }
