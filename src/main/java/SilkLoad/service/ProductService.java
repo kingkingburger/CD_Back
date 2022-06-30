@@ -6,6 +6,7 @@ import SilkLoad.entity.*;
 import SilkLoad.entity.OrderEnum.OrderType;
 import SilkLoad.entity.ProductEnum.ProductTime;
 import SilkLoad.entity.ProductEnum.ProductType;
+import SilkLoad.repository.CategoryRepository;
 import SilkLoad.repository.OrderRepository;
 import SilkLoad.repository.ProductImageRepository;
 import SilkLoad.repository.ProductRepository;
@@ -48,7 +49,7 @@ public class ProductService {
      * imageRepository.... 서비스를 따로 분리해야 하나 생각 중
      */
     private final ProductImageRepository productImageRepository;
-
+    private final CategoryRepository categoryRepository;
     @Transactional
     public void save(ProductFormDto productFormDto, Members loginMember) throws IOException {
 
@@ -58,7 +59,7 @@ public class ProductService {
         Product product = getProduct(productFormDto, loginMember);
         //카테고리 등록
         product.changeCategory(category);
-
+        category.getProductList().add(product);//카테고리의 productList에 product값 넣기
         //product 저장
         Product savedProduct = productRepository.save(product);
 
@@ -105,12 +106,20 @@ public class ProductService {
 
 
     private Category categoryClassification(String categoryName) {
-
+        Category category;
         String[] splitCategory = categoryName.split(",");
-        Category category = Category.builder()
-                .first(splitCategory[0])
-                .second(splitCategory[1])
-                .build();
+        Optional<Category> categoryWithProduct = categoryRepository.
+                findByFirstAndSecondAndThird(splitCategory[0],splitCategory[1],splitCategory[2]);
+        if(categoryWithProduct.isPresent()){
+            category = Category.builder()
+                    .first(splitCategory[0])
+                    .second(splitCategory[1])
+                    .third(splitCategory[2])
+                    .build();
+        }else{
+            category = categoryWithProduct.get();
+        }
+
         return category;
 
     }
@@ -454,7 +463,7 @@ public class ProductService {
     @Transactional
     public Page<ProductRecordDto> SearchToProductname( String keyword, Pageable pageable){
         Page<ProductRecordDto> productRecordDtoPage = productRepository
-                                                    .findByNameContainingIgnoreCaseAndProductType(keyword, ProductType.sale,pageable)
+                                                    .findByNameContainingIgnoreCaseAndProductType(keyword, ProductType.sale, pageable)
                                                     .map(this::getProductRecordDto);
         return productRecordDtoPage;
     }
