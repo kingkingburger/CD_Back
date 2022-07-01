@@ -13,8 +13,8 @@ import java.util.List;
 
 @Repository
 public interface CartRepository extends JpaRepository<Cart, Long> {
-    Page<Cart> findByMember(Members memberid, Pageable pageable);
 
+    Page<Cart> findByMember(Members memberid, Pageable pageable);
 
     @Transactional
     void deleteByProductId(Long productid);
