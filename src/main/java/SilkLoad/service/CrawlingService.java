@@ -30,7 +30,7 @@ public class CrawlingService {
 
         CrawlingDto crawlingDto = CrawlingDto.builder()
                 .name(crawling.getName())
-                .category(crawling.getCategory())
+                .category(crawling.getFirst())
                 .img_link(crawling.getImg_link())
                 .link(crawling.getLink())
                 .price(crawling.getPrice())
@@ -42,17 +42,25 @@ public class CrawlingService {
     /**
      * 크롤링 데이터를 카태고리 별로 가지고 온다.
      * @param pageable
-     * @param category
+     * @param first
      * @return
      */
     @Transactional(readOnly = true)
-    public Page<CrawlingDto> getcrawlingdata(Pageable pageable, String category) {
+    public Page<CrawlingDto> getcrawlingdatafirst(Pageable pageable, String first) {
 
         Page<CrawlingDto> data = crawlingRepository
-                                    .findByCategory(category, pageable)
+                                    .findByFirst(first, pageable)
                                     .map(this::getCrawlingDtoList);
+        log.info("first 쪽 data가 잘 들어오는지 ={}",data);
         return data;
     }
-
+    @Transactional(readOnly = true)
+    public Page<CrawlingDto> getcrawlingdatasecond(Pageable pageable, String second) {
+        Page<CrawlingDto> data = crawlingRepository
+                .findBySecond(second, pageable)
+                .map(this::getCrawlingDtoList);
+        log.info("second 쪽 data가 잘 들어오는지 ={}",data);
+        return data;
+    }
 
 }

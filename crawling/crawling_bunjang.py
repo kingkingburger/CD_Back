@@ -1,15 +1,15 @@
-from asyncio import threads
+# from multiprocessing import Pool
+import threading
 import time
+
 import pymysql
+from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
-from bs4 import BeautifulSoup
-import schedule
-# from multiprocessing import Pool
-import threading
 
-category_list = [[["310090050", "310090060", "310090999", "310110030", "310110010", "310240", "310230", "310260200", "310260100", "310260300",
+category_list = [
+                    [["310090050", "310090060", "310090999", "310110030", "310110010", "310240", "310230", "310260200", "310260100", "310260300",
                    "310040090", "310040080", "310040070", "310040999", "310050010", "310050050", "310050030", "310050040", "310050999", "310150030",
                    "310150010", "310150040", "310150070", "310150999", "310140020", "310140010", "310140030", "310140040", "310140999", "310160010",
                    "310160060", "310160020", "310160999", "310130030", "310130080", "310130040", "310120030", "310120110", "310120020", "310070",
@@ -91,7 +91,8 @@ category_list = [[["310090050", "310090060", "310090999", "310110030", "31011001
                    "500120006", "500120005", "500120007",  # 유아동/출산 500 하위 카테고리 73개"""
 
                    "980100", "980200", "980400", "980500", "980990",  # 반려동물용품 980 하위 카테고리 5개"""
-                   ]]]  # 기타 999"""
+                   ]]
+                 ]  # 기타 999"""
 
 
 def crawling(category_list):
@@ -158,7 +159,7 @@ def crawling(category_list):
             i += 1
 
     connect = pymysql.connect(
-        host='localhost', user='root', password='root', db='silkLoad', charset='utf8mb4')
+        host='localhost', user='root', password='1234', db='silkLoad', charset='utf8mb4')
     cursor = connect.cursor()
 
     # delete = """delete from crawling where exists(select * from crawling)"""
@@ -188,10 +189,10 @@ def crawling(category_list):
 
 def db_reset():
     connect = pymysql.connect(
-        host='localhost', user='root', password='root', db='silkLoad', charset='utf8mb4')
+        host='localhost', user='root', password='1234', db='silkload', charset='utf8mb4')
     cursor = connect.cursor()
 
-    delete = """delete from crawling where exists(select * from crawling)"""
+    delete = """delete from crawling"""
     cursor.execute(delete)
 
     alter = """alter table crawling auto_increment=1"""

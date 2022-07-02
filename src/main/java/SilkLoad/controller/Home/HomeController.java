@@ -39,26 +39,26 @@ public class HomeController {
     @GetMapping("/")
     public String home(Model model,
                        HttpServletRequest request,
-                       @PageableDefault(size=8) Pageable pageable) {//@PageableDefault로 기본 8개를 가지고 오게했다.
+                       @PageableDefault(size=8) Pageable pageable) {//@PageableDefault로 기본 8개를 가지고 오게했다crawling.
         List<ProductRecordDto> content = productService.paged_product(pageable).getContent();
 
         model.addAttribute("Products", content);
         model.addAttribute("sale", ProductType.sale);
 
-        Page<CrawlingDto> women_close = crawlingService.getcrawlingdata(pageable, "여성의류");
-        Page<CrawlingDto> men_close = crawlingService.getcrawlingdata(pageable,"남성의류");
-        Page<CrawlingDto> shose = crawlingService.getcrawlingdata(pageable, "패션");
-        Page<CrawlingDto> sport = crawlingService.getcrawlingdata(pageable, "스포츠");
-        Page<CrawlingDto> car = crawlingService.getcrawlingdata(pageable, "차량");
-        Page<CrawlingDto> star = crawlingService.getcrawlingdata(pageable, "굿즈");
-        Page<CrawlingDto> toy = crawlingService.getcrawlingdata(pageable, "키덜트");
-        Page<CrawlingDto> art = crawlingService.getcrawlingdata(pageable, "예술");
-        Page<CrawlingDto> book = crawlingService.getcrawlingdata(pageable, "도서");
-        Page<CrawlingDto> family = crawlingService.getcrawlingdata(pageable, "가구");
-        Page<CrawlingDto> life = crawlingService.getcrawlingdata(pageable, "생활");
-        Page<CrawlingDto> kid = crawlingService.getcrawlingdata(pageable, "유아");
-        Page<CrawlingDto> animal = crawlingService.getcrawlingdata(pageable, "동물");
-        Page<CrawlingDto> etc = crawlingService.getcrawlingdata(pageable, "기타");
+        Page<CrawlingDto> women_close = crawlingService.getcrawlingdatafirst(pageable, "여성의류");
+        Page<CrawlingDto> men_close = crawlingService.getcrawlingdatafirst(pageable,"남성의류");
+        Page<CrawlingDto> shose = crawlingService.getcrawlingdatafirst(pageable, "신발");
+        Page<CrawlingDto> sport = crawlingService.getcrawlingdatafirst(pageable, "스포츠/레저");
+        Page<CrawlingDto> car = crawlingService.getcrawlingdatafirst(pageable, "차량/오토바이");
+        Page<CrawlingDto> star = crawlingService.getcrawlingdatafirst(pageable, "스타굿즈");
+        Page<CrawlingDto> toy = crawlingService.getcrawlingdatafirst(pageable, "키덜트");
+        Page<CrawlingDto> art = crawlingService.getcrawlingdatafirst(pageable, "예술/희귀/수집품");
+        Page<CrawlingDto> book = crawlingService.getcrawlingdatafirst(pageable, "도서/티켓/문구");
+        Page<CrawlingDto> family = crawlingService.getcrawlingdatafirst(pageable, "가구/인테리어");
+        Page<CrawlingDto> life = crawlingService.getcrawlingdatafirst(pageable, "생활/가공식품");
+        Page<CrawlingDto> kid = crawlingService.getcrawlingdatafirst(pageable, "유아동/출산");
+        Page<CrawlingDto> animal = crawlingService.getcrawlingdatafirst(pageable, "반려동물용품");
+        Page<CrawlingDto> etc = crawlingService.getcrawlingdatafirst(pageable, "기타");
 
         model.addAttribute("women_close",women_close);
         model.addAttribute("men_close",men_close);
