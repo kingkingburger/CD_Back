@@ -64,15 +64,7 @@ public class ProductServiceTest {
         System.out.println("product = " + product);
     }
 
-    @Test
-    void 물품_가져오기_테스트(){
-        List<ProductRecordDto> allProduct = productService.findAllProduct();
-        ProductRecordDto byId_product = productService.findById_ProductRecordDto(5L);
-//        System.out.println("byId_product = " + byId_product);
-        for (ProductRecordDto product : allProduct) {
-            System.out.println("product = " + product.getProductImagesList().get(0).getStoreFileName());
-        }
-    }
+
 
     @Test
     void productLazeTest() throws IOException {

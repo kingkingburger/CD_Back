@@ -89,7 +89,7 @@ public class ShopController {
                                 @PageableDefault(size = 9) Pageable pageable,
                                 Model model) {
 
-        List<ProductRecordDto> allProduct = productService.findAllProduct();
+//        List<ProductRecordDto> allProduct = productService.findAllProduct();
 
         ProductRecordDto byId_productRecordDto = productService.findById_ProductRecordDto(id);
 
@@ -101,13 +101,14 @@ public class ShopController {
         }
 
         //--------------------크롤링 데이터 보내는 부분----------------------
-        Page<CrawlingDto> crawlingdata = crawlingService.getcrawlingdatafirst(pageable, first);
+        Page<CrawlingDto> crawlingdata = crawlingService.getcrawlingdatathird(pageable, third);
         model.addAttribute("crawlingdata",crawlingdata);
+        //----------------------------------------------------------------
 
         model.addAttribute("maxAuctionPrice", maxAuctionPrice);
         model.addAttribute("productTime", ProductTime.values());
         model.addAttribute("product", byId_productRecordDto);
-        model.addAttribute("allProduct", allProduct);
+//        model.addAttribute("allProduct", allProduct);
 
         return "detailProduct";
     }

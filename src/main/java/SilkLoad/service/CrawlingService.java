@@ -26,7 +26,7 @@ public class CrawlingService {
      * @param crawling
      * @return
      */
-    public CrawlingDto getCrawlingDtoList(Crawling crawling){
+    public CrawlingDto ToCrawlingDto(Crawling crawling){
 
         CrawlingDto crawlingDto = CrawlingDto.builder()
                 .name(crawling.getName())
@@ -39,28 +39,31 @@ public class CrawlingService {
         return crawlingDto;
     }
 
-    /**
-     * 크롤링 데이터를 카태고리 별로 가지고 온다.
-     * @param pageable
-     * @param first
-     * @return
-     */
+    //crawling 데이터를 first 기준으로 데이터 리턴
     @Transactional(readOnly = true)
     public Page<CrawlingDto> getcrawlingdatafirst(Pageable pageable, String first) {
 
         Page<CrawlingDto> data = crawlingRepository
                                     .findByFirst(first, pageable)
-                                    .map(this::getCrawlingDtoList);
-        log.info("first 쪽 data가 잘 들어오는지 ={}",data);
+                                    .map(this::ToCrawlingDto);
         return data;
     }
+
+    //crawling 데이터를 second 기준으로 데이터 리턴
     @Transactional(readOnly = true)
     public Page<CrawlingDto> getcrawlingdatasecond(Pageable pageable, String second) {
         Page<CrawlingDto> data = crawlingRepository
                 .findBySecond(second, pageable)
-                .map(this::getCrawlingDtoList);
-        log.info("second 쪽 data가 잘 들어오는지 ={}",data);
+                .map(this::ToCrawlingDto);
         return data;
     }
 
+    //crawling 데이터를 third기준으로 데이터 리턴
+    @Transactional(readOnly = true)
+    public Page<CrawlingDto> getcrawlingdatathird(Pageable pageable, String third) {
+        Page<CrawlingDto> data = crawlingRepository
+                .findByThird(third, pageable)
+                .map(this::ToCrawlingDto);
+        return data;
+    }
 }

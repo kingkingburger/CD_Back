@@ -392,18 +392,18 @@
 
                             <!--가격-->
                             <div class="mb-3"><span class="h3 fw-normal text-accent me-1"
-                                                    th:text="${product.instantPrice}"><small>원</small></span>
-                                <del class="fs-lg me-3">원</del>
+                                                    th:text="${product.instantPrice}"></span>
+                                <span class="me-3">원</span>
                             </div>
 
                             <div class="fs-sm mb-4">
                                 <span class="text-heading fw-medium me-1">카테고리:</span>
                                 <span class="text-muted" id="colorOption1"
-                                      th:utext="${product.categoryRecordDto.getFirst()()}"></span>
+                                      th:utext="${product.categoryRecordDto.getFirst()}"></span>
                                 <span class="text-muted" id="colorOption2"
                                       th:text="${product.categoryRecordDto.getSecond()}"></span>
-                                <span class="text-muted" id="colorOption3"
-                                      th:text="${product.categoryRecordDto.getThird()}"></span>
+<!--                                <span class="text-muted" id="colorOption3"-->
+<!--                                      th:text="${product.categoryRecordDto.getThird()}"></span>-->
                             </div>
 
 
@@ -516,7 +516,6 @@
                                 <div class="d-flex justify-content-between">
                                     <div class="product-price">
                                     <span class="text-accent" th:text="|${product.getPrice()} 원|">
-                                      <small></small>
                                     </span>
                                 </div>
 
