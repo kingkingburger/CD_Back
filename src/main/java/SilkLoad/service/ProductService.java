@@ -50,13 +50,14 @@ public class ProductService {
      */
     private final ProductImageRepository productImageRepository;
     private final CategoryRepository categoryRepository;
+
     @Transactional
     public void save(ProductFormDto productFormDto, Members loginMember) throws IOException {
 
         String categoryName = productFormDto.getCategory();
         Category category = categoryClassification(categoryName);
 
-        Product product = getProduct(productFormDto, loginMember);
+        Product product = ProductFormDtoToProduct(productFormDto, loginMember);
         //카테고리 등록
         product.changeCategory(category);
         category.getProductList().add(product);//카테고리의 productList에 product값 넣기
@@ -70,10 +71,8 @@ public class ProductService {
         //이미지등록
         List<ProductImage> productImages = filesImgSave(productFormDto.getImageFileList());
         productImages.forEach(productImage -> {
-
             productImage.changeProduct(product);
             productImageRepository.save(productImage);
-
         });
 
     }
@@ -90,7 +89,7 @@ public class ProductService {
         return order;
     }
 
-    private Product getProduct(ProductFormDto productFormDto, Members loginMember) {
+    private Product ProductFormDtoToProduct(ProductFormDto productFormDto, Members loginMember) {
         Product product = Product.builder()
                 .name(productFormDto.getName())
                 .instantPrice(productFormDto.getInstancePrice())
@@ -105,23 +104,26 @@ public class ProductService {
     }
 
 
-    private Category categoryClassification(String categoryName) {
+    @Transactional
+    Category categoryClassification(String categoryName) {
         Category category;
         String[] splitCategory = categoryName.split(",");
+
         Optional<Category> categoryWithProduct = categoryRepository.
-                findByFirstAndSecondAndThird(splitCategory[0],splitCategory[1],splitCategory[2]);
-        if(categoryWithProduct.isPresent()){
+                findByFirstAndSecondAndThird(splitCategory[0], splitCategory[1], splitCategory[2]);
+        log.info("왜 2개가 출력이 되는지 : {}", categoryWithProduct);
+        if (!categoryWithProduct.isPresent()) { // 존재하지 않는다면
             category = Category.builder()
                     .first(splitCategory[0])
                     .second(splitCategory[1])
                     .third(splitCategory[2])
                     .build();
-        }else{
+            log.info("if문이 동작함 ={}", category);
+        } else {
             category = categoryWithProduct.get();
+            log.info("else문이 동작함 ={}", category);
         }
-
         return category;
-
     }
 
     /**
@@ -204,24 +206,9 @@ public class ProductService {
      */
     @Transactional(readOnly = true)
     public ProductRecordDto findById_ProductRecordDto(long id) {
-
-
         Product product = productRepository.findById(id).get();
         ProductRecordDto productRecordDto = getProductRecordDto(product);
-
         return productRecordDto;
-    }
-
-
-    /**
-     * db에 있는 product 테이블에 있는 모든것
-     *
-     * @return List형태로 반환
-     */
-    @Transactional
-    public List<ProductRecordDto> findAllProduct() {
-        List<Product> allProduct = productRepository.findAll();
-        return productToProductRecordDto(allProduct);
     }
 
     @Transactional
@@ -251,7 +238,7 @@ public class ProductService {
                 .explanation(product.getExplanation())
                 .productType(product.getProductType())
                 .categoryRecordDto(getCategoryRecordDto(product.getCategory()))
-                .deadLine( productDeadLine(product.getCreatedDate(), product.getProductTime()) )
+                .deadLine(productDeadLine(product.getCreatedDate(), product.getProductTime()))
                 .productTime(product.getProductTime())
                 .productImagesList(getProductRecordImageListDto(product.getProductImagesList()))
                 .build();
@@ -294,7 +281,7 @@ public class ProductService {
                     .instantPrice(product.getInstantPrice())
                     .explanation(product.getExplanation())
                     .productType(product.getProductType())
-                    .categoryRecordDto( getCategoryRecordDto(product.getCategory()))
+                    .categoryRecordDto(getCategoryRecordDto(product.getCategory()))
                     .deadLine(productDeadLine(product.getCreatedDate(), product.getProductTime()))
                     .productTime(product.getProductTime())
                     .productImagesList(getProductRecordImageListDto(product.getProductImagesList()))
@@ -311,6 +298,7 @@ public class ProductService {
         return CategoryRecordDto.builder()
                 .first(category.getFirst())
                 .second(category.getSecond())
+                .third(category.getThird())
                 .build();
     }
 
@@ -331,18 +319,17 @@ public class ProductService {
     }
 
 
-
-
     /**
      * 테이블에 product 를 가져와서 map으로 ProductRecordDto로 만들어준다.
+     *
      * @param pageable
      * @return
      */
     @Transactional
-    public Page<ProductRecordDto> paged_product(Pageable pageable){
+    public Page<ProductRecordDto> paged_product(Pageable pageable) {
         Page<ProductRecordDto> sale = productRepository
-                                        .findByProductTypeOrderByIdDesc(ProductType.sale, pageable)
-                                        .map(this::getProductRecordDto);
+                .findByProductTypeOrderByIdDesc(ProductType.sale, pageable)
+                .map(this::getProductRecordDto);
 
 
         return sale;
@@ -351,14 +338,15 @@ public class ProductService {
     /**
      * second 카테고리 별로 물품을 가져오기
      * 아래 3종 세트
-     * @param category
+     *
+     * @param second
      * @param pageable
      * @return
      */
     @Transactional
-    public Page<ProductRecordDto> pagedBysecondcategoryProduct(String category, Pageable pageable){
+    public Page<ProductRecordDto> pagedBysecondcategoryProduct(String second, Pageable pageable) {
 
-        Page<ProductCategoryDto> productCategoryDtos = productRepository.findsecondcategory(category,pageable);
+        Page<ProductCategoryDto> productCategoryDtos = productRepository.findsecondcategory(second, pageable);
         List<ProductRecordDto> productRecordDtoList = new ArrayList<>();
 
         //ProductRecordDto로 바꾸기
@@ -369,17 +357,19 @@ public class ProductService {
         //List 를 Page로 변환
         return ListToPage(pageable, productRecordDtoList);
     }
+
     /**
      * first 카테고리 별로 물품을 가져오기
      * 아래 3종 세트
+     *
      * @param category
      * @param pageable
      * @return
      */
     @Transactional
-    public Page<ProductRecordDto> pagedByfirstcategoryProduct(String category, Pageable pageable){
+    public Page<ProductRecordDto> pagedByfirstcategoryProduct(String category, Pageable pageable) {
 
-        Page<ProductCategoryDto> productCategoryDtos = productRepository.findfirstcategory(category,pageable);
+        Page<ProductCategoryDto> productCategoryDtos = productRepository.findfirstcategory(category, pageable);
         List<ProductRecordDto> productRecordDtoList = new ArrayList<>();
 
         //ProductRecordDto로 바꾸기
@@ -393,6 +383,7 @@ public class ProductService {
 
     /**
      * 카테고리화 된 객체 ProductRecordDto로 만들기
+     *
      * @param productRecordDtoList
      * @param list
      * @param productCategoryDto
@@ -402,10 +393,8 @@ public class ProductService {
                                             ProductCategoryDto productCategoryDto) {
         String first = productCategoryDto.getFirst();
         String second = productCategoryDto.getSecond();
-        CategoryRecordDto build = CategoryRecordDto.builder().first(first).second(second).build();
-
-        log.info("product craetedate : {} ", productCategoryDto.getCreatedDate());
-        log.info("product time : {} ", productCategoryDto.getProductTime());
+        String third = productCategoryDto.getThird();
+        CategoryRecordDto build = CategoryRecordDto.builder().first(first).second(second).third(third).build();
 
         ProductRecordDto productRecordDto = ProductRecordDto.builder()
                 .id(productCategoryDto.getId())
@@ -420,14 +409,12 @@ public class ProductService {
                 .productImagesList(list)
                 .build();
 
-        log.info("ddddd : {} ", productRecordDto.getDeadLine());
-
-
         productRecordDtoList.add(productRecordDto);
     }
 
     /**
      * 카테고리로 잘라온 물품의 이미지 리스트 만들기
+     *
      * @param productCategoryDto
      * @return
      */
@@ -445,6 +432,7 @@ public class ProductService {
 
     /**
      * List로 된 객체를 Page객체로 변환
+     *
      * @param pageable
      * @param productRecordDtoList
      * @return
@@ -456,15 +444,16 @@ public class ProductService {
 
     /**
      * keyword를 기준으로 Paging된 productRecordDto를 반환
+     *
      * @param keyword
      * @param pageable
      * @return
      */
     @Transactional
-    public Page<ProductRecordDto> SearchToProductname( String keyword, Pageable pageable){
+    public Page<ProductRecordDto> SearchToProductname(String keyword, Pageable pageable) {
         Page<ProductRecordDto> productRecordDtoPage = productRepository
-                                                    .findByNameContainingIgnoreCaseAndProductType(keyword, ProductType.sale, pageable)
-                                                    .map(this::getProductRecordDto);
+                .findByNameContainingIgnoreCaseAndProductType(keyword, ProductType.sale, pageable)
+                .map(this::getProductRecordDto);
         return productRecordDtoPage;
     }
 
@@ -474,9 +463,9 @@ public class ProductService {
     @Transactional
     public void checkDeadLine() {
         List<Product> allProduct = productRepository.findAll();
-        allProduct.forEach( product -> {
+        allProduct.forEach(product -> {
             LocalDateTime deadLine = productDeadLine(product.getCreatedDate(), product.getProductTime());
-            if( product.getProductType() == ProductType.sale && deadLine.isAfter(LocalDateTime.now())) {
+            if (product.getProductType() == ProductType.sale && deadLine.isAfter(LocalDateTime.now())) {
                 product.setProductType(ProductType.cancel);
             }
         });

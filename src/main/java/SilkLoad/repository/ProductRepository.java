@@ -27,7 +27,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     //Product 안에 원하는 category(second) 빼오는 쿼리
     @Query(value = "SELECT " +
             "new SilkLoad.dto.ProductCategoryDto(p.id, p.name, p.auctionPrice, p.instantPrice, p.explanation, " +
-            "p.createdDate, p.productTime ,p.productType, p.category.first, p.category.second, img.uploadFileName, img.storeFileName) " +
+            "p.createdDate, p.productTime ,p.productType, p.category.first, p.category.second, p.category.third, img.uploadFileName, img.storeFileName) " +
             "from Product p " +
             "left join ProductImage img " +
             "on p.id = img.product.id " +
@@ -39,7 +39,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     //Product 안에 원하는 category(second) 빼오는 쿼리
     @Query(value = "SELECT " +
             "new SilkLoad.dto.ProductCategoryDto(p.id, p.name, p.auctionPrice, p.instantPrice, p.explanation, " +
-            "p.createdDate, p.productTime ,p.productType, p.category.first, p.category.second, img.uploadFileName, img.storeFileName) " +
+            "p.createdDate, p.productTime ,p.productType, p.category.first, p.category.second, p.category.third, img.uploadFileName, img.storeFileName) " +
             "from Product p " +
             "left join ProductImage img " +
             "on p.id = img.product.id " +
@@ -47,6 +47,17 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "AND p.productType = SilkLoad.entity.ProductEnum.ProductType.sale "
     )
     Page<ProductCategoryDto> findfirstcategory(@Param("first")String categoryName, Pageable pageable);
+
+    @Query(value = "SELECT " +
+            "new SilkLoad.dto.ProductCategoryDto(p.id, p.name, p.auctionPrice, p.instantPrice, p.explanation, " +
+            "p.createdDate, p.productTime ,p.productType, p.category.first, p.category.second, p.category.third, img.uploadFileName, img.storeFileName) " +
+            "from Product p " +
+            "left join ProductImage img " +
+            "on p.id = img.product.id " +
+            "where p.category.third = :third " +
+            "AND p.productType = SilkLoad.entity.ProductEnum.ProductType.sale "
+    )
+    Page<ProductCategoryDto> findthirdcategory(@Param("third")String categoryName, Pageable pageable);
 
     //검색해서 Product를 반환하는 쿼리
 

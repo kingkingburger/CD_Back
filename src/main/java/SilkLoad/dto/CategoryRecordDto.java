@@ -9,4 +9,5 @@ public class CategoryRecordDto {
 
     private String first;
     private String second;
+    private String third;
 }

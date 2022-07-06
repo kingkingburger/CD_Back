@@ -25,6 +25,7 @@ public class ProductCategoryDto {
     private ProductType productType;
     private String first;
     private String second;
+    private String third;
     private String uploadFileName;  //회원이 올린 파일 이름
     private String storeFileName;   //실제 저장 될 파일 이름
 
@@ -38,6 +39,7 @@ public class ProductCategoryDto {
                               ProductType productType,
                               String first,
                               String second,
+                              String third,
                               String uploadFileName,
                               String storeFileName) {
         this.id = id;
@@ -50,6 +52,7 @@ public class ProductCategoryDto {
         this.productType = productType;
         this.first = first;
         this.second = second;
+        this.third = third;
         this.uploadFileName = uploadFileName;
         this.storeFileName = storeFileName;
     }

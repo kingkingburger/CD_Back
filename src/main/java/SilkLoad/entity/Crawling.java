@@ -18,7 +18,10 @@ public class Crawling {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // PK
 
-    private String category;
+    private String site_name;
+    private String first;
+    private String second;
+    private String third;
     private String name;
     private String price;
     private String link;

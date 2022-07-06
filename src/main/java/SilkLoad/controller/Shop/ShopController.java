@@ -31,13 +31,13 @@ public class ShopController {
 
     @GetMapping
     public String shop(Model model,
-                       @RequestParam(required = false, name = "category") String category,
                        @RequestParam(required = false, name = "first") String first,
+                       @RequestParam(required = false, name = "second") String second,
                        @RequestParam(required = false, name = "keyword")String keyword,
                        @PageableDefault(size = 9) Pageable pageable) {
         //카테고리들
-        model.addAttribute("category", category);
-        model.addAttribute("first",first);
+        model.addAttribute("first", first);
+        model.addAttribute("second",second);
 
 
         //전체 페이지 수
@@ -45,18 +45,16 @@ public class ShopController {
         //현제 페이지
         int presentPage = productService.paged_product(pageable).getNumber();
 
-        log.info("keyword입니다. = {}",keyword);
 
         List<ProductRecordDto> content;
         //first가 있는지 없는지에 따라 content가 변한다.
-        if(first != null)
-            content = productService.pagedByfirstcategoryProduct(first, pageable).getContent();
+        if(second != null)
+            content = productService.pagedBysecondcategoryProduct(second, pageable).getContent();
         else if(keyword != null)
             content = productService.SearchToProductname(keyword, pageable).getContent();
         else
             //페이징화 된 객체
-            content = productService.pagedBysecondcategoryProduct(category, pageable).getContent();
-
+            content = productService.pagedByfirstcategoryProduct(first, pageable).getContent();
 
         model.addAttribute("allProduct", content);
         //전체 페이지 수 모델로 보내기
@@ -68,7 +66,9 @@ public class ShopController {
 
 
         //--------------------크롤링 데이터 보내는 부분----------------------
-        Page<CrawlingDto> crawlingdata = crawlingService.getcrawlingdata(pageable, category);
+        String crawlingcategory;
+        crawlingcategory = second;
+        Page<CrawlingDto> crawlingdata = crawlingService.getcrawlingdatasecond(pageable, crawlingcategory);
         model.addAttribute("crawlingdata",crawlingdata);
 
         return "shop";
@@ -83,12 +83,13 @@ public class ShopController {
      */
     @GetMapping("/detailProduct")
     public String detailProduct(@RequestParam Long id,
-                                @RequestParam(required = false, name = "category") String category,
                                 @RequestParam(required = false, name = "first") String first,
+                                @RequestParam(required = false, name = "second") String second,
+                                @RequestParam(required = false, name = "third") String third,
                                 @PageableDefault(size = 9) Pageable pageable,
                                 Model model) {
 
-        List<ProductRecordDto> allProduct = productService.findAllProduct();
+//        List<ProductRecordDto> allProduct = productService.findAllProduct();
 
         ProductRecordDto byId_productRecordDto = productService.findById_ProductRecordDto(id);
 
@@ -100,13 +101,14 @@ public class ShopController {
         }
 
         //--------------------크롤링 데이터 보내는 부분----------------------
-        Page<CrawlingDto> crawlingdata = crawlingService.getcrawlingdata(pageable, category);
+        Page<CrawlingDto> crawlingdata = crawlingService.getcrawlingdatathird(pageable, third);
         model.addAttribute("crawlingdata",crawlingdata);
+        //----------------------------------------------------------------
 
         model.addAttribute("maxAuctionPrice", maxAuctionPrice);
         model.addAttribute("productTime", ProductTime.values());
         model.addAttribute("product", byId_productRecordDto);
-        model.addAttribute("allProduct", allProduct);
+//        model.addAttribute("allProduct", allProduct);
 
         return "detailProduct";
     }
