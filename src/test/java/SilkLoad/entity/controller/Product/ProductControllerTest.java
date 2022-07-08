@@ -1,4 +1,4 @@
-package SilkLoad.controller.Product;
+package SilkLoad.entity.controller.Product;
 
 import static org.junit.jupiter.api.Assertions.*;
 

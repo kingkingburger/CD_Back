@@ -1,4 +1,4 @@
-package SilkLoad.controller;
+package SilkLoad.entity.controller;
 
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

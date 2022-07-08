@@ -465,7 +465,7 @@ public class ProductService {
         List<Product> allProduct = productRepository.findAll();
         allProduct.forEach(product -> {
             LocalDateTime deadLine = productDeadLine(product.getCreatedDate(), product.getProductTime());
-            if (product.getProductType() == ProductType.sale && deadLine.isAfter(LocalDateTime.now())) {
+            if (product.getProductType() == ProductType.sale && deadLine.isBefore(LocalDateTime.now())) {
                 product.setProductType(ProductType.cancel);
             }
         });
