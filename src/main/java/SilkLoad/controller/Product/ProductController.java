@@ -44,6 +44,7 @@ public class ProductController {
                               HttpServletRequest request) throws IOException {
 
         if (bindingResult.hasErrors()) {
+            bindingResult.reject("addProductFail", "잘못 입력하셨습니다.");
             return "addProductForm";
         }
 

@@ -21,7 +21,7 @@
                               method="post" autocomplete="off" novalidate>
 
                             <div th:if="${#fields.hasGlobalErrors()}">
-                                <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류
+                                <p class="text-danger" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류
                                     메시지</p>
                             </div>
 

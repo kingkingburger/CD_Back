@@ -65,7 +65,7 @@
                     <div class="col-md-4 col-sm-6 px-2 mb-4" th:each="product : ${allProduct}">
                         <div class="card product-card" th:if="${product.getProductType == sale}" >
                             <a class="card-img-top d-block overflow-hidden"
-                               th:href="@{/shop/detailProduct(id=${product.id}, category=${product.categoryRecordDto.getSecond()}, first=${product.categoryRecordDto.getFirst()})}">
+                               th:href="@{/shop/detailProduct(id=${product.id}, first=${product.categoryRecordDto.getFirst()}, second=${product.categoryRecordDto.getSecond()}, third=${product.categoryRecordDto.getThird()} )}">
                                 <img alt="Product"  th:src="|/product/images/${product.productImagesList.get(0).getStoreFileName()}|"/>
                             </a>
                             <div class="card-body py-2">

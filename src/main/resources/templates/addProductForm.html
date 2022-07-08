@@ -35,68 +35,87 @@
             <!-- Product details 상세정보-->
 
             <div class="product-details mx-auto pb-3">
+
                 <form class="needs-validation" action="" th:action="@{/product/add}" th:object="${productData}"
                       method="post" enctype="multipart/form-data">
+
+                    <div th:if="${#fields.hasGlobalErrors()}">
+                        <p class="alert alert-primary" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류
+                            메시지</p>
+                    </div>
 
                     <!--                    <div th:if="${#fields.hasGlobalErrors()}">-->
                     <!--                        <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>-->
                     <!--                    </div>-->
-
-                    <div class="input-group mb-3 my-2 ">
-                        <div class="m-3">상품 명</div>
-                        <input class="form-control rounded-start" id="product_name"
-                               th:errorclass="field-error"
-                               th:field="*{name}" type="text" placeholder="상품 제목을 입력하세요">
+                    <div class="mb-3 mt-2 row align-items-center">
+                        <div class="col-md-2 h6 text-start my-auto">상품 명</div>
+                        <div class="col-md-10">
+                            <input class="form-control rounded-start" id="product_name"
+                                   th:errorclass="field-error"
+                                   th:field="*{name}" type="text" placeholder="상품 제목을 입력하세요">
+                        </div>
                     </div>
-
-                    <div class="input-group mb-3 my-2">
-                        <div class="m-3 me-5">경매 시간</div>
-
-                        <div th:each="type : ${productTimes}" class="form-check p-3">
-                            <input type="radio" class="form-check-input" name="optRadio" value="something"
-                                   th:field="*{productTime}" th:value="${type.name()}">
-                            <label class="form-check-label" th:for="${#ids.prev('productTime')}"
-                                   th:text="${type.description}">24시간</label>
+                    <div class="mb-3 mt-2 row align-items-center">
+                        <div class="col-md-2 h6 text-start my-auto">경매 시간</div>
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                <div th:each="type : ${productTimes}" class="form-check p-3">
+                                    <input type="radio" class="form-check-input" name="optRadio" value="something"
+                                           th:field="*{productTime}" th:value="${type.name()}">
+                                    <label class="form-check-labe" th:for="${#ids.prev('productTime')}"
+                                           th:text="${type.description}">24시간</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="input-group mb-3 my-2">
-                        <div class="m-3">경매 시작가</div>
-                        <input class="form-control rounded-start" id="auction_price"
-                               th:errorclass="field-error"
-                               th:field="*{auctionPrice}"
-                               type="text" placeholder="경매 시작가 입력하세요">
-                        <div class="m-2">원</div>
+                    <div class="mb-3 mt-2 row align-items-center">
+                        <div class="col-md-2 h6 text-start my-auto">경매 시작가</div>
+                        <div class="col-md-10">
+                            <input class="form-control rounded-start" id="auction_price"
+                                   th:errorclass="field-error"
+                                   th:field="*{auctionPrice}"
+                                   type="text" placeholder="경매 시작가 입력하세요">
+
+                        </div>
+                    </div>
+                    <div class="mb-3 mt-2 row align-items-center">
+                        <div class="col-md-2 h6 text-start my-auto">즉시 구매가</div>
+                        <div class="col-md-10">
+                            <input class="form-control rounded-start" id="product_price"
+                                   th:errorclass="field-error"
+                                   th:field="*{instancePrice}"
+                                   type="text" placeholder="즉시 구매가를 입력하세요" required>
+<!--                            <div class="field-error" th:errors="*{instancePrice}">-->
+<!--                                상품명 오류-->
+<!--                            </div>-->
+
+                        </div>
                     </div>
 
-                    <div class="input-group mb-3 my-2">
-                        <div class="m-3">즉시 구매가</div>
-                        <input class="form-control rounded-start" id="product_price"
-                               th:errorclass="field-error"
-                               th:field="*{instancePrice}"
-                               type="text" placeholder="즉시 구매가를 입력하세요" required>
-                        <div class="m-2">원</div>
+                    <div class="mb-3 mt-2 row align-items-center">
+                        <div class="col-md-2 h6 text-start my-auto">상품 이미지</div>
+                        <div class="col-md-10">
+                            <input class="form-control rounded-start" id="image_nameSrc"
+                                   th:errorclass="field-error"
+                                   th:field="*{imageFileList}"
+                                   type="file" multiple="multiple"
+                                   placeholder="이미지를 업로드 하세요"required>
+
+                        </div>
                     </div>
 
-
-                    <div class="input-group mb-3 my-2">
-                        <div class="m-3">상품 이미지</div>
-                        <input class="form-control rounded-start" id="image_nameSrc"
-                               th:errorclass="field-error"
-                               th:field="*{imageFileList}"
-                               type="file" multiple="multiple"
-                               placeholder="이미지를 업로드 하세요">
+                    <div class="mb-3 mt-2 row align-items-center">
+                        <div class="col-md-2 h6 text-start my-auto">설명</div>
+                        <div class="col-md-10">
+                             <textarea rows="6"
+                                       th:errorclass="field-error"
+                                       th:field="*{explanation}"
+                                       class="form-control rounded-start"></textarea>
+                        </div>
                     </div>
 
-                    <div class="mb-3 my-2">
-                        <div class="m-3">설명</div>
-                        <textarea rows="6"
-                                  th:errorclass="field-error"
-                                  th:field="*{explanation}"
-                                  class="form-control rounded-start"></textarea>
-                    </div>
-
-                    <div class="m-3">카테고리</div>
+                    <div class="mb-2">카테고리</div>
                     <div class="container">
                         <!-- Gallery + details-->
                         <div class="bg-light shadow-lg rounded-3 px-4 py-3 mb-4">
@@ -2483,12 +2502,12 @@
                             <span class="category-color" id="smallCategory"></span>
                         </div>
 
-                        <input type="hidden" id="categoryResult" th:field="*{category}"/>
+                        <input type="hidden" id="categoryResult" th:field="*{category}" required/>
                     </div>
 
 
                     <div class="text-end pt-4">
-                        <button class="btn btn-primary btn-shadow d-block w-100" type="submit">
+                        <button class="btn btn-primary btn-shadow d-block w-100 py-3" type="submit">
                             <i class="ci-cart fs-lg me-2"></i>
                             등록하기
                         </button>
