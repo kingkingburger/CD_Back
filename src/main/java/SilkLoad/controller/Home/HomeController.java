@@ -58,7 +58,6 @@ public class HomeController {
         Page<CrawlingDto> life = crawlingService.getcrawlingdatafirst(pageable, "생활/가공식품");
         Page<CrawlingDto> kid = crawlingService.getcrawlingdatafirst(pageable, "유아동/출산");
         Page<CrawlingDto> animal = crawlingService.getcrawlingdatafirst(pageable, "반려동물용품");
-        Page<CrawlingDto> etc = crawlingService.getcrawlingdatafirst(pageable, "기타");
 
         model.addAttribute("women_close",women_close);
         model.addAttribute("men_close",men_close);
@@ -73,7 +72,6 @@ public class HomeController {
         model.addAttribute("life",life);
         model.addAttribute("kid",kid);
         model.addAttribute("animal",animal);
-        model.addAttribute("etc",etc);
 
         return "index";
     }

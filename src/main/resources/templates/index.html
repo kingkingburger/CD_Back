@@ -348,27 +348,6 @@
                         <a class="fs-sm" href="shop-grid-ls.html">View more<i class="ci-arrow-right fs-xs ms-1"></i></a>
                     </div>
                 </div>
-                <div>
-                    <div class="widget">
-                        <h3 class="widget-title">기타</h3>
-
-                        <div class="d-flex align-items-center pb-2 border-bottom" th:each="product : ${etc}">
-                            <a class="d-block flex-shrink-0" th:href="${product.getLink()}" >
-                                <img th:src="${product.getImg_link()}" width="64" alt="Product"></a>
-                            <div class="ps-2">
-                                <h6 class="widget-product-title">
-                                    <a th:href="${product.getLink()}" th:text="${product.getName()}">물품 이름</a>
-                                </h6>
-                                <div class="widget-product-meta">
-                                    <span class="text-accent" th:text="${product.getPrice()}">가격</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <p class="mb-0">...</p>
-                        <a class="fs-sm" href="shop-grid-ls.html">View more<i class="ci-arrow-right fs-xs ms-1"></i></a>
-                    </div>
-                </div>
 
 <!--            </div>-->
             </div>
