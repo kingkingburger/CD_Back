@@ -347,13 +347,7 @@ public class ProductService {
     public Page<ProductRecordDto> pagedBysecondcategoryProduct(String second, Pageable pageable) {
 
         Page<ProductCategoryDto> productCategoryDtos = productRepository.findsecondcategory(second, pageable);
-        List<ProductRecordDto> productRecordDtoList = new ArrayList<>();
-
-        //ProductRecordDto로 바꾸기
-        for (ProductCategoryDto productCategoryDto : productCategoryDtos) {
-            List<ProductImageRecordDto> list = categoryedProductImageRecordDto(productCategoryDto);
-            categoryToProductRecordDto(productRecordDtoList, list, productCategoryDto);
-        }
+        List<ProductRecordDto> productRecordDtoList = changeProductDtoList(productCategoryDtos);
         //List 를 Page로 변환
         return ListToPage(pageable, productRecordDtoList);
     }
@@ -362,14 +356,20 @@ public class ProductService {
      * first 카테고리 별로 물품을 가져오기
      * 아래 3종 세트
      *
-     * @param category
+     * @param first
      * @param pageable
      * @return
      */
     @Transactional
-    public Page<ProductRecordDto> pagedByfirstcategoryProduct(String category, Pageable pageable) {
+    public Page<ProductRecordDto> pagedByfirstcategoryProduct(String first, Pageable pageable) {
 
-        Page<ProductCategoryDto> productCategoryDtos = productRepository.findfirstcategory(category, pageable);
+        Page<ProductCategoryDto> productCategoryDtos = productRepository.findfirstcategory(first, pageable);
+        List<ProductRecordDto> productRecordDtoList = changeProductDtoList(productCategoryDtos);
+        //List 를 Page로 변환
+        return ListToPage(pageable, productRecordDtoList);
+    }
+
+    private List<ProductRecordDto> changeProductDtoList(Page<ProductCategoryDto> productCategoryDtos) {
         List<ProductRecordDto> productRecordDtoList = new ArrayList<>();
 
         //ProductRecordDto로 바꾸기
@@ -377,8 +377,7 @@ public class ProductService {
             List<ProductImageRecordDto> list = categoryedProductImageRecordDto(productCategoryDto);
             categoryToProductRecordDto(productRecordDtoList, list, productCategoryDto);
         }
-        //List 를 Page로 변환
-        return ListToPage(pageable, productRecordDtoList);
+        return productRecordDtoList;
     }
 
     /**
@@ -459,7 +458,7 @@ public class ProductService {
 
     //사용법: spring @Scheduled 검색
     //1시간 마다 실행
-    @Scheduled(cron = "0 0 0/1 * * *")
+    @Scheduled(cron = "0 0/5 * * * *")
     @Transactional
     public void checkDeadLine() {
         List<Product> allProduct = productRepository.findAll();

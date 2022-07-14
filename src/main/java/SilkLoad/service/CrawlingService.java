@@ -66,4 +66,12 @@ public class CrawlingService {
                 .map(this::ToCrawlingDto);
         return data;
     }
+    //crawling 데이터를 first, second third기준으로 데이터 리턴
+    @Transactional(readOnly = true)
+    public Page<CrawlingDto> getcrawlingdataFirstSecondThird(Pageable pageable,String first, String second ,String third) {
+        Page<CrawlingDto> data = crawlingRepository
+                .findByFirstAndSecondAndThird(first, second, third, pageable)
+                .map(this::ToCrawlingDto);
+        return data;
+    }
 }

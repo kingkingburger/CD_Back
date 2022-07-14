@@ -89,26 +89,27 @@ public class ShopController {
                                 @PageableDefault(size = 9) Pageable pageable,
                                 Model model) {
 
-//        List<ProductRecordDto> allProduct = productService.findAllProduct();
-
         ProductRecordDto byId_productRecordDto = productService.findById_ProductRecordDto(id);
 
         Long maxAuctionPrice = orderService.findByMaxAuctionPrice(id);
+
 
         //productType.sale이 판매 중이 아니라면 error 페이저로 보내기
         if (byId_productRecordDto.getProductType() != ProductType.sale) {
             return "error";
         }
 
+
         //--------------------크롤링 데이터 보내는 부분----------------------
-        Page<CrawlingDto> crawlingdata = crawlingService.getcrawlingdatathird(pageable, third);
+        Page<CrawlingDto> crawlingdata = crawlingService.getcrawlingdataFirstSecondThird(pageable, first, second, third);
         model.addAttribute("crawlingdata",crawlingdata);
         //----------------------------------------------------------------
+
 
         model.addAttribute("maxAuctionPrice", maxAuctionPrice);
         model.addAttribute("productTime", ProductTime.values());
         model.addAttribute("product", byId_productRecordDto);
-//        model.addAttribute("allProduct", allProduct);
+
 
         return "detailProduct";
     }
