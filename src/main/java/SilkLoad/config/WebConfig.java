@@ -17,7 +17,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new ErrorPageCheckInterceptor())
                 .order(0)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/",
+                .excludePathPatterns("/**",
                         "/members/add","/members/myPage/profile","/members/myPage/wishlist","/members/myPage/saleOrders",
                         "/members/myPage/purchaseOrders","/product/order/transaction/**", "/members/myPage/myChatRoomList",
                         "/members/myPage/room/**",
@@ -33,6 +33,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .order(1)
                 .addPathPatterns("/**")
                 .excludePathPatterns(
+                        "/**",
                         "/", "/members/add", "/login", "/logout","/home","/product/images/**","/shop/**",
                         "/css/**", "/*.ico", "/error","/vendor/**", "/img/**","/js/**","/fonts/**"
                 );

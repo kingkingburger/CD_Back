@@ -27,7 +27,6 @@ public class CartService {
     private final CartRepository cartRepository;
     private final MemberRepository memberRepository;
     private final ProductRepository productRepository;
-    private final MemberService memberService;
     private final ProductService productService;
 
 
