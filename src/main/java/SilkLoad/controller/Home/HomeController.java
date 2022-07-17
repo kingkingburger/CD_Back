@@ -7,6 +7,8 @@ import SilkLoad.entity.Product;
 import SilkLoad.entity.ProductEnum.ProductType;
 import SilkLoad.repository.ProductRepository;
 import SilkLoad.service.CrawlingService;
+import SilkLoad.service.PagedProductService;
+import SilkLoad.service.ProductSearchService;
 import SilkLoad.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +30,7 @@ import java.util.List;
 public class HomeController {
 
     private final ProductService productService;
+    private final PagedProductService pagedProductService;
     private final CrawlingService crawlingService;
 
     /**
@@ -40,7 +43,7 @@ public class HomeController {
     public String home(Model model,
                        HttpServletRequest request,
                        @PageableDefault(size=8) Pageable pageable) {//@PageableDefault로 기본 8개를 가지고 오게했다crawling.
-        List<ProductRecordDto> content = productService.paged_product(pageable).getContent();
+        List<ProductRecordDto> content = pagedProductService.paged_product(pageable).getContent();
 
         model.addAttribute("Products", content);
         model.addAttribute("sale", ProductType.sale);

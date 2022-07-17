@@ -1,6 +1,7 @@
 package SilkLoad.repository;
 
 import SilkLoad.dto.*;
+import SilkLoad.service.PagedProductService;
 import SilkLoad.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,8 @@ class ProductRepositoryTest {
     @Autowired
     ProductRepository productRepository;
     @Autowired
+    PagedProductService pagedProductService;
+    @Autowired
     ProductService productService;
     @Autowired
     OrderRepository orderRepository;
@@ -30,9 +33,9 @@ class ProductRepositoryTest {
         PageRequest pageRequest = PageRequest.of(1,8);
         PageRequest next = pageRequest.next();
         pageRequest.getPageSize();
-        List<ProductRecordDto> content = productService.paged_product(pageRequest).getContent();
+        List<ProductRecordDto> content = pagedProductService.paged_product(pageRequest).getContent();
         System.out.println("content = " + content);
-        productService.paged_product(pageRequest).getPageable().getPageSize();
+        pagedProductService.paged_product(pageRequest).getPageable().getPageSize();
 
 //        int number = productService.paged_product(pageRequest).getNumberOfElements();
 //        System.out.println("현제 페이지  = " + number);
@@ -82,10 +85,10 @@ class ProductRepositoryTest {
     @Transactional
     void 검색으로_product가져오기_테스트(){
         PageRequest pageRequest = PageRequest.of(0,2);
-        List<ProductRecordDto> test = productService.SearchToProductname("test", pageRequest).getContent();
-        for (ProductRecordDto productRecordDto : test) {
-            System.out.println("productRecordDto = " + productRecordDto);
-        }
+//        List<ProductRecordDto> test = productService.SearchToProductname("test", pageRequest).getContent();
+//        for (ProductRecordDto productRecordDto : test) {
+//            System.out.println("productRecordDto = " + productRecordDto);
+//        }
     }
 
 }

@@ -15,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -29,7 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.function.BiFunction;
 
 @Service
 @RequiredArgsConstructor
@@ -74,7 +72,6 @@ public class ProductService {
             productImage.changeProduct(product);
             productImageRepository.save(productImage);
         });
-
     }
 
 
@@ -207,28 +204,16 @@ public class ProductService {
     @Transactional(readOnly = true)
     public ProductRecordDto findById_ProductRecordDto(long id) {
         Product product = productRepository.findById(id).get();
-        ProductRecordDto productRecordDto = getProductRecordDto(product);
+        ProductRecordDto productRecordDto = ProductToProductRecordDto(product);
         return productRecordDto;
     }
 
-    @Transactional
-    public List<ProductRecordDto> productToProductRecordDto(List<Product> allProduct) {
-
-        List<ProductRecordDto> productRecordDtoList = new ArrayList<>();
-
-        allProduct.forEach(product -> {
-            ProductRecordDto productRecordDto = getProductRecordDto(product);
-            productRecordDtoList.add(productRecordDto);
-        });
-
-        return productRecordDtoList;
-    }
 
     /**
      * 매개변수 product를 통해 ProductRecordDto를 생성
      */
     @Transactional
-    public ProductRecordDto getProductRecordDto(Product product) {
+    public ProductRecordDto ProductToProductRecordDto(Product product) {
 
         ProductRecordDto productRecordDto = ProductRecordDto.builder()
                 .id(product.getId())
@@ -237,10 +222,10 @@ public class ProductService {
                 .instantPrice(product.getInstantPrice())
                 .explanation(product.getExplanation())
                 .productType(product.getProductType())
-                .categoryRecordDto(getCategoryRecordDto(product.getCategory()))
+                .categoryRecordDto(CategoryToDto(product.getCategory()))
                 .deadLine(productDeadLine(product.getCreatedDate(), product.getProductTime()))
                 .productTime(product.getProductTime())
-                .productImagesList(getProductRecordImageListDto(product.getProductImagesList()))
+                .productImagesList(ImageListToDto(product.getProductImagesList()))
                 .build();
 
         return productRecordDto;
@@ -253,7 +238,7 @@ public class ProductService {
      * @return
      */
     @Transactional
-    List<ProductImageRecordDto> getProductRecordImageListDto(List<ProductImage> productImageList) {
+    List<ProductImageRecordDto> ImageListToDto(List<ProductImage> productImageList) {
 
         List<ProductImageRecordDto> productImageRecordDtoList = new ArrayList<ProductImageRecordDto>();
 
@@ -267,11 +252,10 @@ public class ProductService {
         });
 
         return productImageRecordDtoList;
-
     }
 
 
-    public List<ProductRecordDto> getProductRecordDtoList(List<Product> productList) {
+    public List<ProductRecordDto> ListProductToDtoList(List<Product> productList) {
         List<ProductRecordDto> productRecordDtoList = new ArrayList<>();
         productList.forEach((product -> {
             ProductRecordDto productRecordDto = ProductRecordDto.builder()
@@ -281,10 +265,10 @@ public class ProductService {
                     .instantPrice(product.getInstantPrice())
                     .explanation(product.getExplanation())
                     .productType(product.getProductType())
-                    .categoryRecordDto(getCategoryRecordDto(product.getCategory()))
+                    .categoryRecordDto(CategoryToDto(product.getCategory()))
                     .deadLine(productDeadLine(product.getCreatedDate(), product.getProductTime()))
                     .productTime(product.getProductTime())
-                    .productImagesList(getProductRecordImageListDto(product.getProductImagesList()))
+                    .productImagesList(ImageListToDto(product.getProductImagesList()))
                     .build();
             productRecordDtoList.add(productRecordDto);
         }));
@@ -293,7 +277,7 @@ public class ProductService {
     }
 
 
-    private CategoryRecordDto getCategoryRecordDto(Category category) {
+    private CategoryRecordDto CategoryToDto(Category category) {
 
         return CategoryRecordDto.builder()
                 .first(category.getFirst())
@@ -320,22 +304,6 @@ public class ProductService {
 
 
     /**
-     * 테이블에 product 를 가져와서 map으로 ProductRecordDto로 만들어준다.
-     *
-     * @param pageable
-     * @return
-     */
-    @Transactional
-    public Page<ProductRecordDto> paged_product(Pageable pageable) {
-        Page<ProductRecordDto> sale = productRepository
-                .findByProductTypeOrderByIdDesc(ProductType.sale, pageable)
-                .map(this::getProductRecordDto);
-
-
-        return sale;
-    }
-
-    /**
      * second 카테고리 별로 물품을 가져오기
      * 아래 3종 세트
      *
@@ -347,7 +315,7 @@ public class ProductService {
     public Page<ProductRecordDto> pagedBysecondcategoryProduct(String second, Pageable pageable) {
 
         Page<ProductCategoryDto> productCategoryDtos = productRepository.findsecondcategory(second, pageable);
-        List<ProductRecordDto> productRecordDtoList = changeProductDtoList(productCategoryDtos);
+        List<ProductRecordDto> productRecordDtoList = PageProductToDtoList(productCategoryDtos);
         //List 를 Page로 변환
         return ListToPage(pageable, productRecordDtoList);
     }
@@ -364,17 +332,17 @@ public class ProductService {
     public Page<ProductRecordDto> pagedByfirstcategoryProduct(String first, Pageable pageable) {
 
         Page<ProductCategoryDto> productCategoryDtos = productRepository.findfirstcategory(first, pageable);
-        List<ProductRecordDto> productRecordDtoList = changeProductDtoList(productCategoryDtos);
+        List<ProductRecordDto> productRecordDtoList = PageProductToDtoList(productCategoryDtos);
         //List 를 Page로 변환
         return ListToPage(pageable, productRecordDtoList);
     }
 
-    private List<ProductRecordDto> changeProductDtoList(Page<ProductCategoryDto> productCategoryDtos) {
+    private List<ProductRecordDto> PageProductToDtoList(Page<ProductCategoryDto> productCategoryDtos) {
         List<ProductRecordDto> productRecordDtoList = new ArrayList<>();
 
         //ProductRecordDto로 바꾸기
         for (ProductCategoryDto productCategoryDto : productCategoryDtos) {
-            List<ProductImageRecordDto> list = categoryedProductImageRecordDto(productCategoryDto);
+            List<ProductImageRecordDto> list = CategoryProductToImageDtoList(productCategoryDto);
             categoryToProductRecordDto(productRecordDtoList, list, productCategoryDto);
         }
         return productRecordDtoList;
@@ -417,7 +385,7 @@ public class ProductService {
      * @param productCategoryDto
      * @return
      */
-    private List<ProductImageRecordDto> categoryedProductImageRecordDto(ProductCategoryDto productCategoryDto) {
+    private List<ProductImageRecordDto> CategoryProductToImageDtoList(ProductCategoryDto productCategoryDto) {
         List<ProductImageRecordDto> list = new ArrayList<>();
 
         ProductImageRecordDto imageRecordDto = ProductImageRecordDto.builder()
@@ -430,7 +398,7 @@ public class ProductService {
     }
 
     /**
-     * List로 된 객체를 Page객체로 변환
+     * List로 된 productRecordDto 객체를 Page객체로 변환
      *
      * @param pageable
      * @param productRecordDtoList
@@ -441,20 +409,7 @@ public class ProductService {
         return productRecordDtos;
     }
 
-    /**
-     * keyword를 기준으로 Paging된 productRecordDto를 반환
-     *
-     * @param keyword
-     * @param pageable
-     * @return
-     */
-    @Transactional
-    public Page<ProductRecordDto> SearchToProductname(String keyword, Pageable pageable) {
-        Page<ProductRecordDto> productRecordDtoPage = productRepository
-                .findByNameContainingIgnoreCaseAndProductType(keyword, ProductType.sale, pageable)
-                .map(this::getProductRecordDto);
-        return productRecordDtoPage;
-    }
+
 
     //사용법: spring @Scheduled 검색
     //1시간 마다 실행

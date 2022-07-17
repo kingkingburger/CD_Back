@@ -5,9 +5,7 @@ import SilkLoad.dto.MemberFormDto;
 import SilkLoad.dto.ProductRecordDto;
 import SilkLoad.entity.ProductEnum.ProductTime;
 import SilkLoad.entity.ProductEnum.ProductType;
-import SilkLoad.service.CrawlingService;
-import SilkLoad.service.OrderService;
-import SilkLoad.service.ProductService;
+import SilkLoad.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -26,6 +24,8 @@ import java.util.List;
 public class ShopController {
 
     private final ProductService productService;
+    private final ProductSearchService productSearchService;
+    private final PagedProductService pagedProductService;
     private final OrderService orderService;
     private final CrawlingService crawlingService;
 
@@ -41,9 +41,9 @@ public class ShopController {
 
 
         //전체 페이지 수
-        int totalPages = productService.paged_product(pageable).getTotalPages();
+        int totalPages = pagedProductService.paged_product(pageable).getTotalPages();
         //현제 페이지
-        int presentPage = productService.paged_product(pageable).getNumber();
+        int presentPage = pagedProductService.paged_product(pageable).getNumber();
 
 
         List<ProductRecordDto> content;
@@ -51,7 +51,7 @@ public class ShopController {
         if(second != null)
             content = productService.pagedBysecondcategoryProduct(second, pageable).getContent();
         else if(keyword != null)
-            content = productService.SearchToProductname(keyword, pageable).getContent();
+            content = productSearchService.SearchToProductname(keyword, pageable).getContent();
         else
             //페이징화 된 객체
             content = productService.pagedByfirstcategoryProduct(first, pageable).getContent();
