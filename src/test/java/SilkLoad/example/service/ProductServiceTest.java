@@ -10,6 +10,7 @@ import SilkLoad.repository.OrderRepository;
 import SilkLoad.repository.ProductRepository;
 import SilkLoad.service.MemberService;
 import SilkLoad.service.OrderService;
+import SilkLoad.service.PagedProductService;
 import SilkLoad.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -36,6 +37,8 @@ public class ProductServiceTest {
 
     @Autowired
     ProductService productService;
+    @Autowired
+    PagedProductService pagedProductService;
     @Autowired
     ProductRepository repository;
     @Autowired
@@ -193,10 +196,10 @@ public class ProductServiceTest {
 
         log.info("byProductId= {}",content.size());
 
-        Page<ProductRecordDto> productRecordDtoList = productService.paged_product(product);
+        Page<ProductRecordDto> productRecordDtoList = pagedProductService.paged_product(product);
         System.out.println(productRecordDtoList);
         PageRequest product2 = PageRequest.of(1, 3);
-        Page<ProductRecordDto> productRecordDtoList2 = productService.paged_product(product2);
+        Page<ProductRecordDto> productRecordDtoList2 = pagedProductService.paged_product(product2);
         System.out.println(productRecordDtoList2);
 
     }

@@ -49,7 +49,7 @@ public class CartService {
         }
 
         //List 를 Page로 변환
-        List<ProductRecordDto> productRecordDtoList = productService.getProductRecordDtoList(productList);
+        List<ProductRecordDto> productRecordDtoList = productService.ListProductToDtoList(productList);
         Page<ProductRecordDto> productRecordDtos = new PageImpl<>(productRecordDtoList, pageable, productList.size());
         
         return productRecordDtos;
