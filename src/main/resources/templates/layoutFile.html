@@ -80,16 +80,20 @@
                     </a>
 
 
-                    <div class="navbar-tool dropdown ms-3">
+                    <div class="navbar-tool ms-3">
                         <a class="navbar-tool-icon-box bg-secondary dropdown-toggle"
                            th:href="@{/members/myPage/wishlist}">
                             <i class="navbar-tool-icon ci-cart"></i>
                         </a>
 
                         <a class="navbar-tool-text" th:href="@{/members/myPage/profile}">
-                            My Profile
+                            <div th:if="${session.loginMember != null }" th:text="|${session.loginMember.getName()} 님|">
+                                프로필 보여주는 곳
+                            </div>
+                            <div th:if="${session.loginMember == null }" >
+                                My Profile
+                            </div>
                         </a>
-
                     </div>
                 </div>
             </div>

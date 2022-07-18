@@ -10,10 +10,13 @@ import org.springframework.data.domain.Pageable;
 public interface CrawlingRepository extends JpaRepository<Crawling, Long> {
 
     Page<Crawling> findByFirst(String first, Pageable pageable);
-    Page<Crawling> findBySecond(String second, Pageable pageable);
-    Page<Crawling> findByThird(String third, Pageable pageable);
+//    Page<Crawling> findBySecond(String second, Pageable pageable);
+//    Page<Crawling> findByThird(String third, Pageable pageable);
 
     //first, second, third 카테고리를 기준으로 crwaling db에서 데이터 가져오는 쿼리
     Page<Crawling> findByFirstAndSecondAndThird(String first, String second, String third, Pageable pageable);
+
+    //first, second,카테고리를 기준으로 crwaling db에서 데이터 가져오는 쿼리
+    Page<Crawling> findByFirstAndSecond(String first, String second, Pageable pageable);
 
 }

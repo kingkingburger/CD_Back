@@ -48,13 +48,12 @@ public class ShopController {
 
         List<ProductRecordDto> content;
         //first가 있는지 없는지에 따라 content가 변한다.
-        if(second != null)
-            content = productService.pagedBysecondcategoryProduct(second, pageable).getContent();
-        else if(keyword != null)
+
+        if(keyword != null)
             content = productSearchService.SearchToProductname(keyword, pageable).getContent();
         else
-            //페이징화 된 객체
-            content = productService.pagedByfirstcategoryProduct(first, pageable).getContent();
+            content = productService.pagedByfirstsecondcategoryProduct(first,second, pageable).getContent();
+
 
         model.addAttribute("allProduct", content);
         //전체 페이지 수 모델로 보내기
@@ -66,9 +65,7 @@ public class ShopController {
 
 
         //--------------------크롤링 데이터 보내는 부분----------------------
-        String crawlingcategory;
-        crawlingcategory = second;
-        Page<CrawlingDto> crawlingdata = crawlingService.getcrawlingdatasecond(pageable, crawlingcategory);
+        Page<CrawlingDto> crawlingdata = crawlingService.getcrawlingdatafirstandsecond(pageable, first, second);
         model.addAttribute("crawlingdata",crawlingdata);
 
         return "shop";
