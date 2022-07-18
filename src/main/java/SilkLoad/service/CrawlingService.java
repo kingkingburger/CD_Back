@@ -27,7 +27,6 @@ public class CrawlingService {
      * @return
      */
     public CrawlingDto ToCrawlingDto(Crawling crawling){
-
         CrawlingDto crawlingDto = CrawlingDto.builder()
                 .name(crawling.getName())
                 .category(crawling.getFirst())
@@ -35,11 +34,10 @@ public class CrawlingService {
                 .link(crawling.getLink())
                 .price(crawling.getPrice())
                 .build();
-
         return crawlingDto;
     }
 
-    //crawling 데이터를 first 기준으로 데이터 리턴
+    //crawling 데이터를 first 기준으로 데이터 리턴(home 페이지에서 사용)
     @Transactional(readOnly = true)
     public Page<CrawlingDto> getcrawlingdatafirst(Pageable pageable, String first) {
 
@@ -49,24 +47,16 @@ public class CrawlingService {
         return data;
     }
 
-    //crawling 데이터를 second 기준으로 데이터 리턴
+    //crawling 데이터를 first, second 데이터 리턴 (shop 페이지에서 사용)
     @Transactional(readOnly = true)
-    public Page<CrawlingDto> getcrawlingdatasecond(Pageable pageable, String second) {
+    public Page<CrawlingDto> getcrawlingdatafirstandsecond(Pageable pageable, String first, String second) {
         Page<CrawlingDto> data = crawlingRepository
-                .findBySecond(second, pageable)
+                .findByFirstAndSecond(first, second , pageable)
                 .map(this::ToCrawlingDto);
         return data;
     }
 
-    //crawling 데이터를 third기준으로 데이터 리턴
-    @Transactional(readOnly = true)
-    public Page<CrawlingDto> getcrawlingdatathird(Pageable pageable, String third) {
-        Page<CrawlingDto> data = crawlingRepository
-                .findByThird(third, pageable)
-                .map(this::ToCrawlingDto);
-        return data;
-    }
-    //crawling 데이터를 first, second third기준으로 데이터 리턴
+    //crawling 데이터를 first, second third기준으로 데이터 리턴 (detail 페이지에서 사용)
     @Transactional(readOnly = true)
     public Page<CrawlingDto> getcrawlingdataFirstSecondThird(Pageable pageable,String first, String second ,String third) {
         Page<CrawlingDto> data = crawlingRepository

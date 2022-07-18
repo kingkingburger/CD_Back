@@ -321,7 +321,7 @@ public class ProductService {
     }
 
     /**
-     * first 카테고리 별로 물품을 가져오기
+     * 카테고리 별로 물품을 가져오기
      * 아래 3종 세트
      *
      * @param first
@@ -329,14 +329,13 @@ public class ProductService {
      * @return
      */
     @Transactional
-    public Page<ProductRecordDto> pagedByfirstcategoryProduct(String first, Pageable pageable) {
+    public Page<ProductRecordDto> pagedByfirstsecondcategoryProduct(String first, String second, Pageable pageable) {
 
-        Page<ProductCategoryDto> productCategoryDtos = productRepository.findfirstcategory(first, pageable);
+        Page<ProductCategoryDto> productCategoryDtos = productRepository.findFirstandSecondcategory(first, second, pageable);
         List<ProductRecordDto> productRecordDtoList = PageProductToDtoList(productCategoryDtos);
         //List 를 Page로 변환
         return ListToPage(pageable, productRecordDtoList);
     }
-
     private List<ProductRecordDto> PageProductToDtoList(Page<ProductCategoryDto> productCategoryDtos) {
         List<ProductRecordDto> productRecordDtoList = new ArrayList<>();
 
