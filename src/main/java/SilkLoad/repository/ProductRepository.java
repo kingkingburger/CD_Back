@@ -49,6 +49,19 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<ProductCategoryDto> findsecondcategory(@Param("second")String categoryName, Pageable pageable);
 
 
+    //Product 안에 원하는 category(second) 빼오는 쿼리
+    @Query(value = "SELECT " +
+            "new SilkLoad.dto.ProductCategoryDto(p.id, p.name, p.auctionPrice, p.instantPrice, p.explanation, " +
+            "p.createdDate, p.productTime ,p.productType, p.category.first, p.category.second, p.category.third, img.uploadFileName, img.storeFileName) " +
+            "from Product p " +
+            "left join ProductImage img " +
+            "on p.id = img.product.id " +
+            "where p.category.second = :second " +
+            "AND p.category.first = :first " +
+            "AND p.productType = SilkLoad.entity.ProductEnum.ProductType.sale"
+    )
+    Page<ProductCategoryDto> findFirstandSecondcategory(@Param("first")String first, @Param("second")String second, Pageable pageable);
+
     //Product 안에 원하는 category(third) 빼오는 쿼리
     @Query(value = "SELECT " +
             "new SilkLoad.dto.ProductCategoryDto(p.id, p.name, p.auctionPrice, p.instantPrice, p.explanation, " +
