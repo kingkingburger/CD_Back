@@ -316,18 +316,19 @@
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <form action="" th:action="@{/product/order/buyAuction}" method="post" >
-                    <input class="mb-3 form-control rounded-start" th:id="auctionPrice" type="text" th:name="auctionPrice"
-                           placeholder="경매 가격을 입력해주세요" value="">
-                    <input type="hidden" th:id="memberId" th:name="memberId"
-                           th:if="${session.loginMember != null}"
-                           th:value="${session.loginMember.getId()}"/>
-                    <input type="hidden" th:id="productId" th:name="productId" th:value="${product.id}"/>
+                    <form action="" th:action="@{/product/order/buyAuction}" method="post">
+                        <input class="mb-3 form-control rounded-start" th:id="auctionPrice" type="text"
+                               th:name="auctionPrice"
+                               placeholder="경매 가격을 입력해주세요" value="">
+                        <input type="hidden" th:id="memberId" th:name="memberId"
+                               th:if="${session.loginMember != null}"
+                               th:value="${session.loginMember.getId()}"/>
+                        <input type="hidden" th:id="productId" th:name="productId" th:value="${product.id}"/>
 
-                    <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-danger me-2" data-bs-dismiss="modal">경매 주문</button>
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                    </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-danger me-2" data-bs-dismiss="modal">경매 주문</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        </div>
                     </form>
                 </div>
 
@@ -385,7 +386,8 @@
                                 <a href="#reviews" data-scroll>
                                     <span class="d-inline-block fs-sm text-body align-middle mt-1 ms-1"></span>
                                 </a>
-                                <button class="btn-wishlist me-0 me-lg-n3" type="button" data-bs-toggle="tooltip" title="Add to wishlist">
+                                <button class="btn-wishlist me-0 me-lg-n3" type="button" data-bs-toggle="tooltip"
+                                        title="Add to wishlist">
                                     <i class="ci-heart"></i>
                                 </button>
                             </div>
@@ -402,8 +404,8 @@
                                       th:utext="${product.categoryRecordDto.getFirst()}"></span>
                                 <span class="text-muted" id="colorOption2"
                                       th:text="${product.categoryRecordDto.getSecond()}"></span>
-<!--                                <span class="text-muted" id="colorOption3"-->
-<!--                                      th:text="${product.categoryRecordDto.getThird()}"></span>-->
+                                <!--                                <span class="text-muted" id="colorOption3"-->
+                                <!--                                      th:text="${product.categoryRecordDto.getThird()}"></span>-->
                             </div>
 
 
@@ -425,9 +427,12 @@
                                                 <li class="" th:text="${product.productTime.getDescription()}"></li>
                                             </ul>
 
-                                            <h6 class="fs-sm mb-2" th:classappend="${product.productTime.equals( productTime[2])} ?  'd-none' : ''">경매 가격 </h6>
-                                            <ul class="fs-sm ps-4" >
-                                                <li class="" th:text=" ${maxAuctionPrice} == -1 ? ${product.auctionPrice} : ${ maxAuctionPrice }"></li>
+                                            <h6 class="fs-sm mb-2"
+                                                th:classappend="${product.productTime.equals( productTime[2])} ?  'd-none' : ''">
+                                                경매 가격 </h6>
+                                            <ul class="fs-sm ps-4">
+                                                <li class=""
+                                                    th:text=" ${maxAuctionPrice} == -1 ? ${product.auctionPrice} : ${ maxAuctionPrice }"></li>
                                             </ul>
 
                                             <h6 class="fs-sm mb-2">상세 설명</h6>
@@ -441,10 +446,10 @@
                                                 <li th:id="*{ product.productTime}"></li>
                                             </ul>
 
-                                    <!--   <h6 class="fs-sm mb-2">Art. No.</h6>
-                                            <ul class="fs-sm ps-4 mb-0">
-                                                <li>"*{}"</li>
-                                            </ul>-->
+                                            <!--   <h6 class="fs-sm mb-2">Art. No.</h6>
+                                                    <ul class="fs-sm ps-4 mb-0">
+                                                        <li>"*{}"</li>
+                                                    </ul>-->
                                         </div>
                                     </div>
                                 </div>
@@ -517,16 +522,48 @@
                                     <div class="product-price">
                                     <span class="text-accent" th:text="|${product.getPrice()} 원|">
                                     </span>
-                                </div>
+                                    </div>
 
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-    </div>
+        <div class="container pt-5">
+            <h2 class="h3 text-center pb-4">네이버 쇼핑몰 추천 상품</h2>
+            <div class="tns-carousel tns-controls-static tns-controls-outside">
+                <div class="tns-carousel-inner"
+                     data-carousel-options="{&quot;items&quot;: 2, &quot;controls&quot;: true, &quot;nav&quot;: false, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;500&quot;:{&quot;items&quot;:2, &quot;gutter&quot;: 18},&quot;768&quot;:{&quot;items&quot;:3, &quot;gutter&quot;: 20}, &quot;1100&quot;:{&quot;items&quot;:4, &quot;gutter&quot;: 30}}}">
+                    <!-- Product-->
+                    <div th:each="naverProduct : ${naverProductList }">
+                        <div class="card product-card card-static">
+                            <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip"
+                                    data-bs-placement="left" title="Add to wishlist">
+                                <i class="ci-heart"></i>
+                            </button>
+                            <a class="card-img-top d-block overflow-hidden" href="#">
+                                <img th:src="${naverProduct.image}"
+                                     alt="Product">
+                            </a>
+                            <div class="card-body py-2">
+                                <h3 class="product-title fs-sm">
+                                    <a th:href="${naverProduct.link}" th:utext="${naverProduct.title}">물품제목</a>
+                                </h3>
+                                <div class="d-flex justify-content-between">
+                                    <div class="product-price">
+                                    <span class="text-accent" th:text="|${naverProduct.lprice} 원|">
+                                    </span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 <script th:inline="javascript">

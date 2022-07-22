@@ -1,8 +1,6 @@
 package SilkLoad.controller.Shop;
 
-import SilkLoad.dto.CrawlingDto;
-import SilkLoad.dto.MemberFormDto;
-import SilkLoad.dto.ProductRecordDto;
+import SilkLoad.dto.*;
 import SilkLoad.entity.ProductEnum.ProductTime;
 import SilkLoad.entity.ProductEnum.ProductType;
 import SilkLoad.service.*;
@@ -25,6 +23,7 @@ public class ShopController {
 
     private final ProductService productService;
     private final ProductSearchService productSearchService;
+    private final NaverProductService naverProductService;
     private final PagedProductService pagedProductService;
     private final OrderService orderService;
     private final CrawlingService crawlingService;
@@ -88,15 +87,24 @@ public class ShopController {
 
         ProductRecordDto byId_productRecordDto = productService.findById_ProductRecordDto(id);
 
-        Long maxAuctionPrice = orderService.findByMaxAuctionPrice(id);
-
-
         //productType.sale이 판매 중이 아니라면 error 페이저로 보내기
         if (byId_productRecordDto.getProductType() != ProductType.sale) {
             return "error";
         }
 
+        Long maxAuctionPrice = orderService.findByMaxAuctionPrice(id);
 
+        NaverRequestVariableDto naverRequestVariableDto = NaverRequestVariableDto.builder()
+                .query(third)
+                .display(9)
+                .start(1)
+                .sort("sim")
+                .build();
+
+
+        List<NaverProductDto> naverProductDtos = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
+
+        model.addAttribute("naverProductList", naverProductDtos);
         //--------------------크롤링 데이터 보내는 부분----------------------
         Page<CrawlingDto> crawlingdata = crawlingService.getcrawlingdataFirstSecondThird(pageable, first, second, third);
         model.addAttribute("crawlingdata",crawlingdata);
