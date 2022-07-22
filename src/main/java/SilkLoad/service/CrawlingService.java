@@ -20,7 +20,6 @@ public class CrawlingService {
 
     private final CrawlingRepository crawlingRepository;
 
-
     /**
      * table을 Dto로 만드는 메서드
      * @param crawling
