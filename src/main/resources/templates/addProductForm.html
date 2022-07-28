@@ -48,11 +48,11 @@
                     <!--                        <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>-->
                     <!--                    </div>-->
                     <div class="mb-3 mt-2 row align-items-center">
-                        <div class="col-md-2 h6 text-start my-auto">상품 명</div>
+                        <div class="col-md-2 h6 text-start my-auto">상품명</div>
                         <div class="col-md-10">
                             <input class="form-control rounded-start" id="product_name"
                                    th:errorclass="field-error"
-                                   th:field="*{name}" type="text" placeholder="상품 제목을 입력하세요">
+                                   th:field="*{name}" type="text" placeholder="상품 제목을 입력하세요" required>
                         </div>
                     </div>
                     <div class="mb-3 mt-2 row align-items-center">
@@ -62,7 +62,7 @@
                                 <div th:each="type : ${productTimes}" class="form-check p-3">
                                     <input type="radio" class="form-check-input" name="optRadio" value="something"
                                            th:field="*{productTime}" th:value="${type.name()}">
-                                    <label class="form-check-labe" th:for="${#ids.prev('productTime')}"
+                                    <label class="form-check-label" th:for="${#ids.prev('productTime')}"
                                            th:text="${type.description}">24시간</label>
                                 </div>
                             </div>
@@ -75,7 +75,13 @@
                             <input class="form-control rounded-start" id="auction_price"
                                    th:errorclass="field-error"
                                    th:field="*{auctionPrice}"
-                                   type="text" placeholder="경매 시작가 입력하세요">
+                                   type="text" placeholder="경매 시작가를 입력하세요" required>
+
+<!--                            comma 추가 시, 실제로 전달 될 데이터를 담을 태그-->
+<!--                            <input type="hidden"-->
+<!--                                   id="submit_auction_price"-->
+<!--                                   th:errorclass="field-error"-->
+<!--                                   th:field="*{auctionPrice}" required>-->
 
                         </div>
                     </div>
@@ -86,9 +92,16 @@
                                    th:errorclass="field-error"
                                    th:field="*{instancePrice}"
                                    type="text" placeholder="즉시 구매가를 입력하세요" required>
+
 <!--                            <div class="field-error" th:errors="*{instancePrice}">-->
 <!--                                상품명 오류-->
 <!--                            </div>-->
+
+<!--                            comma 추가 시, 실제로 전달 될 데이터를 담을 태그-->
+<!--                            <input type="hidden"-->
+<!--                                   id="submit_product_price"-->
+<!--                                   th:errorclass="field-error"-->
+<!--                                   th:field="*{instancePrice}" required>-->
 
                         </div>
                     </div>
@@ -100,7 +113,7 @@
                                    th:errorclass="field-error"
                                    th:field="*{imageFileList}"
                                    type="file" multiple="multiple"
-                                   placeholder="이미지를 업로드 하세요"required>
+                                   placeholder="이미지를 업로드 하세요" required>
 
                         </div>
                     </div>
@@ -455,7 +468,7 @@
                                             <button type="button" class="btn">차량 용품/부품</button>
                                         </li>
                                         <li class="lii">
-                                            <button type="button" class="btn">오토바이/수쿠터</button>
+                                            <button type="button" class="btn">오토바이/스쿠터</button>
                                         </li>
                                         <li class="lii">
                                             <button type="button" class="btn">오토바이 용품/부품</button>
@@ -2507,7 +2520,7 @@
 
 
                     <div class="text-end pt-4">
-                        <button class="btn btn-primary btn-shadow d-block w-100 py-3" type="submit">
+                        <button class="btn btn-primary btn-shadow d-block w-100 py-3" id="submit" type="submit">
                             <i class="ci-cart fs-lg me-2"></i>
                             등록하기
                         </button>
@@ -2865,7 +2878,7 @@
                     $("#importedCar").show();
                 } else if (e.target.innerText == "차량 용품/부품") {
                     $("#vehicleParts").show();
-                } else if (e.target.innerText == "오토바이/수쿠터") {
+                } else if (e.target.innerText == "오토바이/스쿠터") {
                     $("#motorcycleScooter").show();
                 } else if (e.target.innerText == "오토바이 용품/부품") {
                     $("#motorcycleParts").show();
@@ -2992,7 +3005,35 @@
                 );
             }
         });
+        ///////////////////////////////////////////////////////////////////////////
+        $("#auction_price").on('keyup keydown', function(){
+            this.value = checkNumber(this);
+            // this.value = comma(this);
+            // $("#submit_auction_price").val(unComma(this));
+        })
 
+        $("#product_price").on('keyup keydown', function(){
+            this.value = checkNumber(this);
+            // this.value = comma(this);
+            // $("#submit_product_price").val(unComma(this));
+        })
+
+        // 숫자 입력 확인
+        function checkNumber(x) {
+          //가장 왼쪽에 있는 0 지우기 + 숫자만 입력 받도록 함
+            return x.value.replace(/(^0+)/, "").replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+        }
+
+        // // 세 자리수마다 ',' 찍기
+        // function comma(x) {
+        //     x.value = checkNumber(x);
+        //     return x.value.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+        // }
+        //
+        // // ',' 제거
+        // function unComma(x) {
+        //     return x.value.replace(/,/g, '');
+        // }
 
     });
 
