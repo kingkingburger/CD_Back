@@ -108,17 +108,15 @@ public class ProductService {
 
         Optional<Category> categoryWithProduct = categoryRepository.
                 findByFirstAndSecondAndThird(splitCategory[0], splitCategory[1], splitCategory[2]);
-        log.info("왜 2개가 출력이 되는지 : {}", categoryWithProduct);
+
         if (!categoryWithProduct.isPresent()) { // 존재하지 않는다면
             category = Category.builder()
                     .first(splitCategory[0])
                     .second(splitCategory[1])
                     .third(splitCategory[2])
                     .build();
-            log.info("if문이 동작함 ={}", category);
         } else {
             category = categoryWithProduct.get();
-            log.info("else문이 동작함 ={}", category);
         }
         return category;
     }
@@ -412,7 +410,7 @@ public class ProductService {
 
     //사용법: spring @Scheduled 검색
     //1시간 마다 실행
-    @Scheduled(cron = "0 0/5 * * * *")
+    @Scheduled(cron = "0 0 1 * * *")
     @Transactional
     public void checkDeadLine() {
         List<Product> allProduct = productRepository.findAll();
