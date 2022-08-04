@@ -1,6 +1,8 @@
 package SilkLoad.repository;
 
 import SilkLoad.dto.ProductCategoryDto;
+import SilkLoad.entity.OrderEnum.OrderType;
+import SilkLoad.entity.Orders;
 import SilkLoad.entity.Product;
 import SilkLoad.entity.ProductEnum.ProductType;
 import org.springframework.data.domain.Page;
@@ -23,6 +25,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     //ProductType이 sale인것을 가져오는 쿼리
     //select * from product where ProductType == sale;
     List<Product> findAllByProductType(ProductType type);
+
+    List<Product> findByIdAndProductType (Long productId, ProductType productType);
+
 
     //Product 안에 원하는 category(first) 빼오는 쿼리
     @Query(value = "SELECT " +

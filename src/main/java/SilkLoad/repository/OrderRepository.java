@@ -25,8 +25,6 @@ public interface OrderRepository extends JpaRepository<Orders, Long>  {
     List<Orders> findByProduct_IdAndOrderDateTime(Long productId, LocalDateTime localDateTime);
 
 
-    List<Orders> findByProduct_IdAndOrderTypeNot (Long productId, OrderType orderType);
-
     @Query("SELECT MAX(o.offerPrice) FROM Orders o GROUP BY o.product.id HAVING o.product.id = :productId")
     Long findByProductIdMaxAuctionPrice(@Param("productId") Long productId);
 

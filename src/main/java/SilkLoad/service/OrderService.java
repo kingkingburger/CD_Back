@@ -51,9 +51,9 @@ public class OrderService {
             List<Orders> SameTimeOrderList = getSameTimeOrders(order);
             log.info("겹치는 시간 여부 ={}, {}", order.getProduct().getId(), order.getOrderDateTime());
 
-            List<Orders> byProduct_idANDOrderTypeNot = orderRepository.findByProduct_IdAndOrderTypeNot (order.getProduct().getId(), OrderType.unRegistered);
+            List<Product> byProduct_idAndProductType = productRepository.findByIdAndProductType(order.getProduct().getId(), ProductType.sale);
 
-            if (SameTimeOrderList.isEmpty() && !byProduct_idANDOrderTypeNot.isEmpty() ) {
+            if (SameTimeOrderList.isEmpty() && !byProduct_idAndProductType.isEmpty() ) {
 
                 product.setProductType(ProductType.trading);
                 Product saveProduct = productRepository.save(product);
@@ -81,22 +81,21 @@ public class OrderService {
         Members member = memberRepository.findById(memberId).get();
         Product product = productRepository.findById(productId).get();
 
+
         if( (member != null && product != null) && (product.getMembers().getId() != member.getId()) ) {
 
             Orders order = createBuyAuctionOrder(member, product, orderBuyAuctionDto.getAuctionPrice());
             List<Orders> SameTimeOrderList = getSameTimeOrders(order);
             log.info("겹치는 시간 여부 ={}, {}", order.getProduct().getId(), order.getOrderDateTime());
 
-            List<Orders> byProduct_idANDOrderTypeNot = orderRepository.findByProduct_IdAndOrderTypeNot (order.getProduct().getId(), OrderType.unRegistered);
-
+            List<Product> byProduct_idAndProductType = productRepository.findByIdAndProductType(order.getProduct().getId(), ProductType.sale);
 
             Long maxAuctionPrice = orderRepository.findByProductIdMaxAuctionPrice(order.getProduct().getId());
 
 
-            if (SameTimeOrderList.isEmpty() && !byProduct_idANDOrderTypeNot.isEmpty() && order.getOfferPrice() > maxAuctionPrice ) {
+            if (SameTimeOrderList.isEmpty() && !byProduct_idAndProductType.isEmpty() && order.getOfferPrice() > maxAuctionPrice ) {
                 return orderRepository.save(order);
             }
-
         }
         return null;
 
