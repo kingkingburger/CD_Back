@@ -101,10 +101,10 @@ public class ShopController {
                 .sort("sim")
                 .build();
 
-
+        //네이버 쇼핑 물품 보내는 부분
         List<NaverProductDto> naverProductDtos = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
-
         model.addAttribute("naverProductList", naverProductDtos);
+        
         //--------------------크롤링 데이터 보내는 부분----------------------
         Page<CrawlingDto> crawlingdata = crawlingService.getcrawlingdataFirstSecondThird(pageable, first, second, third);
         model.addAttribute("crawlingdata",crawlingdata);
