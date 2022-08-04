@@ -127,7 +127,7 @@
                         <div class="bg-light shadow-lg rounded-3 px-4 py-3 mb-4">
                             <div class="out-div1">
                                 <div class="out-div2">
-                                    <ul class="ull" id="categoryBig">
+                                    <ul class="ull" id="categoryBigBox">
                                         <li class="lii">
                                             <button type="button" class="btn">여성의류</button>
                                         </li>
@@ -184,7 +184,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="out-div2" id="categoryMiddle">
+                                <div class="out-div2" id="categoryMiddleBox">
                                     <div id="categoryMiddleClass">중분류</div>
                                     <ul class="ull" id="womenMiddle" style="display: none">
                                         <li class="lii">
@@ -615,7 +615,7 @@
                                     </ul>
                                     <!-- 중분류 끝-->
                                 </div>
-                                <div class="out-div2" id="categorySmall">
+                                <div class="out-div2" id="categorySmallBox">
                                     <div id="categorySmallClass">소분류</div>
                                     <!-- 여성의류 -->
                                     <ul class="ull" id="womenPaddingJumper" style="display: none">
@@ -2610,7 +2610,7 @@
                 .attr("readonly", true)
                 .attr("placeholder", "비경매는 입력하지 않습니다.");
         });
-        $("#categoryBig").click(function (e) {
+        $("#categoryBigBox").click(function (e) {
             console.log(e.target);
 
             if (e.target.id == "") {
@@ -2624,10 +2624,10 @@
             }
 
             $("#categoryMiddleClass").hide();
-            $("#categoryMiddle ul").hide();
+            $("#categoryMiddleBox ul").hide();
 
             $("#categorySmallClass").hide();
-            $("#categorySmall ul").hide();
+            $("#categorySmallBox ul").hide();
 
             if (e.target.innerText == "여성의류") {
                 $("#womenMiddle").show();
@@ -2668,7 +2668,7 @@
             }
         });
 
-        $("#categoryMiddle").click(function (e) {
+        $("#categoryMiddleBox").click(function (e) {
             console.log(e.target.innerText);
             const bigCategoryValue = $("#bigCategory").text().split(": ")[1];
             console.log(bigCategoryValue);
@@ -2681,7 +2681,7 @@
             }
 
             $("#categorySmallClass").hide();
-            $("#categorySmall ul").hide();
+            $("#categorySmallBox ul").hide();
 
             if (bigCategoryValue == "여성의류") {
                 if (e.target.innerText == "패딩/점퍼") {
@@ -2978,7 +2978,7 @@
                 }
             }
         });
-        $("#categorySmall").click(function (e) {
+        $("#categorySmallBox").click(function (e) {
             if (e.target.id == "") {
                 // $("#categorySmallValue").val(e.target.innerText);
                 $("#smallCategory").text(" > " + e.target.innerText);

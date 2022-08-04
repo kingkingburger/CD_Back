@@ -40,6 +40,11 @@ public class NaverProductService {
                 .header("X-Naver-Client-Id", "SsFhVJgkJKnUClEiI5uw")
                 .header("X-Naver-Client-Secret", "DM1095XQ8O")
                 .build();
+        /*
+        강준호
+        client-id: COuB5FOeyoiu2FsY3LXZ
+        password: qxx86y7sg4
+         */
 
         ResponseEntity<String> result = restTemplate.exchange(req, String.class);
         List<NaverProductDto> naverProductDtos = fromJSONtoNaverProduct(result.getBody());
