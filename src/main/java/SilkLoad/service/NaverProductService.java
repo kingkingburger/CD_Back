@@ -27,12 +27,6 @@ public class NaverProductService {
         //참고 url: https://ssong915.tistory.com/36
         String url = "https://openapi.naver.com/";
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
-        //네이버로 부터 발급받은 client id와 client secret
-        headers.set("X-Naver-Client-Id", "COuB5FOeyoiu2FsY3LXZ");
-        headers.set("X-Naver-Client-Secret", "qxx86y7sg4");
-
         URI uri = UriComponentsBuilder.fromHttpUrl(url)
                 .path("v1/search/shop.json")
                 .queryParam("query", naverVariable.getQuery())
@@ -50,6 +44,11 @@ public class NaverProductService {
                 .header("X-Naver-Client-Id", "COuB5FOeyoiu2FsY3LXZ")
                 .header("X-Naver-Client-Secret", "qxx86y7sg4")
                 .build();
+        /*
+        강준호
+        client-id: COuB5FOeyoiu2FsY3LXZ
+        password: qxx86y7sg4
+         */
 
         ResponseEntity<String> result = restTemplate.exchange(req, String.class);
         List<NaverProductDto> naverProductDtos = fromJSONtoNaverProduct(result.getBody());

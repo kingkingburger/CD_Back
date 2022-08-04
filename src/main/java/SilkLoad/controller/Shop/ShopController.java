@@ -109,8 +109,7 @@ public class ShopController {
         Page<CrawlingDto> crawlingdata = crawlingService.getcrawlingdataFirstSecondThird(pageable, first, second, third);
         model.addAttribute("crawlingdata",crawlingdata);
         //----------------------------------------------------------------
-
-
+        
         model.addAttribute("maxAuctionPrice", maxAuctionPrice);
         model.addAttribute("productTime", ProductTime.values());
         model.addAttribute("product", byId_productRecordDto);
