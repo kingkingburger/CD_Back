@@ -39,9 +39,13 @@
                             <a th:href="@{/shop/detailProduct(id=${product.id}, first=${product.categoryRecordDto.getFirst()}, second=${product.categoryRecordDto.getSecond()} , third=${product.categoryRecordDto.getThird()} )}" th:text="${product.getName()}">물품제목</a>
                         </h3>
                         <div>
-                            <div class="product-price col"><span class="text-accent" th:text="|즉시 구매가: ${product.instantPrice} 원 |"></span></div>
+                            <div class="product-price col"><span class="text-accent"
+                                                                 th:text="|즉시구매가: ${#numbers.formatInteger(product.instantPrice, 0, 'COMMA')} 원|"></span></div>
+<!--                                                                 th:text="|즉시 구매가: ${product.instantPrice} 원 |"></span></div>-->
                             <div class="product-price col"><span class="text-accent" th:if="${product.auctionPrice != null}"
-                                                                 text="|경매가: ${product.getAuctionPrice()}원|"></span></div>
+                                                                                                 th:text="|경매가: ${#numbers.formatInteger(product.auctionPrice, 0, 'COMMA')} 원|"></span></div>
+<!--                                                                 th:text="|경매가: ${#numbers.formatInteger(order.findByMaxAuctionPrice(product.id), 0, 'COMMA')} 원|"></span></div>-->
+<!--                                                                 text="|경매가: ${product.getAuctionPrice()}원|"></span></div>-->
                             <div class="product-price col"><span class="text-accent" th:text="|마감날짜: ${#temporals.format( product.deadLine , 'yyyy-MM-dd HH:mm:ss')}|">   </span></div>
                         </div>
                     </div>

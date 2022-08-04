@@ -73,15 +73,15 @@
                         <div class="col-md-2 h6 text-start my-auto">경매 시작가</div>
                         <div class="col-md-10">
                             <input class="form-control rounded-start" id="auction_price"
-                                   th:errorclass="field-error"
-                                   th:field="*{auctionPrice}"
                                    type="text" placeholder="경매 시작가를 입력하세요" required>
+<!--                            th:errorclass="field-error"-->
+<!--                            th:field="*{auctionPrice}"-->
 
 <!--                            comma 추가 시, 실제로 전달 될 데이터를 담을 태그-->
-<!--                            <input type="hidden"-->
-<!--                                   id="submit_auction_price"-->
-<!--                                   th:errorclass="field-error"-->
-<!--                                   th:field="*{auctionPrice}" required>-->
+                            <input type="hidden"
+                                   id="_auction_price"
+                                   th:errorclass="field-error"
+                                   th:field="*{auctionPrice}" required>
 
                         </div>
                     </div>
@@ -89,19 +89,12 @@
                         <div class="col-md-2 h6 text-start my-auto">즉시 구매가</div>
                         <div class="col-md-10">
                             <input class="form-control rounded-start" id="product_price"
-                                   th:errorclass="field-error"
-                                   th:field="*{instancePrice}"
                                    type="text" placeholder="즉시 구매가를 입력하세요" required>
 
-<!--                            <div class="field-error" th:errors="*{instancePrice}">-->
-<!--                                상품명 오류-->
-<!--                            </div>-->
-
-<!--                            comma 추가 시, 실제로 전달 될 데이터를 담을 태그-->
-<!--                            <input type="hidden"-->
-<!--                                   id="submit_product_price"-->
-<!--                                   th:errorclass="field-error"-->
-<!--                                   th:field="*{instancePrice}" required>-->
+                            <input type="hidden"
+                                   id="_product_price"
+                                   th:errorclass="field-error"
+                                   th:field="*{instancePrice}" required>
 
                         </div>
                     </div>
@@ -3005,7 +2998,7 @@
                 );
             }
         });
-        ///////////////////////////////////////////////////////////////////////////
+
         $("#auction_price").on('keyup keydown', function(){
             this.value = checkNumber(this);
             // this.value = comma(this);
@@ -3024,16 +3017,34 @@
             return x.value.replace(/(^0+)/, "").replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
         }
 
-        // // 세 자리수마다 ',' 찍기
-        // function comma(x) {
-        //     x.value = checkNumber(x);
-        //     return x.value.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-        // }
-        //
-        // // ',' 제거
-        // function unComma(x) {
-        //     return x.value.replace(/,/g, '');
-        // }
+        $("#auction_price").on('keyup keydown', function(){
+            // this.value = checkNumber(this);
+            this.value = comma(this);
+            $("#_auction_price").val(unComma(this));
+        })
+
+        $("#product_price").on('keyup keydown', function(){
+            // this.value = checkNumber(this);
+            this.value = comma(this);
+            $("#_product_price").val(unComma(this));
+        })
+
+        // 숫자 입력 확인
+        function checkNumber(x) {
+          //가장 왼쪽에 있는 0 지우기 + 숫자만 입력 받도록 함
+            return x.value.replace(/(^0+)/, "").replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+        }
+
+        // 세 자리수마다 ',' 찍기
+        function comma(x) {
+            x.value = checkNumber(x);
+            return x.value.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+        }
+
+        // ',' 제거
+        function unComma(x) {
+            return x.value.replace(/,/g, '');
+        }
 
     });
 

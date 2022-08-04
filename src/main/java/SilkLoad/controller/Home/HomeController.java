@@ -6,12 +6,10 @@ import SilkLoad.dto.ProductRecordDto;
 import SilkLoad.entity.Product;
 import SilkLoad.entity.ProductEnum.ProductType;
 import SilkLoad.repository.ProductRepository;
-import SilkLoad.service.CrawlingService;
-import SilkLoad.service.PagedProductService;
-import SilkLoad.service.ProductSearchService;
-import SilkLoad.service.ProductService;
+import SilkLoad.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +30,7 @@ public class HomeController {
     private final ProductService productService;
     private final PagedProductService pagedProductService;
     private final CrawlingService crawlingService;
+//    private final OrderService orderService;
 
     /**
      * @param model product들을 담기위한 매개변수
@@ -45,8 +44,10 @@ public class HomeController {
                        @PageableDefault(size=8) Pageable pageable) {//@PageableDefault로 기본 8개를 가지고 오게했다crawling.
         List<ProductRecordDto> content = pagedProductService.paged_product(pageable).getContent();
 
+
         model.addAttribute("Products", content);
         model.addAttribute("sale", ProductType.sale);
+//        model.addAttribute("order", orderService);
 
         Page<CrawlingDto> women_close = crawlingService.getcrawlingdatafirst(pageable, "여성의류");
         Page<CrawlingDto> men_close = crawlingService.getcrawlingdatafirst(pageable,"남성의류");
