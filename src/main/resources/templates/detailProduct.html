@@ -317,9 +317,19 @@
                 <!-- Modal body -->
                 <div class="modal-body">
                     <form action="" th:action="@{/product/order/buyAuction}" method="post">
-                        <input class="mb-3 form-control rounded-start" th:id="auctionPrice" type="text"
-                               th:name="auctionPrice"
-                               placeholder="경매 가격을 입력해주세요" value="">
+<!--                        <input class="mb-3 form-control rounded-start" id="inputPrice" type="text"-->
+<!--                               placeholder="경매 가격을 입력해주세요" value="">-->
+<!--                        <input type="hidden"  th:id="auctionPrice" type="text"-->
+<!--                               th:name="auctionPrice">-->
+
+<!--                        <input class="mb-3 form-control rounded-start" th:id="auctionPrice" type="text"-->
+<!--                               th:name="auctionPrice" placeholder="경매 가격을 입력해주세요" >-->
+
+                        <input class="mb-3 form-control rounded-start" id="inputPrice" type="text"
+                               placeholder="경매 가격을 입력해주세요" >
+
+                        <input type="hidden" th:id="auctionPrice" th:name="auctionPrice" th:value="${product.auctionPrice}">
+
                         <input type="hidden" th:id="memberId" th:name="memberId"
                                th:if="${session.loginMember != null}"
                                th:value="${session.loginMember.getId()}"/>
@@ -394,7 +404,9 @@
 
                             <!--가격-->
                             <div class="mb-3"><span class="h3 fw-normal text-accent me-1"
-                                                    th:text="${product.instantPrice}"></span>
+                                                    th:text="${#numbers.formatInteger(product.instantPrice, 0, 'COMMA')}"></span>
+<!--                                                    th:text="${product.instantPrice}"-->
+
                                 <span class="me-3">원</span>
                             </div>
 
@@ -432,7 +444,8 @@
                                                 경매 가격 </h6>
                                             <ul class="fs-sm ps-4">
                                                 <li class=""
-                                                    th:text=" ${maxAuctionPrice} == -1 ? ${product.auctionPrice} : ${ maxAuctionPrice }"></li>
+                                                th:text="|${#numbers.formatInteger((maxAuctionPrice == -1 ? product.auctionPrice : maxAuctionPrice), 0, 'COMMA')} 원|"></li></span>
+                                                <!--                                                    th:text="${maxAuctionPrice} == -1 ? ${product.auctionPrice} : ${ maxAuctionPrice }"></li></span>-->
                                             </ul>
 
                                             <h6 class="fs-sm mb-2">상세 설명</h6>
@@ -606,6 +619,32 @@
     } else {
         $("#deadLine").remove();
     }
+
+    $("#inputPrice").on('keyup keydown', function(){
+      // this.value = checkNumber(this);
+      this.value = comma(this);
+      $("#auctionPrice").val(unComma(this));
+
+    })
+
+    // 숫자 입력 확인
+    function checkNumber(x) {
+      //가장 왼쪽에 있는 0 지우기 + 숫자만 입력 받도록 함
+      return x.value.replace(/(^0+)/, "").replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+    }
+
+    // 세 자리수마다 ',' 찍기
+    function comma(x) {
+      x.value = checkNumber(x);
+      return x.value.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+    }
+
+    // ',' 제거
+    function unComma(x) {
+      return x.value.replace(/,/g, '');
+    }
+
+
 
 </script>
 </body>

@@ -81,6 +81,7 @@ public class OrderService {
         Members member = memberRepository.findById(memberId).get();
         Product product = productRepository.findById(productId).get();
 
+
         if( (member != null && product != null) && (product.getMembers().getId() != member.getId()) ) {
 
             Orders order = createBuyAuctionOrder(member, product, orderBuyAuctionDto.getAuctionPrice());
@@ -89,14 +90,12 @@ public class OrderService {
 
             List<Orders> byProduct_idANDOrderTypeNot = orderRepository.findByProduct_IdAndOrderTypeNot (order.getProduct().getId(), OrderType.unRegistered);
 
-
             Long maxAuctionPrice = orderRepository.findByProductIdMaxAuctionPrice(order.getProduct().getId());
 
-
-            if (SameTimeOrderList.isEmpty() && byProduct_idANDOrderTypeNot.isEmpty() && order.getOfferPrice() > maxAuctionPrice ) {
+///////////////////////////// byProduct_idANDOrderTypeNot가 비어있지 않을 경우로 수정 //////////////////////////////////////////
+            if (SameTimeOrderList.isEmpty() && !byProduct_idANDOrderTypeNot.isEmpty() && order.getOfferPrice() > maxAuctionPrice ) {
                 return orderRepository.save(order);
             }
-
         }
         return null;
 
