@@ -53,7 +53,7 @@ public class OrderService {
 
             List<Orders> byProduct_idANDOrderTypeNot = orderRepository.findByProduct_IdAndOrderTypeNot (order.getProduct().getId(), OrderType.unRegistered);
 
-            if (SameTimeOrderList.isEmpty() && byProduct_idANDOrderTypeNot.isEmpty() ) {
+            if (SameTimeOrderList.isEmpty() && !byProduct_idANDOrderTypeNot.isEmpty() ) {
 
                 product.setProductType(ProductType.trading);
                 Product saveProduct = productRepository.save(product);
@@ -93,7 +93,7 @@ public class OrderService {
             Long maxAuctionPrice = orderRepository.findByProductIdMaxAuctionPrice(order.getProduct().getId());
 
 
-            if (SameTimeOrderList.isEmpty() && byProduct_idANDOrderTypeNot.isEmpty() && order.getOfferPrice() > maxAuctionPrice ) {
+            if (SameTimeOrderList.isEmpty() && !byProduct_idANDOrderTypeNot.isEmpty() && order.getOfferPrice() > maxAuctionPrice ) {
                 return orderRepository.save(order);
             }
 
