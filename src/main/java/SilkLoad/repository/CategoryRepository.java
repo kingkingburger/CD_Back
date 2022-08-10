@@ -14,6 +14,9 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     //1차,2차,3차 카테고리를 받아서 Category엔티티를 반환한다.
     //거기에는 productList가 들어있다.
+//    @EntityGraph("CategoryWithProduct")
+//    Optional<Category> findByFirstAndSecondAndThird(String first, String second, String third);
+    //Contains로 Like를 쿼리에 넣음
     @EntityGraph("CategoryWithProduct")
-    Optional<Category> findByFirstAndSecondAndThird(String first, String second, String third);
+    Optional<Category> findByFirstAndSecondAndThirdContains(String first, String second, String third);
 }

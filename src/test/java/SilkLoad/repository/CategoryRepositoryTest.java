@@ -80,7 +80,7 @@ class CategoryRepositoryTest {
 
         String s = "여성의류,맨투맨,맨투맨";
         List<String> collect = Arrays.asList(s.split(",")).stream().collect(Collectors.toList());
-        Category all = categoryRepository.findByFirstAndSecondAndThird(collect.get(0), collect.get(1), collect.get(2)).get();
+        Category all = categoryRepository.findByFirstAndSecondAndThirdContains(collect.get(0), collect.get(1), collect.get(2)).get();
 //        categoryRepository.save(all.get(0));
         System.out.println("all = " + all);
 

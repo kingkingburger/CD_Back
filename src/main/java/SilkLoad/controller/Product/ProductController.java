@@ -45,7 +45,6 @@ public class ProductController {
                               BindingResult bindingResult,
                               HttpServletRequest request) throws IOException {
 
-        System.out.println(productData);
         if (bindingResult.hasErrors()) {
             if (productData.getCategory().isEmpty()) {
                 bindingResult.reject("addCategoryFail", "카테고리 입력은 필수입니다! 3차 카테고리까지 모두 입력해주세요.");

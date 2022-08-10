@@ -107,7 +107,7 @@ public class ProductService {
         String[] splitCategory = categoryName.split(",");
 
         Optional<Category> categoryWithProduct = categoryRepository.
-                findByFirstAndSecondAndThird(splitCategory[0], splitCategory[1], splitCategory[2]);
+                findByFirstAndSecondAndThirdContains(splitCategory[0], splitCategory[1], splitCategory[2]);
 
         if (!categoryWithProduct.isPresent()) { // 존재하지 않는다면
             category = Category.builder()
