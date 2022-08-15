@@ -83,7 +83,7 @@ class MemberServiceTest {
 
         List<Members> allJPQLFetch = memberRepository.findAllJPQLFetch();
         System.out.println("-----------------------------------------------");
-        log.info("회원의 모든 물품 리스트 ={}", allJPQLFetch);
+//        log.info("회원의 모든 물품 리스트 ={}", allJPQLFetch);
 
     }
 

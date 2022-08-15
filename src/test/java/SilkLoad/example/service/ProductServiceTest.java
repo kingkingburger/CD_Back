@@ -194,7 +194,7 @@ public class ProductServiceTest {
 
         List<OrderHistoryDto> content = orderRepository.findMemberPurchaseOrder(1L, product).getContent();
 
-        log.info("byProductId= {}",content.size());
+//        log.info("byProductId= {}",content.size());
 
         Page<ProductRecordDto> productRecordDtoList = pagedProductService.paged_product(product);
         System.out.println(productRecordDtoList);
@@ -210,7 +210,7 @@ public class ProductServiceTest {
 
         List<ProductCategoryDto> list = repository.findsecondcategory("생활", product).getContent();
 
-        log.info("카테고리 리스트 {}",list);
+//        log.info("카테고리 리스트 {}",list);
 
     }
 
