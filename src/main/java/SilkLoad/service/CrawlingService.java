@@ -59,7 +59,7 @@ public class CrawlingService {
     @Transactional(readOnly = true)
     public Page<CrawlingDto> getcrawlingdataFirstSecondThird(Pageable pageable,String first, String second ,String third) {
         Page<CrawlingDto> data = crawlingRepository
-                .findByFirstAndSecondAndThird(first, second, third, pageable)
+                .findByFirstAndSecondAndThirdContains(first, second, third, pageable)
                 .map(this::ToCrawlingDto);
         return data;
     }
