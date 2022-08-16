@@ -74,10 +74,7 @@
                         <div class="col-md-10">
                             <input class="form-control rounded-start" id="auction_price"
                                    type="text" placeholder="경매 시작가를 입력하세요" required>
-<!--                            th:errorclass="field-error"-->
-<!--                            th:field="*{auctionPrice}"-->
 
-<!--                            comma 추가 시, 실제로 전달 될 데이터를 담을 태그-->
                             <input type="hidden"
                                    id="_auction_price"
                                    th:errorclass="field-error"
@@ -94,7 +91,7 @@
                             <input type="hidden"
                                    id="_product_price"
                                    th:errorclass="field-error"
-                                   th:field="*{instancePrice}" required>
+                                   th:field="*{instancePrice}"z required>
 
                         </div>
                     </div>
@@ -3000,52 +2997,25 @@
         });
 
         $("#auction_price").on('keyup keydown', function(){
-            this.value = checkNumber(this);
-            // this.value = comma(this);
-            // $("#submit_auction_price").val(unComma(this));
+          this.value = comma(this);
+          $("#_auction_price").val(unComma(this));
         })
 
         $("#product_price").on('keyup keydown', function(){
-            this.value = checkNumber(this);
-            // this.value = comma(this);
-            // $("#submit_product_price").val(unComma(this));
+          this.value = comma(this);
+          $("#_product_price").val(unComma(this));
         })
 
         // 숫자 입력 확인
-        function checkNumber(x) {
-          //가장 왼쪽에 있는 0 지우기 + 숫자만 입력 받도록 함
-            return x.value.replace(/(^0+)/, "").replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
-        }
-
-        $("#auction_price").on('keyup keydown', function(){
-            // this.value = checkNumber(this);
-            this.value = comma(this);
-            $("#_auction_price").val(unComma(this));
-        })
-
-        $("#product_price").on('keyup keydown', function(){
-            // this.value = checkNumber(this);
-            this.value = comma(this);
-            $("#_product_price").val(unComma(this));
-        })
-
-        // 숫자 입력 확인
-        function checkNumber(x) {
-          //가장 왼쪽에 있는 0 지우기 + 숫자만 입력 받도록 함
-            return x.value.replace(/(^0+)/, "").replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
-        }
-
-        // 세 자리수마다 ',' 찍기
         function comma(x) {
-            x.value = checkNumber(x);
-            return x.value.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+          //가장 왼쪽에 있는 0 지우기 + 숫자만 입력 받도록 함 + 세 자리수마다 콤마
+          return x.value.replace(/(^0+)/, "").replace(/[^0-9.]/g, '').replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
         }
 
         // ',' 제거
         function unComma(x) {
-            return x.value.replace(/,/g, '');
+          return x.value.replace(/,/g, '');
         }
-
     });
 
 </script>
