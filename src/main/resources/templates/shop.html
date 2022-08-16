@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layoutFile :: layout(~{::body}, 'shop')}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layoutFile::layout(~{::body},'shop')}">
 <!-- Body-->
 <body class="handheld-toolbar-enabled">
     <!-- Page Title-->
@@ -26,7 +24,7 @@
         <div class="row">
 
             <!-- Sidebar-->
-            <div th:replace="~{/shopSidebar:: sidebar ('shopSidebar')}"></div>
+            <div th:replace="~{shopSidebar:: sidebar('shopSidebar')}"></div>
             <!-- Content  -->
             <section class="col-lg-8">
                 <!-- Toolbar-->

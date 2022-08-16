@@ -114,7 +114,7 @@ public class MyPageController {
         model.addAttribute("saleOrders", saleOrders);
         model.addAttribute("orderType", OrderType.values() );
 
-        return "/myPage/memberSaleOrders";
+        return "myPage/memberSaleOrders";
     }
 
     @GetMapping("/purchaseOrders")
@@ -124,7 +124,7 @@ public class MyPageController {
         Page<OrderHistoryDto> purchaseOrders = orderService.findMemberPurchaseOrder(sessionMembers.getId(), pageable);
 
         calculationDeadLine(purchaseOrders);
-        
+
         int totalPages = purchaseOrders.getTotalPages(); //전체 페이지 수
         int presentPage = purchaseOrders.getNumber(); //현재 페이지
         model.addAttribute("totalPages",totalPages); //전체 페이지  모델로 보내기
@@ -133,7 +133,7 @@ public class MyPageController {
         model.addAttribute("purchaseOrders", purchaseOrders);
         model.addAttribute("orderType", OrderType.values());
 
-        return "/myPage/memberPurchaseOrders";
+        return "myPage/memberPurchaseOrders";
 
     }
 
@@ -151,7 +151,7 @@ public class MyPageController {
         model.addAttribute("totalPages",totalPages); //전체 페이지  모델로 보내기
         model.addAttribute("presentPage",presentPage); //현재 페이지  모델로 보내기
 
-        return "/myPage/memberChatRoomList";
+        return "myPage/memberChatRoomList";
     }
 
     @GetMapping("/room/{roomId}")
@@ -161,7 +161,7 @@ public class MyPageController {
         Members sessionMembers = getSessionMembers(request);
         Long memberId = sessionMembers.getId();
         if (!chatService.checkRoomPermission(roomId, memberId) ) {
-            return "redirect:/members/myPage/myChatRoomList";
+            return "redirect:members/myPage/myChatRoomList";
         }
 
         ChatRoomDto chatRoomDto = chatService.getChatRoom(roomId);
@@ -172,7 +172,7 @@ public class MyPageController {
         model.addAttribute("chatRoomDto", chatRoomDto);
         model.addAttribute( "chatMessageList", chatMessageList);
 
-        return "/myPage/memberChatRoom";
+        return "myPage/memberChatRoom";
 
     }
 
@@ -191,7 +191,7 @@ public class MyPageController {
 
         redirectAttributes.addAttribute("roomId", roomId);
 
-        return "redirect:/members/myPage/room/{roomId}";
+        return "redirect:members/myPage/room/{roomId}";
     }
 
     private void calculationDeadLine(Page<OrderHistoryDto> tradeOrders) {
