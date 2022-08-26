@@ -424,11 +424,13 @@
                             <!-- Product panels-->
                             <div class="accordion mb-4" id="productPanels">
                                 <div class="accordion-item">
-                                    <h3 class="accordion-header"><a class="accordion-button" href="#productInfo"
+                                    <h3 class="accordion-header">
+                                        <a class="accordion-button" href="#productInfo"
                                                                     role="button" data-bs-toggle="collapse"
                                                                     aria-expanded="true" aria-controls="productInfo">
-                                        <i class="ci-announcement text-muted fs-lg align-middle mt-n1 me-2"></i>Product
-                                        info</a>
+                                        <i class="ci-announcement text-muted fs-lg align-middle mt-n1 me-2"></i>
+                                        물품 상세 설명
+                                        </a>
                                     </h3>
                                     <div class="accordion-collapse collapse show" id="productInfo"
                                          data-bs-parent="#productPanels">
@@ -450,7 +452,9 @@
 
                                             <h6 class="fs-sm mb-2">상세 설명</h6>
                                             <ul class="fs-sm ps-4">
-                                                <li class="" th:text="${ product.explanation }"></li>
+                                                <!--자동 줄바꿈 word-break -->
+                                                 <div style="word-break: break-all" rows="6"
+                                                           th:text="${ product.explanation }"></div>
                                             </ul>
 
 
@@ -499,11 +503,6 @@
                                 <i class="ci-store fs-lg me-2"></i>경매 구매
                             </button>
 
-                            <!-- Sharing-->
-                            <label class="form-label d-inline-block align-middle my-2 me-3">Share:</label><a
-                                class="btn-share btn-twitter me-2 my-2" href="#"><i class="ci-twitter"></i>Twitter</a><a
-                                class="btn-share btn-instagram me-2 my-2" href="#"><i class="ci-instagram"></i>Instagram</a><a
-                                class="btn-share btn-facebook my-2" href="#"><i class="ci-facebook"></i>Facebook</a>
                         </div>
                     </div>
                 </div>
@@ -621,22 +620,15 @@
     }
 
     $("#inputPrice").on('keyup keydown', function(){
-      // this.value = checkNumber(this);
       this.value = comma(this);
       $("#auctionPrice").val(unComma(this));
 
     })
 
     // 숫자 입력 확인
-    function checkNumber(x) {
-      //가장 왼쪽에 있는 0 지우기 + 숫자만 입력 받도록 함
-      return x.value.replace(/(^0+)/, "").replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
-    }
-
-    // 세 자리수마다 ',' 찍기
     function comma(x) {
-      x.value = checkNumber(x);
-      return x.value.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+      //가장 왼쪽에 있는 0 지우기 + 숫자만 입력 받도록 함
+      return x.value.replace(/(^0+)/, "").replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1').replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
     }
 
     // ',' 제거

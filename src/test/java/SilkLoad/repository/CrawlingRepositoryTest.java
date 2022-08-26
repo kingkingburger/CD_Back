@@ -37,7 +37,7 @@ class CrawlingRepositoryTest {
         PageRequest pageRequest = PageRequest.of(1, 8);
 
         Page<CrawlingDto> data = crawlingRepository
-                .findByFirstAndSecondAndThird("여성의류", "코트", "봄가을", pageRequest)
+                .findByFirstAndSecondAndThirdContains("여성의류", "청바지", "기타(청바지)", pageRequest)
                 .map(this::ToCrawlingDto);
         System.out.println("data = " + data.getContent());
 

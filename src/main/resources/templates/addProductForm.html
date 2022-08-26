@@ -74,10 +74,7 @@
                         <div class="col-md-10">
                             <input class="form-control rounded-start" id="auction_price"
                                    type="text" placeholder="경매 시작가를 입력하세요" required>
-<!--                            th:errorclass="field-error"-->
-<!--                            th:field="*{auctionPrice}"-->
 
-<!--                            comma 추가 시, 실제로 전달 될 데이터를 담을 태그-->
                             <input type="hidden"
                                    id="_auction_price"
                                    th:errorclass="field-error"
@@ -94,7 +91,7 @@
                             <input type="hidden"
                                    id="_product_price"
                                    th:errorclass="field-error"
-                                   th:field="*{instancePrice}" required>
+                                   th:field="*{instancePrice}"z required>
 
                         </div>
                     </div>
@@ -144,7 +141,7 @@
                                             <button type="button" class="btn">시계/쥬얼리</button>
                                         </li>
                                         <li class="lii">
-                                            <button type="button" class="btn">패션악세서리</button>
+                                            <button type="button" class="btn">패션 엑세서리</button>
                                         </li>
                                         <li class="lii">
                                             <button type="button" class="btn">디지털/가전</button>
@@ -382,13 +379,13 @@
                                             <button type="button" class="btn">pc노트북</button>
                                         </li>
                                         <li class="lii">
-                                            <button type="button" class="btn">게임타이틀</button>
+                                            <button type="button" class="btn">게임/타이틀</button>
                                         </li>
                                         <li class="lii">
-                                            <button type="button" class="btn">카메라/dslr</button>
+                                            <button type="button" class="btn">카메라/DSLR</button>
                                         </li>
                                         <li class="lii">
-                                            <button type="button" class="btn">pc부품저장장치</button>
+                                            <button type="button" class="btn">pc부품/저장장치</button>
                                         </li>
                                     </ul>
                                     <ul class="ull" id="sportsLeisure" style="display: none">
@@ -545,7 +542,7 @@
                                             <button type="button" class="btn">다이어트</button>
                                         </li>
                                         <li class="lii">
-                                            <button type="button" class="btn">남성화장품</button>
+                                            <button type="button" class="btn">남성 화장품</button>
                                         </li>
                                     </ul>
                                     <ul class="ull" id="furnitureInterior" style="display: none">
@@ -572,13 +569,13 @@
                                     </ul>
                                     <ul class="ull" id="infantMaternity" style="display: none">
                                         <li class="lii">
-                                            <button type="button" class="btn">베이비의류</button>
+                                            <button type="button" class="btn">베이비의류(0-2세)</button>
                                         </li>
                                         <li class="lii">
-                                            <button type="button" class="btn">여아의류</button>
+                                            <button type="button" class="btn">여아의류(3-6세)</button>
                                         </li>
                                         <li class="lii">
-                                            <button type="button" class="btn">남아의류</button>
+                                            <button type="button" class="btn">남아의류(3-6세)</button>
                                         </li>
                                         <li class="lii">
                                             <button type="button" class="btn">유아동신발/잡화</button>
@@ -1142,10 +1139,10 @@
                                     </ul>
                                     <ul class="ull" id="watch" style="display: none">
                                         <li class="lii">
-                                            <button type="button" class="btn">남성시계</button>
+                                            <button type="button" class="btn">남성 시계</button>
                                         </li>
                                         <li class="lii">
-                                            <button type="button" class="btn">여성시계</button>
+                                            <button type="button" class="btn">여성 시계</button>
                                         </li>
                                         <li class="lii">
                                             <button type="button" class="btn">기타</button>
@@ -2639,7 +2636,7 @@
                 $("#bagMiddle").show();
             } else if (e.target.innerText == "시계/쥬얼리") {
                 $("#watchJewelryMiddle").show();
-            } else if (e.target.innerText == "패션악세서리") {
+            } else if (e.target.innerText == "패션 엑세서리") {
                 $("#fashionAccessoriesMiddle").show();
             } else if (e.target.innerText == "디지털/가전") {
                 $("#digitalHomeApplicanceMiddle").show();
@@ -2788,7 +2785,7 @@
                 } else if (e.target.innerText == "쥬얼리") {
                     $("#jewelry").show();
                 }
-            } else if (bigCategoryValue == "패션악세서리") {
+            } else if (bigCategoryValue == "패션 엑세서리") {
                 if (e.target.innerText == "지갑") {
                     $("#wallet").show();
                 } else if (e.target.innerText == "벨트") {
@@ -3000,52 +2997,25 @@
         });
 
         $("#auction_price").on('keyup keydown', function(){
-            this.value = checkNumber(this);
-            // this.value = comma(this);
-            // $("#submit_auction_price").val(unComma(this));
+          this.value = comma(this);
+          $("#_auction_price").val(unComma(this));
         })
 
         $("#product_price").on('keyup keydown', function(){
-            this.value = checkNumber(this);
-            // this.value = comma(this);
-            // $("#submit_product_price").val(unComma(this));
+          this.value = comma(this);
+          $("#_product_price").val(unComma(this));
         })
 
         // 숫자 입력 확인
-        function checkNumber(x) {
-          //가장 왼쪽에 있는 0 지우기 + 숫자만 입력 받도록 함
-            return x.value.replace(/(^0+)/, "").replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
-        }
-
-        $("#auction_price").on('keyup keydown', function(){
-            // this.value = checkNumber(this);
-            this.value = comma(this);
-            $("#_auction_price").val(unComma(this));
-        })
-
-        $("#product_price").on('keyup keydown', function(){
-            // this.value = checkNumber(this);
-            this.value = comma(this);
-            $("#_product_price").val(unComma(this));
-        })
-
-        // 숫자 입력 확인
-        function checkNumber(x) {
-          //가장 왼쪽에 있는 0 지우기 + 숫자만 입력 받도록 함
-            return x.value.replace(/(^0+)/, "").replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
-        }
-
-        // 세 자리수마다 ',' 찍기
         function comma(x) {
-            x.value = checkNumber(x);
-            return x.value.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+          //가장 왼쪽에 있는 0 지우기 + 숫자만 입력 받도록 함 + 세 자리수마다 콤마
+          return x.value.replace(/(^0+)/, "").replace(/[^0-9.]/g, '').replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
         }
 
         // ',' 제거
         function unComma(x) {
-            return x.value.replace(/,/g, '');
+          return x.value.replace(/,/g, '');
         }
-
     });
 
 </script>

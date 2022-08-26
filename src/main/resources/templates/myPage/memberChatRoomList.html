@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layoutFile :: layout(~{::body},'myPage')}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layoutFile::layout(~{::body},'myPage')}">
 
 <!-- Body-->
 <body class="handheld-toolbar-enabled">
@@ -28,7 +26,7 @@
     <div class="container pb-5 mb-2 mb-md-4">
         <div class="row">
             <!-- Sidebar-->
-            <div th:replace="~{myPage/myPageSidebar:: sidebar ('myChatRoomList')}"></div>
+            <div th:replace="~{myPage/myPageSidebar::sidebar('myChatRoomList')}"></div>
             <!-- Content  -->
             <section class="col-lg-8">
                 <div class="d-flex justify-content-between align-items-center pt-lg-2 pb-4 pb-lg-5 mb-lg-3">
