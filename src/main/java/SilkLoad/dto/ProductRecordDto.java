@@ -24,6 +24,7 @@ public class ProductRecordDto {
     @NotNull
     private Long instantPrice; //즉시거래가격
     private String explanation; //물품상세설명
+    private String predictionImage;
     @NotNull
     private LocalDateTime deadLine;
     @NotNull
@@ -40,16 +41,19 @@ public class ProductRecordDto {
                             Long auctionPrice,
                             Long instantPrice,
                             String explanation,
+                            String predictionImage,
                             LocalDateTime deadLine,
                             ProductTime productTime,
                             ProductType productType,
                             CategoryRecordDto categoryRecordDto,
-                            List<ProductImageRecordDto> productImagesList) {
+                            List<ProductImageRecordDto> productImagesList
+                            ) {
         this.id = id;
         this.name = name;
         this.auctionPrice = auctionPrice;
         this.instantPrice = instantPrice;
         this.explanation = explanation;
+        this.predictionImage = predictionImage;
         this.deadLine = deadLine;
         this.productTime = productTime;
         this.productType = productType;

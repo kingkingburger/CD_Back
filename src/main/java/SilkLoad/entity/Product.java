@@ -29,6 +29,8 @@ public class Product {
     private Long instantPrice; //즉시거래가격
     private String explanation; //물품상세설명
 
+    private String predictionImage;
+
     @Enumerated(EnumType.STRING)
     private ProductType productType;
 
@@ -69,6 +71,7 @@ public class Product {
                    Long auctionPrice,
                    Long instantPrice,
                    String explanation,
+                   String predictionImage,
                    LocalDateTime createdDate,
                    Members members,
                    Category category,
@@ -80,6 +83,7 @@ public class Product {
         this.auctionPrice = auctionPrice;
         this.instantPrice = instantPrice;
         this.explanation = explanation;
+        this.predictionImage = predictionImage;
         this.createdDate = createdDate;
         this.productType = productType;
         this.members = members;
