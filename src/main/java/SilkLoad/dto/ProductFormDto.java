@@ -38,6 +38,9 @@ public class ProductFormDto {
     private LocalDateTime createdDate = LocalDateTime.now(); //생성일자
 
     @NotNull
+    private String predictionImage;
+
+    @NotNull
     private ProductTime productTime;
 
     @Builder
