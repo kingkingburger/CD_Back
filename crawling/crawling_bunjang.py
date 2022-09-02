@@ -159,7 +159,8 @@ def crawling(category_list):
             i += 1
 
     connect = pymysql.connect(
-        host='localhost', user='root', password='1234', db='silkLoad', charset='utf8mb4')
+        host='my-rds-indstance.cs4f6papfyio.ap-northeast-2.rds.amazonaws.com', user='admin', password='alsgh0217',
+        db='silkload', charset='utf8mb4')
     cursor = connect.cursor()
 
     # delete = """delete from crawling where exists(select * from crawling)"""
@@ -189,7 +190,8 @@ def crawling(category_list):
 
 def db_reset():
     connect = pymysql.connect(
-        host='localhost', user='root', password='1234', db='silkload', charset='utf8mb4')
+        host='my-rds-indstance.cs4f6papfyio.ap-northeast-2.rds.amazonaws.com', user='admin', password='alsgh0217',
+        db='silkload', charset='utf8mb4')
     cursor = connect.cursor()
 
     # delete = """delete from crawling"""

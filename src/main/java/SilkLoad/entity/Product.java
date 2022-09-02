@@ -4,8 +4,6 @@ package SilkLoad.entity;
 import SilkLoad.entity.ProductEnum.ProductTime;
 import SilkLoad.entity.ProductEnum.ProductType;
 import lombok.*;
-import org.aspectj.weaver.ast.Or;
-import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -29,7 +27,7 @@ public class Product {
     private Long instantPrice; //즉시거래가격
     private String explanation; //물품상세설명
 
-    private String predictionImage;
+    private String predictionName; //예측 이미지 이름
 
     @Enumerated(EnumType.STRING)
     private ProductType productType;
@@ -83,7 +81,7 @@ public class Product {
         this.auctionPrice = auctionPrice;
         this.instantPrice = instantPrice;
         this.explanation = explanation;
-        this.predictionImage = predictionImage;
+        this.predictionName = predictionImage;
         this.createdDate = createdDate;
         this.productType = productType;
         this.members = members;
