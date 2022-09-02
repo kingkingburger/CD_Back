@@ -2,6 +2,8 @@ package SilkLoad.controller.Home;
 
 
 import SilkLoad.dto.CrawlingDto;
+import SilkLoad.dto.NaverProductDto;
+import SilkLoad.dto.NaverRequestVariableDto;
 import SilkLoad.dto.ProductRecordDto;
 import SilkLoad.entity.Product;
 import SilkLoad.entity.ProductEnum.ProductType;
@@ -31,6 +33,7 @@ public class HomeController {
     private final PagedProductService pagedProductService;
     private final CrawlingService crawlingService;
 //    private final OrderService orderService;
+    private final NaverProductService naverProductService;
 
     /**
      * @param model product들을 담기위한 매개변수
@@ -48,7 +51,7 @@ public class HomeController {
         model.addAttribute("Products", content);
         model.addAttribute("sale", ProductType.sale);
 //        model.addAttribute("order", orderService);
-
+//------------------------번개 장터-------------------------
         Page<CrawlingDto> women_close = crawlingService.getcrawlingdatafirst(pageable, "여성의류");
         Page<CrawlingDto> men_close = crawlingService.getcrawlingdatafirst(pageable,"남성의류");
         Page<CrawlingDto> shose = crawlingService.getcrawlingdatafirst(pageable, "신발");
@@ -76,6 +79,67 @@ public class HomeController {
         model.addAttribute("life",life);
         model.addAttribute("kid",kid);
         model.addAttribute("animal",animal);
+
+        //-------------------------네이버 쇼핑몰--------------------------------------------------------
+
+        NaverRequestVariableDto naverRequestVariableDto = NaverRequestVariableDto.builder()
+                .query("중고 여성의류")
+                .display(8)
+                .start(1)
+                .sort("sim")
+                .build();
+
+        //네이버 쇼핑 물품 보내는 부분
+        List<NaverProductDto> womenClothingList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
+        model.addAttribute("womenClothingList",womenClothingList);
+
+        naverRequestVariableDto.setQuery("중고 남성의류");
+        List<NaverProductDto> menClothingList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
+        model.addAttribute("menClothingList",menClothingList);
+
+        naverRequestVariableDto.setQuery("중고 신발");
+        List<NaverProductDto> shoesList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
+        model.addAttribute("shoesList", shoesList);
+
+        naverRequestVariableDto.setQuery("중고 스포츠/레저");
+        List<NaverProductDto> sportsList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
+        model.addAttribute("sportsList", sportsList);
+
+        naverRequestVariableDto.setQuery("차량/오토바이");
+        List<NaverProductDto> vehicleList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
+        model.addAttribute("vehicleList", vehicleList);
+
+        naverRequestVariableDto.setQuery("중고 스타굿즈");
+        List<NaverProductDto> starGoodsList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
+        model.addAttribute("starGoodsList", starGoodsList);
+
+        naverRequestVariableDto.setQuery("중고 키덜트");
+        List<NaverProductDto> kidultList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
+        model.addAttribute("kidultList", kidultList);
+
+//        naverRequestVariableDto.setQuery("중고 예술");
+//        List<NaverProductDto> artList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
+//        model.addAttribute("artList", artList);
+//
+//        naverRequestVariableDto.setQuery("중고 문구 책");
+//        List<NaverProductDto> bookList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
+//        model.addAttribute("bookList", bookList);
+//
+//        naverRequestVariableDto.setQuery("중고 가구");
+//        List<NaverProductDto> furnitureList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
+//        model.addAttribute("furnitureList", furnitureList);
+//
+//        naverRequestVariableDto.setQuery("중고 가공식품");
+//        List<NaverProductDto> processedFoodList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
+//        model.addAttribute("processedFoodList", processedFoodList);
+//
+//        naverRequestVariableDto.setQuery("중고 유아동");
+//        List<NaverProductDto> infantChildList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
+//        model.addAttribute("infantChildList", infantChildList);
+//
+//        naverRequestVariableDto.setQuery("중고 반려동물");
+//        List<NaverProductDto> petList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
+//        model.addAttribute("petList", petList);
 
         return "index";
     }

@@ -93,7 +93,9 @@ public class OrderService {
             Long maxAuctionPrice = orderRepository.findByProductIdMaxAuctionPrice(order.getProduct().getId());
 
 
-            if (SameTimeOrderList.isEmpty() && !byProduct_idAndProductType.isEmpty() && order.getOfferPrice() > maxAuctionPrice ) {
+            if (SameTimeOrderList.isEmpty() && !byProduct_idAndProductType.isEmpty()
+                    && order.getOfferPrice() > maxAuctionPrice
+                    && order.getOfferPrice() > order.getProduct().getAuctionPrice() ) {
                 return orderRepository.save(order);
             }
         }
