@@ -220,7 +220,7 @@ public class ProductService {
                 .auctionPrice(product.getAuctionPrice())
                 .instantPrice(product.getInstantPrice())
                 .explanation(product.getExplanation())
-                .predictionImage(product.getPredictionImage())
+                .predictionImage(product.getPredictionName())
                 .productType(product.getProductType())
                 .categoryRecordDto(CategoryToDto(product.getCategory()))
                 .deadLine(productDeadLine(product.getCreatedDate(), product.getProductTime()))

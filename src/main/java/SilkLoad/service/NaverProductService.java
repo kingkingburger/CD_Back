@@ -32,7 +32,6 @@ public class NaverProductService {
                 .encode()
                 .build()
                 .toUri();
-        log.info("uri : {}", uri);
 
         RestTemplate restTemplate = new RestTemplate();
         RequestEntity<Void> req = RequestEntity
@@ -49,7 +48,6 @@ public class NaverProductService {
         ResponseEntity<String> result = restTemplate.exchange(req, String.class);
         List<NaverProductDto> naverProductDtos = fromJSONtoNaverProduct(result.getBody());
 
-        log.info("result ={}", naverProductDtos);
         return naverProductDtos;
 
     }

@@ -14,15 +14,16 @@
 
 ## 🍀 폴더구조
 
-| 위치                      | 설명                                 |
-| ------------------------- | ------------------------------------ |
-| src/main/demo/controller  | 컨트롤러 처리하는 곳                 |
-| src/main/demo/config      | WebConfig, Interceptor 페이지를 관리 |
-| src/main/demo/dto         | 데이터 오브젝트로 받는 곳            |
-| src/main/demo/entity      | mysql table이 있는 곳                |
-| src/main/demo/interceptor | interceptor 상새 설정                |
-| src/main/demo/repository  | JPA문 쓰는 곳                        |
-| src/main/demo/service     | DB에서 넘어온 데이터를 가공하는 곳   |
+| 위치                          | 설명                                                        |
+| ----------------------------- | ----------------------------------------------------------- |
+| src/main/SilkLoad/config      | db설정, 소켓 통신 설정 하는 곳                              |
+| src/main/SilkLoad/controller  | 컨트롤러 처리하는 곳                                        |
+| src/main/SilkLoad/config      | WebConfig, Interceptor 페이지, 소켓 통신 설정을 관리        |
+| src/main/SilkLoad/dto         | 데이터 오브젝트로 받는 곳                                   |
+| src/main/SilkLoad/entity      | mysql table이 있는 곳                                       |
+| src/main/SilkLoad/interceptor | interceptor 상새 설정                                       |
+| src/main/SilkLoad/repository  | JPA문 쓰는 곳                                               |
+| src/main/SilkLoad/service     | DB에서 넘어온 데이터를 가공하는 곳, 비지니스 로직이 있는 곳 |
 
 
 
