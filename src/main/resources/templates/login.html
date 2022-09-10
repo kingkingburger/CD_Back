@@ -3,58 +3,70 @@
       xmlns:th="http://www.thymeleaf.org"
       th:replace="~{layoutFile :: layout(~{::body}, 'login')}">
 
-  <!-- Body-->
-  <body class="handheld-toolbar-enabled">
+<!-- Body-->
+<body class="handheld-toolbar-enabled">
 
-    <main class="page-wrapper">
+<main class="page-wrapper">
 
 
-      <div class="container py-4 py-lg-5 my-4">
+    <div class="container py-4 py-lg-5 my-4">
         <div class="row justify-content-center">
-          <div class="col-md-6">
-            <div class="card border-0 shadow">
-              <div class="card-body">
-                <h2 class="h4 mb-1">로그인</h2>
+            <div class="col-md-6">
+                <div class="card border-0 shadow">
+                    <div class="card-body">
+                        <h2 class="h4 mb-1">로그인</h2>
 
-                <hr>
-                <h3 class="fs-base pt-4 pb-2">안녕하세요</h3>
+                        <hr>
+                        <h3 class="fs-base pt-4 pb-2">안녕하세요</h3>
 
-                <form class="needs-validation" action="" th:action="@{/login}" th:object="${loginFormDto}" method="post"  autocomplete="off" novalidate>
+                        <form class="needs-validation" action="" th:action="@{/login}" th:object="${loginFormDto}"
+                              method="post" autocomplete="off" novalidate>
 
-                  <div th:if="${#fields.hasGlobalErrors()}">
-                    <p class="text-danger" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
-                  </div>
+                            <div th:if="${#fields.hasGlobalErrors()}">
+                                <p class="text-danger" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류
+                                    메시지</p>
+                            </div>
 
-                  <div class="input-group mb-3"><i class="ci-mail position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
-                    <input class="form-control rounded-start" id="memberLoginid" th:errorclass="field-error" th:field="*{loginId}" type="text" placeholder="Id을 입력하세요" autofocus required>
-                  </div>
+                            <div class="input-group mb-3"><i
+                                    class="ci-mail position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
+                                <input class="form-control rounded-start" id="memberLoginid" th:errorclass="field-error"
+                                       th:field="*{loginId}" type="text" placeholder="Id을 입력하세요" autofocus required>
+                            </div>
 
-                  <div class="input-group mb-3"><i class="ci-locked position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
-                    <div class="password-toggle w-100">
-                      <input class="form-control" type="password" id="spassword" th:field="*{password}" placeholder="비밀번호" required>
-                      <label class="password-toggle-btn" aria-label="Show/hide password">
-                        <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
-                      </label>
+                            <div class="input-group mb-3"><i
+                                    class="ci-locked position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
+                                <div class="password-toggle w-100">
+                                    <input class="form-control" type="password" id="spassword" th:field="*{password}"
+                                           placeholder="비밀번호" required>
+                                    <label class="password-toggle-btn" aria-label="Show/hide password">
+                                        <input class="password-toggle-check" type="checkbox"><span
+                                            class="password-toggle-indicator"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <hr class="mt-4">
+                            <h3 class="fs-base pt-4 pb-2"><a th:href="@{/members/add}">회원가입</a></h3>
+
+                            <div class="text-end pt-4">
+                                <button class="btn btn-primary" type="submit"><i class="ci-sign-in me-2 ms-n21"></i>Login
+                                    In
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- form으로 하지 않고 oath로만 가능하게 하기 -->
+                        <div class="row">
+                            <a href="/logout" class="btn btn-info active" role="button">Logout</a>
+                            <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
+                        </div>
                     </div>
-                  </div>
-
-                  <hr class="mt-4">
-                  <h3 class="fs-base pt-4 pb-2"><a th:href="@{/members/add}">회원가입</a></h3>
-
-                  <div class="text-end pt-4">
-                    <button class="btn btn-primary" type="submit"><i class="ci-sign-in me-2 ms-n21"></i>Login In</button>
-                  </div>
-
-
-                </form>
-
-              </div>
+                </div>
             </div>
-          </div>
 
         </div>
-      </div>
-    </main>
+    </div>
+</main>
 
-  </body>
+</body>
 </html>

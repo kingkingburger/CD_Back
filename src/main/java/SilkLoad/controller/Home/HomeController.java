@@ -1,6 +1,7 @@
 package SilkLoad.controller.Home;
 
 
+import SilkLoad.config.auth.dto.SessionUser;
 import SilkLoad.dto.CrawlingDto;
 import SilkLoad.dto.NaverProductDto;
 import SilkLoad.dto.NaverRequestVariableDto;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Slf4j
@@ -50,7 +52,6 @@ public class HomeController {
 
         model.addAttribute("Products", content);
         model.addAttribute("sale", ProductType.sale);
-//        model.addAttribute("order", orderService);
 //------------------------번개 장터-------------------------
         Page<CrawlingDto> women_close = crawlingService.getcrawlingdatafirst(pageable, "여성의류");
         Page<CrawlingDto> men_close = crawlingService.getcrawlingdatafirst(pageable,"남성의류");
@@ -117,29 +118,14 @@ public class HomeController {
         List<NaverProductDto> kidultList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
         model.addAttribute("kidultList", kidultList);
 
-//        naverRequestVariableDto.setQuery("중고 예술");
-//        List<NaverProductDto> artList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
-//        model.addAttribute("artList", artList);
-//
-//        naverRequestVariableDto.setQuery("중고 문구 책");
-//        List<NaverProductDto> bookList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
-//        model.addAttribute("bookList", bookList);
-//
-//        naverRequestVariableDto.setQuery("중고 가구");
-//        List<NaverProductDto> furnitureList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
-//        model.addAttribute("furnitureList", furnitureList);
-//
-//        naverRequestVariableDto.setQuery("중고 가공식품");
-//        List<NaverProductDto> processedFoodList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
-//        model.addAttribute("processedFoodList", processedFoodList);
-//
-//        naverRequestVariableDto.setQuery("중고 유아동");
-//        List<NaverProductDto> infantChildList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
-//        model.addAttribute("infantChildList", infantChildList);
-//
-//        naverRequestVariableDto.setQuery("중고 반려동물");
-//        List<NaverProductDto> petList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
-//        model.addAttribute("petList", petList);
+        //ouath2 성공시 데이터 들어오는 곳?
+        HttpSession session = request.getSession();
+        log.info("구글 로그인?");
+        SessionUser user = (SessionUser) session.getAttribute("user");
+        log.info("user = {}", user);
+        if (user != null) {
+            model.addAttribute("userName", user.getName());
+        }
 
         return "index";
     }
