@@ -53,13 +53,7 @@ public class LoginController {
         //쿠키 이름: jsessionid, 값: uuid, uuid를 통해 session 속성에 접근
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 
-        SessionUser user = (SessionUser) session.getAttribute("user");
-        log.info("user가 들어온 ={}",user);
-        if(user != null){
-            model.addAttribute("userName", user.getName());
-        }
         return "redirect:" + redirectURL;
-
     }
 
     @PostMapping("/logout")

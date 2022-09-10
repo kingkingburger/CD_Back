@@ -1,5 +1,6 @@
 package SilkLoad.config.auth.dto;
 
+import SilkLoad.entity.Members;
 import SilkLoad.entity.UserRoleEnum.Role;
 import SilkLoad.entity.User;
 import lombok.Builder;
@@ -47,6 +48,18 @@ public class OAuthAttributes {
                 .email(email)
                 .picture(picture)
                 .role(Role.GUEST) // 기본 권한 GUEST
+                .build();
+    }
+
+    //기본적인 members 구성요소
+    public Members CreateMemberEntity(){
+        return Members.builder()
+                .name(name)
+                .email(email)
+                .picture(picture)
+                .role(Role.GUEST) // 기본 권한 GUEST
+                .ranks(1)
+                .numberPurchase(0)
                 .build();
     }
 

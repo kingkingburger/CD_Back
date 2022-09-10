@@ -23,13 +23,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http
                 .csrf()
                 .and()
                 .authorizeRequests()
                 .antMatchers("/", "/css/**","/fonts/**","/img/**","/vendor/**", "/js/**").permitAll() // 허용 파일 범위
                 .antMatchers("/shop/**").permitAll()
-                .antMatchers("/product/add").hasRole(Role.USER.name()) // username이 있는 사용자만 들어갈 수 있따.
+                .antMatchers("/product/**").hasRole(Role.GUEST.name()) // guest 사용자만 들어갈 수 있따. 들어온 String 뒤에 자동으로 _ROLE 붙여준다.
+                .antMatchers("/members/**").hasRole(Role.GUEST.name()) // username이 있는 사용자만 들어갈 수 있따.
                 .anyRequest()
                 .authenticated()
                 .and()

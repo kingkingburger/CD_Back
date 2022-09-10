@@ -2,6 +2,7 @@ package SilkLoad.service;
 
 import SilkLoad.dto.LoginFormDto;
 import SilkLoad.entity.Members;
+import SilkLoad.entity.User;
 import SilkLoad.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,4 +31,15 @@ public class LoginService  {
         return null;
     }
 
+    @Transactional(readOnly = true)
+    public Members loginWithOauth2(String email) {
+
+        Optional<Members> optionalMember = memberRepository.findByEmail(email);
+
+        if (optionalMember.isPresent()) {
+            Members member = optionalMember.get();
+            return member;
+        }
+        return null;
+    }
 }

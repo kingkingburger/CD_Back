@@ -2,8 +2,11 @@ package SilkLoad.config.auth;
 
 import SilkLoad.config.auth.dto.OAuthAttributes;
 import SilkLoad.config.auth.dto.SessionUser;
+import SilkLoad.entity.Members;
 import SilkLoad.entity.User;
+import SilkLoad.repository.MemberRepository;
 import SilkLoad.repository.UserRepository;
+import SilkLoad.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,6 +27,7 @@ import java.util.Collections;
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     private final UserRepository userRepository;
     private final HttpSession httpSession;
+    private final MemberRepository memberRepository;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -51,6 +55,12 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         User user = userRepository.findByEmail(attributes.getEmail())
                 .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
                 .orElse(attributes.toEntity());
+        log.info("attributes 들어옴 : {}", attributes.getEmail());
+        Members members = memberRepository.findByEmail(attributes.getEmail())
+                .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
+                .orElse(attributes.CreateMemberEntity());
+        memberRepository.save(members);
+
         return userRepository.save(user);
     }
 }

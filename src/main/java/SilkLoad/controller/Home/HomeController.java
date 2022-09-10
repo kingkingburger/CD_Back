@@ -1,6 +1,7 @@
 package SilkLoad.controller.Home;
 
 
+import SilkLoad.SessionConst;
 import SilkLoad.config.auth.dto.SessionUser;
 import SilkLoad.dto.CrawlingDto;
 import SilkLoad.dto.NaverProductDto;
@@ -8,6 +9,8 @@ import SilkLoad.dto.NaverRequestVariableDto;
 import SilkLoad.dto.ProductRecordDto;
 import SilkLoad.entity.Product;
 import SilkLoad.entity.ProductEnum.ProductType;
+import SilkLoad.entity.User;
+import SilkLoad.repository.MemberRepository;
 import SilkLoad.repository.ProductRepository;
 import SilkLoad.service.*;
 import lombok.RequiredArgsConstructor;
@@ -31,11 +34,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HomeController {
 
-    private final ProductService productService;
     private final PagedProductService pagedProductService;
     private final CrawlingService crawlingService;
-//    private final OrderService orderService;
     private final NaverProductService naverProductService;
+    private final LoginService loginService;
+
 
     /**
      * @param model product들을 담기위한 매개변수
@@ -120,10 +123,15 @@ public class HomeController {
 
         //ouath2 성공시 데이터 들어오는 곳?
         HttpSession session = request.getSession();
-        log.info("구글 로그인?");
         SessionUser user = (SessionUser) session.getAttribute("user");
-        log.info("user = {}", user);
+//        log.info("user.getName = {}", user.getName());
+//        log.info("user.gete = {}", user.getEmail());
+//        log.info("user.gept = {}", user.getPicture());
         if (user != null) {
+            //쿠키 이름: jsessionid, 값: uuid, uuid를 통해 session 속성에 접근, Member 객체를 email 기준으로 가지고옴
+            log.info("user.getName = {}", user.getName());
+            //기존 로그인 방식이랑 유사하게 하기위해 session에 email 기반의 Members 객체 데이터를 넣어둔다.
+            session.setAttribute(SessionConst.LOGIN_MEMBER, loginService.loginWithOauth2(user.getEmail()));
             model.addAttribute("userName", user.getName());
         }
 
