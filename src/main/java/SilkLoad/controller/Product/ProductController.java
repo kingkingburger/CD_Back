@@ -44,30 +44,18 @@ public class ProductController {
     public String saveProduct(@Valid @ModelAttribute("productData") ProductFormDto productData,
                               BindingResult bindingResult,
                               HttpServletRequest request) throws IOException {
-
         if (bindingResult.hasErrors()) {
             if (productData.getCategory().isEmpty()) {
                 bindingResult.reject("addCategoryFail", "카테고리 입력은 필수입니다! 3차 카테고리까지 모두 입력해주세요.");
             }
-
             else {bindingResult.reject("addProductFail", "문제가 발생했습니다! 다시 입력해주세요.");}
             return "addProductForm";
         }
 
-
-//        HttpSession session = request.getSession();
-//        Members loginMember = (Members) session.getAttribute(SessionConst.LOGIN_MEMBER);
-//        try{
-//            productService.save(productData, loginMember);
-//        }catch (DataIntegrityViolationException e){
-//
-//            return "redirect:/";
-//        }
         HttpSession session = request.getSession();
+        //session에서 login 정보를 확인하는 방식
         Members loginMember = (Members) session.getAttribute(SessionConst.LOGIN_MEMBER);
-
         productService.save(productData, loginMember);
-
         return "redirect:/";
 
     }

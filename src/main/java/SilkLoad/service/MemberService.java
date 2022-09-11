@@ -33,27 +33,19 @@ public class MemberService  {
 
     @Transactional
     public void save(MemberFormDto memberFormDto) {
-
-        Members member = Members.builder()
-                .loginId(memberFormDto.getLoginId())
-                .name(memberFormDto.getName())
-                .password((memberFormDto.getPassword()))
-                .build();
-
-        memberRepository.save(member);
+//        Members member = Members.builder()
+//                .loginId(memberFormDto.getLoginId())
+//                .name(memberFormDto.getName())
+//                .password((memberFormDto.getPassword()))
+//                .build();
+//
+//        memberRepository.save(member);
 
     }
 
     @Transactional
     public Members findByLoginId(String id){
         return memberRepository.findByLoginId(id).get();
-    }
-    @Transactional
-    public Members findById(Long id){
-        if( memberRepository.findById(id).isPresent()) {
-            return memberRepository.findById(id).get();
-        }
-        return null;
     }
 
     @Transactional
@@ -90,14 +82,4 @@ public class MemberService  {
         }
         return null;
     }
-
-
-/*    @Transactional
-    public Page<ProductRecordDto> paged_product(Pageable pageable){
-        Page<ProductRecordDto> sale = productRepository.findByProductTypeOrderByIdDesc(ProductType.sale, pageable).map(this::getProductRecordDto);
-        return sale;
-    }*/
-
-
-
 }

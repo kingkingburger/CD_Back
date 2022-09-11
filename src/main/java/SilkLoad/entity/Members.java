@@ -1,7 +1,6 @@
 package SilkLoad.entity;
 
-import SilkLoad.dto.ProductFormDto;
-import SilkLoad.dto.ProductRecordDto;
+import SilkLoad.entity.UserRoleEnum.Role;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
 
@@ -16,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@BatchSize(size=100)
+@BatchSize(size = 100)
 public class Members {
 
     @Id
@@ -27,11 +26,21 @@ public class Members {
     @Column(nullable = false, unique = true)
     private String loginId;
 
+    @Column
+    private String password;
+
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false) // OAuth2로 들어오는 정보
+    private String email;
+
+    @Column
+    private String picture; // // OAuth2로 들어오는 정보
+
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String password;
+    private Role role; // // OAuth2로 들어오는 정보
 
     private Integer ranks;
 
@@ -44,17 +53,27 @@ public class Members {
     private List<Product> productList = new ArrayList<Product>();
 
     @Builder
-    public Members(Long id, String loginId, String name, String password, Integer ranks, Integer numberPurchase) {
-
-        this.id = id;
-        this.loginId = loginId;
+    public Members(String name,
+                   String email,
+                   String picture,
+                   Role role,
+                   Integer ranks,
+                   Integer numberPurchase) {
+        this.loginId = email;
+        this.password = email;
         this.name = name;
-        this.password = password;
+        this.email = email;
+        this.picture = picture;
+        this.role = role;
         this.ranks = ranks;
         this.numberPurchase = numberPurchase;
         this.createDate = LocalDate.now();
         this.productList = new ArrayList<Product>();
-
     }
 
+    public Members update(String name, String picture) {
+        this.name = name;
+        this.picture = picture;
+        return this;
+    }
 }
