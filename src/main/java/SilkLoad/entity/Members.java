@@ -54,13 +54,14 @@ public class Members {
 
     @Builder
     public Members(String name,
+                   String password,
                    String email,
                    String picture,
                    Role role,
                    Integer ranks,
                    Integer numberPurchase) {
         this.loginId = email;
-        this.password = email;
+        this.password = password;
         this.name = name;
         this.email = email;
         this.picture = picture;

@@ -6,6 +6,7 @@ import SilkLoad.dto.ProductRecordDto;
 import SilkLoad.entity.Members;
 import SilkLoad.entity.Product;
 import SilkLoad.entity.ProductEnum.ProductType;
+import SilkLoad.entity.UserRoleEnum.Role;
 import SilkLoad.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,13 +34,17 @@ public class MemberService  {
 
     @Transactional
     public void save(MemberFormDto memberFormDto) {
-//        Members member = Members.builder()
-//                .loginId(memberFormDto.getLoginId())
-//                .name(memberFormDto.getName())
-//                .password((memberFormDto.getPassword()))
-//                .build();
-//
-//        memberRepository.save(member);
+        Members member = Members.builder()
+                .name(memberFormDto.getLoginId())
+                .password(memberFormDto.getPassword())
+                .email(memberFormDto.getLoginId())
+                .picture(null)
+                .role(Role.GUEST) // 기본 권한 GUEST
+                .ranks(1)
+                .numberPurchase(0)
+                .build();
+
+        memberRepository.save(member);
 
     }
 

@@ -66,21 +66,14 @@
                             로그아웃
                         </button>
                     </form>
-
+<!--                    |location.href='@{/oauth2/authorization/google}'|-->
                     <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2"
-                       th:if="${session.loginMember == null }" th:onclick="|location.href='@{/oauth2/authorization/google}'|"
+                       th:if="${session.loginMember == null }" th:onclick="|location.href='@{/loginmember}'|"
                        data-bs-toggle="modal">
                         <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
                         <div class="navbar-tool-text ms-n3" th:text="로그인"></div>
                     </a>
 
-                    <!--테스트 하는 곳 -->
-<!--                    <div class="row">-->
-<!--                        <div class="col-md-6">Logged in as: <span id = "user" th:text="${userName}"></span>-->
-<!--                            <a href="/logout" class="btn btn-info active" role="button">Logout</a>-->
-<!--                            <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>-->
-<!--                        </div>-->
-<!--                    </div>-->
 
                     <div class="navbar-tool ms-3">
                         <a class="navbar-tool-icon-box bg-secondary dropdown-toggle"

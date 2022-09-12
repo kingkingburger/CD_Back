@@ -23,6 +23,7 @@ public class MemberFormDto {
     private String password;
 
 
+
     @Builder
     public MemberFormDto(String loginId, String name, String password) {
         this.loginId = loginId;
