@@ -56,6 +56,7 @@ public class OAuthAttributes {
         return Members.builder()
                 .name(name)
                 .email(email)
+                .password("")
                 .picture(picture)
                 .role(Role.GUEST) // 기본 권한 GUEST
                 .ranks(1)

@@ -10,10 +10,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//
-////        //에러 페이지 처리
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+
+//      //에러 페이지 처리
 //        registry.addInterceptor(new ErrorPageCheckInterceptor())
 //                .order(0)
 //                .addPathPatterns("/**")
@@ -36,7 +36,7 @@ public class WebConfig implements WebMvcConfigurer {
 //                        "/", "/members/add", "/login", "/logout", "/home", "/product/images/**", "/shop/**",
 //                        "/css/**", "/*.ico", "/error", "/vendor/**", "/img/**", "/js/**", "/fonts/**"
 //                );
-//
-//    }
+
+    }
 
 }

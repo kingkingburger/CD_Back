@@ -27,7 +27,7 @@ public class LoginController {
 
     private final LoginService loginService;
 
-    @GetMapping("/login")
+    @GetMapping("/loginmember")
     public String loginForm(@ModelAttribute("loginFormDto") LoginFormDto loginFormDto) {
         return "login";
     }

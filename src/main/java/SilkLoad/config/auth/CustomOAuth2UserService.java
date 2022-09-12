@@ -6,7 +6,6 @@ import SilkLoad.entity.Members;
 import SilkLoad.entity.User;
 import SilkLoad.repository.MemberRepository;
 import SilkLoad.repository.UserRepository;
-import SilkLoad.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -33,7 +32,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
-        log.info("getAttrigute : {}", oAuth2User.getAttributes());
+
         // OAuth2 서비스 id (구글, 카카오, 네이버)
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
         // OAuth2 로그인 진행 시 키가 되는 필드 값(PK)
@@ -51,11 +50,11 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     // 유저 생성 및 수정 서비스 로직
     private User saveOrUpdate(OAuthAttributes attributes){
-        log.info("attributes 들어옴 : {}", attributes);
+
         User user = userRepository.findByEmail(attributes.getEmail())
                 .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
                 .orElse(attributes.toEntity());
-        log.info("attributes 들어옴 : {}", attributes.getEmail());
+
         Members members = memberRepository.findByEmail(attributes.getEmail())
                 .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
                 .orElse(attributes.CreateMemberEntity());
