@@ -87,39 +87,24 @@ public class HomeController {
         //-------------------------네이버 쇼핑몰--------------------------------------------------------
 
         NaverRequestVariableDto naverRequestVariableDto = NaverRequestVariableDto.builder()
-                .query("중고 여성의류")
+                .query("중고 옷")
                 .display(8)
                 .start(1)
                 .sort("sim")
                 .build();
 
         //네이버 쇼핑 물품 보내는 부분
-        List<NaverProductDto> womenClothingList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
-        model.addAttribute("womenClothingList",womenClothingList);
+        List<NaverProductDto> clothingList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
+        model.addAttribute("clothingList",clothingList);
 
-        naverRequestVariableDto.setQuery("중고 남성의류");
-        List<NaverProductDto> menClothingList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
-        model.addAttribute("menClothingList",menClothingList);
+        naverRequestVariableDto.setQuery("중고 가방");
+        List<NaverProductDto> bagList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
+        model.addAttribute("bagList", bagList);
 
         naverRequestVariableDto.setQuery("중고 신발");
         List<NaverProductDto> shoesList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
         model.addAttribute("shoesList", shoesList);
 
-        naverRequestVariableDto.setQuery("중고 스포츠/레저");
-        List<NaverProductDto> sportsList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
-        model.addAttribute("sportsList", sportsList);
-
-        naverRequestVariableDto.setQuery("차량/오토바이");
-        List<NaverProductDto> vehicleList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
-        model.addAttribute("vehicleList", vehicleList);
-
-        naverRequestVariableDto.setQuery("중고 스타굿즈");
-        List<NaverProductDto> starGoodsList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
-        model.addAttribute("starGoodsList", starGoodsList);
-
-        naverRequestVariableDto.setQuery("중고 키덜트");
-        List<NaverProductDto> kidultList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
-        model.addAttribute("kidultList", kidultList);
 
         //ouath2 성공시 데이터 들어오는 곳?
         HttpSession session = request.getSession();
