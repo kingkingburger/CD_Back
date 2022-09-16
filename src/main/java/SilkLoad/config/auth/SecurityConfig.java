@@ -20,7 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/css/**","/fonts/**","/img/**","/vendor/**", "/js/**").permitAll() // 허용 파일 범위
+                .antMatchers("/", "/css/**","/fonts/**","/img/**","/vendor/**", "/js/**","/product/images/**").permitAll() // 허용 파일 범위
                 .antMatchers("/shop/**").permitAll()
                 .antMatchers("/members/add").permitAll()
                 .antMatchers("/loginMember").permitAll()
