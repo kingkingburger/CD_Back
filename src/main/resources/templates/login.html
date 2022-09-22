@@ -11,7 +11,7 @@
 
     <div class="container py-4 py-lg-5 my-4">
         <div class="row justify-content-center">
-            <div class="col-md-6">
+            <div class="col-md-6 px-10">
                 <div class="card border-0 shadow">
                     <div class="card-body">
                         <h2 class="h4 mb-1">로그인</h2>
@@ -45,25 +45,23 @@
                                 </div>
                             </div>
 
-                            <hr class="mt-4">
-                            <h3 class="fs-base pt-4 pb-2"><a th:href="@{/members/add}">회원가입</a></h3>
-
-                            <div class="text-end pt-4">
+                            <div class=" row text-end m-auto pt-2 pb-2 w-100">
                                 <button class="btn btn-primary" type="submit"><i class="ci-sign-in me-2 ms-n21"></i>Login
                                     In
                                 </button>
                             </div>
-                        </form>
+                            <hr class="my-4">
+                            <h3 class="fs-base"><a th:href="@{/members/add}">회원가입</a></h3>
 
+                        </form>
                         <!-- form으로 하지 않고 oath로만 가능하게 하기 -->
-                        <div class="row">
+                        <div class="row m-auto pt-2 w-100">
                             <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
                             <!--네이버 로그인 추가-->
                             <a href="/oauth2/authorization/naver" class="btn btn-secondary active" role="button">Naver Login</a>
                             <!--카카오 로그인 추가-->
                             <a href="/oauth2/authorization/kakao" class="btn btn-third active" role="button">Kakao Login</a>
                         </div>
-
                     </div>
                 </div>
             </div>
