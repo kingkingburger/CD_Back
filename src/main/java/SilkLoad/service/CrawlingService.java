@@ -10,8 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -62,5 +60,14 @@ public class CrawlingService {
                 .findByFirstAndSecondAndThirdContains(first, second, third, pageable)
                 .map(this::ToCrawlingDto);
         return data;
+    }
+
+    // 검색된 크롤링 데이터를 얻기
+    @Transactional
+    public Page<CrawlingDto> SearchCategoryCrwalingProductformProductname(String keyword, Pageable pageable) {
+        Page<CrawlingDto> SearchedCrawlingProduct
+                = crawlingRepository.findByNameContainingIgnoreCase(keyword, pageable)
+                .map(this::ToCrawlingDto);
+        return SearchedCrawlingProduct;
     }
 }
