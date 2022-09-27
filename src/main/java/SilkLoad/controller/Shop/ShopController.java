@@ -64,7 +64,11 @@ public class ShopController {
 
 
         //--------------------크롤링 데이터 보내는 부분----------------------
-        Page<CrawlingDto> crawlingdata = crawlingService.getcrawlingdatafirstandsecond(pageable, first, second);
+        Page<CrawlingDto>  crawlingdata;
+        if(keyword != null)
+            crawlingdata = crawlingService.SearchCategoryCrwalingProductformProductname(keyword, pageable);
+        else
+            crawlingdata = crawlingService.getcrawlingdatafirstandsecond(pageable, first, second);
         model.addAttribute("crawlingdata",crawlingdata);
 
         return "shop";

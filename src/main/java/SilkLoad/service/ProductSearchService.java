@@ -1,13 +1,8 @@
 package SilkLoad.service;
 
-import SilkLoad.dto.CategoryRecordDto;
-import SilkLoad.dto.ProductImageRecordDto;
 import SilkLoad.dto.ProductRecordDto;
-import SilkLoad.entity.Category;
-import SilkLoad.entity.Product;
-import SilkLoad.entity.ProductEnum.ProductTime;
 import SilkLoad.entity.ProductEnum.ProductType;
-import SilkLoad.entity.ProductImage;
+import SilkLoad.repository.CrawlingRepository;
 import SilkLoad.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,15 +11,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class ProductSearchService {
     private final ProductRepository productRepository;
+    private final CrawlingRepository crawlingRepository;
     private final ChangeProductRecordDto changeProductRecordDto;
 
     /**
@@ -41,4 +34,5 @@ public class ProductSearchService {
                 .map(changeProductRecordDto::ProductToProductRecordDto);
         return productRecordDtoPage;
     }
+
 }

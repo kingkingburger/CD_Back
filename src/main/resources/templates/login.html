@@ -20,8 +20,8 @@
                         <h3 class="fs-base pt-4 pb-2">안녕하세요</h3>
 
                         <form class="needs-validation" action="" th:action="@{/login}" th:object="${loginFormDto}"
-                              method="post" autocomplete="off" novalidate>
-
+                              method="post" autocomplete="off" novalidate >
+                            <input type ="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                             <div th:if="${#fields.hasGlobalErrors()}">
                                 <p class="text-danger" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류
                                     메시지</p>
@@ -29,14 +29,14 @@
 
                             <div class="input-group mb-3"><i
                                     class="ci-mail position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
-                                <input class="form-control rounded-start" id="memberLoginid" th:errorclass="field-error"
+                                <input class="form-control rounded-start" name="username" id="username" th:errorclass="field-error"
                                        th:field="*{loginId}" type="text" placeholder="Id을 입력하세요" autofocus required>
                             </div>
 
                             <div class="input-group mb-3"><i
                                     class="ci-locked position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
                                 <div class="password-toggle w-100">
-                                    <input class="form-control" type="password" id="spassword" th:field="*{password}"
+                                    <input class="form-control" name="password" type="password" id="password" th:field="*{password}"
                                            placeholder="비밀번호" required>
                                     <label class="password-toggle-btn" aria-label="Show/hide password">
                                         <input class="password-toggle-check" type="checkbox"><span
