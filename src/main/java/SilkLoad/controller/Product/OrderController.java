@@ -2,8 +2,8 @@ package SilkLoad.controller.Product;
 
 import SilkLoad.dto.OrderBuyAuctionDto;
 import SilkLoad.dto.OrderBuyNowDto;
-import SilkLoad.dto.ProductFormDto;
 import SilkLoad.entity.Orders;
+import SilkLoad.service.NotificationsService;
 import SilkLoad.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,13 +19,15 @@ import javax.servlet.http.HttpServletRequest;
 public class OrderController {
 
     private final OrderService orderService;
+    private final NotificationsService notificationsService;
 
     @PostMapping("/buyNow")
     public String saveBuyNow(@ModelAttribute("orderBuyNowDto") OrderBuyNowDto orderBuyNowDto) {
 
         log.info("orderBuyNowDto ={}", orderBuyNowDto);
+        Orders orders = orderService.saveBuyNow(orderBuyNowDto);
 
-        if ( orderService.saveBuyNow(orderBuyNowDto) != null) {
+        if ( orders != null) {
             log.info("order 저장 성공");
 
             return "redirect:/";

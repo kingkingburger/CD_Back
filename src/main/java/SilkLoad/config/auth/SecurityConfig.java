@@ -18,13 +18,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .csrf()
-                .and()
+                .disable()
                 .authorizeRequests()
                 .antMatchers("/", "/css/**","/fonts/**","/img/**","/vendor/**", "/js/**").permitAll() // 허용 파일 범위
                 .antMatchers("/shop/**").permitAll()
                 .antMatchers("/members/add").permitAll()
                 .antMatchers("/loginMember").permitAll()
+                .antMatchers("/subscribe").permitAll()
                 .antMatchers("/login").permitAll()
+                .antMatchers("/product/images/**").permitAll()
                 .antMatchers("/product/**").hasRole(Role.GUEST.name()) // guest 사용자만 들어갈 수 있따. 들어온 String 뒤에 자동으로 _ROLE 붙여준다.
                 .antMatchers("/members/**").hasRole(Role.GUEST.name()) // username이 있는 사용자만 들어갈 수 있따.
                 .antMatchers("/chat/**").hasRole(Role.GUEST.name()) // username이 있는 사용자만 들어갈 수 있따.

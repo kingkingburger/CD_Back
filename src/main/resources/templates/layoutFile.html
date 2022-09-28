@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content, paramActive)" >
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content, paramActive)">
 <head>
     <meta charset="utf-8">
     <title>Silk Load</title>
@@ -17,17 +17,28 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
     <!-- Vendor Styles including: Font Icons, Plugins, etc.-->
-    <link rel="stylesheet" media="screen" href="/vendor/simplebar/dist/simplebar.min.css"/>
-    <link rel="stylesheet" media="screen" href="/vendor/tiny-slider/dist/tiny-slider.css"/>
-    <link rel="stylesheet" media="screen" href="/vendor/nouislider/dist/nouislider.min.css"/>
-    <link rel="stylesheet" media="screen" href="/vendor/drift-zoom/dist/drift-basic.min.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!--    <link rel="stylesheet" media="screen" href="/vendor/simplebar/dist/simplebar.min.css"/>-->
+    <!--    <link rel="stylesheet" media="screen" href="/vendor/tiny-slider/dist/tiny-slider.css"/>-->
+    <!--    <link rel="stylesheet" media="screen" href="/vendor/nouislider/dist/nouislider.min.css"/>-->
+    <!--    <link rel="stylesheet" media="screen" href="/vendor/drift-zoom/dist/drift-basic.min.css"/>-->
+    <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">-->
+    <link
+            rel="stylesheet"
+            media="screen"
+            href="/vendor/simplebar/dist/simplebar.min.css"
+    />
+    <link
+            rel="stylesheet"
+            media="screen"
+            href="/vendor/tiny-slider/dist/tiny-slider.css"
+    />
 
 
     <!-- Main Theme Styles + Bootstrap-->
     <link rel="stylesheet" media="screen" href="/css/theme.min.css">
     <!--jQuery-->
     <script src="/js/jquery-3.6.0.min.js"></script>
+    <script src="/js/notification.js"></script>
 
 </head>
 <body>
@@ -41,9 +52,9 @@
                 </a>
 
                 <div class="input-group d-none d-lg-flex mx-4">
-                    <form class="form-control" method="get" th:action="@{/shop(page = 1)}" >
+                    <form class="form-control" method="get" th:action="@{/shop(page = 1)}">
                         <input class="form-control rounded-end pe-5" type="text" placeholder="Search for products"
-                        th:name="keyword" th:value="${keyword}">
+                               th:name="keyword" th:value="${keyword}">
                     </form>
                 </div>
 
@@ -56,7 +67,6 @@
                     </a>
 
 
-
                     <!-- 로그인 버튼 #signin-modal-->
                     <form class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2"
                           th:if="${session.loginMember != null }" th:action="@{/logout}" method="post"
@@ -66,7 +76,7 @@
                             로그아웃
                         </button>
                     </form>
-<!--                    |location.href='@{/oauth2/authorization/google}'|-->
+                    <!--                    |location.href='@{/oauth2/authorization/google}'|-->
                     <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2"
                        th:if="${session.loginMember == null }" th:onclick="|location.href='@{/loginMember}'|"
                        data-bs-toggle="modal">
@@ -85,7 +95,7 @@
                             <div th:if="${session.loginMember != null }" th:text="|${session.loginMember.getName()} 님|">
                                 프로필 보여주는 곳
                             </div>
-                            <div th:if="${session.loginMember == null }" >
+                            <div th:if="${session.loginMember == null }">
                                 My Profile
                             </div>
                         </a>
@@ -133,7 +143,8 @@
 <div class="handheld-toolbar">
     <div class="d-table table-layout-fixed w-100">
 
-        <a class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" onclick="window.scrollTo(0, 0)">
+        <a class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" data-bs-toggle="collapse"
+           data-bs-target="#navbarCollapse" onclick="window.scrollTo(0, 0)">
         <span class="handheld-toolbar-icon">
             <i class="ci-menu"></i>
         </span>

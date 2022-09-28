@@ -5,6 +5,7 @@ import SilkLoad.SessionConst;
 import SilkLoad.dto.ProductCategoryDto;
 import SilkLoad.dto.ProductFormDto;
 import SilkLoad.entity.ProductEnum.ProductTime;
+import SilkLoad.service.NotificationsService;
 import SilkLoad.service.ProductService;
 import SilkLoad.entity.Members;
 import lombok.RequiredArgsConstructor;
@@ -56,6 +57,8 @@ public class ProductController {
         //session에서 login 정보를 확인하는 방식
         Members loginMember = (Members) session.getAttribute(SessionConst.LOGIN_MEMBER);
         productService.save(productData, loginMember);
+
+
         return "redirect:/";
 
     }
