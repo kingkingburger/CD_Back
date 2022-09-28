@@ -2,11 +2,16 @@ package SilkLoad.entity;
 
 import SilkLoad.entity.UserRoleEnum.Role;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.BatchSize;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -16,7 +21,10 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 @BatchSize(size = 100)
-public class Members  {
+
+@Slf4j
+public class Members implements UserDetails{
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -81,5 +89,39 @@ public class Members  {
         this.name = name;
         this.picture = picture;
         return this;
+    }
+    
+    //로그인 할 때 권한 부여("ROLE_GUEST")로
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
+        auth.add(new SimpleGrantedAuthority("ROLE_GUEST"));
+
+        return auth;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.loginId;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
