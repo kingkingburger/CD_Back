@@ -147,7 +147,7 @@
                                                 경매 가격 </h6>
                                             <ul class="fs-sm ps-4">
                                                 <li class=""
-                                                th:text="|${#numbers.formatInteger((maxAuctionPrice == -1 ? product.auctionPrice : maxAuctionPrice), 0, 'COMMA')} 원|"></li></span>
+                                                th:text="|${#numbers.formatInteger((maxAuctionPrice == -1 ? product.instantPrice : maxAuctionPrice), 0, 'COMMA')} 원|"></li></span>
                                                 <!--                                                    th:text="${maxAuctionPrice} == -1 ? ${product.auctionPrice} : ${ maxAuctionPrice }"></li></span>-->
                                             </ul>
 
@@ -160,7 +160,7 @@
 
 
                                             <h6 th:id="deadLine" class="fs-sm mb-2">마감시간</h6>
-                                            <ul class="fs-sm ps-4">
+                                            <ul class="fs-sm ps-4" th:classappend="${product.productTime.equals( productTime[2])} ?  'd-none' : ''">
                                                 <li th:id="*{ product.productTime}"></li>
                                             </ul>
 
