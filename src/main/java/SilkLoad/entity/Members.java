@@ -21,8 +21,10 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 @BatchSize(size = 100)
+
 @Slf4j
 public class Members implements UserDetails{
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,8 +56,14 @@ public class Members implements UserDetails{
 
     private LocalDate createDate = LocalDate.now();
 
-    @OneToMany(mappedBy = "members", fetch = FetchType.EAGER)
+
+    //, fetch = FetchType.EAGER (원래 이거 였음)
+    @OneToMany(mappedBy = "members")
     private List<Product> productList = new ArrayList<Product>();
+
+    @OneToMany(mappedBy = "receiver")
+    private List<Notifications> NotificationsList = new ArrayList<Notifications>();
+
 
     @Builder
     public Members(String name,
