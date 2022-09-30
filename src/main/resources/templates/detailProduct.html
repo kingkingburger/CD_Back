@@ -83,7 +83,6 @@
                     <div class="col-lg-7 pe-lg-0 pt-lg-4">
                         <div class="product-gallery">
                             <div class="product-gallery-preview order-sm-2">
-
                                 <div class="product-gallery-preview-item active" id="first">
                                     <img th:src="|/product/images/${product.getProductImagesList().get(0).getStoreFileName()}|"
                                          alt="Product image">
@@ -195,7 +194,7 @@
                             </form>
 
 
-                            <button type="button" class="btn btn-info d-block w-100 my-1" data-bs-toggle="modal"
+                            <button th:if="${product.auctionPrice != null}" type="button" class="btn btn-info d-block w-100 my-1" data-bs-toggle="modal"
                                     data-bs-target="#auctionModal">
                                 <i class="ci-store fs-lg me-2"></i>경매 구매
                             </button>
