@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class ProductSearchService {
     private final ProductRepository productRepository;
-    private final CrawlingRepository crawlingRepository;
     private final ChangeProductRecordDto changeProductRecordDto;
 
     /**

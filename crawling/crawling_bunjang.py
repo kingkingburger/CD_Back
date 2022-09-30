@@ -209,7 +209,7 @@ if __name__ == '__main__':
     threads = []
     start_time = time.time()
 
-    for i in range(4):  # 스레드 4개 생성
+    for i in range(8):  # 스레드 4개 생성
         thread = threading.Thread(target=crawling, args=category_list[i])
         thread.start()
         threads.append(thread)
