@@ -83,7 +83,6 @@
                     <div class="col-lg-7 pe-lg-0 pt-lg-4">
                         <div class="product-gallery">
                             <div class="product-gallery-preview order-sm-2">
-
                                 <div class="product-gallery-preview-item active" id="first">
                                     <img th:src="|/product/images/${product.getProductImagesList().get(0).getStoreFileName()}|"
                                          alt="Product image">
@@ -147,7 +146,7 @@
                                                 경매 가격 </h6>
                                             <ul class="fs-sm ps-4">
                                                 <li class=""
-                                                th:text="|${#numbers.formatInteger((maxAuctionPrice == -1 ? product.auctionPrice : maxAuctionPrice), 0, 'COMMA')} 원|"></li></span>
+                                                th:text="|${#numbers.formatInteger((maxAuctionPrice == -1 ? product.instantPrice : maxAuctionPrice), 0, 'COMMA')} 원|"></li></span>
                                                 <!--                                                    th:text="${maxAuctionPrice} == -1 ? ${product.auctionPrice} : ${ maxAuctionPrice }"></li></span>-->
                                             </ul>
 
@@ -160,7 +159,7 @@
 
 
                                             <h6 th:id="deadLine" class="fs-sm mb-2">마감시간</h6>
-                                            <ul class="fs-sm ps-4">
+                                            <ul class="fs-sm ps-4" th:classappend="${product.productTime.equals( productTime[2])} ?  'd-none' : ''">
                                                 <li th:id="*{ product.productTime}"></li>
                                             </ul>
 
@@ -195,7 +194,7 @@
                             </form>
 
 
-                            <button type="button" class="btn btn-info d-block w-100 my-1" data-bs-toggle="modal"
+                            <button th:if="${product.auctionPrice != null}" type="button" class="btn btn-info d-block w-100 my-1" data-bs-toggle="modal"
                                     data-bs-target="#auctionModal">
                                 <i class="ci-store fs-lg me-2"></i>경매 구매
                             </button>
