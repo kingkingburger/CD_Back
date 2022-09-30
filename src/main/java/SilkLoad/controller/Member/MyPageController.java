@@ -205,7 +205,7 @@ public class MyPageController {
         });
     }
 
-    private Members getSessionMembers(HttpServletRequest request) {
+    static public Members getSessionMembers(HttpServletRequest request) {
         HttpSession session = request.getSession();
         Object memberObject = session.getAttribute(SessionConst.LOGIN_MEMBER);
         Members sessionMember = (Members) memberObject;

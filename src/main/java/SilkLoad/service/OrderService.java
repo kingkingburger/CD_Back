@@ -1,21 +1,17 @@
 package SilkLoad.service;
 
+import SilkLoad.dto.NotificationsRequestDto;
 import SilkLoad.dto.OrderBuyAuctionDto;
 import SilkLoad.dto.OrderBuyNowDto;
 import SilkLoad.dto.OrderHistoryDto;
-import SilkLoad.entity.ChatRoom;
+import SilkLoad.entity.*;
 import SilkLoad.entity.ChatRoomEnum.ChatRoomType;
-import SilkLoad.entity.Members;
 import SilkLoad.entity.OrderEnum.OrderType;
-import SilkLoad.entity.Orders;
-import SilkLoad.entity.Product;
 import SilkLoad.entity.ProductEnum.ProductType;
-import SilkLoad.repository.ChatRoomRepository;
-import SilkLoad.repository.MemberRepository;
-import SilkLoad.repository.OrderRepository;
-import SilkLoad.repository.ProductRepository;
+import SilkLoad.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -35,6 +31,11 @@ public class OrderService {
     private final ProductRepository productRepository;
     private final ChatRoomRepository chatRoomRepository;
 
+    private final NotificationsRepository notificationsRepository;
+
+    private final ApplicationEventPublisher applicationEventPublisher;
+
+
     @Transactional
     public Orders saveBuyNow(OrderBuyNowDto orderBuyNowDto) {
 
@@ -44,6 +45,7 @@ public class OrderService {
 
         Members member = memberRepository.findById(memberId).get();
         Product product = productRepository.findById(productId).get();
+
 
         if( (member != null && product != null) && (product.getMembers().getId() != member.getId()) ) {
 
@@ -59,6 +61,8 @@ public class OrderService {
                 Product saveProduct = productRepository.save(product);
                 Orders saveOrder = orderRepository.save(order);
 
+                applicationEventPublisher.publishEvent( NotificationsRequestDto.create(member, product));
+
                 if (saveOrder != null && saveProduct != null) {
                     ChatRoom chatRoom = createChatRoom(member, saveProduct);
                     if (chatRoom != null)
@@ -70,6 +74,9 @@ public class OrderService {
         return null;
 
     }
+
+
+
 
     @Transactional
     public Orders saveBuyAuction(OrderBuyAuctionDto orderBuyAuctionDto) {
@@ -92,11 +99,14 @@ public class OrderService {
 
             Long maxAuctionPrice = orderRepository.findByProductIdMaxAuctionPrice(order.getProduct().getId());
 
-
             if (SameTimeOrderList.isEmpty() && !byProduct_idAndProductType.isEmpty()
                     && order.getOfferPrice() > maxAuctionPrice
                     && order.getOfferPrice() > order.getProduct().getAuctionPrice() ) {
-                return orderRepository.save(order);
+
+                Orders savedOrder = orderRepository.save(order);
+                applicationEventPublisher.publishEvent( NotificationsRequestDto.create(member, product));
+
+                return savedOrder;
             }
         }
         return null;

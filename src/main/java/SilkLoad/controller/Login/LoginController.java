@@ -40,8 +40,10 @@ public class LoginController {
     public String login(@Valid @ModelAttribute("loginFormDto") LoginFormDto loginFormDto,
                         BindingResult bindingResult,
                         @RequestParam(defaultValue = "/") String redirectURL,
-                        HttpServletRequest request,
-                        Model model) {
+                        HttpServletRequest request
+                       ) {
+
+
         if (bindingResult.hasErrors()) {
             return "login";
         }
@@ -56,6 +58,7 @@ public class LoginController {
 
         //쿠키 이름: jsessionid, 값: uuid, uuid를 통해 session 속성에 접근
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+
 
         //권한 부여: memberDTO의 getAuthorities() 메소드에서 담당.
         List<GrantedAuthority> roles = (List<GrantedAuthority>) loginMember.getAuthorities();
