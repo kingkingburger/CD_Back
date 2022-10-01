@@ -147,7 +147,7 @@
                                                 경매 가격 </h6>
                                             <ul class="fs-sm ps-4">
                                                 <li class=""
-                                                th:text="|${#numbers.formatInteger((maxAuctionPrice == -1 ? product.auctionPrice : maxAuctionPrice), 0, 'COMMA')} 원|"></li></span>
+                                                th:text="|${#numbers.formatInteger((maxAuctionPrice == -1 ? product.instantPrice : maxAuctionPrice), 0, 'COMMA')} 원|"></li></span>
                                                 <!--                                                    th:text="${maxAuctionPrice} == -1 ? ${product.auctionPrice} : ${ maxAuctionPrice }"></li></span>-->
                                             </ul>
 
@@ -159,8 +159,8 @@
                                             </ul>
 
 
-                                            <h6 th:id="deadLine" class="fs-sm mb-2">마감시간</h6>
-                                            <ul class="fs-sm ps-4">
+                                            <h6 th:id="deadLine" class="fs-sm mb-2" >마감시간</h6>
+                                            <ul class="fs-sm ps-4" th:classappend="${product.productTime.equals( productTime[2])} ?  'd-none' : ''">
                                                 <li th:id="*{ product.productTime}"></li>
                                             </ul>
 
@@ -177,7 +177,6 @@
                                        th:value="${session.loginMember.getId()}"/>
                                 <input type="hidden" th:id="productId" th:name="productid" th:value="${product.id}"/>
 
-
                                 <button class="btn btn-primary btn-shadow d-block w-100" type="submit"><i
                                         class="ci-cart fs-lg me-2"></i>카트에 담기
                                 </button>
@@ -188,6 +187,7 @@
                                        th:if="${session.loginMember != null}"
                                        th:value="${session.loginMember.getId()}"/>
                                 <input type="hidden" th:id="productId" th:name="productId" th:value="${product.id}"/>
+
 
                                 <button class="btn btn-danger d-block w-100 my-1" type="submit"><i
                                         class="ci-send fs-lg me-2"></i>즉시 구매

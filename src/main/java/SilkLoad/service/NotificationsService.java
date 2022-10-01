@@ -69,7 +69,7 @@ public class NotificationsService {
                      NotificationsType notificationsType
                      ) {
 
-        String message = createMessage(sender, productName, notificationsType);
+        String message = createMessage(sender ,productName, notificationsType);
         String url = createUrl(notificationsType);
 
         Notifications notifications = createNotifications(receiver, message, url);
@@ -88,8 +88,19 @@ public class NotificationsService {
     }
     public String createMessage(String sender, String productName, NotificationsType notificationsType) {
         //memberId = 구매자
-        String message;
-        message = sender + "님이" + productName + "를 " +  notificationsType.getDescription() + "를 하셨습니다.";
+        String message = "";
+
+
+        if (notificationsType == NotificationsType.buyNow ||
+                notificationsType == NotificationsType.buyAuction) {
+            message = sender + "님이 " + productName + "을(를) " +  notificationsType.getDescription() + "를 요쳥합니다.";
+        } else if (notificationsType == NotificationsType.completion ) {
+            message = sender + "님의 " + productName + " 주문이 " + notificationsType.getDescription() + " 되었습니다." ;
+        } else if (notificationsType == NotificationsType.trade) {
+            message = sender + "님의 " + productName + " 주문이 " + notificationsType.getDescription() + " 되었습니다.";
+        } else if (notificationsType == NotificationsType.cancle) {
+            message = sender + "님의 " + productName + " 주문이" + notificationsType.getDescription() + " 되었습니다.";
+        }
 
         return message;
     }
@@ -101,6 +112,10 @@ public class NotificationsService {
         if (notificationsType == NotificationsType.buyNow ||
                 notificationsType == NotificationsType.buyAuction) {
             url = "/members/myPage/saleOrders";
+        } else if (notificationsType == NotificationsType.completion ||
+                    notificationsType == NotificationsType.trade ||
+                    notificationsType == NotificationsType.cancle) {
+            url = "/members/myPage/purchaseOrders";
         }
         return url;
     }

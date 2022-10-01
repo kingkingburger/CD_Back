@@ -6,6 +6,7 @@ import SilkLoad.dto.OrderBuyNowDto;
 import SilkLoad.dto.OrderHistoryDto;
 import SilkLoad.entity.*;
 import SilkLoad.entity.ChatRoomEnum.ChatRoomType;
+import SilkLoad.entity.NotificationsEnum.NotificationsType;
 import SilkLoad.entity.OrderEnum.OrderType;
 import SilkLoad.entity.ProductEnum.ProductType;
 import SilkLoad.repository.*;
@@ -30,9 +31,6 @@ public class OrderService {
     private final MemberRepository memberRepository;
     private final ProductRepository productRepository;
     private final ChatRoomRepository chatRoomRepository;
-
-    private final NotificationsRepository notificationsRepository;
-
     private final ApplicationEventPublisher applicationEventPublisher;
 
 
@@ -61,7 +59,7 @@ public class OrderService {
                 Product saveProduct = productRepository.save(product);
                 Orders saveOrder = orderRepository.save(order);
 
-                applicationEventPublisher.publishEvent( NotificationsRequestDto.create(member, product));
+                applicationEventPublisher.publishEvent( NotificationsRequestDto.create( product.getMembers(), member.getName() ,product.getName() , NotificationsType.buyNow));
 
                 if (saveOrder != null && saveProduct != null) {
                     ChatRoom chatRoom = createChatRoom(member, saveProduct);
@@ -80,7 +78,6 @@ public class OrderService {
 
     @Transactional
     public Orders saveBuyAuction(OrderBuyAuctionDto orderBuyAuctionDto) {
-
 
         Long memberId = orderBuyAuctionDto.getMemberId();
         Long productId = orderBuyAuctionDto.getProductId();
@@ -104,7 +101,7 @@ public class OrderService {
                     && order.getOfferPrice() > order.getProduct().getAuctionPrice() ) {
 
                 Orders savedOrder = orderRepository.save(order);
-                applicationEventPublisher.publishEvent( NotificationsRequestDto.create(member, product));
+                applicationEventPublisher.publishEvent( NotificationsRequestDto.create(product.getMembers(), member.getName() ,product.getName(),NotificationsType.buyAuction));
 
                 return savedOrder;
             }
@@ -154,7 +151,15 @@ public class OrderService {
 
                 order.setOrderType(OrderType.complete);
                 order.getProduct().setProductType(ProductType.soldOut);
-                return orderRepository.save(order);
+                Orders savedOrder = orderRepository.save(order);
+
+                applicationEventPublisher.publishEvent(NotificationsRequestDto.create(
+                        order.getMemberBuyer(),
+                        order.getProduct().getMembers().getName() ,
+                        order.getProduct().getName(),
+                        NotificationsType.completion) );
+
+                return savedOrder;
             }
         }
         return null;
@@ -174,8 +179,17 @@ public class OrderService {
                 order.setOrderType(OrderType.trading);
                 order.getProduct().setProductType(ProductType.trading );
                 ChatRoom chatRoom = createChatRoom(order.getMemberBuyer(), order.getProduct());
-                if (chatRoom != null)
-                    return orderRepository.save(order);
+                if (chatRoom != null) {
+                    Orders savedOrder = orderRepository.save(order);
+                    applicationEventPublisher.publishEvent(NotificationsRequestDto.create(
+                            order.getMemberBuyer(),
+                            order.getProduct().getMembers().getName(),
+                            order.getProduct().getName(),
+                            NotificationsType.trade));
+
+                    return savedOrder;
+                }
+
             }
         }
         return null;
@@ -194,7 +208,14 @@ public class OrderService {
 
                 order.setOrderType(OrderType.cancel );
                 order.getProduct().setProductType(ProductType.cancel );
-                return orderRepository.save(order);
+                Orders savedOrder = orderRepository.save(order);
+                applicationEventPublisher.publishEvent( NotificationsRequestDto.create(
+                        savedOrder.getMemberBuyer(),
+                        savedOrder.getProduct().getMembers().getName(),
+                        savedOrder.getProduct().getName(),
+                        NotificationsType.cancle ));
+                return savedOrder;
+
             }
         }
         return null;

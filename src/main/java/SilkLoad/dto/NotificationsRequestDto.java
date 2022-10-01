@@ -13,16 +13,23 @@ import lombok.Setter;
 public class NotificationsRequestDto {
 
     Members receiver;
-    String sender;
+    String Sender;
     String productName;
     NotificationsType notificationsType;
 
-    public static NotificationsRequestDto create(Members member, Product product) {
+    /**
+     *
+     * @param receiver: receiver
+     *
+     * @param notificationsType
+     * @return
+     */
+    public static NotificationsRequestDto create(Members receiver,String sender ,String productName, NotificationsType notificationsType) {
         return NotificationsRequestDto.builder()
-                .receiver(product.getMembers())
-                .sender(member.getName())
-                .productName(product.getName())
-                .notificationsType(NotificationsType.buyNow)
+                .receiver(receiver)
+                .Sender(sender)
+                .productName(productName)
+                .notificationsType(notificationsType)
                 .build();
     }
 
