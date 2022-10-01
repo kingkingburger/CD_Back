@@ -105,13 +105,14 @@ public class ShopController {
                 .sort("sim")
                 .build();
 
-        //네이버 쇼핑 물품 보내는 부분
-//        List<NaverProductDto> naverProductDtos = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
-//        model.addAttribute("naverProductList", naverProductDtos);
+//        네이버 쇼핑 물품 보내는 부분
+        List<NaverProductDto> naverProductDtos = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
+        model.addAttribute("naverProductList", naverProductDtos);
 
+
+        //이미지 분석을 통한 추천 상품
 //        naverRequestVariableDto.setQuery(byId_productRecordDto.getPredictionImage());
 //        List<NaverProductDto> predictionNaverProductDtos = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
-
 //        model.addAttribute("predictionNaverProductList",predictionNaverProductDtos);
 
         
