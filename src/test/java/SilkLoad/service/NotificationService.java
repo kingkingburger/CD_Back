@@ -56,7 +56,7 @@ public class NotificationService {
         notificationService.subscribe(save.getId(), "");
         //when, then
         assertThatCode( () -> {
-            notificationService.send( save, "준호","과자",NotificationsType.buyNow );
+            notificationService.send( save, "준호","사과", NotificationsType.buyNow );
         }).doesNotThrowAnyException();
     }
 
@@ -71,7 +71,7 @@ public class NotificationService {
         Members members = memberRepository.findById(1L).get();
         Product product = productRepository.findById(1L).get();
 
-        NotificationsRequestDto.create(members,product);
+        NotificationsRequestDto.create(members, product.getMembers().getName(), product.getName(), NotificationsType.buyNow);
 
     }
 

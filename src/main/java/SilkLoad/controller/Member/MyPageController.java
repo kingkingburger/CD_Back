@@ -63,7 +63,7 @@ public class MyPageController {
 
         HttpSession session = request.getSession();
         Object memberObject = session.getAttribute(SessionConst.LOGIN_MEMBER);
-        Members sessionMember = (Members) memberObject;
+        MemberSessionDto sessionMember = (MemberSessionDto) memberObject;
         String loginId = sessionMember.getLoginId();
 
         // cartid 가져오기
@@ -97,7 +97,7 @@ public class MyPageController {
                              Model model,
                              HttpServletRequest request) {
 
-        Members sessionMember = getSessionMembers(request);
+        MemberSessionDto sessionMember = getSessionMembers(request);
 
         Page<OrderHistoryDto> saleOrders = orderService.findMemberSaleOrder(sessionMember.getId(), pageable);
 
@@ -120,7 +120,7 @@ public class MyPageController {
     @GetMapping("/purchaseOrders")
     public String purchaseOrders(@PageableDefault(size=6)Pageable pageable, Model model, HttpServletRequest request) {
 
-        Members sessionMembers = getSessionMembers(request);
+        MemberSessionDto sessionMembers = getSessionMembers(request);
         Page<OrderHistoryDto> purchaseOrders = orderService.findMemberPurchaseOrder(sessionMembers.getId(), pageable);
 
         calculationDeadLine(purchaseOrders);
@@ -141,7 +141,7 @@ public class MyPageController {
     public String myChatRoomList(Model model ,
                                  HttpServletRequest request,
                                  @PageableDefault(size=6)Pageable pageable){
-        Members sessionMembers = getSessionMembers(request);
+        MemberSessionDto sessionMembers = getSessionMembers(request);
 
         Page<ChatRoomTableDto> memberChatRoomList = chatService.getMemberChatRoomList(sessionMembers.getId(), pageable);
         model.addAttribute("memberChatRoomList", memberChatRoomList);
@@ -158,7 +158,7 @@ public class MyPageController {
     public String myRoom(@PathVariable("roomId") Long roomId,
                          Model model,
                          HttpServletRequest request) throws IOException {
-        Members sessionMembers = getSessionMembers(request);
+        MemberSessionDto sessionMembers = getSessionMembers(request);
         Long memberId = sessionMembers.getId();
         if (!chatService.checkRoomPermission(roomId, memberId) ) {
             return "redirect:members/myPage/myChatRoomList";
@@ -182,7 +182,7 @@ public class MyPageController {
                             RedirectAttributes redirectAttributes
     ) {
 
-        Members sessionMembers = getSessionMembers(request);
+        MemberSessionDto sessionMembers = getSessionMembers(request);
 
         if ( chatService.exitRoom(roomId, sessionMembers.getId()) ) {
 
@@ -205,10 +205,10 @@ public class MyPageController {
         });
     }
 
-    static public Members getSessionMembers(HttpServletRequest request) {
+    static public MemberSessionDto getSessionMembers(HttpServletRequest request) {
         HttpSession session = request.getSession();
         Object memberObject = session.getAttribute(SessionConst.LOGIN_MEMBER);
-        Members sessionMember = (Members) memberObject;
+        MemberSessionDto sessionMember = (MemberSessionDto) memberObject;
         return sessionMember;
     }
 

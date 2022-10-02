@@ -3,10 +3,8 @@ package SilkLoad.controller.Home;
 
 import SilkLoad.SessionConst;
 import SilkLoad.config.auth.dto.SessionUser;
-import SilkLoad.dto.CrawlingDto;
-import SilkLoad.dto.NaverProductDto;
-import SilkLoad.dto.NaverRequestVariableDto;
-import SilkLoad.dto.ProductRecordDto;
+import SilkLoad.dto.*;
+import SilkLoad.entity.Members;
 import SilkLoad.entity.Product;
 import SilkLoad.entity.ProductEnum.ProductType;
 import SilkLoad.entity.User;
@@ -112,11 +110,23 @@ public class HomeController {
         if (user != null) {
             //쿠키 이름: jsessionid, 값: uuid, uuid를 통해 session 속성에 접근, Member 객체를 email 기준으로 가지고옴
             //기존 로그인 방식이랑 유사하게 하기위해 session에 email 기반의 Members 객체 데이터를 넣어둔다.
-            session.setAttribute(SessionConst.LOGIN_MEMBER, loginService.loginWithOauth2(user.getEmail()));
+            Members members = loginService.loginWithOauth2(user.getEmail());
+            MemberSessionDto memberSessionDto = getMemberSessionDto(members);
+
+            session.setAttribute(SessionConst.LOGIN_MEMBER, memberSessionDto);
             model.addAttribute("userName", user.getName());
         }
 
         return "index";
+    }
+
+    private MemberSessionDto getMemberSessionDto(Members members) {
+        MemberSessionDto memberSessionDto = MemberSessionDto.builder()
+                .id(members.getId())
+                .name(members.getName())
+                .loginId(members.getLoginId())
+                .build();
+        return memberSessionDto;
     }
 
 }

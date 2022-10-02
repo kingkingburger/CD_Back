@@ -2,9 +2,11 @@ package SilkLoad.controller.Product;
 
 
 import SilkLoad.SessionConst;
+import SilkLoad.dto.MemberSessionDto;
 import SilkLoad.dto.ProductCategoryDto;
 import SilkLoad.dto.ProductFormDto;
 import SilkLoad.entity.ProductEnum.ProductTime;
+import SilkLoad.service.MemberService;
 import SilkLoad.service.NotificationsService;
 import SilkLoad.service.ProductService;
 import SilkLoad.entity.Members;
@@ -30,6 +32,7 @@ import java.net.MalformedURLException;
 public class ProductController {
 
     private final ProductService productService;
+    private final MemberService memberService;
 
     @ModelAttribute("productTimes")
     public ProductTime[] productType() {
@@ -55,9 +58,9 @@ public class ProductController {
 
         HttpSession session = request.getSession();
         //session에서 login 정보를 확인하는 방식
-        Members loginMember = (Members) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        MemberSessionDto memberSessionDto = (MemberSessionDto) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        Members loginMember = memberService.findByLoginId(memberSessionDto.getLoginId());
         productService.save(productData, loginMember);
-
 
         return "redirect:/";
 
