@@ -34,7 +34,7 @@ public class LoginController {
     @GetMapping("/loginMember")
     public String loginForm(@ModelAttribute("loginFormDto") LoginFormDto loginFormDto) {
 
-        return "/login";
+        return "login";
     }
 
     @PostMapping("/login")

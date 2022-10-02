@@ -78,7 +78,7 @@
                                 </div>
 
                                 <div class="py-2"> 물품 상태:&nbsp&nbsp<span
-                                        th:text="${saleOrder.productType.description}"></span>
+                                        th:text="${saleOrder.orderType.description}"></span>
 
                                 </div>
                                 <div class="py-2"> 등록 상태:&nbsp&nbsp<span
@@ -100,11 +100,9 @@
 
                                 <div class="py-2"> 주문 상태:&nbsp&nbsp<span
                                         th:text="${saleOrder.orderType.description}"></span>
-
                                 </div>
-                                <div class="py-2"> 주문 제시 가격:&nbsp&nbsp<span
-                                        th:text=" ( ${saleOrder.offerPrice} == -1 ) ? '-' : ${saleOrder.offerPrice}"></span>
-
+                                <div class="py-2"> 주문 제시 가격:&nbsp&nbsp
+                                    <span th:text=" ( ${saleOrder.offerPrice} == -1 ) ? '-' : ${saleOrder.offerPrice}"></span>
                                 </div>
                                 <div class="py-2"> 구매자 이름:&nbsp&nbsp<span
                                         th:text=" ( ${saleOrder.orderType } == ${orderType[0] } ) ? '-' : ${saleOrder.buyerName}"></span>

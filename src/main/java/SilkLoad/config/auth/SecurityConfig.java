@@ -28,6 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/", "/css/**","/fonts/**","/img/**","/vendor/**", "/js/**","/product/images/**").permitAll() // 허용 파일 범위
                 .antMatchers("/shop/**").permitAll()
+                .antMatchers("/detailProduct/**").permitAll()
                 .antMatchers("/members/add").permitAll()
                 .antMatchers("/loginMember").permitAll()
                 .antMatchers("/subscribe").permitAll()
@@ -36,6 +37,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/product/**").hasRole(Role.GUEST.name()) // guest 사용자만 들어갈 수 있따. 들어온 String 뒤에 자동으로 _ROLE 붙여준다.
                 .antMatchers("/members/**").hasRole(Role.GUEST.name()) // username이 있는 사용자만 들어갈 수 있따.
                 .antMatchers("/chat/**").hasRole(Role.GUEST.name()) // username이 있는 사용자만 들어갈 수 있따.
+//                .antMatchers("/product/**").permitAll() // guest 사용자만 들어갈 수 있따. 들어온 String 뒤에 자동으로 _ROLE 붙여준다.
+//                .antMatchers("/members/**").permitAll() // username이 있는 사용자만 들어갈 수 있따.
+//                .antMatchers("/chat/**").permitAll() // username이 있는 사용자만 들어갈 수 있따.
                 .anyRequest()
                 .authenticated()
                 .and()

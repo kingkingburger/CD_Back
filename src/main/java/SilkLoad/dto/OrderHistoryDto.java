@@ -25,7 +25,18 @@ public class OrderHistoryDto {
     private String buyerName;
     private LocalDateTime orderDateTime;
 
-    public OrderHistoryDto(Long productId, String productName, Long auctionPrice, Long instantPrice, ProductType productType, ProductTime productTime, LocalDateTime productDateTime, Long orderId, OrderType orderType, Long offerPrice, String buyerName, LocalDateTime orderDateTime) {
+    public OrderHistoryDto(Long productId,
+                           String productName,
+                           Long auctionPrice,
+                           Long instantPrice,
+                           ProductType productType,
+                           ProductTime productTime,
+                           LocalDateTime productDateTime,
+                           Long orderId,
+                           OrderType orderType,
+                           Long offerPrice,
+                           String buyerName,
+                           LocalDateTime orderDateTime) {
 
         this.productId = productId;
         this.productName = productName;
