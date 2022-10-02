@@ -2,6 +2,7 @@ package SilkLoad.controller.Alarm;
 
 import SilkLoad.SessionConst;
 import SilkLoad.controller.Member.MyPageController;
+import SilkLoad.dto.MemberSessionDto;
 import SilkLoad.entity.Members;
 import SilkLoad.service.NotificationsService;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +32,8 @@ public class NotificationController {
                                 HttpServletRequest request
                                 ) {
 
-        Members sessionMembers = MyPageController.getSessionMembers(request);
-        log.info( "테스트 세션 ={}" ,sessionMembers.getName());
+        MemberSessionDto sessionMembers = MyPageController.getSessionMembers(request);
+        log.info( "lastEventId ={}" ,lastEventId);
         SseEmitter sseEmitter = notificationService.subscribe(sessionMembers.getId(), lastEventId);
 
         return sseEmitter;

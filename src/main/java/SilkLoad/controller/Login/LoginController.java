@@ -2,6 +2,7 @@ package SilkLoad.controller.Login;
 
 import SilkLoad.SessionConst;
 import SilkLoad.dto.LoginFormDto;
+import SilkLoad.dto.MemberSessionDto;
 import SilkLoad.entity.Members;
 import SilkLoad.service.LoginService;
 import lombok.RequiredArgsConstructor;
@@ -56,9 +57,10 @@ public class LoginController {
 
         HttpSession session = request.getSession();
 
-        //쿠키 이름: jsessionid, 값: uuid, uuid를 통해 session 속성에 접근
-        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+        MemberSessionDto memberSessionDto = getMemberSessionDto(loginMember);
 
+        //쿠키 이름: jsessionid, 값: uuid, uuid를 통해 session 속성에 접근
+        session.setAttribute(SessionConst.LOGIN_MEMBER, memberSessionDto);
 
         //권한 부여: memberDTO의 getAuthorities() 메소드에서 담당.
         List<GrantedAuthority> roles = (List<GrantedAuthority>) loginMember.getAuthorities();
@@ -85,5 +87,13 @@ public class LoginController {
         return "redirect:/";
     }
 
+    private MemberSessionDto getMemberSessionDto(Members loginMember) {
+        MemberSessionDto memberSessionDto = MemberSessionDto.builder()
+                .id(loginMember.getId())
+                .loginId(loginMember.getLoginId())
+                .name(loginMember.getName())
+                .build();
+        return memberSessionDto;
+    }
 
 }

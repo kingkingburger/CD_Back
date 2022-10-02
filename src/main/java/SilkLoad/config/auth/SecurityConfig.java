@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 
 @RequiredArgsConstructor
@@ -23,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .csrf()
-                .disable()
+                .and()
                 .authorizeRequests()
                 .antMatchers("/", "/css/**","/fonts/**","/img/**","/vendor/**", "/js/**","/product/images/**").permitAll() // 허용 파일 범위
                 .antMatchers("/shop/**").permitAll()

@@ -25,7 +25,6 @@ import java.util.List;
 @Slf4j
 public class Members implements UserDetails{
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MEMBER_ID")
@@ -55,7 +54,6 @@ public class Members implements UserDetails{
     private Integer numberPurchase;
 
     private LocalDate createDate = LocalDate.now();
-
 
     //, fetch = FetchType.EAGER (원래 이거 였음)
     @OneToMany(mappedBy = "members")
