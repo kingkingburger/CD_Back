@@ -149,8 +149,8 @@ public class OrderService {
 
             Orders order = optionalOrders.get();
 
-            if( order.getOrderType() == OrderType.trading
-            && order.getProduct().getProductType() == ProductType.trading) {
+            if((order.getOrderType() == OrderType.trading || order.getOrderType() == OrderType.auction)
+            && (order.getProduct().getProductType() == ProductType.trading || order.getProduct().getProductType() == ProductType.auction)) {
 
                 order.setOrderType(OrderType.complete);
                 order.getProduct().setProductType(ProductType.soldOut);
@@ -171,8 +171,8 @@ public class OrderService {
             if( order.getOrderType() == OrderType.waiting
                     &&  order.getProduct().getProductType() == ProductType.sale) {
 
-                order.setOrderType(OrderType.trading);
-                order.getProduct().setProductType(ProductType.trading );
+                order.setOrderType(OrderType.bidding);
+                order.getProduct().setProductType(ProductType.bidding );
                 ChatRoom chatRoom = createChatRoom(order.getMemberBuyer(), order.getProduct());
                 if (chatRoom != null)
                     return orderRepository.save(order);
