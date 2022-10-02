@@ -82,6 +82,63 @@ public class OrderService {
         Long memberId = orderBuyAuctionDto.getMemberId();
         Long productId = orderBuyAuctionDto.getProductId();
 
+        if (memberId != productId) {
+
+            Optional<Members> optionalMembers = memberRepository.findById(memberId);
+            Optional<Product> optionalProduct = productRepository.findById(productId);
+            Members member;
+            Product product;
+
+            if ( optionalMembers.isPresent() && optionalProduct.isPresent() ) {
+                member = optionalMembers.get();
+                product = optionalProduct.get();
+
+                Orders order = createBuyAuctionOrder(member, product, orderBuyAuctionDto.getAuctionPrice());
+                List<Orders> SameTimeOrderList = getSameTimeOrders(order);
+                log.info("겹치는 시간 여부 ={}, {}", order.getProduct().getId(), order.getOrderDateTime());
+
+                //물품 타입을 검사하여 판매중인 상태인지 검사
+                List<Product> byProduct_idAndProductType = productRepository.findByIdAndProductType(order.getProduct().getId(), ProductType.sale);
+                Long maxAuctionPrice = orderRepository.findByProductIdMaxAuctionPrice(order.getProduct().getId());
+
+                if (SameTimeOrderList.isEmpty() && !byProduct_idAndProductType.isEmpty()
+                        && order.getOfferPrice() > maxAuctionPrice
+                        && order.getOfferPrice() > order.getProduct().getAuctionPrice() ) {
+
+                    Optional<Orders> optionalFindOrder = orderRepository.findByMemberBuyer_IdAndProduct_Id(order.getMemberBuyer().getId(), order.getProduct().getId());
+                    Orders saveOrder;
+
+                    if (optionalFindOrder.isPresent()) {
+
+                        saveOrder = optionalFindOrder.get();
+                        saveOrder.setOfferPrice(orderBuyAuctionDto.getAuctionPrice());
+
+                    } else {
+                        saveOrder = order;
+                    }
+                    Orders savedOrder = orderRepository.save(saveOrder);
+                    applicationEventPublisher.publishEvent( NotificationsRequestDto.create(
+                            product.getMembers(), member.getName()
+                            ,product.getName(),
+                            NotificationsType.buyAuction));
+
+                    return savedOrder;
+                }
+
+            }
+
+        }
+        return null;
+
+    /*    Long memberId = orderBuyAuctionDto.getMemberId();
+        Long productId = orderBuyAuctionDto.getProductId();
+
+        Optional<Members> optionalMembers = memberRepository.findById(memberId);
+
+        if ( optionalMembers.isPresent() ) {
+            Members member = optionalMembers.get();
+        }
+
         Members member = memberRepository.findById(memberId).get();
         Product product = productRepository.findById(productId).get();
 
@@ -93,7 +150,6 @@ public class OrderService {
             log.info("겹치는 시간 여부 ={}, {}", order.getProduct().getId(), order.getOrderDateTime());
 
             List<Product> byProduct_idAndProductType = productRepository.findByIdAndProductType(order.getProduct().getId(), ProductType.sale);
-
             Long maxAuctionPrice = orderRepository.findByProductIdMaxAuctionPrice(order.getProduct().getId());
 
             if (SameTimeOrderList.isEmpty() && !byProduct_idAndProductType.isEmpty()
@@ -106,7 +162,7 @@ public class OrderService {
                 return savedOrder;
             }
         }
-        return null;
+        return null;*/
 
     }
 

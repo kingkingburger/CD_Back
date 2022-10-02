@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Orders, Long>  {
@@ -45,7 +46,6 @@ public interface OrderRepository extends JpaRepository<Orders, Long>  {
     )
     Page<OrderHistoryDto> findMemberSaleOrder(@Param("memberId") Long memberId, Pageable pageable);
 
-
     @Query("SELECT " +
             "NEW SilkLoad.dto.OrderHistoryDto(p.id, p.name, p.auctionPrice, p.instantPrice, p.productType, p.productTime, p.createdDate," +
             " o.id, o.orderType, o.offerPrice, o.memberBuyer.name, o.orderDateTime) " +
@@ -53,11 +53,14 @@ public interface OrderRepository extends JpaRepository<Orders, Long>  {
             "join Product p " +
             "on o.product.id = p.id " +
             "WHERE o.orderType <> SilkLoad.entity.OrderEnum.OrderType.unRegistered " +
-            "AND o.orderType <> SilkLoad.entity.OrderEnum.OrderType.waiting " +
             "AND o.memberBuyer.id = :memberId"
     )
     Page<OrderHistoryDto> findMemberPurchaseOrder(@Param("memberId") Long memberId, Pageable pageable);
 
+    //변경전 코드, where절에 있던 조건
+    //  "AND o.orderType <> SilkLoad.entity.OrderEnum.OrderType.waiting " +
+
+    Optional<Orders> findByMemberBuyer_IdAndProduct_Id ( Long memberId,  Long productId);
 
 
 }
