@@ -59,14 +59,13 @@
                         </div>
                     </div>
                     <!--카트에 담기-->
-                    <div class="card-body card-body-hidden">
-                        <form action="" th:action="@{/product/order/inCart}" method="post">
-                            <input type="hidden" th:id="memberId" th:name="memberId"
+                    <div th:if="${session.loginMember != null}" class="card-body card-body-hidden">
+                        <form th:action="@{/product/order/inCart}" method="post">
+                            <input type="hidden" th:id="memberId" th:name="memberid"
                                    th:if="${session.loginMember != null}"
                                    th:value="${session.loginMember.getId()}"/>
-                            <input type="hidden" th:id="productId" th:name="productId" th:value="${product.id}"/>
-
-                            <button class="btn btn-primary btn-sm d-block w-100 mb-2" type="button">
+                            <input type="hidden" th:id="productId" th:name="productid" th:value="${product.id}"/>
+                            <button class="btn btn-primary btn-sm d-block w-100 mb-2" type="submit">
                                 <i class="ci-cart fs-sm me-2"></i>Add to Cart
                             </button>
                         </form>
