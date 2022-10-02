@@ -18,14 +18,14 @@ public class NotificationsResponseDto {
     String url;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-    LocalDateTime createdTime;
+    LocalDateTime createdDateTime;
 
     public static NotificationsResponseDto create(Notifications notifications) {
 
         return NotificationsResponseDto.builder()
                 .message(notifications.getMessage())
                 .url(notifications.getUrl())
-                .createdTime(notifications.getCreatedDate())
+                .createdDateTime(notifications.getCreatedDate())
                 .build();
 
     }

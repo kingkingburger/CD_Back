@@ -11,17 +11,10 @@
     <!-- Viewport-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon and Touch Icons-->
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-
-    <link rel="mask-icon" color="#fe6a6a" href="safari-pinned-tab.svg">
+<!--    <link rel="mask-icon" color="#fe6a6a" href="safari-pinned-tab.svg">-->
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
-    <!-- Vendor Styles including: Font Icons, Plugins, etc.-->
-    <!--    <link rel="stylesheet" media="screen" href="/vendor/simplebar/dist/simplebar.min.css"/>-->
-    <!--    <link rel="stylesheet" media="screen" href="/vendor/tiny-slider/dist/tiny-slider.css"/>-->
-    <!--    <link rel="stylesheet" media="screen" href="/vendor/nouislider/dist/nouislider.min.css"/>-->
-    <!--    <link rel="stylesheet" media="screen" href="/vendor/drift-zoom/dist/drift-basic.min.css"/>-->
-    <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">-->
+
     <link
             rel="stylesheet"
             media="screen"
@@ -38,7 +31,6 @@
     <link rel="stylesheet" media="screen" href="/css/theme.min.css">
     <!--jQuery-->
     <script src="/js/jquery-3.6.0.min.js"></script>
-    <script src="/js/notification.js"></script>
 
 </head>
 <body>
@@ -87,6 +79,7 @@
                     "
                             >
                                 <div
+                                        id="message-box"
                                         style="height: 15rem"
                                         data-simplebar
                                         data-simplebar-auto-hide="false"
@@ -102,22 +95,23 @@
                                         />
                                     </div>
 
-                                    <div class="widget-cart-item pb-2">
-                                            <div class="ps-2">
-                                                <h6 class="widget-product-title">
-                                                    <a href="shop-single-v1.html"
-                                                    >Women Colorblock Sneakers</a
-                                                    >
-                                                </h6>
-                                                <div class="widget-product-meta">
-                                                    <div class="mt-2 me-2 text-end">2017-10-21
-                                                    </div>
-                                                </div>
-                                                <hr class="border border-1 mt-1" />
+                                    <!--알림 목록 하드 코딩   -->
+<!--                                    <div class="pb-2">-->
+<!--                                            <div class="ps-2">-->
+<!--                                                <h6 class="widget-product-title">-->
+<!--                                                    <a href="shop-single-v1.html"-->
+<!--                                                    >Women Colorblock Sneakers</a-->
+<!--                                                    >-->
+<!--                                                </h6>-->
+<!--                                                <div class="widget-product-meta">-->
+<!--                                                    <div class="mt-2 me-2 text-end">2017-10-21-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                                <hr class="border border-1 mt-1" />-->
 
-                                            </div>
+<!--                                            </div>-->
 
-                                    </div>
+<!--                                    </div>-->
 
 
                                 </div>
@@ -264,7 +258,61 @@
 <!-- Main theme script-->
 <script src="/js/theme.min.js"></script>
 <script th:inline="javascript">
-    const memberSession = [[${session.loginMember}]];
+
+    $(document).ready((function () {
+
+        const memberSession = [[${session.loginMember}]];
+
+        console.log(memberSession);
+
+        if (memberSession != null) {
+            const eventSource = new EventSource(`/subscribe`);
+
+            eventSource.onopen = (e) => {
+                console.log(e);
+            };
+            eventSource.onerror = (e) => {
+                eventSource.close();
+                console.log(e);
+            };
+            /**
+             *
+             * @param e.data : message, createdDateTime, url
+             */
+            eventSource.onmessage = (e) => {
+
+                const notificationResponseDto = JSON.parse(e.data);
+
+                $(".simplebar-content").append(
+                    '<div class="pb-2">' +
+                    '<div class="ps-2">' +
+                    '<h6 class="widget-product-title">' +
+                    '<a href="' +
+                    notificationResponseDto.url +
+                    '">' +
+                    notificationResponseDto.message +
+                    '</a>' +
+                    '</h6>' +
+                    '<div class="widget-product-meta">' +
+                    '<div class="mt-2 me-2 text-end">' +
+                    notificationResponseDto.createdDateTime +
+                    '</div>' +
+                    '</div>' +
+                    '<hr class="border border-1 mt-1"/>' +
+                    '</div>' +
+                    '</div>'
+
+
+                )
+
+
+
+
+
+            };
+
+        }
+    }))
 
 </script>
 </body>
