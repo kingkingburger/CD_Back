@@ -10,6 +10,7 @@ import SilkLoad.repository.CartRepository;
 import SilkLoad.repository.MemberRepository;
 import SilkLoad.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CartService {
 
     private final CartRepository cartRepository;
@@ -74,7 +76,6 @@ public class CartService {
 
         Long memberId = cartDto.getMemberid();
         Long productId = cartDto.getProductid();
-
         Optional<Members> byMemberId = memberRepository.findById(memberId);
         Optional<Product> byProductId = productRepository.findById(productId);
 
