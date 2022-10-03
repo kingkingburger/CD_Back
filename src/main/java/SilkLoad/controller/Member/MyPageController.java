@@ -113,6 +113,7 @@ public class MyPageController {
 
         model.addAttribute("saleOrders", saleOrders);
         model.addAttribute("orderType", OrderType.values() );
+        model.addAttribute("noneTime", ProductTime.NONE );
 
         return "myPage/memberSaleOrders";
     }
@@ -132,6 +133,7 @@ public class MyPageController {
 
         model.addAttribute("purchaseOrders", purchaseOrders);
         model.addAttribute("orderType", OrderType.values());
+        model.addAttribute("noneTime", ProductTime.NONE );
 
         return "myPage/memberPurchaseOrders";
 

@@ -82,16 +82,17 @@ public class OrderService {
         Long memberId = orderBuyAuctionDto.getMemberId();
         Long productId = orderBuyAuctionDto.getProductId();
 
-        if (memberId != productId) {
 
-            Optional<Members> optionalMembers = memberRepository.findById(memberId);
-            Optional<Product> optionalProduct = productRepository.findById(productId);
-            Members member;
-            Product product;
+        Optional<Members> optionalMembers = memberRepository.findById(memberId);
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+        Members member;
+        Product product;
 
-            if ( optionalMembers.isPresent() && optionalProduct.isPresent() ) {
-                member = optionalMembers.get();
-                product = optionalProduct.get();
+        if ( optionalMembers.isPresent() && optionalProduct.isPresent() ) {
+            member = optionalMembers.get();
+            product = optionalProduct.get();
+
+            if ( (product.getMembers().getId() != member.getId())) {
 
                 Orders order = createBuyAuctionOrder(member, product, orderBuyAuctionDto.getAuctionPrice());
                 List<Orders> SameTimeOrderList = getSameTimeOrders(order);
@@ -103,7 +104,7 @@ public class OrderService {
 
                 if (SameTimeOrderList.isEmpty() && !byProduct_idAndProductType.isEmpty()
                         && order.getOfferPrice() > maxAuctionPrice
-                        && order.getOfferPrice() > order.getProduct().getAuctionPrice() ) {
+                        && order.getOfferPrice() > order.getProduct().getAuctionPrice()) {
 
                     Optional<Orders> optionalFindOrder = orderRepository.findByMemberBuyer_IdAndProduct_Id(order.getMemberBuyer().getId(), order.getProduct().getId());
                     Orders saveOrder;
@@ -117,9 +118,9 @@ public class OrderService {
                         saveOrder = order;
                     }
                     Orders savedOrder = orderRepository.save(saveOrder);
-                    applicationEventPublisher.publishEvent( NotificationsRequestDto.create(
+                    applicationEventPublisher.publishEvent(NotificationsRequestDto.create(
                             product.getMembers(), member.getName()
-                            ,product.getName(),
+                            , product.getName(),
                             NotificationsType.buyAuction));
 
                     return savedOrder;
@@ -202,9 +203,8 @@ public class OrderService {
 
             Orders order = optionalOrders.get();
 
-            if((order.getOrderType() == OrderType.trading || order.getOrderType() == OrderType.auction)
-            && (order.getProduct().getProductType() == ProductType.trading || order.getProduct().getProductType() == ProductType.auction)) {
-
+            if( order.getOrderType() == OrderType.successfulBid
+                    && order.getProduct().getProductType() == ProductType.trading) {
                 order.setOrderType(OrderType.complete);
                 order.getProduct().setProductType(ProductType.soldOut);
                 Orders savedOrder = orderRepository.save(order);
@@ -229,11 +229,11 @@ public class OrderService {
 
             Orders order = optionalOrders.get();
 
-            if( order.getOrderType() == OrderType.waiting
+            if(  order.getOrderType() == OrderType.bid
                     &&  order.getProduct().getProductType() == ProductType.sale) {
 
-                order.setOrderType(OrderType.bidding);
-                order.getProduct().setProductType(ProductType.bidding );
+                order.setOrderType(OrderType.successfulBid);
+                order.getProduct().setProductType(ProductType.trading );
                 ChatRoom chatRoom = createChatRoom(order.getMemberBuyer(), order.getProduct());
                 if (chatRoom != null) {
                     Orders savedOrder = orderRepository.save(order);
@@ -293,7 +293,7 @@ public class OrderService {
                .memberBuyer(member)
                .product(product)
                .offerPrice(offerPrice)
-               .orderType(OrderType.waiting)
+               .orderType(OrderType.bid )
                .orderDateTime(LocalDateTime.now())
                .build();
        return  order;
@@ -306,7 +306,7 @@ public class OrderService {
                 .memberBuyer(member)
                 .product(product)
                 .offerPrice(product.getInstantPrice())
-                .orderType(OrderType.trading)
+                .orderType(OrderType.buyNow )
                 .orderDateTime(LocalDateTime.now())
                 .build();
 
