@@ -69,9 +69,9 @@
 
                                     <div class="py-2"> 물품 번호:&nbsp&nbsp<span th:text="${purchaseOrder.productId}"></span></div>
                                     <div class="py-2"> 물품 이름:&nbsp&nbsp<span th:text="${purchaseOrder.productName}"></span></div>
-                                    <div class="py-2"> 경매 가격:&nbsp&nbsp<span th:text=" ( ${purchaseOrder.auctionPrice} == null ) ? '-': ${purchaseOrder.auctionPrice} "></span>
+                                    <div class="py-2"> 경매 시작가:&nbsp&nbsp<span th:text=" ( ${purchaseOrder.auctionPrice} == null ) ? '-': ${purchaseOrder.auctionPrice} "></span>
                                     </div>
-                                    <div class="py-2"> 즉시 구매가:&nbsp&nbsp<span th:text="${purchaseOrder.instantPrice}"></span>
+                                    <div class="py-2"> 바로 구매가:&nbsp&nbsp<span th:text="${purchaseOrder.instantPrice}"></span>
 
                                     </div>
 
@@ -95,8 +95,14 @@
                                     <div class="py-2"> 주문 상태:&nbsp&nbsp<span th:text="${purchaseOrder.orderType.description}"></span>
 
                                     </div>
-                                    <div class="py-2"> 주문 제시 가격:&nbsp&nbsp<span th:text=" ( ${purchaseOrder.offerPrice} == -1 ) ? '-' : ${purchaseOrder.offerPrice}"></span>
-
+                                    <div class="py-2" th:if="${purchaseOrder.orderType} == ${orderType[1]}" > 입찰가:&nbsp&nbsp<span
+                                            th:text=" ( ${purchaseOrder.offerPrice} == -1 ) ? '-' : ${purchaseOrder.offerPrice}"></span>
+                                    </div>
+                                    <div class="py-2" th:if="${purchaseOrder.orderType} == ${orderType[2]}" > 낙찰가:&nbsp&nbsp<span
+                                            th:text=" ( ${purchaseOrder.offerPrice} == -1 ) ? '-' : ${purchaseOrder.offerPrice}"></span>
+                                    </div>
+                                    <div class="py-2" th:if="${purchaseOrder.orderType} == ${orderType[3]}" > 바로 구매:&nbsp&nbsp<span
+                                            th:text=" ( ${purchaseOrder.offerPrice} == -1 ) ? '-' : ${purchaseOrder.offerPrice}"></span>
                                     </div>
                                     <div class="py-2"> 구매자 이름:&nbsp&nbsp<span th:text=" ( ${purchaseOrder.orderType } == ${orderType[0] } ) ? '-' : ${purchaseOrder.buyerName}"></span>
 
@@ -127,9 +133,10 @@
                         <thead>
                         <tr class="text-center">
                             <th>물품 이름</th>
+                            <th>판매 형식</th>
                             <th>물품 상태</th>
-                            <th>경매 가</th>
-                            <th>즉시 구매가</th>
+                            <th>현재 입찰가</th>
+                            <th>바로 구매가</th>
                             <th>등록 날짜</th>
                         </tr>
                         </thead>
@@ -138,12 +145,16 @@
                         <tr class="text-center" th:each="purchaseOrder, purchaseStat : ${purchaseOrders}">
 
                             <td class="py-3">
-                                <button type="button" class="btn btn-primary btn-sm d-none d-lg-inline-block"
+                                <button type="button" class="btn btn-primary btn-sm d-lg-inline-block"
                                         th:text="${ purchaseOrder.productName }" data-bs-toggle="modal"
                                         th:data-bs-target="|#myModal${purchaseStat.index}|"></button>
                             </td>
-                            <td class="py-3 align-middle" th:text="${ purchaseOrder.productType.description }"></td>
-                            <td class="py-3 align-middle" th:text=" (${purchaseOrder.auctionPrice} == null) ? '-' : ${ purchaseOrder.auctionPrice }"></td>
+                            <td class="py-3 align-middle" th:text="${purchaseOrder.productTime == noneTime  ?
+                             '비경매 ' : '경매 ' }"></td>
+                            <td class="py-3 align-middle" th:text="${purchaseOrder.productType.description }"></td>
+
+                            <td class="py-3 align-middle"
+                                th:text=" (${purchaseOrder.offerPrice} == -1 ) ? '-' : ${ purchaseOrder.offerPrice }"></td>
                             <td class="py-3 align-middle" th:text="${ purchaseOrder.instantPrice}"></td>
                             <td class="py-3 align-middle"
                                 th:text="${#temporals.format( purchaseOrder.productDateTime , 'yy-MM-dd HH:mm')}"></td>

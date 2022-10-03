@@ -140,15 +140,15 @@
                                             <ul class="fs-sm ps-4">
                                                 <li class="" th:text="${product.productTime.getDescription()}"></li>
                                             </ul>
-
-                                            <h6 class="fs-sm mb-2"
-                                                th:classappend="${product.productTime.equals( productTime[2])} ?  'd-none' : ''">
+                                            <span th:classappend="${product.productTime.equals( productTime[2])} ?  'd-none' : ''">
+                                            <h6 class="fs-sm mb-2">
                                                 경매 가격 </h6>
                                             <ul class="fs-sm ps-4">
                                                 <li class=""
-                                                th:text="|${#numbers.formatInteger((maxAuctionPrice == -1 ? product.instantPrice : maxAuctionPrice), 0, 'COMMA')} 원|"></li></span>
+                                                th:text="|${#numbers.formatInteger((maxAuctionPrice == -1 ? product.auctionPrice : maxAuctionPrice ), 0, 'COMMA')} 원|"></li></span>
                                                 <!--                                                    th:text="${maxAuctionPrice} == -1 ? ${product.auctionPrice} : ${ maxAuctionPrice }"></li></span>-->
                                             </ul>
+                                            </span>
 
                                             <h6 class="fs-sm mb-2">상세 설명</h6>
                                             <ul class="fs-sm ps-4">

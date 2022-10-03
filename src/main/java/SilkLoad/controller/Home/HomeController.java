@@ -50,7 +50,6 @@ public class HomeController {
                        @PageableDefault(size=8) Pageable pageable) {//@PageableDefault로 기본 8개를 가지고 오게했다crawling.
         List<ProductRecordDto> content = pagedProductService.paged_product(pageable).getContent();
 
-
         model.addAttribute("Products", content);
         model.addAttribute("sale", ProductType.sale);
 //------------------------번개 장터-------------------------

@@ -27,7 +27,7 @@ public class MemberService  {
     @Transactional
     public void save(MemberFormDto memberFormDto) {
         Members member = Members.builder()
-                .name(memberFormDto.getLoginId())
+                .name(memberFormDto.getName())
                 .password(memberFormDto.getPassword())
                 .email(memberFormDto.getLoginId())
                 .picture(null)
