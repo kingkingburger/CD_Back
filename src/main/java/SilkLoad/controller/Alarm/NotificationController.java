@@ -33,9 +33,7 @@ public class NotificationController {
                                 ) {
 
         MemberSessionDto sessionMembers = MyPageController.getSessionMembers(request);
-        log.info( "lastEventId ={}" ,lastEventId);
         SseEmitter sseEmitter = notificationService.subscribe(sessionMembers.getId(), lastEventId);
-
         return sseEmitter;
 
     }

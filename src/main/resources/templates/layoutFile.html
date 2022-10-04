@@ -63,18 +63,17 @@
                             data-bs-target="#alarmList"
                             onclick="window.scrollTo(0, 0)"
                     >
-                        <a class="navbar-tool-icon-box bg-s econdary dropdown-toggle"
-                        ><span class="navbar-tool-label">3</span
-                        ><i class="navbar-tool-icon ci-bell"></i
-                        ></a>
+                        <a class="navbar-tool-icon-box bg-s econdary dropdown-toggle">
+                            <span class="navbar-tool-label alarm-count">0</span>
+                            <i class="navbar-tool-icon ci-bell"></i>
+                        </a>
 
                         <!-- Cart dropdown-->
                         <div class="dropdown-menu dropdown-menu-end" id="alarmList">
                             <div
                                     class="widget widget-cart px-3 pt-2 pb-3"
                                     style="width: 23rem"
-                                    data-bs-toggle="dropdown
-                    "
+                                    data-bs-toggle="dropdown"
                             >
                                 <div
                                         style="height: 15rem"
@@ -91,13 +90,11 @@
                                                 class="border border-2 rounded border-primary bg-primary mb-1"
                                         />
                                     </div>
-
-
                                 </div>
-
                             </div>
                         </div>
                     </div>
+
                     <!-- 로그인 버튼 #signin-modal-->
                     <form class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2"
                           th:if="${session.loginMember != null }" th:action="@{/logout}" method="post"
@@ -246,6 +243,8 @@
         if (memberSession != null) {
             const eventSource = new EventSource(`/subscribe`);
 
+            console.log("eventSource")
+            console.log(eventSource)
             eventSource.onopen = (e) => {
                 console.log(e);
             };
@@ -254,13 +253,12 @@
                 console.log(e);
             };
             /**
-             *
              * @param e.data : message, createdDateTime, url
              */
+            let alramCount = 0;
             eventSource.onmessage = (e) => {
-
                 const notificationResponseDto = JSON.parse(e.data);
-
+                alramCount += 1;
                 $(".simplebar-content").append(
                     '<div class="widget-cart-item pb-2">' +
                     '<div class="ps-2">' +
@@ -282,10 +280,10 @@
                     '</div>' +
                     '</div>'
                 )
-
-
+                $(".alarm-count").text(
+                    alramCount
+                )
             };
-
         }
     }))
 
