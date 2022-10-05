@@ -27,7 +27,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         if (session == null || session.getAttribute(SessionConst.LOGIN_MEMBER) == null ) {
             log.info("미인증 사용자 요청");
 
-            response.sendRedirect("/login?redirectURL=" + requestURI);
+            response.sendRedirect("/loginMember?redirectURL=" + requestURI);
             //컨트롤러에 요청 x
             return false;
         }

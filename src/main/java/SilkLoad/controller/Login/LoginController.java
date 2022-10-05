@@ -32,7 +32,13 @@ public class LoginController {
     private final LoginService loginService;
 
     @GetMapping("/loginMember")
-    public String loginForm(@ModelAttribute("loginFormDto") LoginFormDto loginFormDto) {
+    public String loginForm(@ModelAttribute("loginFormDto") LoginFormDto loginFormDto,
+                            @RequestParam(required = false) String redirectURL) {
+        log.info("redirect URL 확인: {}", redirectURL);
+
+        if( redirectURL != null) {
+            return "redirect:/";
+        }
 
         return "login";
     }
