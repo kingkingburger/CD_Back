@@ -36,6 +36,12 @@ public class LoginController {
 
         return "login";
     }
+    @GetMapping("/login")
+    public String oauth2LoginRedirect(@ModelAttribute("loginFormDto") LoginFormDto loginFormDto,
+                                      @RequestParam(value = "redirectURL", defaultValue = "/") String redirectURL ) {
+        return "redirect:" + redirectURL;
+    }
+
 
     @PostMapping("/login")
     public String login(@Valid @ModelAttribute("loginFormDto") LoginFormDto loginFormDto,

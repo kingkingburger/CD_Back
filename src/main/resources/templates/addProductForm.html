@@ -2577,13 +2577,58 @@
 
 </style>
 
+
+<!-- ml5 js 코드 가져오기-->
 <!--<script src="/js/p5.js"></script>-->
 <!--<script src="/js/p5.sound.min.js"></script>-->
 <!--<script src="/js/ml5.min.js"></script>-->
 <!--<script src="/js/sketch.js"></script>-->
+
+<!-- tensorflow js 코드 가져오기-->
+<script src="/js/tfjs@1.0.1.js"> </script>
+<script src="/js/mobilenet@1.0.0.js"> </script>
+
 <script th:inline="javascript">
 
     $(document).ready(() => {
+
+        //등록된 상품 이미지 읽어오기
+        const fileRead = () => {
+            return new Promise((res, rej) => {
+                console.log("test");
+                let reader = new FileReader();
+                reader.onload = () => {
+                    let dataURL = reader.result;
+                    $("#selected-image").attr("src", dataURL);
+                    res();
+                };
+                let file = $("#image_nameSrc").prop("files")[0];
+                reader.readAsDataURL(file);
+            });
+        };
+
+        // 이미지가 등록된다면 모델 불러오기 및 이미지 분석하기
+        $("#image_nameSrc").change(function () {
+            $("#submit").attr("disabled", true);
+            mobilenet.load().then((model) => {
+                fileRead().then(() => {
+                    let img = $("#selected-image").get(0);
+                    model.classify(img).then((predictions) => {
+                        console.log("Predictions: ");
+                        console.log(predictions);
+                        console.log(predictions[0].className);
+                        const firstPrediction = predictions[0].className.split(",")[0];
+                        console.log(firstPrediction);
+                        $("#predictionResult").val(firstPrediction);
+                        $("#submit").attr("disabled", false);
+                    });
+                });
+            });
+        });
+
+        /**
+         *
+         */
 
         //변수를 담는다.
         //24, 48, 비경매
