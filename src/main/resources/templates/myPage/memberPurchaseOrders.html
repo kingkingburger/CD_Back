@@ -152,10 +152,9 @@
                             <td class="py-3 align-middle" th:text="${purchaseOrder.productTime == noneTime  ?
                              '비경매 ' : '경매 ' }"></td>
                             <td class="py-3 align-middle" th:text="${purchaseOrder.productType.description }"></td>
-
                             <td class="py-3 align-middle"
-                                th:text=" (${purchaseOrder.offerPrice} == -1 ) ? '-' : ${ purchaseOrder.offerPrice }"></td>
-                            <td class="py-3 align-middle" th:text="${ purchaseOrder.instantPrice}"></td>
+                                th:text=" (${purchaseOrder.offerPrice} == -1 ) ? '-' : ${#numbers.formatInteger(purchaseOrder.offerPrice, 0, 'COMMA')}"></td>
+                            <td class="py-3 align-middle" th:text="${#numbers.formatInteger(purchaseOrder.instantPrice, 0, 'COMMA')}"></td>
                             <td class="py-3 align-middle"
                                 th:text="${#temporals.format( purchaseOrder.productDateTime , 'yy-MM-dd HH:mm')}"></td>
 
