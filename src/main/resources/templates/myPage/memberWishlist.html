@@ -63,7 +63,7 @@
                                 <span class="me-2" >
                                     즉시구매가:
                                 </span>
-                                <span class="text-muted me-2"  th:text="|${product.instantPrice} 원|">
+                                <span class="text-muted me-2"  th:text="|${#numbers.formatInteger(product.instantPrice, 0, 'COMMA')}원|">
                                 </span>
                             </div>
 
@@ -71,7 +71,7 @@
                                 <span class="me-2" >
                                     경매가:
                                 </span>
-                                <span class="text-muted me-2"  th:text="|${product.getAuctionPrice()} 원|">
+                                <span class="text-muted me-2"  th:text="|${#numbers.formatInteger(product.getAuctionPrice(), 0, 'COMMA')} 원|">
                                 </span>
                             </div>
 
