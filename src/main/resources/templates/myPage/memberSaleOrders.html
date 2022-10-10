@@ -190,8 +190,8 @@
                              '비경매 ' : '경매 ' }"></td>
                         <td class="py-3 align-middle" th:text="${ saleOrder.productType.description }"></td>
                         <td class="py-3 align-middle"
-                            th:text=" (${saleOrder.offerPrice} == -1 ) ? '-' : ${ saleOrder.offerPrice }"></td>
-                        <td class="py-3 align-middle" th:text="${ saleOrder.instantPrice}"></td>
+                            th:text=" (${saleOrder.offerPrice} == -1 ) ? '-' : ${#numbers.formatInteger(saleOrder.offerPrice, 0, 'COMMA')}"></td>
+                        <td class="py-3 align-middle" th:text="${#numbers.formatInteger(saleOrder.instantPrice, 0, 'COMMA')}"></td>
                         <td class="py-3 align-middle"
                             th:text="${#temporals.format( saleOrder.productDateTime , 'yy-MM-dd HH:mm')}"></td>
 
