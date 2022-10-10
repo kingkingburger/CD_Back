@@ -81,27 +81,44 @@ public class HomeController {
         model.addAttribute("kid",kid);
         model.addAttribute("animal",animal);
 
-        //-------------------------네이버 쇼핑몰--------------------------------------------------------
+        List<NaverProductDto> womenClothingList = naverProductService.findByCategory("여성의류");
+        model.addAttribute("womenClothingList",womenClothingList);
 
-        NaverRequestVariableDto naverRequestVariableDto = NaverRequestVariableDto.builder()
-                .query("중고 옷")
-                .display(8)
-                .start(1)
-                .sort("sim")
-                .build();
+        List<NaverProductDto> menClothingList = naverProductService.findByCategory("남성의류");
+        model.addAttribute("menClothingList",menClothingList);
 
-        //네이버 쇼핑 물품 보내는 부분
-        List<NaverProductDto> clothingList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
-        model.addAttribute("clothingList",clothingList);
-
-        naverRequestVariableDto.setQuery("중고 가방");
-        List<NaverProductDto> bagList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
-        model.addAttribute("bagList", bagList);
-
-        naverRequestVariableDto.setQuery("중고 신발");
-        List<NaverProductDto> shoesList = naverProductService.naverShopSearchAPI(naverRequestVariableDto);
+        List<NaverProductDto> shoesList = naverProductService.findByCategory("신발");
         model.addAttribute("shoesList", shoesList);
 
+        List<NaverProductDto> sportsList = naverProductService.findByCategory("스포츠/레저");
+        model.addAttribute("sportsList", sportsList);
+
+        List<NaverProductDto> vehicleList = naverProductService.findByCategory("차량/오토바이");
+        model.addAttribute("vehicleList", vehicleList);
+
+        List<NaverProductDto> starGoodsList = naverProductService.findByCategory("스타굿즈");
+        model.addAttribute("starGoodsList", starGoodsList);
+
+        List<NaverProductDto> kidultList = naverProductService.findByCategory("키덜트");
+        model.addAttribute("kidultList", kidultList);
+
+        List<NaverProductDto> artList = naverProductService.findByCategory("예술");
+        model.addAttribute("artList", artList);
+
+        List<NaverProductDto> bookList = naverProductService.findByCategory("문구책");
+        model.addAttribute("bookList", bookList);
+
+        List<NaverProductDto> furnitureList = naverProductService.findByCategory("가구");
+        model.addAttribute("furnitureList", furnitureList);
+
+        List<NaverProductDto> processedFoodList = naverProductService.findByCategory("가공식품");
+        model.addAttribute("processedFoodList", processedFoodList);
+
+        List<NaverProductDto> infantChildList = naverProductService.findByCategory("유아동");
+        model.addAttribute("infantChildList", infantChildList );
+
+        List<NaverProductDto> petList = naverProductService.findByCategory("반려동물");
+        model.addAttribute("petList", petList);
 
         //ouath2 성공시 데이터 들어오는 곳?
         HttpSession session = request.getSession();

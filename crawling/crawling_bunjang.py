@@ -159,8 +159,7 @@ def crawling(category_list):
             i += 1
 
     connect = pymysql.connect(
-        host='my-rds-indstance.cs4f6papfyio.ap-northeast-2.rds.amazonaws.com', user='admin', password='alsgh0217',
-        db='silkload', charset='utf8mb4')
+        host='localhost', user='root', password='1234', db='silkLoad', charset='utf8mb4')
     cursor = connect.cursor()
 
     # delete = """delete from crawling where exists(select * from crawling)"""
@@ -190,13 +189,12 @@ def crawling(category_list):
 
 def db_reset():
     connect = pymysql.connect(
-        host='my-rds-indstance.cs4f6papfyio.ap-northeast-2.rds.amazonaws.com', user='admin', password='alsgh0217',
-        db='silkload', charset='utf8mb4')
+        host='localhost', user='root', password='1234', db='silkload', charset='utf8mb4')
     cursor = connect.cursor()
 
-    # delete = """delete from crawling"""
-    # cursor.execute(delete)
-    #
+    delete = """delete from crawling"""
+    cursor.execute(delete)
+
     alter = """alter table crawling auto_increment=1"""
     cursor.execute(alter)
 
@@ -206,16 +204,16 @@ def db_reset():
 if __name__ == '__main__':
     db_reset()
 
-    threads = []
+    # threads = []
     start_time = time.time()
 
-    for i in range(8):  # 스레드 4개 생성
-        thread = threading.Thread(target=crawling, args=category_list[i])
-        thread.start()
-        threads.append(thread)
+    # for i in range(4):  # 스레드 4개 생성
+    #     thread = threading.Thread(target=crawling, args=category_list[i])
+    #     thread.start()
+    #     threads.append(thread)
 
-    for thread in threads:
-        thread.join()
+    # for thread in threads:
+    #     thread.join()
     crawling(category_list)
 
     print("실행 시간 : %s초" % (time.time() - start_time))

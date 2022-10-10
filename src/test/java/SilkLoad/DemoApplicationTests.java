@@ -10,7 +10,6 @@ class DemoApplicationTests {
 	void contextLoads() {
 
 
-		System.out.println(Integer.parseInt("01"));
 	}
 
 }

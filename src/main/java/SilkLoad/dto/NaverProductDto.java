@@ -1,9 +1,12 @@
 package SilkLoad.dto;
 
-import lombok.Getter;
+import lombok.*;
 import org.json.JSONObject;
 
+
+@Builder
 @Getter
+@AllArgsConstructor
 public class NaverProductDto {
 
     private String title;
