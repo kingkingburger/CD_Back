@@ -1,6 +1,3 @@
-#bell_box {
-    width: 23rem;
-}
 @media(max-width:499px) {
     #bell_box {
         width: 14rem;
