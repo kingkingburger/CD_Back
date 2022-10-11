@@ -71,6 +71,14 @@ public class ShopController {
             crawlingdata = crawlingService.getcrawlingdatafirstandsecond(pageable, first, second);
         model.addAttribute("crawlingdata",crawlingdata);
 
+        //--------------------네이버 데이터 보내는 부분----------------------
+        Page<NaverProductDto> naverData;
+        if(keyword != null)
+            naverData = naverProductService.SearchContainingTitle(keyword, pageable);
+        else
+            naverData = null;
+        model.addAttribute("data", naverData);
+
         return "shop";
     }
 

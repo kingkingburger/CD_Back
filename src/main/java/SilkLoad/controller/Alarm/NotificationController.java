@@ -9,10 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@RequestMapping("/notifications")
 public class NotificationController {
 
     private final NotificationsService notificationService;
@@ -37,5 +35,17 @@ public class NotificationController {
         return sseEmitter;
 
     }
+    @GetMapping(value = "/read")
+    public void read(HttpServletRequest request) {
+
+        MemberSessionDto sessionMembers = MyPageController.getSessionMembers(request);
+        notificationService.readCheck( sessionMembers.getId().toString() );
+        
+
+    }
+
+
+
+
 
 }

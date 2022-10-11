@@ -29,6 +29,7 @@
 
     <!-- Main Theme Styles + Bootstrap-->
     <link rel="stylesheet" media="screen" href="/css/theme.min.css">
+    <link rel="stylesheet" href="/css/bell-box.css">
     <!--jQuery-->
     <script src="/js/jquery-3.6.0.min.js"></script>
 
@@ -58,7 +59,8 @@
                         <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-heart"></i></div>
                     </a>
                     <div
-                            class="navbar-tool dropdown"
+                            id="bell"
+                            class="navbar-tool"
                             data-bs-toggle="collapse"
                             data-bs-target="#alarmList"
                             onclick="window.scrollTo(0, 0)"
@@ -71,8 +73,9 @@
                         <!-- Cart dropdown-->
                         <div class="dropdown-menu dropdown-menu-end" id="alarmList">
                             <div
+                                    id="bell_box"
                                     class="widget widget-cart px-3 pt-2 pb-3"
-                                    style="width: 23rem"
+
                             >
                                 <div
                                         style="height: 15rem"
@@ -222,6 +225,7 @@
     </div>
 
 </footer>
+
 <script src="/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/vendor/simplebar/dist/simplebar.min.js"></script>
 <script src="/vendor/tiny-slider/dist/min/tiny-slider.js"></script>
@@ -239,8 +243,22 @@
 
         console.log(memberSession);
 
+        let alramCount = 0;
+
         if (memberSession != null) {
-            const eventSource = new EventSource(`/subscribe`);
+            const eventSource = new EventSource(`/notifications/subscribe`);
+
+            $("#bell").click(() => {
+                $("#bell").addClass("dropdown");
+                fetch(`/notifications/read`);
+                alramCount=0;
+                $(".alarm-count").text(
+                    alramCount
+                )
+            });
+            $("#bell").mouseleave(() => {
+                $("#bell").removeClass("dropdown");
+            });
 
             console.log("eventSource")
             console.log(eventSource)
@@ -254,11 +272,16 @@
             /**
              * @param e.data : message, createdDateTime, url
              */
-            let alramCount = 0;
+
             eventSource.onmessage = (e) => {
                 const notificationResponseDto = JSON.parse(e.data);
-                alramCount += 1;
-                $(".simplebar-content").append(
+                if ( notificationResponseDto.isRead == false) {
+                    alramCount += 1;
+                    $(".alarm-count").text(
+                        alramCount
+                    )
+                }
+                $("#alarmList").find(".simplebar-content").append(
                     '<div class="widget-cart-item pb-2">' +
                     '<div class="ps-2">' +
                     '<h6 class="widget-product-title">' +
@@ -279,9 +302,9 @@
                     '</div>' +
                     '</div>'
                 )
-                $(".alarm-count").text(
-                    alramCount
-                )
+
+
+
             };
         }
     }))

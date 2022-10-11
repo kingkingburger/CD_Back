@@ -1,0 +1,12 @@
+@media(max-width:499px) {
+    #bell_box {
+        width: 14rem;
+    }
+
+}
+
+@media (min-width: 499px) {
+    #bell_box {
+        width: 23rem;
+    }
+}

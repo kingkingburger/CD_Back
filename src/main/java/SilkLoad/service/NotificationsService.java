@@ -9,6 +9,7 @@ import SilkLoad.repository.MemberRepository;
 import SilkLoad.repository.NotificationsRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
@@ -29,6 +30,27 @@ public class NotificationsService {
     private final NotificationsRepository notificationsRepository;
 
     private Long DEFAULT_TIMEOUT = 60L * 1000L * 60L;
+
+    @Transactional
+    public void readCheck(String memberId) {
+
+        Map<String, Object> allEventCacheStartWithByMemberId = emitterRepository.findAllEventCacheStartWithByMemberId(memberId);
+        allEventCacheStartWithByMemberId.forEach( ( id,  value ) -> {
+
+            Notifications notifications = (Notifications) value;
+            notifications.setIsRead(true);
+            allEventCacheStartWithByMemberId.put(id, notifications);
+
+            }
+        );
+        List<Notifications> byReceiver_id = notificationsRepository.findByReceiver_Id(Long.valueOf(memberId));
+        byReceiver_id.forEach( (notifications) -> {
+            notifications.setIsRead(true);
+        } );
+        notificationsRepository.saveAll(byReceiver_id);
+        notificationsRepository.saveAll( (Iterable) allEventCacheStartWithByMemberId.entrySet());
+
+    }
 
     public SseEmitter subscribe(Long memberId, String lastEventId) {
 

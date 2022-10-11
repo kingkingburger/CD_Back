@@ -142,12 +142,12 @@
                         </thead>
                         <tbody>
 
-                        <tr class="text-center" th:each="purchaseOrder, purchaseStat : ${purchaseOrders}">
+                        <tr class="text-center"  data-bs-toggle="modal"
+                            th:data-bs-target="|#myModal${purchaseStat.index}|"
+                            th:each="purchaseOrder, purchaseStat : ${purchaseOrders}">
 
-                            <td class="py-3">
-                                <button type="button" class="btn btn-primary btn-sm d-lg-inline-block"
-                                        th:text="${ purchaseOrder.productName }" data-bs-toggle="modal"
-                                        th:data-bs-target="|#myModal${purchaseStat.index}|"></button>
+                            <td class="py-3 align-middle" th:text="${ purchaseOrder.productName }" >
+
                             </td>
                             <td class="py-3 align-middle" th:text="${purchaseOrder.productTime == noneTime  ?
                              '비경매 ' : '경매 ' }"></td>

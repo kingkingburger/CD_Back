@@ -160,9 +160,10 @@
 
 
                                             <h6 th:id="deadLine" class="fs-sm mb-2">마감시간</h6>
-                                            <ul class="fs-sm ps-4" th:classappend="${product.productTime.equals( productTime[2])} ?  'd-none' : ''">
+                                            <ul th:id="ulDeadLine" class="fs-sm ps-4" >
                                                 <li th:id="*{ product.productTime}"></li>
                                             </ul>
+
 
                                         </div>
                                     </div>
@@ -354,7 +355,8 @@
 
         }, 1000);
     } else {
-        $("#deadLine").remove();
+        $("#deadLine").text("물품상태: 마감");
+        $("#ulDeadLine").remove();
     }
 
     $("#inputPrice").on('keyup keydown', function(){

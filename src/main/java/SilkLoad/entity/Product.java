@@ -21,7 +21,6 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PRODUCT_ID")
     private Long id; // PK
-
     private String name; //물품이름
     private Long auctionPrice; //경매가격
     private Long instantPrice; //즉시거래가격

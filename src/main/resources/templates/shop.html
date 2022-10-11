@@ -101,7 +101,7 @@
                             <img alt="Product" th:src="${crawlingdata.getImg_link()}"/>
                         </a>
                         <div class="card-body py-2">
-                            <div class="product-meta d-block fs-xs pb-1" href="#" th:text="번개장터">카테고리
+                            <div class="product-meta d-block fs-xs pb-1"  th:text="번개장터">카테고리
                             </div>
 
                             <h3 class="product-title fs-sm">
@@ -114,6 +114,27 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-md-4 col-sm-6 px-2 mb-4" th:each="naverData : ${data}">
+                    <div class="card product-card">
+                        <a class="card-img-top d-block overflow-hidden" th:href="${ naverData.getLink()  }">
+                            <img alt="Product" th:src="${naverData.getImage() }"/>
+                        </a>
+                        <div class="card-body py-2">
+                            <div class="product-meta d-block fs-xs pb-1"  th:text="네이버">카테고리
+                            </div>
+                            <h3 class="product-title fs-sm">
+                                <a th:href="${naverData.getLink() }" th:utext="${naverData.getTitle()}">물품 이름</a>
+                            </h3>
+
+                            <div class="product-price ">
+                                <span class="text-accent" th:text="|구매가: ${naverData.getLprice()} 원 |"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
 
 
