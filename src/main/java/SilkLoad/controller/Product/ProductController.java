@@ -30,7 +30,6 @@ import java.net.MalformedURLException;
 @RequiredArgsConstructor
 @RequestMapping("/product")
 public class ProductController {
-
     private final ProductService productService;
     private final MemberService memberService;
 

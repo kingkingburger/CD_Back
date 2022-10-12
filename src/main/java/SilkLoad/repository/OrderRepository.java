@@ -1,7 +1,7 @@
 package SilkLoad.repository;
 
+import SilkLoad.dto.HomeProductDto;
 import SilkLoad.dto.OrderHistoryDto;
-import SilkLoad.entity.OrderEnum.OrderType;
 import SilkLoad.entity.Orders;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +28,71 @@ public interface OrderRepository extends JpaRepository<Orders, Long>  {
 
     @Query("SELECT MAX(o.offerPrice) FROM Orders o GROUP BY o.product.id HAVING o.product.id = :productId")
     Long findByProductIdMaxAuctionPrice(@Param("productId") Long productId);
+
+//       "from Product p " +
+//               "left join ProductImage img " +
+//               "on p.id = img.product.id " +
+    @Query("SELECT " +
+            "New SilkLoad.dto.HomeProductDto(p.id, p.name, p.auctionPrice, p.instantPrice, p.explanation, " +
+            "p.predictionName, p.category.first, p.category.second, p.category.third, " +
+            "p.createdDate, p.productTime, p.productType, " +
+            "img.storeFileName, img.uploadFileName, " +
+            "original.offerPrice  ) " +
+            "FROM Orders original " +
+            "Left JOIN Orders copy " +
+            "On original.product.id = copy.product.id " +
+            "AND original.orderDateTime < copy.orderDateTime " +
+            "JOIN Product p ON p.id = original.product.id " +
+            "Join ProductImage img ON p.id = img.product.id " +
+            "WHERE copy.product.id IS null " +
+            "AND p.productType = SilkLoad.entity.ProductEnum.ProductType.sale " +
+            "ORDER BY original.product.id desc"
+
+    )
+    Page<HomeProductDto> findHomeProductDtoBySaleOrder(Pageable pageable);
+
+    @Query("SELECT " +
+            "New SilkLoad.dto.HomeProductDto(p.id, p.name, p.auctionPrice, p.instantPrice, p.explanation, " +
+            "p.predictionName, p.category.first, p.category.second, p.category.third, " +
+            "p.createdDate, p.productTime, p.productType, " +
+            "img.storeFileName, img.uploadFileName, " +
+            "original.offerPrice  ) " +
+            "FROM Orders original " +
+            "Left JOIN Orders copy " +
+            "On original.product.id = copy.product.id " +
+            "AND original.orderDateTime < copy.orderDateTime " +
+            "JOIN Product p ON p.id = original.product.id " +
+            "Join ProductImage img ON p.id = img.product.id " +
+            "WHERE copy.product.id IS null " +
+            "AND p.productType = SilkLoad.entity.ProductEnum.ProductType.sale " +
+            "AND p.name LIKE %:name% " +
+            "ORDER BY original.product.id desc"
+
+    )
+    Page<HomeProductDto> findHomeProductDtoSearch(@Param("name")String name, Pageable pageable);
+
+    @Query("SELECT " +
+            "New SilkLoad.dto.HomeProductDto(p.id, p.name, p.auctionPrice, p.instantPrice, p.explanation, " +
+            "p.predictionName, p.category.first, p.category.second, p.category.third, " +
+            "p.createdDate, p.productTime, p.productType, " +
+            "img.storeFileName, img.uploadFileName, " +
+            "original.offerPrice  ) " +
+            "FROM Orders original " +
+            "Left JOIN Orders copy " +
+            "On original.product.id = copy.product.id " +
+            "AND original.orderDateTime < copy.orderDateTime " +
+            "JOIN Product p ON p.id = original.product.id " +
+            "Join ProductImage img ON p.id = img.product.id " +
+            "WHERE copy.product.id IS null " +
+            "AND p.productType = SilkLoad.entity.ProductEnum.ProductType.sale " +
+            "AND p.category.first = :firstCategory " +
+            "AND p.category.second = :secondCategory " +
+            "ORDER BY original.product.id desc"
+
+    )
+    Page<HomeProductDto> findHomeProductDtoByCategory(@Param("firstCategory")String firstCategory,
+                                                      @Param("secondCategory")String secondCategory, Pageable pageable);
+
 
 
     /**

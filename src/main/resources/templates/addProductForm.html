@@ -2610,6 +2610,7 @@
         // 이미지가 등록된다면 모델 불러오기 및 이미지 분석하기
         $("#image_nameSrc").change(function () {
             $("#submit").attr("disabled", true);
+            $("#submit").text("이미지 분석 중");
             mobilenet.load().then((model) => {
                 fileRead().then(() => {
                     let img = $("#selected-image").get(0);
@@ -2621,6 +2622,7 @@
                         console.log(firstPrediction);
                         $("#predictionResult").val(firstPrediction);
                         $("#submit").attr("disabled", false);
+                        $("#submit").text("등록하기");
                     });
                 });
             });

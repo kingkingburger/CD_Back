@@ -203,7 +203,8 @@ public class OrderService {
 
             Orders order = optionalOrders.get();
 
-            if( order.getOrderType() == OrderType.successfulBid
+            if( order.getOrderType() == OrderType.successfulBid ||
+                    order.getOrderType() == OrderType.buyNow
                     && order.getProduct().getProductType() == ProductType.trading) {
                 order.setOrderType(OrderType.complete);
                 order.getProduct().setProductType(ProductType.soldOut);

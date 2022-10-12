@@ -65,31 +65,34 @@
                 <div class="col-md-4 col-sm-6 px-2 mb-4" th:each="product : ${allProduct}">
                     <div class="card product-card" th:if="${product.getProductType == sale}">
                         <a class="card-img-top d-block overflow-hidden"
-                           th:href="@{/shop/detailProduct(id=${product.id}, first=${product.categoryRecordDto.getFirst()}, second=${product.categoryRecordDto.getSecond()}, third=${product.categoryRecordDto.getThird()} )}">
+                           th:href="@{/shop/detailProduct(id=${product.id}, first=${product.getCategoryFirst()}, second=${product.getCategorySecond()}, third=${product.getCategoryThird()} )}">
                             <img alt="Product"
-                                 th:src="|/product/images/${product.productImagesList.get(0).getStoreFileName()}|"/>
+                                 th:src="|/product/images/${product.getUploadFileName()}|"/>
                         </a>
                         <div class="card-body py-2">
                             <a class="product-meta d-block fs-xs pb-1"
                                th:href="@{/shop/(
-                               first=${product.categoryRecordDto.getFirst()},
-                               second=${product.categoryRecordDto.getSecond()} )}"
-                               th:text="${ product.categoryRecordDto.getSecond() }">카테고리
+                               first=${product.getCategoryFirst()},
+                               second=${product.getCategorySecond()} )}"
+                               th:text="${ product.getCategoryThird() }">카테고리
                             </a>
 
                             <h3 class="product-title fs-sm">
                                 <a th:href="@{/shop/detailProduct(id=${product.id},
-                                first=${product.categoryRecordDto.getFirst()},
-                                second=${product.categoryRecordDto.getSecond()},
-                                third=${product.categoryRecordDto.getThird()} )}"
+                                first=${product.getCategoryFirst()},
+                                second=${product.getCategorySecond()},
+                                third=${product.getCategoryThird()} )}"
                                    th:text="${product.getName()}">물품제목</a>
                             </h3>
                             <div class="product-price "><span class="text-accent"
-                                                              th:text="|즉시 구매가: ${product.instantPrice} 원 |"></span>
+                                                              th:text="|바로 구매가: ${#numbers.formatInteger(product.getInstantPrice(), 0, 'COMMA')} 원 |"></span>
                             </div>
                             <div class="product-price "><span class="text-accent"
                                                               th:if="${product.auctionPrice != null}"
-                                                              th:text="|경매가: ${product.auctionPrice}원|"></span></div>
+                                                              th:text="|경매 시작가: ${#numbers.formatInteger(product.getAuctionPrice() , 0, 'COMMA')} 원|"></span></div>
+                            <div class="product-price "><span class="text-accent"
+                                                              th:if="${product.offerPrice != null and product.offerPrice != -1}"
+                                                              th:text="|현재 경매가: ${#numbers.formatInteger(product.getOfferPrice() , 0, 'COMMA')} 원|"></span></div>
                             <!--                                    <div class="product-price "><span class="text-accent" th:text="|마감날짜: ${product.deadLine}|"></span></div>-->
                         </div>
                     </div>
@@ -109,7 +112,7 @@
                             </h3>
 
                             <div class="product-price ">
-                                <span class="text-accent" th:text="${crawlingdata.getPrice()}"></span>
+                                <span class="text-accent" th:text="|가격: ${crawlingdata.getPrice()} 원|"></span>
                             </div>
                         </div>
                     </div>
@@ -128,7 +131,7 @@
                             </h3>
 
                             <div class="product-price ">
-                                <span class="text-accent" th:text="|구매가: ${naverData.getLprice()} 원 |"></span>
+                                <span class="text-accent" th:text="|가격: ${#numbers.formatInteger(naverData.getLprice() , 0, 'COMMA')} 원|"></span>
                             </div>
                         </div>
                     </div>
@@ -140,59 +143,59 @@
 
             <hr class="my-3">
 
-            <!-- Pagination-->
-            <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation" th:if="${totalPages != 0}">
+<!--            &lt;!&ndash; Pagination&ndash;&gt;-->
+<!--            <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation" th:if="${totalPages != 0}">-->
 
-                <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link"
-                           th:href="@{/shop(category=${category}, first=${first}, page=${presentPage}-1)}">
-                            <i class="ci-arrow-left me-2"></i>Prev
-                        </a>
-                    </li>
-                </ul>
+<!--                <ul class="pagination">-->
+<!--                    <li class="page-item">-->
+<!--                        <a class="page-link"-->
+<!--                           th:href="@{/shop(category=${category}, first=${first}, page=${presentPage}-1)}">-->
+<!--                            <i class="ci-arrow-left me-2"></i>Prev-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                </ul>-->
 
-                <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" th:href="@{/shop(category=${category}, first=${first},page = 1)}">
-                            <i class="ci-arrow-left me-2"></i>First
-                        </a>
-                    </li>
-                </ul>
-                <
-                <ul class="pagination">
-                    <th:block th:with="start = ${ T(Math).floor( presentPage/10 ) * 10 +1},
-                                            end = (${start + 9 < totalPages ? start+9 : totalPages})">
-                        <li class="page-item"
-                            th:each="pageButton : ${#numbers.sequence(start, end)}">
-                            <a class="page-link"
-                               th:classappend="( ${ pageButton == presentPage + 1 }) ? 'bg-primary text-white'  : '' "
-                               th:href="@{/shop(category=${category}, first=${first},page = ${pageButton})}"
-                               th:text="${pageButton}"></a>
-                        </li>
-                    </th:block>
-                </ul>
+<!--                <ul class="pagination">-->
+<!--                    <li class="page-item">-->
+<!--                        <a class="page-link" th:href="@{/shop(category=${category}, first=${first},page = 1)}">-->
+<!--                            <i class="ci-arrow-left me-2"></i>First-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--                <-->
+<!--                <ul class="pagination">-->
+<!--                    <th:block th:with="start = ${ T(Math).floor( presentPage/10 ) * 10 +1},-->
+<!--                                            end = (${start + 9 < totalPages ? start+9 : totalPages})">-->
+<!--                        <li class="page-item"-->
+<!--                            th:each="pageButton : ${#numbers.sequence(start, end)}">-->
+<!--                            <a class="page-link"-->
+<!--                               th:classappend="( ${ pageButton == presentPage + 1 }) ? 'bg-primary text-white'  : '' "-->
+<!--                               th:href="@{/shop(category=${category}, first=${first},page = ${pageButton})}"-->
+<!--                               th:text="${pageButton}"></a>-->
+<!--                        </li>-->
+<!--                    </th:block>-->
+<!--                </ul>-->
 
-                <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link"
-                           th:href="@{/shop(category=${category}, first=${first}, page=${totalPages})}"
-                           aria-label="Next">Last
-                            <i class="ci-arrow-right ms-2"></i>
-                        </a>
-                    </li>
-                </ul>
+<!--                <ul class="pagination">-->
+<!--                    <li class="page-item">-->
+<!--                        <a class="page-link"-->
+<!--                           th:href="@{/shop(category=${category}, first=${first}, page=${totalPages})}"-->
+<!--                           aria-label="Next">Last-->
+<!--                            <i class="ci-arrow-right ms-2"></i>-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                </ul>-->
 
-                <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link"
-                           th:href="@{/shop(category=${category}, first=${first}, page=${presentPage}+1)}"
-                           aria-label="Next">Next
-                            <i class="ci-arrow-right ms-2"></i>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+<!--                <ul class="pagination">-->
+<!--                    <li class="page-item">-->
+<!--                        <a class="page-link"-->
+<!--                           th:href="@{/shop(category=${category}, first=${first}, page=${presentPage}+1)}"-->
+<!--                           aria-label="Next">Next-->
+<!--                            <i class="ci-arrow-right ms-2"></i>-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </nav>-->
         </section>
     </div>
 </div>

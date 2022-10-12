@@ -1,6 +1,7 @@
 package SilkLoad.controller.Shop;
 
 import SilkLoad.dto.*;
+import SilkLoad.entity.OrderEnum.OrderType;
 import SilkLoad.entity.ProductEnum.ProductTime;
 import SilkLoad.entity.ProductEnum.ProductType;
 import SilkLoad.service.*;
@@ -40,19 +41,47 @@ public class ShopController {
 
 
         //전체 페이지 수
-        int totalPages = pagedProductService.paged_product(pageable).getTotalPages();
+        int totalPages = 0;
         //현제 페이지
-        int presentPage = pagedProductService.paged_product(pageable).getNumber();
+        int presentPage = 0;
 
 
-        List<ProductRecordDto> content;
+        Page<HomeProductDto> content;
         //first가 있는지 없는지에 따라 content가 변한다.
 
         if(keyword != null)
-            content = productSearchService.SearchToProductname(keyword, pageable).getContent();
+            content = productSearchService.SearchToHomeProductName(keyword, pageable);
         else
-            content = productService.pagedByfirstsecondcategoryProduct(first,second, pageable).getContent();
+            content = productSearchService.SearchToCategory(first,second, pageable);
 
+
+        //--------------------크롤링 데이터 보내는 부분----------------------
+        Page<CrawlingDto>  crawlingdata;
+        if(keyword != null)
+            crawlingdata = crawlingService.SearchCategoryCrwalingProductformProductname(keyword, pageable);
+        else {
+            crawlingdata = crawlingService.getcrawlingdatafirstandsecond(pageable, first, second);
+            totalPages = crawlingdata.getTotalPages();
+            presentPage = crawlingdata.getNumber();
+        }
+
+        model.addAttribute("crawlingdata",crawlingdata);
+
+        //--------------------네이버 데이터 보내는 부분----------------------
+        Page<NaverProductDto> naverData;
+        if(keyword != null) {
+            naverData = naverProductService.SearchContainingTitle(keyword, pageable);
+            totalPages = naverData.getTotalPages();
+            presentPage = naverData.getNumber();
+        }
+        else
+            naverData = null;
+
+
+        log.info("totalpages {}", totalPages);
+        log.info("presentPage {}", presentPage);
+
+        model.addAttribute("data", naverData);
 
         model.addAttribute("allProduct", content);
         //전체 페이지 수 모델로 보내기
@@ -61,23 +90,6 @@ public class ShopController {
         model.addAttribute("presentPage",presentPage);
         //판매중인 상태 보내기
         model.addAttribute("sale", ProductType.sale);
-
-
-        //--------------------크롤링 데이터 보내는 부분----------------------
-        Page<CrawlingDto>  crawlingdata;
-        if(keyword != null)
-            crawlingdata = crawlingService.SearchCategoryCrwalingProductformProductname(keyword, pageable);
-        else
-            crawlingdata = crawlingService.getcrawlingdatafirstandsecond(pageable, first, second);
-        model.addAttribute("crawlingdata",crawlingdata);
-
-        //--------------------네이버 데이터 보내는 부분----------------------
-        Page<NaverProductDto> naverData;
-        if(keyword != null)
-            naverData = naverProductService.SearchContainingTitle(keyword, pageable);
-        else
-            naverData = null;
-        model.addAttribute("data", naverData);
 
         return "shop";
     }
