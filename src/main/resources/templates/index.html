@@ -53,8 +53,8 @@
                                                                  th:text="|경매 시작가: ${#numbers.formatInteger(product.auctionPrice, 0, 'COMMA')} 원|"></span>
                             </div>
                             <div class="product-price col"><span class="text-accent"
-                                                                 th:if="${product.auctionPrice != null}"
-                                                                 th:text="|현재 경매가: ${#numbers.formatInteger(product.auctionPrice, 0, 'COMMA')} 원|"></span>
+                                                                 th:if="${product.offerPrice != null and product.offerPrice != -1}"
+                                                                 th:text="|현재 경매가: ${#numbers.formatInteger(product.offerPrice, 0, 'COMMA')} 원|"></span>
                             </div>
                             <!--                                                                 th:text="|경매가: ${#numbers.formatInteger(order.findByMaxAuctionPrice(product.id), 0, 'COMMA')} 원|"></span></div>-->
                             <!--                                                                 text="|경매가: ${product.getAuctionPrice()}원|"></span></div>-->

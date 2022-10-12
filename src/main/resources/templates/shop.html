@@ -89,7 +89,10 @@
                             </div>
                             <div class="product-price "><span class="text-accent"
                                                               th:if="${product.auctionPrice != null}"
-                                                              th:text="|경매가: ${product.auctionPrice}원|"></span></div>
+                                                              th:text="|경매 시작가: ${product.auctionPrice }원|"></span></div>
+                            <div class="product-price "><span class="text-accent"
+                                                              th:if="${product.offerPrice != null and product.offerPrice != -1}"
+                                                              th:text="|현재 경매가: ${product.offerPrice }원|"></span></div>
                             <!--                                    <div class="product-price "><span class="text-accent" th:text="|마감날짜: ${product.deadLine}|"></span></div>-->
                         </div>
                     </div>
