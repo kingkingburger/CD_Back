@@ -85,14 +85,14 @@
                                    th:text="${product.getName()}">물품제목</a>
                             </h3>
                             <div class="product-price "><span class="text-accent"
-                                                              th:text="|즉시 구매가: ${product.instantPrice} 원 |"></span>
+                                                              th:text="|바로 구매가: ${#numbers.formatInteger(product.getInstantPrice(), 0, 'COMMA')} 원 |"></span>
                             </div>
                             <div class="product-price "><span class="text-accent"
                                                               th:if="${product.auctionPrice != null}"
-                                                              th:text="|경매 시작가: ${product.auctionPrice }원|"></span></div>
+                                                              th:text="|경매 시작가: ${#numbers.formatInteger(product.getAuctionPrice() , 0, 'COMMA')} 원|"></span></div>
                             <div class="product-price "><span class="text-accent"
                                                               th:if="${product.offerPrice != null and product.offerPrice != -1}"
-                                                              th:text="|현재 경매가: ${product.offerPrice }원|"></span></div>
+                                                              th:text="|현재 경매가: ${#numbers.formatInteger(product.getOfferPrice() , 0, 'COMMA')} 원|"></span></div>
                             <!--                                    <div class="product-price "><span class="text-accent" th:text="|마감날짜: ${product.deadLine}|"></span></div>-->
                         </div>
                     </div>
@@ -112,7 +112,7 @@
                             </h3>
 
                             <div class="product-price ">
-                                <span class="text-accent" th:text="|가격: ${crawlingdata.getPrice()}|"></span>
+                                <span class="text-accent" th:text="|가격: ${crawlingdata.getPrice()} 원|"></span>
                             </div>
                         </div>
                     </div>
@@ -131,7 +131,7 @@
                             </h3>
 
                             <div class="product-price ">
-                                <span class="text-accent" th:text="|가격: ${naverData.getLprice()} 원 |"></span>
+                                <span class="text-accent" th:text="|가격: ${#numbers.formatInteger(naverData.getLprice() , 0, 'COMMA')} 원|"></span>
                             </div>
                         </div>
                     </div>
