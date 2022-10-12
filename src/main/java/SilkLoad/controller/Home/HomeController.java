@@ -37,6 +37,8 @@ public class HomeController {
     private final NaverProductService naverProductService;
     private final LoginService loginService;
 
+    private final ProductService productService;
+
 
     /**
      * @param model product들을 담기위한 매개변수
@@ -48,7 +50,8 @@ public class HomeController {
     public String home(Model model,
                        HttpServletRequest request,
                        @PageableDefault(size=8) Pageable pageable) {//@PageableDefault로 기본 8개를 가지고 오게했다crawling.
-        List<ProductRecordDto> content = pagedProductService.paged_product(pageable).getContent();
+//        List<ProductRecordDto> content = pagedProductService.paged_product(pageable).getContent();
+        List<HomeProductDto> content = productService.findHomeProductDto(pageable);
 
         model.addAttribute("Products", content);
         model.addAttribute("sale", ProductType.sale);

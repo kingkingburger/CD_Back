@@ -30,17 +30,17 @@
                 <div class="card product-card" th:if="${product.getProductType == sale}">
 
                     <a class="card-img-top d-block overflow-hidden"
-                       th:href="@{/shop/detailProduct(id=${product.id}, first=${product.categoryRecordDto.getFirst()}, second=${product.categoryRecordDto.getSecond()} , third=${product.categoryRecordDto.getThird()} )}">
+                       th:href="@{/shop/detailProduct(id=${product.id}, first=${product.getCategoryFirst()}, second=${product.getCategorySecond()} , third=${product.getCategoryThird()} )}">
                         <figure class="image is-4by3">
                             <img alt="Product"
-                                 th:src="|/product/images/${product.productImagesList.get(0).getStoreFileName()}|"/>
+                                 th:src="|/product/images/${product.getUploadFileName()}|"/>
                         </figure>
                     </a>
                     <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#"
-                                                   th:text="${product.categoryRecordDto.getSecond()}">카테고리</a>
+                                                   th:text="${product.getCategorySecond()}">카테고리</a>
 
                         <h3 class="product-title fs-sm">
-                            <a th:href="@{/shop/detailProduct(id=${product.id}, first=${product.categoryRecordDto.getFirst()}, second=${product.categoryRecordDto.getSecond()} , third=${product.categoryRecordDto.getThird()} )}"
+                            <a th:href="@{/shop/detailProduct(id=${product.id}, first=${product.getCategoryFirst()}, second=${product.getCategorySecond()} , third=${product.getCategoryThird()} )}"
                                th:text="${product.getName()}">물품제목</a>
                         </h3>
                         <div>
@@ -50,7 +50,11 @@
                             <!--                                                                 th:text="|즉시 구매가: ${product.instantPrice} 원 |"></span></div>-->
                             <div class="product-price col"><span class="text-accent"
                                                                  th:if="${product.auctionPrice != null}"
-                                                                 th:text="|경매가: ${#numbers.formatInteger(product.auctionPrice, 0, 'COMMA')} 원|"></span>
+                                                                 th:text="|경매 시작가: ${#numbers.formatInteger(product.auctionPrice, 0, 'COMMA')} 원|"></span>
+                            </div>
+                            <div class="product-price col"><span class="text-accent"
+                                                                 th:if="${product.auctionPrice != null}"
+                                                                 th:text="|현재 경매가: ${#numbers.formatInteger(product.auctionPrice, 0, 'COMMA')} 원|"></span>
                             </div>
                             <!--                                                                 th:text="|경매가: ${#numbers.formatInteger(order.findByMaxAuctionPrice(product.id), 0, 'COMMA')} 원|"></span></div>-->
                             <!--                                                                 text="|경매가: ${product.getAuctionPrice()}원|"></span></div>-->

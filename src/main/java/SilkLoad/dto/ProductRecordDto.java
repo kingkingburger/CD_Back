@@ -60,4 +60,5 @@ public class ProductRecordDto {
         this.categoryRecordDto = categoryRecordDto;
         this.productImagesList = productImagesList;
     }
+
 }

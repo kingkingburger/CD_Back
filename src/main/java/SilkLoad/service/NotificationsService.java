@@ -48,7 +48,6 @@ public class NotificationsService {
             notifications.setIsRead(true);
         } );
         notificationsRepository.saveAll(byReceiver_id);
-        notificationsRepository.saveAll( (Iterable) allEventCacheStartWithByMemberId.entrySet());
 
     }
 

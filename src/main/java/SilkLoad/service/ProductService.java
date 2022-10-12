@@ -408,6 +408,12 @@ public class ProductService {
         return productRecordDtos;
     }
 
+    public List<HomeProductDto> findHomeProductDto(Pageable pageable) {
+        List<HomeProductDto> content = orderRepository.findHomeProductDtoBySaleOrder(pageable).getContent();
+
+        return content;
+    }
+
 
 
     //사용법: spring @Scheduled 검색
