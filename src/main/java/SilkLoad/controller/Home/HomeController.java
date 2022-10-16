@@ -6,6 +6,7 @@ import SilkLoad.config.auth.dto.SessionUser;
 import SilkLoad.dto.*;
 import SilkLoad.entity.Members;
 import SilkLoad.entity.Product;
+import SilkLoad.entity.ProductEnum.ProductTime;
 import SilkLoad.entity.ProductEnum.ProductType;
 import SilkLoad.entity.User;
 import SilkLoad.repository.MemberRepository;
@@ -55,6 +56,7 @@ public class HomeController {
 
         model.addAttribute("Products", content);
         model.addAttribute("sale", ProductType.sale);
+        model.addAttribute("none", ProductTime.NONE);
 //------------------------번개 장터-------------------------
         Page<CrawlingDto> women_close = crawlingService.getcrawlingdatafirst(pageable, "여성의류");
         Page<CrawlingDto> men_close = crawlingService.getcrawlingdatafirst(pageable,"남성의류");

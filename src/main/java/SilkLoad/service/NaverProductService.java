@@ -12,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
@@ -34,96 +35,96 @@ public class NaverProductService {
     @PostConstruct
     public void naverProductInit() throws  Exception  {
 
-        naverProductRepository.deleteAll();
-
-
-        NaverRequestVariableDto naverRequestVariableDto = NaverRequestVariableDto.builder()
-                .query("중고 여성의류")
-                .display(9)
-                .start(1)
-                .sort("sim")
-                .build();
-
-        List<NaverProductDto> womenClothingDtoList = naverShopSearchAPI(naverRequestVariableDto);
-        List<NaverProduct> naverProductList = new ArrayList<>();
-        changeNaverProductDtoList(womenClothingDtoList, naverProductList, naverRequestVariableDto.getQuery().split("중고 ")[1]);
-        naverProductRepository.saveAll( (Iterable) naverProductList );
-
-        naverRequestVariableDto.setQuery("중고 남성의류");
-        List<NaverProductDto> menClothingDtoList = naverShopSearchAPI(naverRequestVariableDto);
-        List<NaverProduct> menClothingList = new ArrayList<>();
-        changeNaverProductDtoList(menClothingDtoList, menClothingList, naverRequestVariableDto.getQuery().split("중고 ")[1]);
-        naverProductRepository.saveAll( (Iterable) menClothingList );
-
-
-        naverRequestVariableDto.setQuery("중고 신발");
-        List<NaverProductDto> shoesDtoList = naverShopSearchAPI(naverRequestVariableDto);
-        List<NaverProduct> shoesList = new ArrayList<>();
-        changeNaverProductDtoList(shoesDtoList, shoesList, naverRequestVariableDto.getQuery().split("중고 ")[1]);
-        naverProductRepository.saveAll( (Iterable) shoesList );
-
-        naverRequestVariableDto.setQuery("중고 스포츠/레저");
-        List<NaverProductDto> sportsDtoList = naverShopSearchAPI(naverRequestVariableDto);
-        List<NaverProduct> sportsList = new ArrayList<>();
-        changeNaverProductDtoList(sportsDtoList, sportsList, naverRequestVariableDto.getQuery().split("중고 ")[1]);
-        naverProductRepository.saveAll( (Iterable) sportsList );
-
-        naverRequestVariableDto.setQuery("중고 차량/오토바이");
-        List<NaverProductDto> vehicleDtoList = naverShopSearchAPI(naverRequestVariableDto);
-        List<NaverProduct> vehicleList = new ArrayList<>();
-        changeNaverProductDtoList(vehicleDtoList, vehicleList, naverRequestVariableDto.getQuery().split("중고 ")[1]);
-        naverProductRepository.saveAll( (Iterable) vehicleList );
-
-        naverRequestVariableDto.setQuery("중고 스타굿즈");
-        List<NaverProductDto> starGoodsDtoList = naverShopSearchAPI(naverRequestVariableDto);
-        List<NaverProduct> starGoodsList = new ArrayList<>();
-        changeNaverProductDtoList(starGoodsDtoList, starGoodsList, naverRequestVariableDto.getQuery().split("중고 ")[1]);
-        naverProductRepository.saveAll( (Iterable) starGoodsList );
-
-        naverRequestVariableDto.setQuery("중고 키덜트");
-        List<NaverProductDto> kidultDtoList = naverShopSearchAPI(naverRequestVariableDto);
-        List<NaverProduct> kidultList = new ArrayList<>();
-        changeNaverProductDtoList(kidultDtoList, kidultList, naverRequestVariableDto.getQuery().split("중고 ")[1]);
-        naverProductRepository.saveAll( (Iterable) kidultList );
-
-        naverRequestVariableDto.setQuery("중고 예술");
-        List<NaverProductDto> artDtoList = naverShopSearchAPI(naverRequestVariableDto);
-        List<NaverProduct> artList = new ArrayList<>();
-        changeNaverProductDtoList(artDtoList, artList, naverRequestVariableDto.getQuery().split("중고 ")[1]);
-        naverProductRepository.saveAll( (Iterable) artList );
-
-        naverRequestVariableDto.setQuery("중고 문구책");
-        List<NaverProductDto> bookDtoList = naverShopSearchAPI(naverRequestVariableDto);
-        List<NaverProduct> bookList = new ArrayList<>();
-        changeNaverProductDtoList(bookDtoList, bookList, naverRequestVariableDto.getQuery().split("중고 ")[1]);
-        naverProductRepository.saveAll( (Iterable) bookList );
-
-        // 429 bad request 방지, 초당 10건 이상의 요청을 보내면 내이버에서 거부
-        Thread.sleep(1000);
-
-        naverRequestVariableDto.setQuery("중고 가구");
-        List<NaverProductDto> furnitureDtoList = naverShopSearchAPI(naverRequestVariableDto);
-        List<NaverProduct> furnitureList = new ArrayList<>();
-        changeNaverProductDtoList(furnitureDtoList, furnitureList, naverRequestVariableDto.getQuery().split("중고 ")[1]);
-        naverProductRepository.saveAll( (Iterable) furnitureList );
-
-        naverRequestVariableDto.setQuery("중고 가공식품");
-        List<NaverProductDto> processedFoodDtoList = naverShopSearchAPI(naverRequestVariableDto);
-        List<NaverProduct> processedFoodList = new ArrayList<>();
-        changeNaverProductDtoList(processedFoodDtoList, processedFoodList, naverRequestVariableDto.getQuery().split("중고 ")[1]);
-        naverProductRepository.saveAll( (Iterable) processedFoodList );
-
-        naverRequestVariableDto.setQuery("중고 유아동");
-        List<NaverProductDto> infantChildDtoList = naverShopSearchAPI(naverRequestVariableDto);
-        List<NaverProduct> infantChildList = new ArrayList<>();
-        changeNaverProductDtoList(infantChildDtoList, infantChildList,naverRequestVariableDto.getQuery().split("중고 ")[1]);
-        naverProductRepository.saveAll( (Iterable) infantChildList );
-
-        naverRequestVariableDto.setQuery("중고 반려동물");
-        List<NaverProductDto> petDtoList = naverShopSearchAPI(naverRequestVariableDto);
-        List<NaverProduct> petList = new ArrayList<>();
-        changeNaverProductDtoList(petDtoList, petList, naverRequestVariableDto.getQuery().split("중고 ")[1]);
-        naverProductRepository.saveAll( (Iterable) petList );
+//        naverProductRepository.deleteAll();
+//
+//
+//        NaverRequestVariableDto naverRequestVariableDto = NaverRequestVariableDto.builder()
+//                .query("중고 여성의류")
+//                .display(9)
+//                .start(1)
+//                .sort("sim")
+//                .build();
+//
+//        List<NaverProductDto> womenClothingDtoList = naverShopSearchAPI(naverRequestVariableDto);
+//        List<NaverProduct> naverProductList = new ArrayList<>();
+//        changeNaverProductDtoList(womenClothingDtoList, naverProductList, naverRequestVariableDto.getQuery().split("중고 ")[1]);
+//        naverProductRepository.saveAll( (Iterable) naverProductList );
+//
+//        naverRequestVariableDto.setQuery("중고 남성의류");
+//        List<NaverProductDto> menClothingDtoList = naverShopSearchAPI(naverRequestVariableDto);
+//        List<NaverProduct> menClothingList = new ArrayList<>();
+//        changeNaverProductDtoList(menClothingDtoList, menClothingList, naverRequestVariableDto.getQuery().split("중고 ")[1]);
+//        naverProductRepository.saveAll( (Iterable) menClothingList );
+//
+//
+//        naverRequestVariableDto.setQuery("중고 신발");
+//        List<NaverProductDto> shoesDtoList = naverShopSearchAPI(naverRequestVariableDto);
+//        List<NaverProduct> shoesList = new ArrayList<>();
+//        changeNaverProductDtoList(shoesDtoList, shoesList, naverRequestVariableDto.getQuery().split("중고 ")[1]);
+//        naverProductRepository.saveAll( (Iterable) shoesList );
+//
+//        naverRequestVariableDto.setQuery("중고 스포츠/레저");
+//        List<NaverProductDto> sportsDtoList = naverShopSearchAPI(naverRequestVariableDto);
+//        List<NaverProduct> sportsList = new ArrayList<>();
+//        changeNaverProductDtoList(sportsDtoList, sportsList, naverRequestVariableDto.getQuery().split("중고 ")[1]);
+//        naverProductRepository.saveAll( (Iterable) sportsList );
+//
+//        naverRequestVariableDto.setQuery("중고 차량/오토바이");
+//        List<NaverProductDto> vehicleDtoList = naverShopSearchAPI(naverRequestVariableDto);
+//        List<NaverProduct> vehicleList = new ArrayList<>();
+//        changeNaverProductDtoList(vehicleDtoList, vehicleList, naverRequestVariableDto.getQuery().split("중고 ")[1]);
+//        naverProductRepository.saveAll( (Iterable) vehicleList );
+//
+//        naverRequestVariableDto.setQuery("중고 스타굿즈");
+//        List<NaverProductDto> starGoodsDtoList = naverShopSearchAPI(naverRequestVariableDto);
+//        List<NaverProduct> starGoodsList = new ArrayList<>();
+//        changeNaverProductDtoList(starGoodsDtoList, starGoodsList, naverRequestVariableDto.getQuery().split("중고 ")[1]);
+//        naverProductRepository.saveAll( (Iterable) starGoodsList );
+//
+//        naverRequestVariableDto.setQuery("중고 키덜트");
+//        List<NaverProductDto> kidultDtoList = naverShopSearchAPI(naverRequestVariableDto);
+//        List<NaverProduct> kidultList = new ArrayList<>();
+//        changeNaverProductDtoList(kidultDtoList, kidultList, naverRequestVariableDto.getQuery().split("중고 ")[1]);
+//        naverProductRepository.saveAll( (Iterable) kidultList );
+//
+//        naverRequestVariableDto.setQuery("중고 예술");
+//        List<NaverProductDto> artDtoList = naverShopSearchAPI(naverRequestVariableDto);
+//        List<NaverProduct> artList = new ArrayList<>();
+//        changeNaverProductDtoList(artDtoList, artList, naverRequestVariableDto.getQuery().split("중고 ")[1]);
+//        naverProductRepository.saveAll( (Iterable) artList );
+//
+//        naverRequestVariableDto.setQuery("중고 문구책");
+//        List<NaverProductDto> bookDtoList = naverShopSearchAPI(naverRequestVariableDto);
+//        List<NaverProduct> bookList = new ArrayList<>();
+//        changeNaverProductDtoList(bookDtoList, bookList, naverRequestVariableDto.getQuery().split("중고 ")[1]);
+//        naverProductRepository.saveAll( (Iterable) bookList );
+//
+//        // 429 bad request 방지, 초당 10건 이상의 요청을 보내면 내이버에서 거부
+//        Thread.sleep(1000);
+//
+//        naverRequestVariableDto.setQuery("중고 가구");
+//        List<NaverProductDto> furnitureDtoList = naverShopSearchAPI(naverRequestVariableDto);
+//        List<NaverProduct> furnitureList = new ArrayList<>();
+//        changeNaverProductDtoList(furnitureDtoList, furnitureList, naverRequestVariableDto.getQuery().split("중고 ")[1]);
+//        naverProductRepository.saveAll( (Iterable) furnitureList );
+//
+//        naverRequestVariableDto.setQuery("중고 가공식품");
+//        List<NaverProductDto> processedFoodDtoList = naverShopSearchAPI(naverRequestVariableDto);
+//        List<NaverProduct> processedFoodList = new ArrayList<>();
+//        changeNaverProductDtoList(processedFoodDtoList, processedFoodList, naverRequestVariableDto.getQuery().split("중고 ")[1]);
+//        naverProductRepository.saveAll( (Iterable) processedFoodList );
+//
+//        naverRequestVariableDto.setQuery("중고 유아동");
+//        List<NaverProductDto> infantChildDtoList = naverShopSearchAPI(naverRequestVariableDto);
+//        List<NaverProduct> infantChildList = new ArrayList<>();
+//        changeNaverProductDtoList(infantChildDtoList, infantChildList,naverRequestVariableDto.getQuery().split("중고 ")[1]);
+//        naverProductRepository.saveAll( (Iterable) infantChildList );
+//
+//        naverRequestVariableDto.setQuery("중고 반려동물");
+//        List<NaverProductDto> petDtoList = naverShopSearchAPI(naverRequestVariableDto);
+//        List<NaverProduct> petList = new ArrayList<>();
+//        changeNaverProductDtoList(petDtoList, petList, naverRequestVariableDto.getQuery().split("중고 ")[1]);
+//        naverProductRepository.saveAll( (Iterable) petList );
 
 
     }

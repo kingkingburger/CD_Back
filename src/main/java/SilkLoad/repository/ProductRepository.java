@@ -4,6 +4,7 @@ import SilkLoad.dto.ProductCategoryDto;
 import SilkLoad.entity.OrderEnum.OrderType;
 import SilkLoad.entity.Orders;
 import SilkLoad.entity.Product;
+import SilkLoad.entity.ProductEnum.ProductTime;
 import SilkLoad.entity.ProductEnum.ProductType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -81,6 +82,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     //검색해서 Product를 반환하는 쿼리
     Page<Product> findByNameContainingIgnoreCaseAndProductType(String keyword, ProductType productType, Pageable pageable);
+
+    List<Product> findByProductTimeNotAndProductType(ProductTime productTime, ProductType productType);
 
 }
 

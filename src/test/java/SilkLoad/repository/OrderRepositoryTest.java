@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 
 import javax.transaction.Transactional;
@@ -45,7 +46,7 @@ class OrderRepositoryTest {
     @Transactional
     void findHomeProductSearch() {
         PageRequest pageable = PageRequest.of(0, 4);
-        Page<HomeProductDto> homeProductDtoBySaleOrder = orderRepository.findHomeProductDtoSearch( "테스트",pageable);
+        Slice<HomeProductDto> homeProductDtoBySaleOrder = orderRepository.findHomeProductDtoSearch( "테스트",pageable);
         System.out.println(homeProductDtoBySaleOrder.getContent().size());
     }
 }

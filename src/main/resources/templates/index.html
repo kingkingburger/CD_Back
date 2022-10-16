@@ -59,6 +59,7 @@
                             <!--                                                                 th:text="|경매가: ${#numbers.formatInteger(order.findByMaxAuctionPrice(product.id), 0, 'COMMA')} 원|"></span></div>-->
                             <!--                                                                 text="|경매가: ${product.getAuctionPrice()}원|"></span></div>-->
                             <div class="product-price col"><span class="text-accent"
+                                                                 th:if="${product.getProductTime() != none }"
                                                                  th:text="|마감날짜: ${#temporals.format( product.deadLine , 'yyyy-MM-dd HH:mm:ss')}|">   </span>
                             </div>
                         </div>

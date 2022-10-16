@@ -7,13 +7,13 @@ import SilkLoad.entity.ProductEnum.ProductType;
 import SilkLoad.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -34,61 +34,72 @@ public class ShopController {
                        @RequestParam(required = false, name = "first") String first,
                        @RequestParam(required = false, name = "second") String second,
                        @RequestParam(required = false, name = "keyword")String keyword,
-                       @PageableDefault(size = 9) Pageable pageable) {
-        //카테고리들
+                       @PageableDefault(size=6)Pageable pageable
+
+                       ) {
         model.addAttribute("first", first);
         model.addAttribute("second",second);
-
-
-        //전체 페이지 수
-        int totalPages = 0;
-        //현제 페이지
-        int presentPage = 0;
-
-
-        Page<HomeProductDto> content;
+        log.info("keyword {},", keyword);
+        Page<HomeProductDto> productData;
         //first가 있는지 없는지에 따라 content가 변한다.
 
-        if(keyword != null)
-            content = productSearchService.SearchToHomeProductName(keyword, pageable);
+        if(keyword != null && keyword != "")
+            productData = productSearchService.SearchToHomeProductName(keyword, pageable);
         else
-            content = productSearchService.SearchToCategory(first,second, pageable);
-
+            productData = productSearchService.SearchToCategory(first,second, pageable);
 
         //--------------------크롤링 데이터 보내는 부분----------------------
-        Page<CrawlingDto>  crawlingdata;
-        if(keyword != null)
+
+        Page<CrawlingDto> crawlingdata;
+        if(keyword != null && keyword != "")
             crawlingdata = crawlingService.SearchCategoryCrwalingProductformProductname(keyword, pageable);
         else {
             crawlingdata = crawlingService.getcrawlingdatafirstandsecond(pageable, first, second);
-            totalPages = crawlingdata.getTotalPages();
-            presentPage = crawlingdata.getNumber();
         }
 
-        model.addAttribute("crawlingdata",crawlingdata);
 
-        //--------------------네이버 데이터 보내는 부분----------------------
+//        --------------------네이버 데이터 보내는 부분----------------------
+
         Page<NaverProductDto> naverData;
-        if(keyword != null) {
+        if(keyword != null && keyword != "") {
             naverData = naverProductService.SearchContainingTitle(keyword, pageable);
-            totalPages = naverData.getTotalPages();
-            presentPage = naverData.getNumber();
         }
         else
             naverData = null;
 
 
-        log.info("totalpages {}", totalPages);
+        int totalPagesArray[];
+        //keyword 검색
+        if (keyword != null && keyword != "") {
+            totalPagesArray = new int[3];
+            totalPagesArray[0] = productData.getTotalPages();
+            totalPagesArray[1] = crawlingdata.getTotalPages();
+            totalPagesArray[2] = naverData.getTotalPages();
+        }
+        //카테고리 검색
+        else {
+            totalPagesArray = new int[2];
+            totalPagesArray[0] = productData.getTotalPages();
+            totalPagesArray[1] = crawlingdata.getTotalPages();
+        }
+
+        Arrays.sort(totalPagesArray);
+        int biggestPage;
+        biggestPage = totalPagesArray[totalPagesArray.length -1];
+
+
+        int totalPages = biggestPage;
+        int presentPage = pageable.getPageNumber();
+
+        log.info("totalPages {}", totalPages);
         log.info("presentPage {}", presentPage);
 
-        model.addAttribute("data", naverData);
-
-        model.addAttribute("allProduct", content);
-        //전체 페이지 수 모델로 보내기
-        model.addAttribute("totalPages",totalPages);
-        //현제 페이지  모델로 보내기
-        model.addAttribute("presentPage",presentPage);
-        //판매중인 상태 보내기
+        model.addAttribute("crawlingdata",crawlingdata);
+        model.addAttribute("naverData", naverData);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("productData", productData);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("presentPage", presentPage);
         model.addAttribute("sale", ProductType.sale);
 
         return "shop";
@@ -110,7 +121,6 @@ public class ShopController {
                                 Model model) {
 
         ProductRecordDto byId_productRecordDto = productService.findById_ProductRecordDto(id);
-
         //productType.sale이 판매 중이 아니라면 error 페이저로 보내기
         if (byId_productRecordDto.getProductType() != ProductType.sale) {
             return "error";
@@ -140,7 +150,8 @@ public class ShopController {
         Page<CrawlingDto> crawlingdata = crawlingService.getcrawlingdataFirstSecondThird(pageable, first, second, third);
         model.addAttribute("crawlingdata",crawlingdata);
         //----------------------------------------------------------------
-        
+
+
         model.addAttribute("maxAuctionPrice", maxAuctionPrice);
         model.addAttribute("productTime", ProductTime.values());
         model.addAttribute("product", byId_productRecordDto);

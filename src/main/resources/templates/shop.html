@@ -45,15 +45,15 @@
                     <!--                        </div>-->
                 </div>
 
-                <!--paging 처리 부분 -->
+                <!--paging 처리 부분-->
                 <div class="d-flex pb-3 " th:if="${totalPages != 0}">
                     <a class="nav-link-style nav-link-light me-3" th:if="${presentPage}"
-                       th:href="@{/shop(page=${presentPage}-1)}" href="#">
+                       th:href="@{/shop(first=${first},second=${second},keyword=${keyword},page=${presentPage})}" href="#">
                         <i class="ci-arrow-left"></i>
                     </a>
                     <span class="fs-md text-light" th:text="|${presentPage} / ${totalPages - 1}|"> </span>
                     <a class="nav-link-style nav-link-light ms-3" th:if="${presentPage < totalPages}"
-                       th:href="@{/shop(page=${presentPage}+1)}" href="#">
+                       th:href="@{/shop(first=${first},second=${second},keyword=${keyword},page=${presentPage} + 2)}" href="#">
                         <i class="ci-arrow-right"></i>
                     </a>
                 </div>
@@ -62,7 +62,7 @@
             <!-- Products grid-->
             <div class="row mx-n2">
                 <!-- Product-->
-                <div class="col-md-4 col-sm-6 px-2 mb-4" th:each="product : ${allProduct}">
+                <div id="products" class="col-md-4 col-sm-6 px-2 mb-4" th:each="product : ${productData}">
                     <div class="card product-card" th:if="${product.getProductType == sale}">
                         <a class="card-img-top d-block overflow-hidden"
                            th:href="@{/shop/detailProduct(id=${product.id}, first=${product.getCategoryFirst()}, second=${product.getCategorySecond()}, third=${product.getCategoryThird()} )}">
@@ -118,7 +118,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4 col-sm-6 px-2 mb-4" th:each="naverData : ${data}">
+                <div class="col-md-4 col-sm-6 px-2 mb-4" th:each="naverData : ${naverData}">
                     <div class="card product-card">
                         <a class="card-img-top d-block overflow-hidden" th:href="${ naverData.getLink()  }">
                             <img alt="Product" th:src="${naverData.getImage() }"/>
@@ -143,61 +143,63 @@
 
             <hr class="my-3">
 
-<!--            &lt;!&ndash; Pagination&ndash;&gt;-->
-<!--            <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation" th:if="${totalPages != 0}">-->
 
-<!--                <ul class="pagination">-->
-<!--                    <li class="page-item">-->
-<!--                        <a class="page-link"-->
-<!--                           th:href="@{/shop(category=${category}, first=${first}, page=${presentPage}-1)}">-->
-<!--                            <i class="ci-arrow-left me-2"></i>Prev-->
-<!--                        </a>-->
-<!--                    </li>-->
-<!--                </ul>-->
+            <!-- Pagination-->
+            <nav class="d-flex justify-content-center pt-2" aria-label="Page navigation" th:if="${totalPages != 0}">
 
-<!--                <ul class="pagination">-->
-<!--                    <li class="page-item">-->
-<!--                        <a class="page-link" th:href="@{/shop(category=${category}, first=${first},page = 1)}">-->
-<!--                            <i class="ci-arrow-left me-2"></i>First-->
-<!--                        </a>-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--                <-->
-<!--                <ul class="pagination">-->
-<!--                    <th:block th:with="start = ${ T(Math).floor( presentPage/10 ) * 10 +1},-->
-<!--                                            end = (${start + 9 < totalPages ? start+9 : totalPages})">-->
-<!--                        <li class="page-item"-->
-<!--                            th:each="pageButton : ${#numbers.sequence(start, end)}">-->
-<!--                            <a class="page-link"-->
-<!--                               th:classappend="( ${ pageButton == presentPage + 1 }) ? 'bg-primary text-white'  : '' "-->
-<!--                               th:href="@{/shop(category=${category}, first=${first},page = ${pageButton})}"-->
-<!--                               th:text="${pageButton}"></a>-->
-<!--                        </li>-->
-<!--                    </th:block>-->
-<!--                </ul>-->
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link"
+                           th:href="@{/shop(first=${first},second=${second},keyword=${keyword}, page=${presentPage})}">
+                            <i class="ci-arrow-left me-2"></i>
+                        </a>
+                    </li>
+                </ul>
 
-<!--                <ul class="pagination">-->
-<!--                    <li class="page-item">-->
-<!--                        <a class="page-link"-->
-<!--                           th:href="@{/shop(category=${category}, first=${first}, page=${totalPages})}"-->
-<!--                           aria-label="Next">Last-->
-<!--                            <i class="ci-arrow-right ms-2"></i>-->
-<!--                        </a>-->
-<!--                    </li>-->
-<!--                </ul>-->
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" th:href="@{/shop(first=${first},second=${second},keyword=${keyword},page = 1)}">
+                            <i class="ci-arrow-left me-2"></i>
+                        </a>
+                    </li>
+                </ul>
 
-<!--                <ul class="pagination">-->
-<!--                    <li class="page-item">-->
-<!--                        <a class="page-link"-->
-<!--                           th:href="@{/shop(category=${category}, first=${first}, page=${presentPage}+1)}"-->
-<!--                           aria-label="Next">Next-->
-<!--                            <i class="ci-arrow-right ms-2"></i>-->
-<!--                        </a>-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--            </nav>-->
+                <ul class="pagination row justify-content-center">
+                    <th:block th:with="start = ${ T(Math).floor( presentPage/10 ) * 10 +1},
+                                            end = (${start + 9 < totalPages ? start+9 : totalPages})">
+                        <li class="page-item col-1 d-flex"
+                            th:each="pageButton : ${#numbers.sequence(start, end)}">
+                            <a class="page-link"
+                               th:classappend="( ${ pageButton == presentPage + 1 }) ? 'bg-primary text-white'  : '' "
+                               th:href="@{/shop(first=${first},second=${second},keyword=${keyword},page = ${pageButton})}"
+                               th:text="${pageButton}"></a>
+                        </li>
+                    </th:block>
+                </ul>
+
+                <ul class="pagination ps-4">
+                    <li class="page-item">
+                        <a class="page-link"
+                           th:href="@{/shop(first=${first},second=${second},keyword=${keyword}, page=${totalPages})}"
+                           aria-label="Next">
+                            <i class="ci-arrow-right ms-2"></i>
+                        </a>
+                    </li>
+                </ul>
+
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link"
+                           th:href="@{/shop( first=${first},second=${second},keyword=${keyword}, page=${presentPage + 2})}"
+                           aria-label="Next">
+                            <i class="ci-arrow-right ms-2"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </section>
     </div>
 </div>
+
 </body>
 </html>

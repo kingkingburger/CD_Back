@@ -418,13 +418,15 @@ public class ProductService {
 
     //사용법: spring @Scheduled 검색
     //1시간 마다 실행
-    @Scheduled(cron = "0 0 1 * * *")
+    @Scheduled(cron = "0 0 0/1 * * *")
     @Transactional
     public void checkDeadLine() {
-        List<Product> allProduct = productRepository.findAll();
+        List<Product> allProduct = productRepository.findByProductTimeNotAndProductType(ProductTime.NONE, ProductType.sale);
         allProduct.forEach(product -> {
             LocalDateTime deadLine = productDeadLine(product.getCreatedDate(), product.getProductTime());
-            if (product.getProductType() == ProductType.sale && deadLine.isBefore(LocalDateTime.now())) {
+            if (product.getProductType() == ProductType.sale &&
+                    product.getProductTime() != ProductTime.NONE &&
+                    deadLine.isBefore(LocalDateTime.now())) {
                 product.setProductType(ProductType.cancel);
             }
         });

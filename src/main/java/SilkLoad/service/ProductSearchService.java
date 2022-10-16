@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +43,7 @@ public class ProductSearchService {
     public Page<HomeProductDto> SearchToHomeProductName(String keyword, Pageable pageable) {
 
         return orderRepository.findHomeProductDtoSearch(keyword, pageable);
+
     }
 
     public Page<HomeProductDto> SearchToCategory(String firstCategory,String secondCategory, Pageable pageable) {
