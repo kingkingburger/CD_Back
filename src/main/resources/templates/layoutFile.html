@@ -187,6 +187,16 @@
 <div class="handheld-toolbar">
     <div class="d-table table-layout-fixed w-100">
 
+        <a th:if="${paramActive == 'shop'}"
+            class="d-table-cell handheld-toolbar-item"
+                href="#"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#shop-sidebar"
+        ><span class="handheld-toolbar-icon"
+        ><i class="ci-filter-alt"></i></span
+        ><span class="handheld-toolbar-label">카테고리</span></a
+        >
+
         <a class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" data-bs-toggle="collapse"
            data-bs-target="#navbarCollapse" onclick="window.scrollTo(0, 0)">
         <span class="handheld-toolbar-icon">
