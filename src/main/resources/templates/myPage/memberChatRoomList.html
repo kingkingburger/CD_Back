@@ -67,12 +67,12 @@
                     </table>
                 </div>
                 <!-- Pagination-->
-                <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation" th:if="${totalPages != 0}">
+                <nav class="d-flex justify-content-center pt-2" aria-label="Page navigation" th:if="${totalPages != 0}">
 
                     <ul class="pagination">
                         <li class="page-item">
-                            <a class="page-link"  th:href="@{/members/myPage/myChatRoomList(page=${presentPage}-1)}">
-                                <i class="ci-arrow-left me-2"></i>Prev
+                            <a class="page-link"  th:href="@{/members/myPage/myChatRoomList(page=${presentPage})}">
+                                <i class="ci-arrow-left me-2"></i>
                             </a>
                         </li>
                     </ul>
@@ -80,26 +80,26 @@
                     <ul class="pagination">
                         <li class="page-item">
                             <a class="page-link" th:href="@{/members/myPage/myChatRoomList(page = 1)}">
-                                <i class="ci-arrow-left me-2"></i>First
+                                <i class="ci-arrow-left me-2"></i>
                             </a>
                         </li>
                     </ul>
 
-                    <ul class="pagination">
-                        <th:block th:with="start = ${ T(Math).floor(presentPage/10) * 10 +1 },
+                    <ul class="pagination row justify-content-center">
+                        <th:block th:with="start = ${T(Math).floor(presentPage/10) * 10 +1},
                                             end = (${start + 9 < totalPages ? start+9 : totalPages})">
-                            <li class="page-item"
+                            <li class="page-item col-1 d-flex"
                                 th:each="pageButton : ${#numbers.sequence(start, end)}">
                                 <a class="page-link" th:classappend="( ${ pageButton == presentPage + 1 }) ? 'bg-primary text-white'  : '' " th:href="@{/members/myPage/myChatRoomList(page = ${pageButton})}" th:text="${pageButton}"></a>
                             </li>
                         </th:block>
-<!--                        th:text=" ( ${saleOrder.auctionPrice} == null ) ? '-': ${saleOrder.auctionPrice} "></span>-->
-<!--                        th:classappend="(${saleOrder.orderType} == ${orderType[3]}) ? '' : 'd-none' " -->
                     </ul>
 
-                    <ul class="pagination">
+
+
+                    <ul class="pagination ps-4">
                         <li class="page-item">
-                            <a class="page-link"th:href="@{/members/myPage/myChatRoomList(page=${totalPages})}" aria-label="Next">Last
+                            <a class="page-link"th:href="@{/members/myPage/myChatRoomList(page=${totalPages})}" aria-label="Next">
                                 <i class="ci-arrow-right ms-2"></i>
                             </a>
                         </li>
@@ -107,7 +107,7 @@
 
                     <ul class="pagination">
                         <li class="page-item">
-                            <a class="page-link"th:href="@{/members/myPage/myChatRoomList(page=${presentPage}+1)}" aria-label="Next">Next
+                            <a class="page-link"  th:href="@{/members/myPage/myChatRoomList(page=${presentPage + 2 > totalPages ? presentPage + 1: presentPage + 2})}" aria-label="Next">
                                 <i class="ci-arrow-right ms-2"></i>
                             </a>
                         </li>

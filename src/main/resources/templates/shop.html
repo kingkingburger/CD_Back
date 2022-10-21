@@ -190,7 +190,7 @@
                 <ul class="pagination">
                     <li class="page-item">
                         <a class="page-link"
-                           th:href="@{/shop( first=${first},second=${second},keyword=${keyword}, page=${presentPage + 2})}"
+                           th:href="@{/shop( first=${first},second=${second},keyword=${keyword}, page=${presentPage + 2 > totalPages ? presentPage + 1: presentPage + 2})}"
                            aria-label="Next">
                             <i class="ci-arrow-right ms-2"></i>
                         </a>
