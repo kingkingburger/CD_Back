@@ -192,7 +192,7 @@
 
                     <ul class="pagination">
                         <li class="page-item">
-                            <a class="page-link"  th:href="@{/members/myPage/purchaseOrders(page=${presentPage}-1)}">
+                            <a class="page-link"  th:href="@{/members/myPage/purchaseOrders(page=${presentPage})}">
                                 <i class="ci-arrow-left me-2"></i>
                             </a>
                         </li>
@@ -226,7 +226,7 @@
 
                     <ul class="pagination">
                         <li class="page-item">
-                            <a class="page-link"th:href="@{/members/myPage/purchaseOrders(page=${presentPage}+1)}" aria-label="Next">
+                            <a class="page-link"   th:href="@{/members/myPage/purchaseOrders(page=${presentPage + 2 > totalPages ? presentPage + 1: presentPage + 2})}" aria-label="Next">
                                 <i class="ci-arrow-right ms-2"></i>
                             </a>
                         </li>
