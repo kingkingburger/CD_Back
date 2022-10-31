@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 @PropertySource("classpath:/application.properties")
 public class DatabaseConfig {
 
+    //asdassadas
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource.hikari")
     public HikariConfig hikariConfig() {
