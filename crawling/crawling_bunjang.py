@@ -103,7 +103,7 @@ def crawling(category_list):
         ChromeDriverManager().install()), options=options)
     driver.implicitly_wait(30)
 
-    dataset = []
+    productDataset = []
 
     for category_num in category_list:
         url = "https://m.bunjang.co.kr/categories/"+category_num
@@ -113,7 +113,7 @@ def crawling(category_list):
         html = driver.page_source
         soup = BeautifulSoup(html, 'html.parser')
 
-        category = list(soup.find_all('div', 'dKdYNm'))
+        category = list(soup.find_all('div', 'fgNMrc'))
 
         if (len(category) == 3):
             category[0] = category[0].text
@@ -130,24 +130,10 @@ def crawling(category_list):
             category.append(category[0])
             category.append(category[0])
 
-        # if ('/' in category[0]):
-        #     category[0] = re.sub("\/", "", category[0])
-        # if ('/' in category[1]):
-        #     category[1] = re.sub("\/", "", category[1])
-        # if ('/' in category[2]):
-        #     category[2] = re.sub("\/", "", category[2])
-
-        # if ('/' in category[0]):
-        #     category[0] = category[0].replace("/", "")
-        # if ('/' in category[1]):
-        #     category[1] = category[1].replace("/", "")
-        # if ('/' in category[2]):
-        #     category[2] = category[2].replace("/", "")
-
-        name = soup.find_all('div', 'hmkmpv')
-        price = soup.find_all('div', 'kwIxAx')
-        prod_link = soup.find_all('a', 'hjcqIZ')
-        img_link = soup.find_all('div', 'kSFMjp')
+        name = soup.find_all('div', 'gwleiO')
+        price = soup.find_all('div', 'moVyh')
+        prod_link = soup.find_all('a', 'iizKix')
+        img_link = soup.find_all('div', 'eSpfym')
 
         i = 0
         for data in zip(name, price, prod_link, img_link):
@@ -155,31 +141,31 @@ def crawling(category_list):
                 break
             data = list(data)
             data.extend(category)
-            dataset.append(data)
+            productDataset.append(data)
             i += 1
 
     connect = pymysql.connect(
-        host='localhost', user='root', password='1234', db='silkLoad', charset='utf8mb4')
+        host='my-rds-indstance.cs4f6papfyio.ap-northeast-2.rds.amazonaws.com', user='admin', password='alsgh0217',
+        db='silkload', charset='utf8mb4')
     cursor = connect.cursor()
 
-    # delete = """delete from crawling where exists(select * from crawling)"""
-    # cursor.execute(delete)
+    #초기화 과정은 db_reset()에서 진행
 
-    # alter = """alter table crawling auto_increment=1"""
-    # cursor.execute(alter)
+    for product in productDataset:
+        name = str(product[0].text)
+        price = str(product[1].text)
+        prod_link = str('https://m.bunjang.co.kr'+product[2]['href'])
+        img_link = str(product[3].find('img')['src'])
 
-    # connect.commit()
-
-    for data in dataset:
-        name = str(data[0].text)
-        price = str(data[1].text)
-        prod_link = str('https://m.bunjang.co.kr'+data[2]['href'])
-        img_link = str(data[3].find('img')['src'])
-
+        firstCategory = product[-3]
+        secondCategory = product[-2]
+        thirdCategory = product[-1]
+        
+        site_name = "번개장터"
         insert = """insert into crawling
         (site_name, first, second, third, name, price, link, img_link)
         values ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')
-        """ % ("번개장터", data[-3], data[-2], data[-1], connect.escape_string(name), price, prod_link, img_link)
+        """ % (site_name, firstCategory, secondCategory, thirdCategory, connect.escape_string(name), price, prod_link, img_link)
 
         cursor.execute(insert)
     print("========== done =========")
@@ -189,7 +175,8 @@ def crawling(category_list):
 
 def db_reset():
     connect = pymysql.connect(
-        host='localhost', user='root', password='1234', db='silkload', charset='utf8mb4')
+        host='my-rds-indstance.cs4f6papfyio.ap-northeast-2.rds.amazonaws.com', user='admin', password='alsgh0217',
+        db='silkload', charset='utf8mb4')
     cursor = connect.cursor()
 
     delete = """delete from crawling"""
@@ -204,16 +191,16 @@ def db_reset():
 if __name__ == '__main__':
     db_reset()
 
-    # threads = []
+    threads = []
     start_time = time.time()
 
-    # for i in range(4):  # 스레드 4개 생성
-    #     thread = threading.Thread(target=crawling, args=category_list[i])
-    #     thread.start()
-    #     threads.append(thread)
+    for i in range(4):  # 스레드 4개 생성
+        thread = threading.Thread(target=crawling, args=category_list[i])
+        thread.start()
+        threads.append(thread)
 
-    # for thread in threads:
-    #     thread.join()
+    for thread in threads:
+        thread.join()
     crawling(category_list)
 
     print("실행 시간 : %s초" % (time.time() - start_time))
