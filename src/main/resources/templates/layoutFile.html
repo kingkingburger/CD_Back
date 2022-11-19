@@ -29,7 +29,6 @@
 
     <!-- Main Theme Styles + Bootstrap-->
     <link rel="stylesheet" media="screen" href="/css/theme.min.css">
-    <link rel="stylesheet" href="/css/bell-box.css">
     <!--jQuery-->
     <script src="/js/jquery-3.6.0.min.js"></script>
 
@@ -44,15 +43,12 @@
                     SilkLoad
                 </a>
 
-
                 <div class="input-group d-none d-lg-flex mx-4">
                     <form class="form-control" method="get" th:action="@{/shop(page = 1)}">
                         <input class="form-control rounded-end pe-5" type="text" placeholder="Search for products"
-                               required
                                th:name="keyword" th:value="${keyword}">
                     </form>
                 </div>
-
 
                 <div class="navbar-toolbar d-flex flex-shrink-0 align-items-center">
 
@@ -62,8 +58,7 @@
                         <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-heart"></i></div>
                     </a>
                     <div
-                            id="bell"
-                            class="navbar-tool"
+                            class="navbar-tool dropdown"
                             data-bs-toggle="collapse"
                             data-bs-target="#alarmList"
                             onclick="window.scrollTo(0, 0)"
@@ -76,9 +71,8 @@
                         <!-- Cart dropdown-->
                         <div class="dropdown-menu dropdown-menu-end" id="alarmList">
                             <div
-                                    id="bell_box"
                                     class="widget widget-cart px-3 pt-2 pb-3"
-
+                                    style="width: 23rem"
                             >
                                 <div
                                         style="height: 15rem"
@@ -101,43 +95,43 @@
                     </div>
 
                     <!-- 로그인 버튼 #signin-modal-->
-                    <form class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2"
+                    <form class="navbar-tool ms-3"
                           th:if="${session.loginMember != null }" th:action="@{/logout}" method="post"
                           data-bs-toggle="modal">
-                        <div class="navbar-tool-icon-box">
-                            <a class="navbar-tool-icon-box bg-s econdary dropdown-toggle" th:href="@{/members/myPage/profile}" >
-                                <i class="navbar-tool-icon ci-user">
-                                </i>
-                            </a>
-                        </div>
-                        <button class="navbar-tool-text ms-n3 bg-transparent border-0" type="submit">
+<!--                        <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>-->
+                        <button class="navbar-tool-text px-2 py-1 bg-transparent border border-2 rounded" type="submit">
+                            <span class="navbar-tool-tooltip">로그아웃</span>
                             로그아웃
                         </button>
                     </form>
-                    <!--                    |location.href='@{/oauth2/authorization/google}'|-->
-                    <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2"
+
+                    <a class="navbar-tool ms-3"
                        th:if="${session.loginMember == null }" th:onclick="|location.href='@{/loginMember}'|"
                        data-bs-toggle="modal">
-                        <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
-                        <div class="navbar-tool-text ms-n3" th:text="로그인"></div>
+                        <span class="navbar-tool-tooltip">로그인</span>
+<!--                        <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>-->
+                        <div class="navbar-tool-text px-2 py-1 bg-transparent border border-2 rounded" th:text="로그인"></div>
                     </a>
 
 
                     <div class="navbar-tool ms-3">
-                        <a class="navbar-tool-icon-box bg-secondary dropdown-toggle"
-                           th:href="@{/members/myPage/wishlist}">
+                        <span class="navbar-tool-tooltip">구매주문</span>
+                        <a class="navbar-tool-icon-box bg-secondary dropdown-toggle" th:href="@{/members/myPage/purchaseOrders}">
                             <i class="navbar-tool-icon ci-cart"></i>
                         </a>
+                    </div>
 
+                    <div class="navbar-tool ms-3">
                         <a class="navbar-tool-text" th:href="@{/members/myPage/profile}">
-                            <div th:if="${session.loginMember != null }" th:text="|${session.loginMember.getName()} 님|">
+                            <span class="navbar-tool-tooltip">프로필</span>
+                            <div class="px-2 py-1 bg-transparent border border-2 rounded" th:if="${session.loginMember != null }" th:text="|${session.loginMember.getName()} 님|">
                                 프로필 보여주는 곳
                             </div>
-                            <div th:if="${session.loginMember == null }">
+                            <div class="px-2 py-1 bg-transparent border border-2 rounded" th:if="${session.loginMember == null }">
                                 My Profile
                             </div>
                         </a>
-                    </div>
+                     </div>
                 </div>
             </div>
         </div>
@@ -145,17 +139,11 @@
             <div class="container">
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <!-- Search-->
+                    <div class="input-group d-lg-none my-3"><i
+                            class="ci-search position-absolute top-50 start-0 translate-middle-y text-muted fs-base ms-3"></i>
+                        <input class="form-control rounded-start" type="text" placeholder="Search for products">
+                    </div>
 
-
-                    <form  method="get" th:action="@{/shop(page = 1)}">
-                        <div class="input-group d-lg-none my-3"><i
-                                class="ci-search position-absolute top-50 start-0 translate-middle-y text-muted fs-base ms-3"></i>
-
-                                <input class="form-control rounded-end pe-5" type="text" placeholder="Search for products"
-                                       required
-                                       th:name="keyword" th:value="${keyword}">
-                        </div>
-                    </form>
                     <!-- Primary menu-->
                     <ul class="navbar-nav">
                         <a class="nav-link dropdown-toggle" th:classappend="${paramActive == 'home'} ? active"
@@ -186,16 +174,6 @@
 
 <div class="handheld-toolbar">
     <div class="d-table table-layout-fixed w-100">
-
-        <a th:if="${paramActive == 'shop'}"
-            class="d-table-cell handheld-toolbar-item"
-                href="#"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#shop-sidebar"
-        ><span class="handheld-toolbar-icon"
-        ><i class="ci-filter-alt"></i></span
-        ><span class="handheld-toolbar-label">카테고리</span></a
-        >
 
         <a class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" data-bs-toggle="collapse"
            data-bs-target="#navbarCollapse" onclick="window.scrollTo(0, 0)">
@@ -249,7 +227,6 @@
     </div>
 
 </footer>
-
 <script src="/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/vendor/simplebar/dist/simplebar.min.js"></script>
 <script src="/vendor/tiny-slider/dist/min/tiny-slider.js"></script>
@@ -267,22 +244,8 @@
 
         console.log(memberSession);
 
-        let alramCount = 0;
-
         if (memberSession != null) {
-            const eventSource = new EventSource(`/notifications/subscribe`);
-
-            $("#bell").click(() => {
-                $("#bell").addClass("dropdown");
-                fetch(`/notifications/read`);
-                alramCount=0;
-                $(".alarm-count").text(
-                    alramCount
-                )
-            });
-            $("#bell").mouseleave(() => {
-                $("#bell").removeClass("dropdown");
-            });
+            const eventSource = new EventSource(`/subscribe`);
 
             console.log("eventSource")
             console.log(eventSource)
@@ -296,16 +259,11 @@
             /**
              * @param e.data : message, createdDateTime, url
              */
-
+            let alramCount = 0;
             eventSource.onmessage = (e) => {
                 const notificationResponseDto = JSON.parse(e.data);
-                if ( notificationResponseDto.isRead == false) {
-                    alramCount += 1;
-                    $(".alarm-count").text(
-                        alramCount
-                    )
-                }
-                $("#alarmList").find(".simplebar-content").append(
+                alramCount += 1;
+                $(".simplebar-content").append(
                     '<div class="widget-cart-item pb-2">' +
                     '<div class="ps-2">' +
                     '<h6 class="widget-product-title">' +
@@ -326,7 +284,9 @@
                     '</div>' +
                     '</div>'
                 )
-
+                $(".alarm-count").text(
+                    alramCount
+                )
             };
         }
     }))
