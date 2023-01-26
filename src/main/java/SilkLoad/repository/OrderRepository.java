@@ -108,7 +108,9 @@ public interface OrderRepository extends JpaRepository<Orders, Long>  {
             "ON original.product.id = copy.product.id " +
             "AND original.orderDateTime < copy.orderDateTime " +
             "JOIN Product p ON p.id = original.product.id " +
-            "WHERE copy.product.id IS NULL AND p.members.id = :memberId ORDER BY original.product.id"
+            "WHERE copy.product.id IS NULL " +
+            "AND p.members.id = :memberId " +
+            "ORDER BY original.product.id"
     )
     Page<OrderHistoryDto> findMemberSaleOrder(@Param("memberId") Long memberId, Pageable pageable);
 

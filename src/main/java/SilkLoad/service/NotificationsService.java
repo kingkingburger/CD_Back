@@ -74,6 +74,7 @@ public class NotificationsService {
                 sendNotification(emitter, eventId, emitterId, NotificationsResponseDto.create(notifications));
             }) );
         }
+
         //sse 연결
         return emitter;
     }
